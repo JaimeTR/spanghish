@@ -24,6 +24,16 @@ const PAGES = [
     en: { h1: "Spanish lessons for mature adults", title: /^Spanish lessons for mature adults \(65\+\)/ },
   },
   {
+    slug: "online-conversations",
+    es: { h1: "Conversación online", title: /^Conversación online en español \(10 semanas, nivel intermedio\)/ },
+    en: { h1: "Online conversations", title: /^Online Spanish conversations \(10 weeks, intermediate\)/ },
+  },
+  {
+    slug: "resources",
+    es: { h1: "Recursos para aprender español", title: /^Recursos gratis para aprender español/ },
+    en: { h1: "Resources to learn Spanish", title: /^Free resources to learn Spanish/ },
+  },
+  {
     slug: "teachers",
     es: { h1: "Conócenos", title: /^Conócenos: Maribel Mayhua/ },
     en: { h1: "Meet us", title: /^Meet us: Maribel Mayhua/ },
@@ -111,9 +121,9 @@ test("header and footer links reach every inner page", async ({ page }) => {
   await page.goto("/es");
   const header = page.getByRole("navigation", { name: "Navegación principal" });
 
-  await header.getByRole("link", { name: "Clases" }).click();
+  await header.getByRole("link", { name: "Clases", exact: true }).click();
   await expect(page).toHaveURL(/\/es\/lessons$/);
-  await expect(header.getByRole("link", { name: "Clases" })).toHaveAttribute("aria-current", "page");
+  await expect(header.getByRole("link", { name: "Clases", exact: true })).toHaveAttribute("aria-current", "page");
 
   await header.getByRole("link", { name: "Conócenos" }).click();
   await expect(page).toHaveURL(/\/es\/teachers$/);
@@ -127,6 +137,8 @@ test("header and footer links reach every inner page", async ({ page }) => {
     ["Clases para adultos", "adult-lessons"],
     ["Clases para niños", "kids-lessons"],
     ["Clases para mayores", "mature-lessons"],
+    ["Conversación online", "online-conversations"],
+    ["Recursos", "resources"],
   ] as const) {
     await footer.getByRole("link", { name }).click();
     await expect(page).toHaveURL(new RegExp(`/es/${slug}$`));
@@ -170,11 +182,11 @@ test("the free-lesson CTA on an inner page goes to the booking form", async ({ p
   await expect(page.locator('main a[href="tel:+61413178583"]')).toBeVisible();
 });
 
-test("contact is for general questions and links to the booking form", async ({ page }) => {
+test("contact has its own short form and links to the free-lesson booking form", async ({ page }) => {
   await page.goto("/es/contact-us");
-  await expect(page.locator("main form")).toHaveCount(0);
+  await expect(page.locator("main form")).toHaveCount(1);
   await expect(page.locator('main a[href="mailto:hello@spanglish.com.au"]').first()).toBeVisible();
-  await page.getByRole("main").getByRole("link", { name: "Ir al formulario" }).click();
+  await page.getByRole("main").getByRole("link", { name: "Ir al formulario", exact: true }).click();
   await expect(page).toHaveURL(/\/es\/bookings$/);
 });
 

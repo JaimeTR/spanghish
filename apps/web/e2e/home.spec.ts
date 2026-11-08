@@ -70,7 +70,8 @@ test.describe("mobile", () => {
     await button.click();
     await expect(button).toHaveAttribute("aria-expanded", "true");
     const nav = page.getByRole("navigation", { name: "Navegación principal" });
-    await expect(nav.getByRole("link", { name: "Clases" })).toBeFocused();
+    // "Clases" es un grupo desplegable: el primer elemento es su botón.
+    await expect(nav.getByRole("button", { name: "Clases" })).toBeFocused();
     await page.keyboard.press("Escape");
     await expect(button).toHaveAttribute("aria-expanded", "false");
     await expect(button).toBeFocused();

@@ -16,6 +16,8 @@ const ALL = [
   "adult-lessons",
   "kids-lessons",
   "mature-lessons",
+  "online-conversations",
+  "resources",
   "teachers",
   "contact-us",
   "bookings",
@@ -57,4 +59,28 @@ for (const slug of PAGES) {
       });
     }
   }
+}
+
+/** Navegación: desplegable "Clases" abierto (1280) y menú de móvil con Clases desplegado (375). */
+for (const locale of ["es", "en"] as const) {
+  test(`shot nav dropdown ${locale} 1280`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto(`/${locale}/kids-lessons`);
+    await page.evaluate(() => document.fonts.ready);
+    await page.getByRole("button", { name: locale === "es" ? "Mostrar clases" : "Show lessons" }).click();
+    await page.screenshot({ path: path.join(dir, `nav-dropdown-${locale}-1280.png`) });
+  });
+
+  test(`shot mobile menu lessons ${locale} 375`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(`/${locale}`);
+    await page.evaluate(() => document.fonts.ready);
+    await page.getByRole("button", { name: locale === "es" ? "Menú" : "Menu" }).click();
+    await page.getByRole("navigation", { name: locale === "es" ? "Navegación principal" : "Main navigation" })
+      .getByRole("button", { name: locale === "es" ? "Clases" : "Lessons" })
+      .click();
+    await page.screenshot({ path: path.join(dir, `nav-mobile-lessons-${locale}-375.png`) });
+  });
 }

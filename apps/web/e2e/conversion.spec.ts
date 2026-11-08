@@ -129,11 +129,17 @@ test.describe("header fit", () => {
       await page.setViewportSize({ width, height: 800 });
       await page.goto("/es/faq");
       const items = page.getByRole("navigation", { name: "Navegación principal" }).getByRole("listitem");
-      await expect(items).toHaveCount(5);
+      // Clases (con su desplegable cerrado), Precios, Recursos, Preguntas, Conócenos y Contacto.
+      await expect(items).toHaveCount(6);
       const tops = await items.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
       expect(new Set(tops).size).toBe(1);
       const cta = await page.locator("header").getByRole("link", { name: "Clase gratis" }).boundingBox();
       expect(cta && cta.x + cta.width).toBeLessThanOrEqual(width);
+      // "Entrar" al portal, en la misma línea (solo icono por debajo de 1180px).
+      const login = await page.locator("header").getByRole("link", { name: /^Entrar al portal de alumnos$/ }).boundingBox();
+      expect(login).not.toBeNull();
+      expect(Math.abs(login!.y + login!.height / 2 - (cta!.y + cta!.height / 2))).toBeLessThan(4);
+      expect(login!.width).toBeLessThan(width < 1180 ? 60 : 140);
       expect(await horizontalOverflow(page)).toBe(0);
     });
   }
