@@ -18,3 +18,5 @@ supabase/.branches/
 test-results/
 playwright-report/
 blob-report/
+
+.claude/settings.local.json

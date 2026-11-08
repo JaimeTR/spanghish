@@ -15,7 +15,9 @@ Requisitos: Node 22+, pnpm 9.7 (`corepack enable`) y Docker Desktop en ejecució
 1. `pnpm install`
 2. `pnpm supabase start` (levanta el stack local) y `pnpm supabase db reset` (migraciones + `supabase/seed.sql`).
 3. Variables de la app: `pnpm supabase status -o env` da `API_URL` y `ANON_KEY`; copiarlos a
-   `apps/app/.env.local` (git-ignored; ver `.env.example`).
+   `apps/app/.env.local` (git-ignored; ver `.env.example` en la raíz). Añadir también `NEXT_PUBLIC_SITE_URL`
+   (`http://127.0.0.1:3001`; sin ella la recuperación de contraseña registra un error) y, para el e2e,
+   `SUPABASE_SERVICE_ROLE_KEY` (`SERVICE_ROLE_KEY` del mismo comando).
 4. `pnpm dev`.
 5. Al terminar: `pnpm supabase stop`.
 

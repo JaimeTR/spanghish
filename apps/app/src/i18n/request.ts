@@ -6,6 +6,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const locale = requested && isLocale(requested) ? requested : routing.defaultLocale;
   return {
     locale,
+    // Zona horaria del negocio según la especificación.
+    timeZone: "Australia/Brisbane",
     messages: (await import(`../../messages/${locale}.json`)).default,
   };
 });
