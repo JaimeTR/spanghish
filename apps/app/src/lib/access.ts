@@ -1,4 +1,4 @@
-import type { Locale } from "@/i18n/routing";
+import { isLocale, type Locale } from "../i18n/routing";
 
 export type AppRole = "admin" | "teacher" | "student" | "guardian";
 export type UserStatus = "active" | "suspended";
@@ -17,9 +17,28 @@ export function roleHomePath(roles: AppRole[], locale: Locale): string {
   return role ? `/${locale}/${role}` : `/${locale}/login`;
 }
 
+/**
+ * Falla cerrado: path = /<locale>/<area>/...
+ * - El proxy debe ejecutar next-intl primero y pasar el pathname crudo.
+ * - Los layouts de servidor deben seguir llamando a getSessionUser (defensa en
+ *   profundidad; se hace en la Tarea 8).
+ * Reglas: se normaliza (sin query/hash, decodificado, sin segmentos vacíos,
+ * minúsculas). Sin locale válido o con codificación inválida -> false. El
+ * segundo segmento decide el área; cualquier otro (o ninguno) es público. Un
+ * nombre de área en segmentos posteriores (/es/foo/admin) es solo una ruta anidada.
+ */
 export function canAccess(roles: AppRole[], path: string): boolean {
-  // path = /<locale>/<area>/...
-  const area = path.split(/[?#]/)[0]!.split("/")[2];
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(path.split(/[?#]/)[0]!);
+  } catch {
+    return false;
+  }
+  const [locale, area] = decoded
+    .split("/")
+    .filter((s) => s !== "")
+    .map((s) => s.toLowerCase());
+  if (!locale || !isLocale(locale)) return false;
   if (area === "admin") return roles.includes("admin");
   if (area === "teacher" || area === "student" || area === "guardian") {
     return roles.includes(area) || roles.includes("admin");
@@ -41,8 +60,10 @@ export function toSessionUser(profile: ProfileRow, roleRows: RoleRow[]): Session
   const suspended = profile.status === "suspended";
   return {
     id: profile.id,
-    roles: suspended ? [] : roleRows.map((r) => r.role),
+    roles: suspended
+      ? []
+      : roleRows.map((r) => r.role).filter((r): r is AppRole => ROLE_PRIORITY.includes(r)),
     status: profile.status,
-    locale: profile.preferred_locale,
+    locale: isLocale(profile.preferred_locale) ? profile.preferred_locale : "es",
   };
 }

@@ -32,6 +32,51 @@ describe("canAccess", () => {
   });
 });
 
+describe("canAccess fail-closed", () => {
+  it("canAccess denies a path with no locale (/admin, /admin/users)", () => {
+    expect(canAccess(["admin"], "/admin")).toBe(false);
+    expect(canAccess(["student"], "/admin/users")).toBe(false);
+  });
+  it("canAccess denies an unknown locale (/fr/admin)", () => {
+    expect(canAccess(["admin"], "/fr/admin")).toBe(false);
+    expect(canAccess([], "/fr/login")).toBe(false);
+  });
+  it("canAccess normalizes empty segments (/es//admin blocks a student)", () => {
+    expect(canAccess(["student"], "/es//admin")).toBe(false);
+  });
+  it("canAccess decodes percent-encoding (/es/%61dmin blocks a student)", () => {
+    expect(canAccess(["student"], "/es/%61dmin")).toBe(false);
+  });
+  it("canAccess denies on malformed encoding (/es/%E0%A4%A)", () => {
+    expect(canAccess(["admin"], "/es/%E0%A4%A")).toBe(false);
+  });
+  it("canAccess is case-insensitive on area (/es/ADMIN blocks a student)", () => {
+    expect(canAccess(["student"], "/es/ADMIN")).toBe(false);
+  });
+  it("public paths stay public for everyone (/es, /es/login, /en/forgot-password)", () => {
+    for (const p of ["/es", "/es/login", "/en/forgot-password", "/es/foo/admin"]) {
+      expect(canAccess([], p)).toBe(true);
+    }
+  });
+});
+
+describe("toSessionUser hardening", () => {
+  it("drops unknown role values", () => {
+    const u = toSessionUser(
+      { id: "u3", status: "active", preferred_locale: "es" },
+      [{ role: "student" }, { role: "root" as never }],
+    );
+    expect(u.roles).toEqual(["student"]);
+  });
+  it("falls back to es for an unknown locale", () => {
+    const u = toSessionUser(
+      { id: "u4", status: "active", preferred_locale: "fr" as never },
+      [],
+    );
+    expect(u.locale).toBe("es");
+  });
+});
+
 describe("isSafeRedirect", () => {
   it("isSafeRedirect rejects '//evil.com' and 'https://x.com'", () => {
     expect(isSafeRedirect("//evil.com")).toBe(false);
