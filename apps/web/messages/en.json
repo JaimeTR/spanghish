@@ -300,7 +300,7 @@
     "faqQuestion": "Any questions?",
     "relatedQuestion": "Looking for something else?",
     "relatedTeachers": "Meet Maribel",
-    "relatedTeachersBody": "Your tutor: native, certified and with 4+ years of experience.",
+    "relatedTeachersBody": "Your tutor: native and certified.",
     "relatedLessons": "All lessons",
     "relatedLessonsBody": "Compare formats and prices for every age.",
     "freeLesson": {
@@ -524,7 +524,7 @@
     },
     "teachers": {
       "metaTitle": "Meet us: Maribel Mayhua, Spanish tutor · Spanglish",
-      "metaDescription": "Maribel Mayhua is a native Spanish tutor from Lima, Peru, certified for levels A1 to B2, with more than 4 years of experience. She lives in Australia.",
+      "metaDescription": "Maribel Mayhua is a native Spanish tutor from Lima, Peru, certified for levels A1 to B2. She lives in Australia.",
       "title": "Meet us",
       "lead": "Our goal is that you speak Spanish confidently. Meet the person who will teach you.",
       "ask": "Who will teach me?",
@@ -537,7 +537,6 @@
       "facts": {
         "native": "Native speaker, from Lima, Peru",
         "certified": "Certified to teach levels A1, A2, B1 and B2",
-        "years": "4+ years of experience",
         "based": "Based in Australia"
       },
       "approachQuestion": "What are her lessons like?",
@@ -798,7 +797,7 @@
             },
             "teacher": {
               "q": "Who teaches the lessons?",
-              "a": "Maribel Mayhua, a native Spanish tutor from Lima, Peru, certified to teach levels A1 to B2 and with more than 4 years of experience. She lives in Australia."
+              "a": "Maribel Mayhua, a native Spanish tutor from Lima, Peru, certified to teach levels A1 to B2. She lives in Australia."
             }
           }
         },

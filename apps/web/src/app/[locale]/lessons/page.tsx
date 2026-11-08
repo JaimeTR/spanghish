@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { AUDIENCE_STYLE } from "@/components/audience-style";
@@ -6,7 +7,7 @@ import { SectionQuestion } from "@/components/Bubble";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { FreeLessonBand } from "@/components/FreeLessonBand";
 import { HowItWorks } from "@/components/home/HowItWorks";
-import { SparkIcon } from "@/components/icons";
+import { ArrowIcon, SparkIcon } from "@/components/icons";
 import { PageShell } from "@/components/PageShell";
 import { container } from "@/components/styles";
 import { isLocale } from "@/i18n/routing";
@@ -40,6 +41,7 @@ export default async function LessonsPage({ params }: PageProps) {
   const tc = await getTranslations({ locale, namespace: "common" });
   const tn = await getTranslations({ locale, namespace: "nav" });
   const th = await getTranslations({ locale, namespace: "hero" });
+  const tl = await getTranslations({ locale, namespace: "lessons" });
   const label = (key: string) => (key.startsWith("formats.") ? tc(key) : t(key));
 
   return (
@@ -78,6 +80,28 @@ export default async function LessonsPage({ params }: PageProps) {
               />
             ))}
           </ul>
+
+          {/* Conversación online: programa aparte, con su propia página. */}
+          <div className="on-dark relative mt-4 flex flex-col justify-between gap-6 overflow-hidden rounded-lg bg-brand-burgundy p-6 text-on-primary transition-transform duration-200 ease-out hover:-translate-y-1 has-[a:focus-visible]:outline-[3px] has-[a:focus-visible]:outline-offset-[3px] has-[a:focus-visible]:outline-[var(--brand-purple)] has-[a:focus-visible]:outline-solid motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-8 lg:mt-5 lg:flex-row lg:items-center">
+            <div className="max-w-[40rem]">
+              <span className="inline-block rounded-full bg-brand-yellow px-3 py-1 text-sm font-bold text-ink">{tl("online.tag")}</span>
+              <h2 className="mt-3 font-display text-[clamp(1.9rem,4vw,2.75rem)] leading-none">
+                <Link
+                  href={localePath(locale, "online")}
+                  className="text-current no-underline outline-none after:absolute after:inset-0 after:content-['']"
+                >
+                  {tl("online.title")}
+                </Link>
+              </h2>
+              <p className="mt-3 text-lg leading-relaxed">{tl("online.body")}</p>
+            </div>
+            <span aria-hidden="true" className="flex items-center gap-3 font-bold">
+              {tl("online.more")}
+              <span className="flex size-12 items-center justify-center rounded-full ring-2 ring-current">
+                <ArrowIcon />
+              </span>
+            </span>
+          </div>
         </div>
       </section>
 

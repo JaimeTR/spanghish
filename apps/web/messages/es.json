@@ -300,7 +300,7 @@
     "faqQuestion": "¿Tienes dudas?",
     "relatedQuestion": "¿Buscas otra cosa?",
     "relatedTeachers": "Conoce a Maribel",
-    "relatedTeachersBody": "Tu profesora: nativa, certificada y con más de 4 años de experiencia.",
+    "relatedTeachersBody": "Tu profesora: nativa y certificada.",
     "relatedLessons": "Todas las clases",
     "relatedLessonsBody": "Compara formatos y precios para cada edad.",
     "freeLesson": {
@@ -524,7 +524,7 @@
     },
     "teachers": {
       "metaTitle": "Conócenos: Maribel Mayhua, profesora de español · Spanglish",
-      "metaDescription": "Maribel Mayhua es profesora de español nativa, de Lima (Perú), certificada para los niveles A1 a B2, con más de 4 años de experiencia. Vive en Australia.",
+      "metaDescription": "Maribel Mayhua es profesora de español nativa, de Lima (Perú), certificada para los niveles A1 a B2. Vive en Australia.",
       "title": "Conócenos",
       "lead": "Nuestro objetivo es que hables español con confianza. Te presentamos a quien te dará clase.",
       "ask": "¿Quién me va a dar clase?",
@@ -537,7 +537,6 @@
       "facts": {
         "native": "Nativa, de Lima (Perú)",
         "certified": "Certificada para enseñar los niveles A1, A2, B1 y B2",
-        "years": "Más de 4 años de experiencia",
         "based": "Vive en Australia"
       },
       "approachQuestion": "¿Cómo son sus clases?",
@@ -798,7 +797,7 @@
             },
             "teacher": {
               "q": "¿Quién da las clases?",
-              "a": "Maribel Mayhua, profesora nativa de Lima (Perú), certificada para enseñar los niveles A1 a B2 y con más de 4 años de experiencia. Vive en Australia."
+              "a": "Maribel Mayhua, profesora nativa de Lima (Perú), certificada para enseñar los niveles A1 a B2. Vive en Australia."
             }
           }
         },

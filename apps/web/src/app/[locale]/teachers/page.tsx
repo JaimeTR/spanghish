@@ -6,6 +6,7 @@ import { AudienceTile } from "@/components/AudienceTile";
 import { Bubble, SectionQuestion } from "@/components/Bubble";
 import { BubbleThread, MinutesBadge } from "@/components/BubbleThread";
 import { FreeLessonBand } from "@/components/FreeLessonBand";
+import { MaribelPhoto } from "@/components/MaribelPhoto";
 import { ArrowIcon, CheckIcon } from "@/components/icons";
 import { HeroChat, heroButtons, PageHero } from "@/components/PageHero";
 import { PageShell } from "@/components/PageShell";
@@ -16,7 +17,7 @@ import { crumbsJsonLd, innerPageMetadata, type PageProps } from "@/lib/page-meta
 import { bookingPath, localePath } from "@/lib/routes";
 import { teacherJsonLd } from "@/lib/structured-data";
 
-const FACTS = ["native", "certified", "years", "based"] as const;
+const FACTS = ["native", "certified", "based"] as const;
 const APPROACH = ["practical", "grammar", "materials", "summary"] as const;
 
 export function generateMetadata({ params }: PageProps) {
@@ -32,6 +33,7 @@ export default async function TeachersPage({ params }: PageProps) {
   const tc = await getTranslations({ locale, namespace: "common" });
   const tn = await getTranslations({ locale, namespace: "nav" });
   const tl = await getTranslations({ locale, namespace: "lessons" });
+  const tm = await getTranslations({ locale, namespace: "maribel" });
   const buttons = heroButtons("burgundy");
   const path = localePath(locale, "teachers");
 
@@ -74,7 +76,8 @@ export default async function TeachersPage({ params }: PageProps) {
             </Bubble>
             <p className="mt-8 max-w-[38rem] text-xl leading-relaxed text-ink">{t("mission")}</p>
           </div>
-          <div className="lg:col-span-5 lg:pt-4">
+          <div className="flex flex-col gap-10 lg:col-span-5 lg:pt-4">
+            <MaribelPhoto alt={tm("photoAlt")} priority className="mx-auto w-[min(78%,19rem)] lg:mx-0" />
             <div className="rounded-lg bg-brand-purple p-7 text-on-structure sm:p-9">
               <h3 className="font-display text-[1.75rem] leading-tight text-brand-yellow">{t("factsLabel")}</h3>
               <ul className="mt-5 flex flex-col gap-4">
