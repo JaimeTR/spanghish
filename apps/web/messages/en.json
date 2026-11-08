@@ -182,7 +182,8 @@
       "native": "Native speaker",
       "certified": "Certified",
       "based": "Based in Australia"
-    }
+    },
+    "photoAlt": "Maribel Mayhua, Spanglish Spanish tutor"
   },
   "learn": {
     "question": "Want to practise right now?",
@@ -1116,6 +1117,16 @@
     "home": "Go to the home page",
     "lessons": "See the lessons",
     "booking": "Book a free lesson"
+  },
+  "testimonials": {
+    "question": "What do students say?",
+    "intro": "Real reviews from Maribel’s students, in their own words.",
+    "kinds": {
+      "private": "Private student",
+      "family": "Family pack student"
+    },
+    "label": "Student reviews",
+    "goTo": "Review {n} of {total}: {name}"
   },
   "videos": {
     "question": "Learn with Maribel’s videos",

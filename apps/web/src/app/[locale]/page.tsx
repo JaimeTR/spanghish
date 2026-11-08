@@ -8,6 +8,8 @@ import { LearnNow } from "@/components/home/LearnNow";
 import { Lessons } from "@/components/home/Lessons";
 import { Maribel } from "@/components/home/Maribel";
 import { Prices } from "@/components/home/Prices";
+import { Testimonials } from "@/components/home/Testimonials";
+import { Videos } from "@/components/home/Videos";
 import { PageShell } from "@/components/PageShell";
 import { isLocale } from "@/i18n/routing";
 import { pageMetadata } from "@/lib/seo";
@@ -35,6 +37,8 @@ export default async function HomePage({ params }: Props) {
       <HowItWorks />
       <Prices />
       <Maribel />
+      <Testimonials />
+      <Videos />
       <LearnNow />
       <Contact />
     </PageShell>

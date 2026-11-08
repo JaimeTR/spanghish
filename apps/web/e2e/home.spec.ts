@@ -150,3 +150,34 @@ test.describe("hero slider with reduced motion", () => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   });
 });
+
+test.describe("home sections with Maribel's content", () => {
+  test("videos load YouTube only after pressing play", async ({ page }) => {
+    await page.goto("/es");
+    const section = page.locator("#videos");
+    await section.scrollIntoViewIfNeeded();
+    await expect(section.locator("iframe")).toHaveCount(0);
+    await section.getByRole("link", { name: /Reproducir video: Personal Pronouns in Spanish/ }).click();
+    await expect(section.locator("iframe")).toHaveAttribute("src", /youtube-nocookie\.com\/embed\/GilfeIjZm_g/);
+  });
+
+  test("testimonials render and Maribel speaks in the first person without years of experience", async ({ page }) => {
+    await page.goto("/es");
+    await expect(page.locator("#testimonials blockquote")).toHaveCount(5);
+    const maribel = page.locator("#maribel");
+    await expect(maribel).toContainText("Soy profesora nativa");
+    await expect(maribel).not.toContainText(/4\s*años/);
+  });
+
+  test("testimonials show one at a time, move with the avatars and advance by themselves", async ({ page }) => {
+    await page.goto("/es");
+    const group = page.getByRole("group", { name: "Opiniones de alumnos" });
+    await group.scrollIntoViewIfNeeded();
+    await expect(group.getByText("Maribel is an excellent Spanish tutor.")).toBeVisible();
+    await expect(group.getByText("Perfect! Was a good introductory lesson")).toBeHidden();
+    await group.getByRole("button", { name: "Opinión 4 de 5: Ben" }).click();
+    await expect(group.getByText("Perfect! Maribel was kind")).toBeVisible();
+    await page.mouse.move(0, 0);
+    await expect(group.getByText("Perfect! Was a good introductory lesson")).toBeVisible({ timeout: 12_000 });
+  });
+});

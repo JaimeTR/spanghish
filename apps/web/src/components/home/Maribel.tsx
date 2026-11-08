@@ -4,13 +4,14 @@ import type { Locale } from "@/i18n/routing";
 import { localePath } from "@/lib/routes";
 import { Bubble, SectionQuestion } from "../Bubble";
 import { ArrowIcon } from "../icons";
+import { MaribelPhoto } from "../MaribelPhoto";
 import { btnOnDarkOutline, container } from "../styles";
 
-const FACTS = ["native", "certified", "years", "based"] as const;
+const FACTS = ["native", "certified", "based"] as const;
 
 /**
- * Campo burdeos. Sin foto todavía: Maribel se presenta con un bocadillo
- * grande, rotulado como el logo.
+ * Campo burdeos. Foto de Maribel en bocadillo con el tratamiento de marca y,
+ * encima, su saludo rotulado como el logo.
  */
 export function Maribel() {
   const t = useTranslations("maribel");
@@ -32,22 +33,30 @@ export function Maribel() {
           </Link>
         </div>
 
-        <div className="lg:col-span-6">
-          <Bubble tone="cream" tail="right" shadow className="mx-auto max-w-[32rem] rotate-[-2deg]" boxClassName="px-8 pt-8 pb-9 sm:px-10">
-            <p aria-hidden="true" className="font-display text-[clamp(2rem,5vw,2.75rem)] leading-none text-brand-purple">
+        {/* Ella habla: el bocadillo va encima y su cola apunta a su foto. */}
+        <div className="mx-auto w-full max-w-[24rem] lg:col-span-6 lg:mr-0 lg:ml-auto">
+          <Bubble
+            tone="cream"
+            tail="right"
+            shadow
+            className="relative z-10 -rotate-2 sm:mr-2"
+            boxClassName="px-6 py-5 sm:px-7 sm:py-6"
+          >
+            <p aria-hidden="true" className="font-display text-[clamp(1.25rem,3.4vw,1.625rem)] leading-none text-brand-purple">
               {t("hello")}
             </p>
-            <p className="lettering mt-1 font-display text-[clamp(3rem,9vw,5rem)] leading-[0.95] text-brand-fuchsia">
+            <p className="lettering mt-1 font-display text-[clamp(1.875rem,6vw,2.75rem)] leading-[0.95] text-brand-fuchsia">
               {t("name")}
             </p>
-            <ul className="mt-7 flex flex-wrap gap-2">
+            <ul className="mt-4 flex flex-wrap gap-2">
               {FACTS.map((key) => (
-                <li key={key} className="rounded-full bg-brand-yellow px-4 py-2 text-[0.9375rem] font-bold text-ink">
+                <li key={key} className="rounded-full bg-brand-yellow px-3.5 py-1.5 text-sm font-bold text-ink">
                   {t(`facts.${key}`)}
                 </li>
               ))}
             </ul>
           </Bubble>
+          <MaribelPhoto alt={t("photoAlt")} tail="left" className="mt-7 ml-auto w-[min(72%,15rem)] rotate-[2deg] sm:w-[16rem]" />
         </div>
       </div>
     </section>

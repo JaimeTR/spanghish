@@ -10,6 +10,10 @@ export async function expectNoAxeViolations(page: Page) {
   // Con la página ya hidratada (RevealOnScroll marca los bloques al montar), se
   // muestran todos y se espera a que terminen las transiciones de entrada.
   await page.waitForLoadState("networkidle");
+  // Los carruseles de la home avanzan solos; con el puntero encima se detienen
+  // (si no, un cambio de diapositiva a mitad del análisis falsea el contraste).
+  const vp = page.viewportSize();
+  if (vp) await page.mouse.move(vp.width / 2, Math.min(300, vp.height / 2));
   await page.evaluate(async () => {
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     document.querySelectorAll(".reveal-pending").forEach((el) => el.classList.remove("reveal-pending"));

@@ -27,10 +27,11 @@ export function Lessons() {
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6 lg:gap-5">
           <AudienceTile
             href={localePath(locale, "adults")}
-            className="on-dark bg-brand-fuchsia text-on-primary sm:col-span-2 lg:col-span-4 lg:row-span-2 lg:min-h-[25rem]"
+            className="on-dark bg-brand-fuchsia text-on-primary sm:col-span-2 lg:col-span-4 lg:row-span-2"
             age={t("adults.age")}
             title={t("adults.title")}
             body={t("adults.body")}
+            image={{ src: "/img/lessons-adults.png", sizes: "(min-width: 1024px) 44rem, 100vw", position: "50% 30%" }}
             big
           />
           <AudienceTile
@@ -39,6 +40,7 @@ export function Lessons() {
             age={t("kids.age")}
             title={t("kids.title")}
             body={t("kids.body")}
+            image={{ src: "/img/lessons-kids.jpg", sizes: "(min-width: 1024px) 22rem, (min-width: 640px) 50vw, 100vw", position: "50% 35%" }}
           />
           <AudienceTile
             href={localePath(locale, "mature")}
@@ -46,6 +48,7 @@ export function Lessons() {
             age={t("mature.age")}
             title={t("mature.title")}
             body={t("mature.body")}
+            image={{ src: "/img/lessons-mature.jpg", sizes: "(min-width: 1024px) 22rem, (min-width: 640px) 50vw, 100vw", position: "40% 40%" }}
           />
           <li className="on-dark relative flex flex-col justify-between gap-6 overflow-hidden rounded-lg bg-brand-burgundy p-6 text-on-primary sm:col-span-2 sm:p-8 lg:col-span-6 lg:flex-row lg:items-center">
             <div className="max-w-[36rem]">

@@ -182,7 +182,8 @@
       "native": "Nativa",
       "certified": "Certificada",
       "based": "En Australia"
-    }
+    },
+    "photoAlt": "Maribel Mayhua, profesora de español de Spanglish"
   },
   "learn": {
     "question": "¿Quieres practicar ya?",
@@ -1116,6 +1117,16 @@
     "home": "Ir al inicio",
     "lessons": "Ver las clases",
     "booking": "Reservar clase gratis"
+  },
+  "testimonials": {
+    "question": "¿Qué dicen los alumnos?",
+    "intro": "Opiniones reales de alumnos de Maribel, tal como las escribieron (en inglés).",
+    "kinds": {
+      "private": "Alumno individual",
+      "family": "Alumno del pack familiar"
+    },
+    "label": "Opiniones de alumnos",
+    "goTo": "Opinión {n} de {total}: {name}"
   },
   "videos": {
     "question": "Aprende con los videos de Maribel",
