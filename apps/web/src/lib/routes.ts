@@ -4,7 +4,8 @@ import { routing, type Locale } from "../i18n/routing";
  * Única fuente de verdad de las rutas públicas. Los slugs son los de la web
  * actual (spanglish.com.au) para conservar SEO y enlaces antiguos, y son
  * iguales en ambos idiomas: /es/adult-lessons y /en/adult-lessons.
- * Cada slug corresponde a la carpeta src/app/[locale]/<slug>/ (lo comprueba un test).
+ * Cada slug corresponde a la carpeta src/app/[locale]/<slug>/ (lo comprueba un test);
+ * los slugs anidados (learn/alphabet) son subcarpetas.
  */
 export const ROUTES = {
   home: "",
@@ -22,6 +23,11 @@ export const ROUTES = {
   prices: "prices",
   privacy: "privacy-policy",
   terms: "terms",
+  learn: "learn",
+  learnAlphabet: "learn/alphabet",
+  learnNouns: "learn/nouns-and-articles",
+  shop: "shop",
+  shopSuccess: "shop/success",
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
@@ -29,11 +35,11 @@ export type RouteKey = keyof typeof ROUTES;
 export const ROUTE_KEYS = Object.keys(ROUTES) as RouteKey[];
 
 /**
- * Rutas que no se indexan ni van al sitemap: la confirmación (no tiene sentido
- * llegar desde un buscador) y los textos legales, pendientes de revisión del
- * propietario/abogado antes de publicarse como definitivos.
+ * Rutas que no se indexan ni van al sitemap: las confirmaciones (solicitud y
+ * pago; no tiene sentido llegar desde un buscador) y los textos legales,
+ * pendientes de revisión del propietario/abogado antes de publicarse como definitivos.
  */
-export const NOINDEX_ROUTES = ["thankYou", "privacy", "terms"] as const satisfies readonly RouteKey[];
+export const NOINDEX_ROUTES = ["thankYou", "privacy", "terms", "shopSuccess"] as const satisfies readonly RouteKey[];
 
 export function isIndexable(route: RouteKey): boolean {
   return !(NOINDEX_ROUTES as readonly RouteKey[]).includes(route);
@@ -64,8 +70,8 @@ export type NavChild = { key: string; route: RouteKey };
 
 /**
  * Navegación principal: solo páginas importantes (nada que lleve a una sección).
- * "Clases" agrupa sus subpáginas: el enlace va a /lessons y un botón aparte
- * despliega el resto (patrón disclosure).
+ * "Clases" y "Recursos" agrupan sus subpáginas: el enlace va a la página del
+ * grupo y un botón aparte despliega el resto (patrón disclosure).
  */
 export const HEADER_NAV = [
   {
@@ -80,7 +86,15 @@ export const HEADER_NAV = [
     ],
   },
   { key: "prices", route: "prices" },
-  { key: "resources", route: "resources" },
+  {
+    key: "resources",
+    route: "resources",
+    children: [
+      { key: "allResources", route: "resources" },
+      { key: "learn", route: "learn" },
+      { key: "shop", route: "shop" },
+    ],
+  },
   { key: "faq", route: "faq" },
   { key: "teachers", route: "teachers" },
   { key: "contact", route: "contact" },
@@ -100,6 +114,8 @@ export const FOOTER_NAV = {
     { key: "teachers", route: "teachers" },
     { key: "faq", route: "faq" },
     { key: "resources", route: "resources" },
+    { key: "learn", route: "learn" },
+    { key: "shop", route: "shop" },
     { key: "contact", route: "contact" },
     { key: "bookings", route: "bookings" },
   ],
@@ -111,11 +127,27 @@ export const FOOTER_NAV = {
 
 export type HeaderNavKey = (typeof HEADER_NAV)[number]["key"];
 
+/**
+ * Página "padre" de las que no están en la navegación: las lecciones cuelgan de
+ * Aprende ahora y la confirmación del pago, de la tienda.
+ */
+const NAV_PARENT: Partial<Record<RouteKey, RouteKey>> = {
+  learnAlphabet: "learn",
+  learnNouns: "learn",
+  shopSuccess: "shop",
+};
+
+/** Ruta que representa a `route` en la navegación (ella misma o su padre). */
+export function navRoute(route: RouteKey): RouteKey {
+  return NAV_PARENT[route] ?? route;
+}
+
 /** Ruta activa en la cabecera para cada página (aria-current). */
 export function activeNavKey(route: RouteKey): HeaderNavKey | undefined {
+  const r = navRoute(route);
   for (const item of HEADER_NAV) {
-    if (item.route === route) return item.key;
-    if ("children" in item && item.children.some((c) => c.route === route)) return item.key;
+    if (item.route === r) return item.key;
+    if ("children" in item && item.children.some((c) => c.route === r)) return item.key;
   }
   return undefined;
 }

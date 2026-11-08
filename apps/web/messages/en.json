@@ -40,7 +40,11 @@
     "matureShort": "Mature adults",
     "showLessons": "Show lessons",
     "login": "Sign in",
-    "loginSuffix": "to the student portal"
+    "loginSuffix": "to the student portal",
+    "allResources": "All resources",
+    "learn": "Learn now",
+    "shop": "Materials shop",
+    "showResources": "Show resources"
   },
   "locales": {
     "es": "Español",
@@ -196,10 +200,10 @@
   },
   "learn": {
     "question": "Want to practise right now?",
-    "body": "Free interactive lessons, from the alphabet to verbs, via nouns and articles. For adults and kids, levels A1 to B2. Low-cost digital materials are available too.",
+    "body": "Free interactive lessons, with audio, to start right now: the alphabet, and nouns and articles. More are on the way, for kids and adults. Downloadable materials at sale prices are available too.",
     "levelsLabel": "Levels",
-    "cta": "Go to the free lessons",
-    "note": "For now they live on the current Spanglish website."
+    "cta": "Go to Learn now",
+    "note": "Free, no account needed."
   },
   "contact": {
     "question": "Shall we start?",
@@ -763,7 +767,7 @@
         },
         "learn": {
           "title": "Practise now",
-          "body": "Free interactive lessons, A1 to B2."
+          "body": "Free interactive lessons, with audio."
         }
       },
       "backHome": "Back to the home page"
@@ -1069,7 +1073,7 @@
       }
     },
     "terms": {
-      "todoLegal": "TODO(legal): there is no published policy for cancellation windows, fees, refunds or make-up lessons. Confirm with the owner (and a legal review) before removing noindex from /privacy-policy and /terms.",
+      "todoLegal": "TODO(legal): there is no published policy on cancellation notice, fees, refunds or make-up lessons, nor on refunds for digital materials (Australian Consumer Law). Confirm with the owner (and legal review) before removing noindex from /privacy-policy and /terms.",
       "metaTitle": "Terms and cancellations · Spanglish",
       "metaDescription": "How Spanglish lessons are arranged: the free lesson, prices, payments, and changes or cancellations.",
       "title": "Terms and cancellations",
@@ -1106,6 +1110,14 @@
           "title": "Under-18s",
           "body": {
             "p1": "If the student is under 18, the booking is made by their parent or legal guardian, and lessons are arranged with them."
+          }
+        },
+        "materials": {
+          "title": "Digital materials",
+          "body": {
+            "p1": "The materials in the shop are downloadable (digital). You pay by card on Stripe’s secure page: your card details never go through this website.",
+            "p2": "For now delivery isn’t automatic: after you pay, Maribel emails you the materials as soon as possible.",
+            "p3": "The refund policy for digital materials is still to be confirmed. If you have any problem with your purchase, email us at {email}."
           }
         },
         "consumer": {
@@ -1240,8 +1252,8 @@
       "toAccess": "What’s free and what isn’t",
       "learn": {
         "question": "Free interactive lessons",
-        "body": "From the alphabet to verbs, via nouns, articles, colours and numbers. There are lessons for adults and for kids.",
-        "moving": "Today they live on the current Spanglish website. We’re moving them to the new platform, so you’ll find them here soon."
+        "body": "To start with: the alphabet, and nouns and articles, with audio and exercises. More lessons are on the way, for kids and adults.",
+        "moving": "We’re moving them into the new student portal; in the meantime they’re here, free and with no account."
       },
       "access": {
         "question": "What can I use, and how?",
@@ -1269,8 +1281,8 @@
             "meta": "Video · free"
           },
           "learnLegacy": {
-            "title": "Interactive lessons on the current website",
-            "meta": "From the alphabet to verbs"
+            "title": "Learn now: interactive lessons",
+            "meta": "The alphabet, nouns and articles"
           },
           "worksheets": {
             "title": "Downloadable worksheets",
@@ -1297,6 +1309,11 @@
         "studentsNote": "If you’re already a student, sign in with your account; if not yet, book your free lesson.",
         "studentsCta": "Book your free lesson",
         "discount": "Enrolled students get 30% off digital resources."
+      },
+      "materials": {
+        "question": "Downloadable materials",
+        "body": "Practise at your own pace, at home or in class, at sale prices. Maribel emails them to you after you pay.",
+        "cta": "Go to the shop"
       }
     },
     "contactForm": {
@@ -1356,6 +1373,157 @@
         "unavailable": "We can’t receive messages through the website right now, and yours has not been sent. Call or email us:",
         "failed": "A technical problem stopped your message from being sent: it has not been sent. Try again in a moment, or call or email us:"
       }
+    },
+    "learn": {
+      "metaTitle": "Learn now: free interactive Spanish lessons · Spanglish",
+      "metaDescription": "Free interactive lessons to learn Spanish: the alphabet, and nouns and articles, with audio. More lessons for kids and adults, A1 to C2, on the way.",
+      "title": "Learn now",
+      "lead": "Free interactive lessons to practise on your own, with no account or sign-up. Two are ready to start with today; the rest are on the way.",
+      "ask": "Can I start right now?",
+      "answer": "Yes! Start with the alphabet.",
+      "toLessons": "See the lessons",
+      "toShop": "Materials shop",
+      "question": "What would you like to learn?",
+      "intro": "The lessons are organised as on the current website: foundations, levels for kids and adults, stories and games.",
+      "englishNote": "The lessons are explained in English, for people learning Spanish.",
+      "available": "Interactive lesson",
+      "soon": "Coming soon",
+      "countReady": "{count, plural, =0 {Coming soon} one {# lesson ready} other {# lessons ready}}",
+      "categories": {
+        "foundations": {
+          "title": "Foundations",
+          "intro": "The basics: letters, words, colours and numbers."
+        },
+        "kids": {
+          "title": "Kids",
+          "intro": "By level, A1 to C2."
+        },
+        "adults": {
+          "title": "Adults",
+          "intro": "By level, A1 to C2."
+        },
+        "stories": {
+          "title": "Stories",
+          "intro": "Reading in Spanish, A1 to C2."
+        },
+        "games": {
+          "title": "Games",
+          "intro": "Practise while you play, A1 to C2."
+        }
+      },
+      "items": {
+        "alphabet": "The alphabet",
+        "nouns": "Nouns and articles",
+        "colors": "Colours",
+        "numbers": "Numbers",
+        "level": "Level {level}",
+        "levelWith": "Level {level}: {lesson}"
+      },
+      "portal": {
+        "question": "What about the other lessons?",
+        "body": "We’re moving the interactive lessons into the new student portal. The ones marked “Coming soon” aren’t ready yet: we’ll publish them here as they are."
+      },
+      "more": {
+        "question": "Want more?",
+        "shop": {
+          "title": "Downloadable materials",
+          "body": "Practise at your own pace, at sale prices.",
+          "cta": "Go to the shop"
+        },
+        "lesson": {
+          "title": "Lessons with Maribel",
+          "body": "Your first lesson is free: 45 minutes, online.",
+          "cta": "Book your free lesson"
+        }
+      }
+    },
+    "learnAlphabet": {
+      "metaTitle": "The Spanish alphabet: free interactive lesson · Spanglish",
+      "metaDescription": "Free interactive lesson on the Spanish alphabet: tap any letter to hear it, with an example word, vowels and consonants, special letters and pronunciation tips.",
+      "title": "The Spanish Alphabet",
+      "crumb": "The alphabet",
+      "lead": "Tap any letter to hear how it sounds and see an example word. Then go over the vowels, the consonants and the special letters.",
+      "ask": "How does Ñ sound?",
+      "answer": "Tap it and listen!"
+    },
+    "learnNouns": {
+      "metaTitle": "Spanish nouns and articles: free interactive lesson · Spanglish",
+      "metaDescription": "Free interactive lesson: what nouns are, masculine and feminine gender, plurals and articles in Spanish, with exercises to practise.",
+      "title": "Spanish Nouns & Articles",
+      "crumb": "Nouns and articles",
+      "lead": "Discover what nouns are, why every Spanish noun is masculine or feminine, how to make plurals, and meet the little words that always come before them: the articles.",
+      "ask": "Is it el agua or la agua?",
+      "answer": "Find out here!"
+    },
+    "lesson": {
+      "englishNote": "This lesson is in English.",
+      "speechNote": "To play the words, your browser uses its own Spanish voice.",
+      "nav": "More lessons",
+      "prev": "Previous lesson",
+      "next": "Next lesson",
+      "hub": "All lessons",
+      "start": "Start the lesson"
+    },
+    "shop": {
+      "metaTitle": "Shop: materials to learn Spanish · Spanglish",
+      "metaDescription": "Downloadable Spanglish materials to learn Spanish: the alphabet and regular verbs, at sale prices. Secure payment with Stripe.",
+      "titleA": "Materials",
+      "titleB": "shop",
+      "lead": "Downloadable Spanglish materials to practise Spanish at your own pace, at home or in class. Sale prices, in Australian dollars.",
+      "ask": "Do you have materials to practise at home?",
+      "answer": "Yes! And they’re on sale.",
+      "toProducts": "See the materials",
+      "question": "Downloadable materials",
+      "howTitle": "How it works",
+      "how": {
+        "add": "Add the materials to your cart.",
+        "pay": "Pay by card on Stripe’s secure page.",
+        "email": "Maribel emails you the materials as soon as possible."
+      },
+      "discount": {
+        "title": "Are you a Spanglish student?",
+        "body": "Enrolled students get 30% off digital resources. It isn’t applied in the cart yet: get in touch before you buy and we’ll apply it for you.",
+        "cta": "Get in touch"
+      },
+      "more": {
+        "question": "Looking for something free?",
+        "learn": {
+          "title": "Learn now",
+          "body": "Free interactive lessons, with audio."
+        },
+        "resources": {
+          "title": "Resources",
+          "body": "Maribel’s videos and everything you can use."
+        }
+      }
+    },
+    "shopSuccess": {
+      "metaTitle": "Your order payment · Spanglish",
+      "metaDescription": "Payment status of your Spanglish materials.",
+      "crumb": "Payment",
+      "paid": {
+        "title": "Payment received!",
+        "lead": "Payment received: Maribel will email you your materials as soon as possible.",
+        "ask": "What happens now?",
+        "answer": "Keep an eye on your inbox!",
+        "receipt": "Stripe also emails your payment receipt to the address you entered. Nothing arrived? Check your spam folder or get in touch."
+      },
+      "unpaid": {
+        "title": "Payment not completed",
+        "lead": "Stripe hasn’t confirmed the payment for this order yet. Nothing has been sent and your cart is still saved.",
+        "ask": "What happened?",
+        "answer": "You can try again.",
+        "receipt": "If you think you did pay, get in touch and we’ll check."
+      },
+      "unknown": {
+        "title": "Thanks for your purchase",
+        "lead": "We can’t confirm the payment from here. If you completed it, you’ll get Stripe’s receipt by email and Maribel will email you your materials.",
+        "ask": "Did my payment go through?",
+        "answer": "Check your email.",
+        "receipt": "If no receipt arrives, the payment wasn’t completed: your cart is still saved. Questions? Get in touch."
+      },
+      "backShop": "Back to the shop",
+      "toLearn": "Go to Learn now"
     }
   },
   "notFound": {
@@ -1381,5 +1549,51 @@
     "question": "Learn with Maribel’s videos",
     "intro": "Short, free lessons so you can start practising right away.",
     "play": "Play video"
+  },
+  "cart": {
+    "button": "Cart, {count, plural, one {# item} other {# items}}",
+    "title": "Your cart",
+    "close": "Close the cart",
+    "empty": "Your cart is empty.",
+    "emptyCta": "Go to the shop",
+    "remove": "Remove",
+    "removeLabel": "Remove {name} from the cart",
+    "subtotal": "Subtotal",
+    "currencyNote": "Prices in Australian dollars (AUD).",
+    "checkout": "Go to checkout",
+    "pending": "Opening the payment page…",
+    "stripeNote": "You pay on Stripe’s secure page: your card details never go through this website.",
+    "deliveryNote": "After you pay, Maribel emails you the materials.",
+    "unavailable": "Payments aren’t switched on yet; get in touch and we’ll send it to you.",
+    "failed": "We couldn’t open the payment page. Try again in a moment, or get in touch and we’ll send it to you.",
+    "invalid": "One of the products in your cart is no longer available. Check your cart and try again.",
+    "contactLead": "Email or call us:",
+    "itemsLabel": "Products in your cart"
+  },
+  "shop": {
+    "sale": "Sale!",
+    "was": "Was",
+    "now": "Now",
+    "priceLabel": "Was {was}, now {price}",
+    "add": "Add to cart",
+    "added": "In cart",
+    "addLabel": "Add {name} to the cart",
+    "addedLabel": "{name} is in the cart. Open it to check out.",
+    "viewCart": "View cart",
+    "type": "Digital download",
+    "products": {
+      "alphabet": {
+        "summary": "Downloadable material: the Spanish alphabet.",
+        "alt": "Sample page: the letter C with the words color and cama."
+      },
+      "regularVerbsBasic": {
+        "summary": "Have the basics to learn or start a Spanish lesson smoothly! Download the best resources you can find for you or your Spanish lessons! With these materials, learning the Spanish regular verbs is easier. Whether you are a teacher or student, you will love it.",
+        "alt": "Sample page: the three conjugations (AR, ER, IR) and regular verbs such as hablar, beber and vivir."
+      },
+      "regularVerbs": {
+        "summary": "Learn and practise regular verbs in Spanish with a fun, visual and engaging educational resource designed to make learning easier and more enjoyable.",
+        "alt": "Cover of the book Regular Verbs in Spanish, with the Spanglish logo."
+      }
+    }
   }
 }

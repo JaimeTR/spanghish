@@ -11,8 +11,10 @@ import {
   isIndexable,
   languageAlternates,
   localePath,
+  navRoute,
   ROUTE_KEYS,
   ROUTES,
+  type NavChild,
 } from "./routes";
 
 const APP_DIR = path.resolve(__dirname, "../app/[locale]");
@@ -35,14 +37,19 @@ describe("routes", () => {
       prices: "prices",
       privacy: "privacy-policy",
       terms: "terms",
+      learn: "learn",
+      learnAlphabet: "learn/alphabet",
+      learnNouns: "learn/nouns-and-articles",
+      shop: "shop",
+      shopSuccess: "shop/success",
     });
   });
 
-  it("every slug is unique, kebab-case and has a page.tsx", () => {
+  it("every slug is unique, kebab-case (nested segments allowed) and has a page.tsx", () => {
     const slugs = Object.values(ROUTES);
     expect(new Set(slugs).size).toBe(slugs.length);
     for (const slug of slugs) {
-      if (slug) expect(slug).toMatch(/^[a-z]+(?:-[a-z]+)*$/);
+      if (slug) expect(slug).toMatch(/^[a-z]+(?:-[a-z]+)*(?:\/[a-z]+(?:-[a-z]+)*)*$/);
       expect(existsSync(path.join(APP_DIR, slug, "page.tsx")), `page for "${slug}"`).toBe(true);
     }
   });
@@ -53,6 +60,7 @@ describe("routes", () => {
     expect(localePath("en", "home", "prices")).toBe("/en#prices");
     expect(bookingPath("es")).toBe("/es/bookings");
     expect(bookingPath("en")).toBe("/en/bookings");
+    expect(localePath("en", "learnAlphabet")).toBe("/en/learn/alphabet");
   });
 
   it("hreflang alternates list both locales plus x-default (Spanish)", () => {
@@ -64,12 +72,12 @@ describe("routes", () => {
   });
 
   it("navigation only points at existing routes and every label exists in both locales", () => {
-    const children = HEADER_NAV.flatMap((i) => ("children" in i ? i.children : []));
+    const children = HEADER_NAV.flatMap((i): readonly NavChild[] => ("children" in i ? i.children : []));
     const items = [...HEADER_NAV, ...children, ...FOOTER_NAV.lessons, ...FOOTER_NAV.school, ...FOOTER_NAV.legal];
     for (const item of items) {
       expect(ROUTE_KEYS).toContain(item.route);
-      expect(es.nav[item.key], `es nav.${item.key}`).toBeTruthy();
-      expect(en.nav[item.key], `en nav.${item.key}`).toBeTruthy();
+      expect((es.nav as Record<string, string>)[item.key], `es nav.${item.key}`).toBeTruthy();
+      expect((en.nav as Record<string, string>)[item.key], `en nav.${item.key}`).toBeTruthy();
     }
     // La cabecera enlaza solo a páginas, no a secciones (anclas) de la home.
     expect(HEADER_NAV.every((i) => !("hash" in i))).toBe(true);
@@ -87,6 +95,12 @@ describe("routes", () => {
     ]);
   });
 
+  it("Recursos groups the hub, Aprende ahora and the shop", () => {
+    const resources = HEADER_NAV.find((i) => i.key === "resources");
+    expect(resources && "children" in resources && resources.children.map((c) => c.route)).toEqual(["resources", "learn", "shop"]);
+    expect(FOOTER_NAV.school.map((i) => i.route)).toEqual(expect.arrayContaining(["learn", "shop"]));
+  });
+
   it("the footer links the online conversations and the resources", () => {
     expect(FOOTER_NAV.lessons.map((i) => i.route)).toContain("online");
     expect(FOOTER_NAV.school.map((i) => i.route)).toContain("resources");
@@ -98,6 +112,13 @@ describe("routes", () => {
     expect(activeNavKey("mature")).toBe("lessons");
     expect(activeNavKey("online")).toBe("lessons");
     expect(activeNavKey("resources")).toBe("resources");
+    expect(activeNavKey("learn")).toBe("resources");
+    expect(activeNavKey("shop")).toBe("resources");
+    expect(activeNavKey("learnAlphabet")).toBe("resources");
+    expect(activeNavKey("learnNouns")).toBe("resources");
+    expect(activeNavKey("shopSuccess")).toBe("resources");
+    expect(navRoute("learnNouns")).toBe("learn");
+    expect(navRoute("faq")).toBe("faq");
     expect(activeNavKey("lessons")).toBe("lessons");
     expect(activeNavKey("teachers")).toBe("teachers");
     expect(activeNavKey("contact")).toBe("contact");
@@ -107,9 +128,11 @@ describe("routes", () => {
     expect(activeNavKey("bookings")).toBeUndefined();
   });
 
-  it("keeps the thank-you page and the legal drafts out of search engines", () => {
-    expect(ROUTE_KEYS.filter((r) => !isIndexable(r))).toEqual(["thankYou", "privacy", "terms"]);
+  it("keeps the confirmations and the legal drafts out of search engines", () => {
+    expect(ROUTE_KEYS.filter((r) => !isIndexable(r))).toEqual(["thankYou", "privacy", "terms", "shopSuccess"]);
     expect(isIndexable("bookings")).toBe(true);
+    expect(isIndexable("shop")).toBe(true);
+    expect(isIndexable("learnNouns")).toBe(true);
   });
 
   it("the footer links the legal pages", () => {

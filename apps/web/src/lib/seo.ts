@@ -59,6 +59,10 @@ const PRIORITY: Partial<Record<RouteKey, number>> = {
   bookings: 0.9,
   prices: 0.8,
   faq: 0.6,
+  learn: 0.7,
+  learnAlphabet: 0.6,
+  learnNouns: 0.6,
+  shop: 0.6,
 };
 
 /** Rutas del sitemap: todas menos las marcadas como noindex. */

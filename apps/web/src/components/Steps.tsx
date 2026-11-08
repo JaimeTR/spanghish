@@ -25,7 +25,7 @@ export function Steps({
           </span>
           <div>
             <Heading className={`${stacked ? "" : "mt-3"} text-xl font-extrabold text-ink`}>{item.title}</Heading>
-            <p className="mt-1.5 text-lg leading-relaxed text-ink">{item.body}</p>
+            {item.body && <p className="mt-1.5 text-lg leading-relaxed text-ink">{item.body}</p>}
           </div>
         </li>
       ))}

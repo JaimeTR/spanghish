@@ -4,13 +4,14 @@ import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import { ACCESS_LEVELS, cardsFor, type AccessLevel, type ResourceCard } from "@/lib/resources";
 import { bookingPath, localePath } from "@/lib/routes";
-import { appLoginUrl, LEARN_URL } from "@/lib/site";
+import { appLoginUrl } from "@/lib/site";
 import { VIDEOS } from "@/lib/videos";
 import { Bubble, SectionQuestion, type BubbleTone } from "../Bubble";
 import { FreeLessonBand } from "../FreeLessonBand";
 import { Videos } from "../home/Videos";
-import { ArrowIcon, ExternalIcon, LockIcon, ResourceIcon } from "../icons";
+import { ArrowIcon, LockIcon, ResourceIcon } from "../icons";
 import { HeroChat, heroButtons, PageHero } from "../PageHero";
+import { ProductPreviews } from "../shop/ProductPreviews";
 import { btnInk, btnPrimary, container } from "../styles";
 
 /** Color de cada nivel de acceso: libre amarillo, con cuenta morado, alumnos burdeos. */
@@ -21,7 +22,7 @@ const TIER: Record<AccessLevel, { bubble: BubbleTone; tile: string }> = {
 };
 
 /**
- * Recursos: lo que se puede usar hoy (videos y lecciones de la web actual) y
+ * Recursos: lo que se puede usar hoy (videos, Aprende ahora y la tienda) y
  * cómo se organizarán por nivel de acceso. No hay formularios de login ni de
  * alta: los recursos de alumnos enlazan al login del portal (apps/app).
  */
@@ -29,7 +30,6 @@ export function ResourcesPage({ locale }: { locale: Locale }) {
   const t = useTranslations("page.resources");
   const tn = useTranslations("nav");
   const tl = useTranslations("learn");
-  const ta = useTranslations("a11y");
   const buttons = heroButtons("yellow");
 
   return (
@@ -59,7 +59,7 @@ export function ResourcesPage({ locale }: { locale: Locale }) {
 
       <Videos />
 
-      {/* Lecciones interactivas: hoy, en la web actual */}
+      {/* Lecciones interactivas: Aprende ahora */}
       <section aria-labelledby="learn-title" className="bg-surface-sunken py-20 lg:py-24">
         <div className={`${container} grid items-center gap-10 lg:grid-cols-12`}>
           <div className="lg:col-span-7">
@@ -70,12 +70,32 @@ export function ResourcesPage({ locale }: { locale: Locale }) {
             <p className="mt-4 max-w-[38rem] text-lg leading-relaxed text-ink-muted">{t("learn.moving")}</p>
           </div>
           <div className="flex lg:col-span-5 lg:justify-end">
-            <a href={LEARN_URL} rel="noopener noreferrer" className={btnInk}>
+            <Link href={localePath(locale, "learn")} className={btnInk}>
               {tl("cta")}
-              <ExternalIcon />
-              <span className="sr-only">{ta("external")}</span>
-            </a>
+              <ArrowIcon />
+            </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Materiales descargables: vista previa de la tienda */}
+      <section aria-labelledby="materials-title" className="bg-brand-yellow py-20 lg:py-24">
+        <div className={container}>
+          <div className="grid items-end gap-6 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <SectionQuestion id="materials-title" tone="white" tail="left">
+                {t("materials.question")}
+              </SectionQuestion>
+              <p className="mt-8 max-w-[38rem] text-lg leading-relaxed text-ink">{t("materials.body")}</p>
+            </div>
+            <div className="flex lg:col-span-4 lg:justify-end">
+              <Link href={localePath(locale, "shop")} className={btnInk}>
+                {t("materials.cta")}
+                <ArrowIcon />
+              </Link>
+            </div>
+          </div>
+          <ProductPreviews locale={locale} />
         </div>
       </section>
 
@@ -139,7 +159,6 @@ export function ResourcesPage({ locale }: { locale: Locale }) {
  */
 function ResourceTile({ card, locale }: { card: ResourceCard; locale: Locale }) {
   const t = useTranslations("page.resources.access");
-  const ta = useTranslations("a11y");
   const video = card.videoId ? VIDEOS.find((v) => v.id === card.videoId) : undefined;
   const title = video ? video.title : t(`items.${card.key}.title`);
   const meta = t(`items.${video ? "video" : card.key}.meta`);
@@ -149,7 +168,7 @@ function ResourceTile({ card, locale }: { card: ResourceCard; locale: Locale }) 
     card.state === "locked"
       ? appLoginUrl(locale)
       : card.target === "learn"
-        ? LEARN_URL
+        ? localePath(locale, "learn")
         : card.videoId
           ? `#video-${card.videoId}`
           : undefined;
@@ -195,12 +214,10 @@ function ResourceTile({ card, locale }: { card: ResourceCard; locale: Locale }) 
           {href ? (
             <a
               href={href}
-              rel={card.target === "learn" ? "noopener noreferrer" : undefined}
               className="text-current no-underline outline-none after:absolute after:inset-0 after:rounded-[1.5rem] after:content-['']"
             >
               {title}
               {locked && <span className="sr-only">: {t("locked")}</span>}
-              {card.target === "learn" && <span className="sr-only"> {ta("external")}</span>}
             </a>
           ) : (
             title
@@ -220,7 +237,7 @@ function ResourceTile({ card, locale }: { card: ResourceCard; locale: Locale }) 
 
       {card.state === "open" && (
         <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-full ring-2 ring-ink/20 transition-colors duration-200 group-hover:bg-ink/8">
-          {card.target === "learn" ? <ExternalIcon /> : <ArrowIcon />}
+          <ArrowIcon />
         </span>
       )}
     </li>

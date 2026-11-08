@@ -25,9 +25,6 @@ export function appLoginUrl(locale: "es" | "en"): string {
   return `${APP_URL}/${locale}/login`;
 }
 
-/** Lecciones interactivas gratis de la web actual (hasta migrarlas a /learn). */
-export const LEARN_URL = "https://spanglish.com.au/learn-spanish/";
-
 export const SOCIAL = [
   { key: "facebook", label: "Facebook", href: "https://www.facebook.com/worldwide.spanglish" },
   { key: "instagram", label: "Instagram", href: "https://www.instagram.com/spanglishworldwide" },

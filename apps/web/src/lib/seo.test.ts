@@ -33,7 +33,11 @@ describe("sitemapEntries", () => {
       expect(urls).toContain(`https://example.test/es/${slug}`);
       expect(urls).toContain(`https://example.test/en/${slug}`);
     }
-    for (const slug of ["thank-you", "privacy-policy", "terms"]) {
+    for (const slug of ["learn", "learn/alphabet", "learn/nouns-and-articles", "shop"]) {
+      expect(urls).toContain(`https://example.test/es/${slug}`);
+      expect(urls).toContain(`https://example.test/en/${slug}`);
+    }
+    for (const slug of ["thank-you", "privacy-policy", "terms", "shop/success"]) {
       expect(urls.some((u) => u.endsWith(`/${slug}`)), slug).toBe(false);
     }
     expect(new Set(urls).size).toBe(urls.length);

@@ -1,7 +1,9 @@
-import { useTranslations } from "next-intl";
-import { LEARN_URL } from "@/lib/site";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import type { Locale } from "@/i18n/routing";
+import { localePath } from "@/lib/routes";
 import { SectionQuestion } from "../Bubble";
-import { ExternalIcon } from "../icons";
+import { ArrowIcon } from "../icons";
 import { btnInk, container } from "../styles";
 
 const LEVELS = [
@@ -11,10 +13,10 @@ const LEVELS = [
   { label: "B2", cls: "bg-brand-burgundy text-on-primary" },
 ] as const;
 
-/** Lecciones gratis: enlazan a la web actual hasta que existan en /learn. */
+/** Lecciones gratis: enlazan a Aprende ahora (/learn). */
 export function LearnNow() {
   const t = useTranslations("learn");
-  const ta = useTranslations("a11y");
+  const locale = useLocale() as Locale;
 
   return (
     <section id="learn" aria-labelledby="learn-title" className="bg-surface-sunken py-20 lg:py-24">
@@ -25,11 +27,10 @@ export function LearnNow() {
           </SectionQuestion>
           <p className="mt-8 max-w-[38rem] text-lg leading-relaxed text-ink">{t("body")}</p>
           <div className="mt-8 flex flex-col items-start gap-3">
-            <a href={LEARN_URL} rel="noopener noreferrer" className={btnInk}>
+            <Link href={localePath(locale, "learn")} className={btnInk}>
               {t("cta")}
-              <ExternalIcon />
-              <span className="sr-only">{ta("external")}</span>
-            </a>
+              <ArrowIcon />
+            </Link>
             <p className="text-sm text-ink-muted">{t("note")}</p>
           </div>
         </div>

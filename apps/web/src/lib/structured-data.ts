@@ -195,3 +195,37 @@ export function faqPageJsonLd(locale: Locale, path: string, items: { q: string; 
     })),
   };
 }
+
+/**
+ * Lección interactiva gratis como LearningResource, solo con lo que se sabe:
+ * nombre, que es gratis, interactiva, en inglés (para quien aprende español),
+ * qué enseña y, si la web anterior lo publicaba, el nivel.
+ */
+export function learningResourceJsonLd({
+  path,
+  name,
+  description,
+  teaches,
+  educationalLevel,
+}: {
+  path: string;
+  name: string;
+  description: string;
+  teaches: string;
+  educationalLevel?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    name,
+    description,
+    url: `${SITE_URL}${path}`,
+    inLanguage: "en",
+    learningResourceType: "Interactive lesson",
+    interactivityType: "active",
+    isAccessibleForFree: true,
+    teaches,
+    ...(educationalLevel ? { educationalLevel } : {}),
+    provider: ORG_REF,
+  };
+}

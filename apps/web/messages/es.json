@@ -40,7 +40,11 @@
     "matureShort": "Mayores",
     "showLessons": "Mostrar clases",
     "login": "Entrar",
-    "loginSuffix": "al portal de alumnos"
+    "loginSuffix": "al portal de alumnos",
+    "allResources": "Todos los recursos",
+    "learn": "Aprende ahora",
+    "shop": "Tienda de materiales",
+    "showResources": "Mostrar recursos"
   },
   "locales": {
     "es": "Español",
@@ -196,10 +200,10 @@
   },
   "learn": {
     "question": "¿Quieres practicar ya?",
-    "body": "Lecciones interactivas gratis, del alfabeto a los verbos, pasando por sustantivos y artículos. Para adultos y niños, de nivel A1 a B2. También hay materiales digitales a bajo coste.",
+    "body": "Lecciones interactivas gratis, con audio, para empezar ya: el alfabeto, y los sustantivos y artículos. Hay más en camino, para niños y adultos. También tienes materiales descargables a precio de oferta.",
     "levelsLabel": "Niveles",
-    "cta": "Ir a las lecciones gratis",
-    "note": "De momento están en la web actual de Spanglish."
+    "cta": "Ir a Aprende ahora",
+    "note": "Gratis y sin cuenta."
   },
   "contact": {
     "question": "¿Empezamos?",
@@ -763,7 +767,7 @@
         },
         "learn": {
           "title": "Practica ya",
-          "body": "Lecciones interactivas gratis, del A1 al B2."
+          "body": "Lecciones interactivas gratis, con audio."
         }
       },
       "backHome": "Volver al inicio"
@@ -1069,7 +1073,7 @@
       }
     },
     "terms": {
-      "todoLegal": "TODO(legal): no hay política publicada de plazos de cancelación, cargos, reembolsos ni recuperación de clases. Confirmar con la propietaria (y revisión legal) antes de quitar el noindex de /privacy-policy y /terms.",
+      "todoLegal": "TODO(legal): no hay política publicada de plazos de cancelación, cargos, reembolsos ni recuperación de clases, ni de reembolsos de los materiales digitales (Ley Australiana del Consumidor). Confirmar con la propietaria (y revisión legal) antes de quitar el noindex de /privacy-policy y /terms.",
       "metaTitle": "Términos y cancelaciones · Spanglish",
       "metaDescription": "Cómo se acuerdan las clases de Spanglish, la clase gratis, los precios, los pagos y los cambios o cancelaciones.",
       "title": "Términos y cancelaciones",
@@ -1106,6 +1110,14 @@
           "title": "Menores",
           "body": {
             "p1": "Si el alumno es menor de 18 años, la reserva la hace su madre, padre o tutor legal, que es con quien se acuerdan las clases."
+          }
+        },
+        "materials": {
+          "title": "Materiales digitales",
+          "body": {
+            "p1": "Los materiales de la tienda son descargables (digitales). Se pagan con tarjeta en la página segura de Stripe: los datos de la tarjeta no pasan por esta web.",
+            "p2": "Por ahora la entrega no es automática: después del pago, Maribel te envía los materiales por email lo antes posible.",
+            "p3": "La política de reembolsos de los materiales digitales está pendiente de confirmar. Si tienes cualquier problema con tu compra, escríbenos a {email}."
           }
         },
         "consumer": {
@@ -1240,8 +1252,8 @@
       "toAccess": "Qué es libre y qué no",
       "learn": {
         "question": "Lecciones interactivas gratis",
-        "body": "Del alfabeto a los verbos, pasando por sustantivos, artículos, colores y números. Hay lecciones para adultos y para niños.",
-        "moving": "Hoy están en la web actual de Spanglish. Las estamos pasando a la nueva plataforma, así que pronto las tendrás aquí."
+        "body": "Para empezar: el alfabeto, y los sustantivos y artículos, con audio y ejercicios. Hay más lecciones en camino, para niños y adultos.",
+        "moving": "Las estamos pasando al nuevo portal de alumnos; mientras, las tienes aquí, gratis y sin cuenta."
       },
       "access": {
         "question": "¿Qué puedo usar y cómo?",
@@ -1269,8 +1281,8 @@
             "meta": "Video · gratis"
           },
           "learnLegacy": {
-            "title": "Lecciones interactivas de la web actual",
-            "meta": "Del alfabeto a los verbos"
+            "title": "Aprende ahora: lecciones interactivas",
+            "meta": "El alfabeto, sustantivos y artículos"
           },
           "worksheets": {
             "title": "Fichas descargables",
@@ -1297,6 +1309,11 @@
         "studentsNote": "Si ya eres alumna o alumno, entra con tu cuenta; si aún no, reserva tu clase gratis.",
         "studentsCta": "Reserva tu clase gratis",
         "discount": "Los alumnos matriculados tienen un 30 % de descuento en los recursos digitales."
+      },
+      "materials": {
+        "question": "Materiales descargables",
+        "body": "Para practicar a tu ritmo, en casa o en clase, a precio de oferta. Maribel te los envía por email después del pago.",
+        "cta": "Ir a la tienda"
       }
     },
     "contactForm": {
@@ -1356,6 +1373,157 @@
         "unavailable": "Ahora mismo no podemos recibir mensajes desde la web y el tuyo no se ha enviado. Llámanos o escríbenos:",
         "failed": "Un problema técnico impidió enviar tu mensaje: no se ha enviado. Inténtalo de nuevo en un momento, o llámanos o escríbenos:"
       }
+    },
+    "learn": {
+      "metaTitle": "Aprende ahora: lecciones interactivas gratis de español · Spanglish",
+      "metaDescription": "Lecciones interactivas gratis para aprender español: el alfabeto y los sustantivos y artículos, con audio. Más lecciones para niños y adultos, del A1 al C2, en camino.",
+      "title": "Aprende ahora",
+      "lead": "Lecciones interactivas gratis para practicar por tu cuenta, sin cuenta ni registro. Hoy tienes dos listas para empezar; el resto está en camino.",
+      "ask": "¿Puedo empezar ya mismo?",
+      "answer": "¡Sí! Empieza por el alfabeto.",
+      "toLessons": "Ver las lecciones",
+      "toShop": "Tienda de materiales",
+      "question": "¿Qué quieres aprender?",
+      "intro": "Las lecciones se ordenan como en la web de siempre: fundamentos, niveles para niños y adultos, historias y juegos.",
+      "englishNote": "Las lecciones están explicadas en inglés, pensadas para quien aprende español.",
+      "available": "Lección interactiva",
+      "soon": "Próximamente",
+      "countReady": "{count, plural, =0 {Próximamente} one {# lección lista} other {# lecciones listas}}",
+      "categories": {
+        "foundations": {
+          "title": "Fundamentos",
+          "intro": "Las bases: letras, palabras, colores y números."
+        },
+        "kids": {
+          "title": "Niños",
+          "intro": "Por niveles, del A1 al C2."
+        },
+        "adults": {
+          "title": "Adultos",
+          "intro": "Por niveles, del A1 al C2."
+        },
+        "stories": {
+          "title": "Historias",
+          "intro": "Para leer en español, del A1 al C2."
+        },
+        "games": {
+          "title": "Juegos",
+          "intro": "Para practicar jugando, del A1 al C2."
+        }
+      },
+      "items": {
+        "alphabet": "El alfabeto",
+        "nouns": "Sustantivos y artículos",
+        "colors": "Los colores",
+        "numbers": "Los números",
+        "level": "Nivel {level}",
+        "levelWith": "Nivel {level}: {lesson}"
+      },
+      "portal": {
+        "question": "¿Y el resto de lecciones?",
+        "body": "Estamos pasando las lecciones interactivas al nuevo portal de alumnos. Las que ves como «Próximamente» todavía no están listas: las iremos publicando aquí."
+      },
+      "more": {
+        "question": "¿Quieres más?",
+        "shop": {
+          "title": "Materiales descargables",
+          "body": "Para practicar a tu ritmo, a precio de oferta.",
+          "cta": "Ir a la tienda"
+        },
+        "lesson": {
+          "title": "Clases con Maribel",
+          "body": "La primera clase es gratis: 45 minutos, online.",
+          "cta": "Reserva tu clase gratis"
+        }
+      }
+    },
+    "learnAlphabet": {
+      "metaTitle": "El alfabeto español: lección interactiva gratis · Spanglish",
+      "metaDescription": "Lección interactiva gratis del alfabeto español: pulsa cada letra para oírla, con una palabra de ejemplo, vocales y consonantes, letras especiales y consejos de pronunciación.",
+      "title": "The Spanish Alphabet",
+      "crumb": "El alfabeto",
+      "lead": "Pulsa cada letra para oír cómo suena y ver una palabra de ejemplo. Después, repasa las vocales, las consonantes y las letras especiales.",
+      "ask": "¿Cómo suena la Ñ?",
+      "answer": "¡Púlsala y escúchala!"
+    },
+    "learnNouns": {
+      "metaTitle": "Sustantivos y artículos en español: lección interactiva gratis · Spanglish",
+      "metaDescription": "Lección interactiva gratis: qué son los sustantivos, el género masculino y femenino, el plural y los artículos en español, con ejercicios para practicar.",
+      "title": "Spanish Nouns & Articles",
+      "crumb": "Sustantivos y artículos",
+      "lead": "Descubre qué son los sustantivos, por qué en español todos son masculinos o femeninos, cómo se forma el plural y conoce las palabras que siempre van delante: los artículos.",
+      "ask": "¿Se dice el agua o la agua?",
+      "answer": "¡Aquí lo descubres!"
+    },
+    "lesson": {
+      "englishNote": "Esta lección está en inglés (todavía no hay versión en español).",
+      "speechNote": "Para escuchar las palabras, tu navegador usa su propia voz en español.",
+      "nav": "Más lecciones",
+      "prev": "Lección anterior",
+      "next": "Siguiente lección",
+      "hub": "Todas las lecciones",
+      "start": "Empezar la lección"
+    },
+    "shop": {
+      "metaTitle": "Tienda de materiales para aprender español · Spanglish",
+      "metaDescription": "Materiales descargables de Spanglish para aprender español: el abecedario y los verbos regulares, a precio de oferta. Pago seguro con Stripe.",
+      "titleA": "Tienda de",
+      "titleB": "materiales",
+      "lead": "Materiales descargables de Spanglish para practicar español a tu ritmo, en casa o en clase. Precios de oferta, en dólares australianos.",
+      "ask": "¿Hay material para practicar en casa?",
+      "answer": "¡Sí! Y está de oferta.",
+      "toProducts": "Ver los materiales",
+      "question": "Materiales descargables",
+      "howTitle": "Así funciona",
+      "how": {
+        "add": "Añade los materiales al carrito.",
+        "pay": "Paga con tarjeta en la página segura de Stripe.",
+        "email": "Maribel te envía los materiales por email lo antes posible."
+      },
+      "discount": {
+        "title": "¿Eres alumna o alumno de Spanglish?",
+        "body": "Los alumnos matriculados tienen un 30 % de descuento en los recursos digitales. Todavía no se aplica en el carrito: escríbenos antes de comprar y te lo aplicamos.",
+        "cta": "Escríbenos"
+      },
+      "more": {
+        "question": "¿Buscas algo gratis?",
+        "learn": {
+          "title": "Aprende ahora",
+          "body": "Lecciones interactivas gratis, con audio."
+        },
+        "resources": {
+          "title": "Recursos",
+          "body": "Los videos de Maribel y todo lo que puedes usar."
+        }
+      }
+    },
+    "shopSuccess": {
+      "metaTitle": "Pago de tu pedido · Spanglish",
+      "metaDescription": "Estado del pago de tus materiales de Spanglish.",
+      "crumb": "Pago",
+      "paid": {
+        "title": "¡Pago recibido!",
+        "lead": "Pago recibido: Maribel te enviará tus materiales por email lo antes posible.",
+        "ask": "¿Y ahora qué?",
+        "answer": "¡Atenta al email!",
+        "receipt": "Stripe te envía también el recibo del pago al email que pusiste. ¿No te llega nada? Revisa la carpeta de spam o escríbenos."
+      },
+      "unpaid": {
+        "title": "Pago sin completar",
+        "lead": "Stripe todavía no confirma el pago de este pedido. No se te ha enviado nada y tu carrito sigue guardado.",
+        "ask": "¿Qué ha pasado?",
+        "answer": "Puedes volver a intentarlo.",
+        "receipt": "Si crees que sí pagaste, escríbenos y lo revisamos."
+      },
+      "unknown": {
+        "title": "Gracias por tu compra",
+        "lead": "No podemos confirmar el pago desde aquí. Si lo completaste, recibirás el recibo de Stripe por email y Maribel te enviará tus materiales.",
+        "ask": "¿Pagué bien?",
+        "answer": "Mira tu email.",
+        "receipt": "Si no te llega el recibo, tu pago no se completó: tu carrito sigue guardado. ¿Dudas? Escríbenos."
+      },
+      "backShop": "Volver a la tienda",
+      "toLearn": "Ir a Aprende ahora"
     }
   },
   "notFound": {
@@ -1381,5 +1549,51 @@
     "question": "Aprende con los videos de Maribel",
     "intro": "Clases cortas y gratis para empezar a practicar ya. Los títulos están en inglés.",
     "play": "Reproducir video"
+  },
+  "cart": {
+    "button": "Carrito, {count, plural, one {# artículo} other {# artículos}}",
+    "title": "Tu carrito",
+    "close": "Cerrar el carrito",
+    "empty": "Tu carrito está vacío.",
+    "emptyCta": "Ver la tienda",
+    "remove": "Quitar",
+    "removeLabel": "Quitar {name} del carrito",
+    "subtotal": "Subtotal",
+    "currencyNote": "Precios en dólares australianos (AUD).",
+    "checkout": "Ir a pagar",
+    "pending": "Abriendo la página de pago…",
+    "stripeNote": "Pagas en la página segura de Stripe: los datos de tu tarjeta no pasan por esta web.",
+    "deliveryNote": "Después del pago, Maribel te envía los materiales por email.",
+    "unavailable": "Los pagos aún no están activos; escríbenos y te lo enviamos.",
+    "failed": "No hemos podido abrir la página de pago. Inténtalo de nuevo en un momento o escríbenos y te lo enviamos.",
+    "invalid": "Uno de los productos de tu carrito ya no está disponible. Revisa el carrito y vuelve a intentarlo.",
+    "contactLead": "Escríbenos o llámanos:",
+    "itemsLabel": "Productos en tu carrito"
+  },
+  "shop": {
+    "sale": "¡Oferta!",
+    "was": "Antes",
+    "now": "Ahora",
+    "priceLabel": "Antes {was}, ahora {price}",
+    "add": "Añadir al carrito",
+    "added": "En el carrito",
+    "addLabel": "Añadir {name} al carrito",
+    "addedLabel": "{name} está en el carrito. Ábrelo para revisarlo.",
+    "viewCart": "Ver el carrito",
+    "type": "Material descargable",
+    "products": {
+      "alphabet": {
+        "summary": "Material descargable: el abecedario en español.",
+        "alt": "Muestra del material: la letra C con las palabras color y cama."
+      },
+      "regularVerbsBasic": {
+        "summary": "¡Lo básico para empezar o seguir una clase de español sin tropiezos! Con este material, aprender los verbos regulares en español es más fácil. Seas profe o estudiante, te va a encantar.",
+        "alt": "Muestra del material: las tres conjugaciones (AR, ER, IR) y verbos regulares como hablar, beber y vivir."
+      },
+      "regularVerbs": {
+        "summary": "Aprende y practica los verbos regulares en español con un recurso educativo divertido, visual y ameno, pensado para que aprender sea más fácil y agradable.",
+        "alt": "Portada del libro Regular Verbs in Spanish, con el logo de Spanglish."
+      }
+    }
   }
 }

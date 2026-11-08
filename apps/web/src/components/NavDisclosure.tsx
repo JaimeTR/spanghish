@@ -59,7 +59,7 @@ export function NavBadge({ item, compact = false }: { item: NavSubItem; compact?
 }
 
 /**
- * "Clases" en la cabecera de escritorio (patrón disclosure, no menú ARIA):
+ * "Clases" y "Recursos" en la cabecera de escritorio (patrón disclosure, no menú ARIA):
  * el texto es un enlace real a /lessons y el botón del chevrón despliega las
  * subpáginas. Se abre con clic, Intro o Espacio y, con ratón, al pasar por
  * encima (con un pequeño retardo). Se cierra con Escape (el foco vuelve al
@@ -69,12 +69,15 @@ export function NavDisclosure({
   label,
   href,
   toggleLabel,
+  tailClassName = "left-[5.25rem] xl:left-[5.75rem]",
   current,
   items,
 }: {
   label: string;
   href: string;
   toggleLabel: string;
+  /** Posición de la cola del bocadillo: bajo el chevrón (depende del ancho del texto). */
+  tailClassName?: string;
   /** "page" en /lessons; "true" en una subpágina (el grupo está activo). */
   current?: "page" | "true";
   items: NavSubItem[];
@@ -143,7 +146,7 @@ export function NavDisclosure({
       <Link
         href={href}
         aria-current={current}
-        className="inline-flex min-h-11 items-center rounded-full py-2 pr-1 pl-3 font-semibold whitespace-nowrap text-ink no-underline decoration-brand-fuchsia decoration-[3px] transition-colors duration-200 hover:bg-ink/8 hover:underline aria-[current]:underline xl:pl-3.5"
+        className="inline-flex min-h-11 items-center rounded-full py-2 pr-1 pl-3 lg:pl-2 font-semibold whitespace-nowrap text-ink no-underline decoration-brand-fuchsia decoration-[3px] transition-colors duration-200 hover:bg-ink/8 hover:underline aria-[current]:underline xl:pl-3.5"
       >
         {label}
       </Link>
@@ -186,7 +189,7 @@ export function NavDisclosure({
           if ((e.target as HTMLElement).closest("a[href]")) close();
         }}
       >
-        <svg aria-hidden="true" viewBox="0 0 34 22" className="absolute -top-[17px] left-[5.25rem] h-[22px] w-[34px] -scale-y-100 text-cream xl:left-[5.75rem]">
+        <svg aria-hidden="true" viewBox="0 0 34 22" className={`absolute -top-[17px] h-[22px] w-[34px] -scale-y-100 text-cream ${tailClassName}`}>
           <path d="M0 0h34C26 6 15 14 2 22c5-8 6-15-2-22Z" fill="currentColor" />
         </svg>
         <ul className="relative flex flex-col gap-0.5 rounded-[1.75rem] border-2 border-ink/10 bg-cream p-2.5">

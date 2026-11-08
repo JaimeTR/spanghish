@@ -53,10 +53,13 @@ export function PageHero({
   lead,
   actions,
   aside,
+  titleLang,
 }: {
   tone: HeroTone;
   crumbs: Crumb[];
   titleA: string;
+  /** Idioma del h1 si no es el de la página (títulos publicados en inglés). */
+  titleLang?: string;
   titleB?: string;
   lead: ReactNode;
   actions?: ReactNode;
@@ -70,7 +73,7 @@ export function PageHero({
         <Breadcrumbs items={crumbs} />
         <div className="mt-6 grid items-center gap-x-10 gap-y-12 lg:mt-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <h1 id="page-title" className="font-display leading-[0.95] text-[clamp(2.75rem,9vw,4.5rem)] lg:text-[min(4.75rem,5.2vw)]">
+            <h1 id="page-title" lang={titleLang} className="font-display leading-[0.95] text-[clamp(2.75rem,9vw,4.5rem)] lg:text-[min(4.75rem,5.2vw)]">
               <span className={`block ${titleB ? "text-[0.72em] leading-[1.05]" : `lettering ${c.lettering}`} ${titleB ? c.title : ""}`}>
                 {titleA}
               </span>

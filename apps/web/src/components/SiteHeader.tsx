@@ -8,14 +8,23 @@ import { LockIcon } from "./icons";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { MobileMenu } from "./MobileMenu";
 import { MobileNavGroup, NavDisclosure, type NavSubItem, type NavTone } from "./NavDisclosure";
+import { CartButton } from "./shop/CartButton";
 import { btnOnDark, btnOnDarkOutline, btnPrimary } from "./styles";
 
-/** Color y edad de cada subpágina de "Clases" (el mismo que en la home). */
+/** Color y edad de cada subpágina de "Clases" (el mismo que en la home) y de "Recursos". */
 const SUB_STYLE: Partial<Record<RouteKey, { tone: NavTone; age?: "adults" | "kids" | "mature" }>> = {
   adults: { tone: "fuchsia", age: "adults" },
   kids: { tone: "yellow", age: "kids" },
   mature: { tone: "purple", age: "mature" },
   online: { tone: "burgundy" },
+  learn: { tone: "yellow" },
+  shop: { tone: "fuchsia" },
+};
+
+/** Botón que despliega cada grupo y posición de la cola del panel (apunta al chevrón). */
+const GROUP: Partial<Record<HeaderNavKey, { toggle: "showLessons" | "showResources"; tail: string }>> = {
+  lessons: { toggle: "showLessons", tail: "left-[5.25rem] xl:left-[5.75rem]" },
+  resources: { toggle: "showResources", tail: "left-[6.4rem] xl:left-[6.9rem]" },
 };
 
 export function SiteHeader({
@@ -58,7 +67,7 @@ export function SiteHeader({
 
   return (
     <header className="sticky top-0 z-30 border-b-2 border-ink/10 bg-cream">
-      <div className="relative mx-auto flex h-[4.5rem] w-full max-w-[76rem] items-center gap-3 px-4 sm:px-6 lg:px-10">
+      <div className="relative mx-auto flex h-[4.5rem] w-full max-w-[76rem] items-center gap-3 px-4 sm:px-6 lg:px-6 xl:px-10">
         <Link href={localePath(locale, "home")} className="shrink-0 rounded-md">
           <Image src="/logo-spanglish.png" alt={t("home")} width={68} height={54} priority />
         </Link>
@@ -71,7 +80,8 @@ export function SiteHeader({
                   key={item.key}
                   label={t(item.key)}
                   href={item.href}
-                  toggleLabel={t("showLessons")}
+                  toggleLabel={t(GROUP[item.key]?.toggle ?? "showLessons")}
+                  tailClassName={GROUP[item.key]?.tail}
                   current={item.ariaCurrent}
                   items={item.children}
                 />
@@ -80,7 +90,7 @@ export function SiteHeader({
                   <Link
                     href={item.href}
                     aria-current={item.ariaCurrent}
-                    className="inline-flex min-h-11 items-center rounded-full px-2.5 font-semibold whitespace-nowrap text-ink no-underline decoration-brand-fuchsia decoration-[3px] transition-colors duration-200 hover:bg-ink/8 hover:underline aria-[current=page]:underline xl:px-3.5"
+                    className="inline-flex min-h-11 items-center rounded-full px-2.5 lg:px-2 font-semibold whitespace-nowrap text-ink no-underline decoration-brand-fuchsia decoration-[3px] transition-colors duration-200 hover:bg-ink/8 hover:underline aria-[current=page]:underline xl:px-3.5"
                   >
                     {t(item.key)}
                   </Link>
@@ -90,8 +100,9 @@ export function SiteHeader({
           </ul>
         </nav>
 
-        <div className="ml-auto flex items-center gap-2 sm:gap-3">
+        <div className="ml-auto flex items-center gap-2 sm:gap-3 lg:gap-1.5 xl:gap-3">
           <LocaleSwitch locale={locale} />
+          <CartButton locale={locale} />
           {/* Portal de alumnos (otra web, misma pestaña). Solo icono hasta 1180px
               para que la navegación quepa en una línea. */}
           <a
@@ -103,7 +114,7 @@ export function SiteHeader({
             <span className="sr-only"> {t("loginSuffix")}</span>
           </a>
           <span className="hidden sm:block">
-            <Link href={bookingPath(locale)} className={`${btnPrimary} !min-h-11 !px-5 !text-base whitespace-nowrap`}>
+            <Link href={bookingPath(locale)} className={`${btnPrimary} !min-h-11 !px-5 !text-base whitespace-nowrap lg:!px-4 xl:!px-5`}>
               {t("cta")}
             </Link>
           </span>

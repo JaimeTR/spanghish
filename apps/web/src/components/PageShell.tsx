@@ -4,12 +4,14 @@ import type { Locale } from "@/i18n/routing";
 import { activeNavKey, type RouteKey } from "@/lib/routes";
 import { serializeJsonLd } from "@/lib/structured-data";
 import { RevealOnScroll } from "./RevealOnScroll";
+import { CartProvider } from "./shop/CartProvider";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
 /**
  * Esqueleto común de todas las páginas: enlace para saltar al contenido,
- * cabecera (con la sección activa marcada), <main>, pie y JSON-LD.
+ * cabecera (con la sección activa marcada), <main>, pie y JSON-LD. El carrito
+ * (CartProvider) envuelve cabecera y contenido sin añadir nodos al DOM.
  */
 export function PageShell({
   locale,
@@ -34,11 +36,13 @@ export function PageShell({
       >
         {t("skip")}
       </a>
-      <SiteHeader locale={locale} current={activeNavKey(route)} route={route} />
-      <main id="main" tabIndex={-1} className="outline-none">
-        {children}
-      </main>
-      <SiteFooter locale={locale} />
+      <CartProvider>
+        <SiteHeader locale={locale} current={activeNavKey(route)} route={route} />
+        <main id="main" tabIndex={-1} className="outline-none">
+          {children}
+        </main>
+        <SiteFooter locale={locale} />
+      </CartProvider>
       <RevealOnScroll />
       {jsonLd.map((data, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />

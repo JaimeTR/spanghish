@@ -24,7 +24,7 @@ export type ResourceCard = {
   kind: ResourceKind;
   /** Solo en los videos: id de YouTube (título publicado en VIDEOS). */
   videoId?: string;
-  /** Destino de las tarjetas "open": la sección de videos o las lecciones de la web actual. */
+  /** Destino de las tarjetas "open": la sección de videos o Aprende ahora (/learn). */
   target?: "videos" | "learn";
 };
 

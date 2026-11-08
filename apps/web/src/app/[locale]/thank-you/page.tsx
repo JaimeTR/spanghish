@@ -10,14 +10,14 @@ import { container } from "@/components/styles";
 import { isLocale } from "@/i18n/routing";
 import { innerPageMetadata, type PageProps } from "@/lib/page-meta";
 import { localePath, type RouteKey } from "@/lib/routes";
-import { CONTACT, LEARN_URL } from "@/lib/site";
+import { CONTACT } from "@/lib/site";
 
 const NEXT = ["read", "reply", "lesson"] as const;
 const LINKS: { key: string; route?: RouteKey; href?: string }[] = [
   { key: "lessons", route: "lessons" },
   { key: "prices", route: "prices" },
   { key: "faq", route: "faq" },
-  { key: "learn", href: LEARN_URL },
+  { key: "learn", route: "learn" },
 ];
 
 export function generateMetadata({ params }: PageProps) {
