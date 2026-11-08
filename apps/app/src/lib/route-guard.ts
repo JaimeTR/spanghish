@@ -1,7 +1,7 @@
 import { isLocale, routing } from "../i18n/routing";
-import { canAccess, isSafeRedirect, roleHomePath, type AppRole, type UserStatus } from "./access";
+import { canAccess, isSafeRedirect, roleHomePath, type AppRole, type SessionStatus } from "./access";
 
-export type GuardUser = { roles: AppRole[]; status: UserStatus } | null;
+export type GuardUser = { roles: AppRole[]; status: SessionStatus } | null;
 
 export type GuardDecision =
   | { kind: "allow" }
@@ -59,6 +59,10 @@ export function guardRequest(pathname: string, search: string, user: GuardUser):
 
   if (user?.status === "suspended") {
     return { kind: "redirect", to: `/${locale}/login?error=suspended`, signOut: true };
+  }
+  // Cuenta sin perfil: falla cerrado, sin revelar el motivo.
+  if (user?.status === "no_profile") {
+    return { kind: "redirect", to: `/${locale}/login`, signOut: true };
   }
 
   if (!area || !PROTECTED_AREAS.includes(area)) return { kind: "allow" };

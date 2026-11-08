@@ -4,22 +4,22 @@ import { toSessionUser, type SessionUser } from "./access";
 /**
  * Lee el usuario autenticado y su acceso con el cliente dado (proxy o servidor).
  * - getUser() valida el JWT contra Auth (getSession no sirve para autorizar).
- * - Un usuario suspendido no puede leer ni su perfil (RLS exige is_active()),
- *   así que el estado se pregunta con is_active(): false => suspendido, sin roles.
- *   Un usuario sin perfil también da false: se trata igual (falla cerrado).
+ * - Un suspendido no puede leer ni su perfil (RLS exige is_active()), así que el
+ *   estado se pregunta con account_status() (0005): 'suspended' => sin roles;
+ *   NULL => "no_profile" (sin roles; el proxy y el login cierran la sesión con
+ *   el mensaje genérico, no con el de suspensión).
  * - Ante errores de la base de datos devuelve null (sin acceso), sin marcar
- *   suspendido, para no cerrar sesiones por fallos transitorios.
+ *   ningún estado, para no cerrar sesiones por fallos transitorios.
  */
 export async function loadSessionUser(supabase: SupabaseClient): Promise<SessionUser | null> {
   const { data, error } = await supabase.auth.getUser();
   if (error || !data.user) return null;
   const id = data.user.id;
 
-  const active = await supabase.rpc("is_active");
-  if (active.error) return null;
-  if (active.data !== true) {
-    return { id, roles: [], status: "suspended", locale: "es" };
-  }
+  const status = await supabase.rpc("account_status");
+  if (status.error) return null;
+  if (status.data === null) return { id, roles: [], status: "no_profile", locale: "es" };
+  if (status.data !== "active") return { id, roles: [], status: "suspended", locale: "es" };
 
   const [profile, roles] = await Promise.all([
     supabase.from("profiles").select("id, status, preferred_locale").eq("id", id).maybeSingle(),

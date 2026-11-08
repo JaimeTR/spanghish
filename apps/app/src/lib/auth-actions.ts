@@ -53,6 +53,11 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
     await supabase.auth.signOut();
     return { error: "unavailable" };
   }
+  if (user.status === "no_profile") {
+    // Falla cerrado con el mensaje genérico (no el de suspensión).
+    await supabase.auth.signOut();
+    return { error: "credentials" };
+  }
   if (user.status === "suspended") {
     // Sin sesión para cuentas suspendidas.
     await supabase.auth.signOut();

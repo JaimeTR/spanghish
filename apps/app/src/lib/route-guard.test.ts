@@ -115,6 +115,15 @@ describe("guardRequest", () => {
     });
   });
 
+  it("signs users without profile out to a plain login (no suspended message)", () => {
+    const noProfile = { roles: [], status: "no_profile" as const };
+    expect(guardRequest("/es/student", "", noProfile)).toEqual({
+      kind: "redirect",
+      to: "/es/login",
+      signOut: true,
+    });
+  });
+
   it("fails closed when there is no valid locale", () => {
     expect(guardRequest("/admin", "", active(["admin"]))).toEqual({
       kind: "redirect",

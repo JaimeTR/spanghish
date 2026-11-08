@@ -41,17 +41,6 @@ export function loginError(page: Page) {
   return page.locator('#login-error[role="alert"]');
 }
 
-/** Cliente con la sesión de la administradora del seed (solo local). */
-export async function signedInAdminClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) throw new Error("Faltan NEXT_PUBLIC_SUPABASE_URL o NEXT_PUBLIC_SUPABASE_ANON_KEY.");
-  const client = createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
-  const { error } = await client.auth.signInWithPassword({ email: USERS.admin, password: DEV_PASSWORD });
-  if (error) throw error;
-  return client;
-}
-
 /** Cliente service_role para preparar datos en las pruebas (solo local). */
 export function adminClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;

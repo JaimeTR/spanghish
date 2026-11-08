@@ -14,6 +14,7 @@ export async function requireArea(locale: Locale, area: AppRole): Promise<Sessio
   if (!user) redirect(`/${locale}/login?${new URLSearchParams({ next: path })}`);
   // El proxy cierra la sesión del suspendido; aquí solo se le niega el acceso.
   if (user.status === "suspended") redirect(`/${locale}/login?error=suspended`);
+  if (user.status !== "active") redirect(`/${locale}/login`);
   if (!canAccess(user.roles, path)) redirect(roleHomePath(user.roles, locale));
   return user;
 }

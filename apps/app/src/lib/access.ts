@@ -2,11 +2,13 @@ import { isLocale, type Locale } from "../i18n/routing";
 
 export type AppRole = "admin" | "teacher" | "student" | "guardian";
 export type UserStatus = "active" | "suspended";
+/** Estado de sesión: el de la base de datos o "no_profile" (cuenta sin perfil). */
+export type SessionStatus = UserStatus | "no_profile";
 
 export type SessionUser = {
   id: string;
   roles: AppRole[];
-  status: UserStatus;
+  status: SessionStatus;
   locale: Locale;
 };
 

@@ -5,7 +5,6 @@ import {
   expectPath,
   login,
   loginError,
-  signedInAdminClient,
   USERS,
 } from "./fixtures";
 
@@ -110,9 +109,8 @@ test("a suspended user with an already open session loses access on the next req
     await login(page, email);
     await expectPath(page, "/es/student");
 
-    // La administradora suspende la cuenta con su propia sesión (flujo real, con RLS).
-    const asAdmin = await signedInAdminClient();
-    const { data, error } = await asAdmin
+    // service_role puede cambiar el estado desde 0004.
+    const { data, error } = await admin
       .from("profiles")
       .update({ status: "suspended" })
       .eq("id", userId)
