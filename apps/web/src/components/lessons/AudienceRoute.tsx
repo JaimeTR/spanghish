@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/routing";
 import { AUDIENCES, type Audience } from "@/lib/lessons";
 import { crumbsJsonLd, innerPageMetadata, type PageProps } from "@/lib/page-meta";
+import { PRICE_VALUES } from "@/lib/prices";
 import { localePath } from "@/lib/routes";
 import { lessonServiceJsonLd } from "@/lib/structured-data";
 import { PageShell } from "../PageShell";
@@ -28,13 +29,13 @@ export async function AudienceRoute({ params, audience }: PageProps & { audience
     locale,
     path: localePath(locale, data.route),
     name: `${t("titleA")} ${t("titleB")}`,
-    description: t("metaDescription"),
+    description: t("metaDescription", PRICE_VALUES),
     minAge: data.minAge,
     maxAge: data.maxAge,
     offers: data.offers.map((o) => ({
       description: o.upfront
-        ? `${tc(`prices.${o.key}.title`)}: ${tc(`prices.${o.key}.body`)}`
-        : `${tc(`prices.${o.key}.title`)}: ${tc(`prices.${o.key}.amount`)}`,
+        ? `${tc(`prices.${o.key}.title`)}: ${tc(`prices.${o.key}.body`, PRICE_VALUES)}`
+        : `${tc(`prices.${o.key}.title`)}: ${tc(`prices.${o.key}.amount`, PRICE_VALUES)}`,
       price: o.price,
       minPrice: o.minPrice,
     })),

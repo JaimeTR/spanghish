@@ -146,21 +146,21 @@
     },
     "groups": {
       "from": "from",
-      "amount": "$30",
+      "amount": "{groupFrom}",
       "unit": "per person",
       "title": "Group lessons"
     },
     "mature": {
-      "amount": "$40",
+      "amount": "{matureLesson}",
       "unit": "per lesson",
       "title": "Mature adults program",
-      "body": "10 lessons: $390 paid upfront. Single lesson: $45."
+      "body": "10 lessons: {matureUpfront} paid upfront. Single lesson: {matureSingle}."
     },
     "online": {
-      "amount": "$245",
+      "amount": "{onlineUpfront}",
       "unit": "10 weeks",
       "title": "Online conversations",
-      "body": "10-week program: $25 per class."
+      "body": "10-week program: {onlineLesson} per class."
     },
     "groupsAskTitle": "Looking for a group?",
     "groupsAskBody": "Ask us about dates and times for the upcoming groups.",
@@ -253,7 +253,7 @@
       },
       "group": {
         "from": "from",
-        "amount": "$30",
+        "amount": "{groupFrom}",
         "unit": "per person",
         "title": "Group lessons",
         "body": "The final rate depends on your group size."
@@ -265,13 +265,13 @@
         "cta": "Ask for prices"
       },
       "program": {
-        "amount": "$40",
+        "amount": "{matureLesson}",
         "unit": "per lesson",
         "title": "10-lesson program",
-        "body": "Or $390 if you pay for all 10 lessons upfront."
+        "body": "Or {matureUpfront} if you pay for all 10 lessons upfront."
       },
       "single": {
-        "amount": "$45",
+        "amount": "{matureSingle}",
         "unit": "per lesson",
         "title": "Single lesson",
         "body": "Pay for each lesson as you go."
@@ -334,8 +334,8 @@
         "none": "Not available",
         "programs": "10-week program or pay as you go.",
         "programsMature": "10-lesson program or single lessons.",
-        "price": "Groups from $30 per person. Private: prices by email.",
-        "priceMature": "$40 per lesson in the 10-lesson program ($390 upfront). Single lesson: $45."
+        "price": "Groups from {groupFrom} per person. Private: prices by email.",
+        "priceMature": "{matureLesson} per lesson in the 10-lesson program ({matureUpfront} upfront). Single lesson: {matureSingle}."
       }
     },
     "adults": {
@@ -391,7 +391,7 @@
         },
         "private": {
           "q": "How much is a private lesson?",
-          "a": "Email hello@spanglish.com.au with your preferred lesson mode and we’ll send you current pricing. Group rates start from $30 per person."
+          "a": "Email hello@spanglish.com.au with your preferred lesson mode and we’ll send you current pricing. Group rates start from {groupFrom} per person."
         }
       }
     },
@@ -446,13 +446,13 @@
         },
         "private": {
           "q": "How much is a private lesson?",
-          "a": "Email hello@spanglish.com.au with your preferred lesson mode and we’ll send you current pricing. Group rates start from $30 per person."
+          "a": "Email hello@spanglish.com.au with your preferred lesson mode and we’ll send you current pricing. Group rates start from {groupFrom} per person."
         }
       }
     },
     "mature": {
       "metaTitle": "Spanish lessons for mature adults (65+) · Spanglish",
-      "metaDescription": "Spanish lessons for adults over 65, beginner to advanced: online or face to face, private or with your own group. 10-lesson program at $40 per lesson. Your first lesson is free.",
+      "metaDescription": "Spanish lessons for adults over 65, beginner to advanced: online or face to face, private or with your own group. 10-lesson program at {matureLesson} per lesson. Your first lesson is free.",
       "titleA": "Spanish lessons",
       "titleB": "for mature adults",
       "lead": "For adults aged 65 and over, from complete beginner to advanced. Online or face to face, private or with your own group.",
@@ -489,7 +489,7 @@
         },
         "upfront": {
           "q": "Do I have to pay for all 10 lessons upfront?",
-          "a": "No. In the 10-lesson program you pay $40 per lesson, or $390 if you pay for all 10 upfront. You can also pay as you go: $45 per lesson."
+          "a": "No. In the 10-lesson program you pay {matureLesson} per lesson, or {matureUpfront} if you pay for all 10 upfront. You can also pay as you go: {matureSingle} per lesson."
         },
         "friends": {
           "q": "Can I take lessons with friends?",

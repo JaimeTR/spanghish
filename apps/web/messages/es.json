@@ -146,21 +146,21 @@
     },
     "groups": {
       "from": "desde",
-      "amount": "$30",
+      "amount": "{groupFrom}",
       "unit": "por persona",
       "title": "Clases en grupo"
     },
     "mature": {
-      "amount": "$40",
+      "amount": "{matureLesson}",
       "unit": "por clase",
       "title": "Programa para mayores",
-      "body": "10 clases: $390 si las pagas por adelantado. Clase suelta: $45."
+      "body": "10 clases: {matureUpfront} si las pagas por adelantado. Clase suelta: {matureSingle}."
     },
     "online": {
-      "amount": "$245",
+      "amount": "{onlineUpfront}",
       "unit": "10 semanas",
       "title": "Conversación online",
-      "body": "Programa de 10 semanas: $25 por clase."
+      "body": "Programa de 10 semanas: {onlineLesson} por clase."
     },
     "groupsAskTitle": "¿Buscas un grupo?",
     "groupsAskBody": "Pregúntanos por las fechas y los horarios de los próximos grupos.",
@@ -253,7 +253,7 @@
       },
       "group": {
         "from": "desde",
-        "amount": "$30",
+        "amount": "{groupFrom}",
         "unit": "por persona",
         "title": "Clases en grupo",
         "body": "El precio final depende del tamaño del grupo."
@@ -265,13 +265,13 @@
         "cta": "Pedir precios"
       },
       "program": {
-        "amount": "$40",
+        "amount": "{matureLesson}",
         "unit": "por clase",
         "title": "Programa de 10 clases",
-        "body": "O $390 si pagas las 10 clases por adelantado."
+        "body": "O {matureUpfront} si pagas las 10 clases por adelantado."
       },
       "single": {
-        "amount": "$45",
+        "amount": "{matureSingle}",
         "unit": "por clase",
         "title": "Clase suelta",
         "body": "Pagas cada clase por separado."
@@ -334,8 +334,8 @@
         "none": "No disponible",
         "programs": "Programa de 10 semanas o pago por clase.",
         "programsMature": "Programa de 10 clases o clases sueltas.",
-        "price": "Grupos desde $30 por persona. Individuales: precio por email.",
-        "priceMature": "$40 por clase en el programa de 10 ($390 por adelantado). Clase suelta: $45."
+        "price": "Grupos desde {groupFrom} por persona. Individuales: precio por email.",
+        "priceMature": "{matureLesson} por clase en el programa de 10 ({matureUpfront} por adelantado). Clase suelta: {matureSingle}."
       }
     },
     "adults": {
@@ -391,7 +391,7 @@
         },
         "private": {
           "q": "¿Cuánto cuesta una clase individual?",
-          "a": "Escríbenos a hello@spanglish.com.au con el formato que prefieres y te enviamos los precios actuales. Las clases en grupo empiezan desde $30 por persona."
+          "a": "Escríbenos a hello@spanglish.com.au con el formato que prefieres y te enviamos los precios actuales. Las clases en grupo empiezan desde {groupFrom} por persona."
         }
       }
     },
@@ -446,13 +446,13 @@
         },
         "private": {
           "q": "¿Cuánto cuesta una clase individual?",
-          "a": "Escríbenos a hello@spanglish.com.au con el formato que prefieres y te enviamos los precios actuales. Las clases en grupo empiezan desde $30 por persona."
+          "a": "Escríbenos a hello@spanglish.com.au con el formato que prefieres y te enviamos los precios actuales. Las clases en grupo empiezan desde {groupFrom} por persona."
         }
       }
     },
     "mature": {
       "metaTitle": "Clases de español para mayores (65+) · Spanglish",
-      "metaDescription": "Clases de español para mayores de 65, de principiante a avanzado: online o presenciales, individuales o en tu propio grupo. Programa de 10 clases a $40 por clase. Primera clase gratis.",
+      "metaDescription": "Clases de español para mayores de 65, de principiante a avanzado: online o presenciales, individuales o en tu propio grupo. Programa de 10 clases a {matureLesson} por clase. Primera clase gratis.",
       "titleA": "Clases de español",
       "titleB": "para mayores",
       "lead": "Para mayores de 65, desde principiante absoluto hasta nivel avanzado. Online o presenciales, individuales o con tu propio grupo.",
@@ -489,7 +489,7 @@
         },
         "upfront": {
           "q": "¿Tengo que pagar las 10 clases por adelantado?",
-          "a": "No. En el programa de 10 clases pagas $40 por clase, o $390 si pagas las 10 por adelantado. También puedes pagar clase a clase: $45 por clase."
+          "a": "No. En el programa de 10 clases pagas {matureLesson} por clase, o {matureUpfront} si pagas las 10 por adelantado. También puedes pagar clase a clase: {matureSingle} por clase."
         },
         "friends": {
           "q": "¿Puedo hacer las clases con amigos?",

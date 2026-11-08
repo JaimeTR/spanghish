@@ -38,16 +38,10 @@ describe("lesson pages data", () => {
     }
   });
 
-  it("JSON-LD prices match the visible published prices", () => {
-    const visible = (key: string) => JSON.stringify(es.common.prices[key as keyof typeof es.common.prices]);
-    for (const a of AUDIENCE_KEYS) {
-      for (const o of AUDIENCES[a].offers) {
-        const n = o.price ?? o.minPrice;
-        if (n) expect(visible(o.key), `${a} ${o.key} ${n}`).toContain(`$${n}`);
-      }
-    }
+  it("JSON-LD prices come from the single price source", () => {
     // Mayores: $40 por clase, $390 por adelantado, $45 clase suelta (desde abril de 2026).
     expect(AUDIENCES.mature.offers.map((o) => o.price)).toEqual([0, 40, 390, 45]);
+    expect(AUDIENCES.adults.offers.map((o) => o.price ?? o.minPrice)).toEqual([0, 30]);
   });
 
   it("related pages are the other two audiences", () => {

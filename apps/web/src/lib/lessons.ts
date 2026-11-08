@@ -1,3 +1,4 @@
+import { PRICES } from "./prices";
 import type { RouteKey } from "./routes";
 
 /**
@@ -68,8 +69,8 @@ export const AUDIENCES: Record<Audience, AudienceData> = {
     activities: ["visual", "roleplay", "conversation", "exercises"],
     prices: ["free", "group", "privateAsk"],
     offers: [
-      { key: "free", price: 0 },
-      { key: "group", minPrice: 30 },
+      { key: "free", price: PRICES.free },
+      { key: "group", minPrice: PRICES.groupFrom },
     ],
   },
   kids: {
@@ -97,8 +98,8 @@ export const AUDIENCES: Record<Audience, AudienceData> = {
     activities: ["visual", "games", "songs", "exercises"],
     prices: ["free", "group", "privateAsk"],
     offers: [
-      { key: "free", price: 0 },
-      { key: "group", minPrice: 30 },
+      { key: "free", price: PRICES.free },
+      { key: "group", minPrice: PRICES.groupFrom },
     ],
   },
   mature: {
@@ -117,10 +118,10 @@ export const AUDIENCES: Record<Audience, AudienceData> = {
     activities: ["repetition", "social", "memory"],
     prices: ["free", "program", "single"],
     offers: [
-      { key: "free", price: 0 },
-      { key: "program", price: 40 },
-      { key: "program", price: 390, upfront: true },
-      { key: "single", price: 45 },
+      { key: "free", price: PRICES.free },
+      { key: "program", price: PRICES.matureLesson },
+      { key: "program", price: PRICES.matureUpfront, upfront: true },
+      { key: "single", price: PRICES.matureSingle },
     ],
   },
 };

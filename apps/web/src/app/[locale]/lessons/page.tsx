@@ -12,6 +12,7 @@ import { container } from "@/components/styles";
 import { isLocale } from "@/i18n/routing";
 import { AUDIENCES, type Audience } from "@/lib/lessons";
 import { crumbsJsonLd, innerPageMetadata, type PageProps } from "@/lib/page-meta";
+import { PRICE_VALUES } from "@/lib/prices";
 import { localePath } from "@/lib/routes";
 
 const AUDIENCE_KEYS = Object.keys(AUDIENCES) as Audience[];
@@ -119,7 +120,7 @@ export default async function LessonsPage({ params }: PageProps) {
                       key={a}
                       className={`py-5 pr-6 text-[1.0625rem] leading-relaxed ${row.cells[a] === "none" ? "text-ink-muted" : "text-ink"}`}
                     >
-                      {t(`rows.${row.cells[a]}`)}
+                      {t(`rows.${row.cells[a]}`, PRICE_VALUES)}
                     </td>
                   ))}
                 </tr>
@@ -139,7 +140,7 @@ export default async function LessonsPage({ params }: PageProps) {
                     <div key={row.key}>
                       <dt className="font-extrabold text-ink">{label(row.label)}</dt>
                       <dd className={`mt-0.5 leading-relaxed ${row.cells[a] === "none" ? "text-ink-muted" : "text-ink"}`}>
-                        {t(`rows.${row.cells[a]}`)}
+                        {t(`rows.${row.cells[a]}`, PRICE_VALUES)}
                       </dd>
                     </div>
                   ))}

@@ -1,11 +1,11 @@
 import { useTranslations } from "next-intl";
 import { Bubble, SectionQuestion } from "../Bubble";
-import { PriceItem } from "../PriceItem";
+import { PriceHighlights } from "../PriceHighlights";
 import { btnPrimary, container } from "../styles";
 
 /**
- * Solo los precios publicados en la web actual. Sin calendario de grupos (las
- * fechas publicadas están vencidas): se invita a preguntar.
+ * Solo los precios publicados en la web actual (lib/prices.ts). Sin calendario
+ * de grupos (las fechas caducan): se invita a preguntar.
  */
 export function Prices() {
   const t = useTranslations("prices");
@@ -20,32 +20,7 @@ export function Prices() {
           <p className="text-lg text-ink-muted">{t("intro")}</p>
         </div>
 
-        <ul className="mt-12 grid border-t-2 border-ink md:grid-cols-2 lg:grid-cols-4">
-          <PriceItem
-            highlight
-            amount={t("free.amount")}
-            title={t("free.title")}
-            body={t("free.body")}
-          />
-          <PriceItem
-            pre={t("groups.from")}
-            amount={t("groups.amount")}
-            unit={t("groups.unit")}
-            title={t("groups.title")}
-          />
-          <PriceItem
-            amount={t("mature.amount")}
-            unit={t("mature.unit")}
-            title={t("mature.title")}
-            body={t("mature.body")}
-          />
-          <PriceItem
-            amount={t("online.amount")}
-            unit={t("online.unit")}
-            title={t("online.title")}
-            body={t("online.body")}
-          />
-        </ul>
+        <PriceHighlights />
 
         <Bubble tone="yellow" tail="right" shadow className="mt-14 md:ml-auto md:max-w-[40rem]" boxClassName="flex flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <div>

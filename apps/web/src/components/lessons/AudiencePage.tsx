@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import { AUDIENCES, relatedAudiences, type Audience, type FormatGroup } from "@/lib/lessons";
+import { PRICE_VALUES } from "@/lib/prices";
 import { bookingPath, localePath } from "@/lib/routes";
 import { CONTACT } from "@/lib/site";
 import { AUDIENCE_STYLE } from "../audience-style";
@@ -138,7 +139,7 @@ export function AudiencePage({ locale, audience }: { locale: Locale; audience: A
           </div>
           <ul className="mt-12 grid border-t-2 border-ink md:grid-cols-3">
             {data.prices.map((key) => {
-              const p = (k: string) => tc(`prices.${key}.${k}`);
+              const p = (k: string) => tc(`prices.${key}.${k}`, PRICE_VALUES);
               const has = (k: string) => tc.has(`prices.${key}.${k}`);
               return (
                 <PriceItem
@@ -166,7 +167,7 @@ export function AudiencePage({ locale, audience }: { locale: Locale; audience: A
 
       <Faq
         title={tc("faqQuestion")}
-        items={data.faq.map((key) => ({ key, q: t(`faq.${key}.q`), a: t(`faq.${key}.a`) }))}
+        items={data.faq.map((key) => ({ key, q: t(`faq.${key}.q`), a: t(`faq.${key}.a`, PRICE_VALUES) }))}
       />
 
       {/* Otras páginas */}

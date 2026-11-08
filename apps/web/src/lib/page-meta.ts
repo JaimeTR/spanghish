@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { isLocale, type Locale } from "@/i18n/routing";
+import { PRICE_VALUES } from "@/lib/prices";
 import { localePath, type RouteKey } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
@@ -20,7 +21,7 @@ export async function innerPageMetadata(params: PageProps["params"], route: Rout
     locale,
     route,
     title: t("metaTitle"),
-    description: t("metaDescription"),
+    description: t("metaDescription", PRICE_VALUES),
     ogAlt: tm("ogAlt"),
   });
 }
