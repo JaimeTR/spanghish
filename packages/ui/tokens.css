@@ -1,0 +1,41 @@
+/* Tokens de marca Spanglish. Compartidos por apps/web y apps/app.
+   Contrastes verificados (WCAG): ver docs/DESIGN.md */
+:root {
+  /* Marca (oficiales) */
+  --brand-yellow: #FCD404;
+  --brand-fuchsia: #D71950;
+  --brand-burgundy: #8F0831;
+  --brand-purple: #592F85;
+
+  /* Neutros cálidos */
+  --ink: #1E1226;          /* texto principal, 16.8:1 sobre crema */
+  --ink-muted: #5E5468;    /* texto secundario, 6.7:1 sobre crema */
+  --cream: #FBF7EC;        /* fondo de página */
+  --surface: #FFFFFF;
+  --surface-sunken: #F3ECDA;
+  --line: #E6DDC8;
+
+  /* Roles semánticos */
+  --color-bg: var(--cream);
+  --color-text: var(--ink);
+  --color-text-muted: var(--ink-muted);
+  --color-primary: var(--brand-fuchsia);       /* blanco sobre él: 5.1:1 */
+  --color-primary-hover: var(--brand-burgundy);
+  --color-on-primary: #FFFFFF;
+  --color-structure: var(--brand-purple);      /* sidebar, cabeceras */
+  --color-on-structure: #FFFFFF;
+  --color-highlight: var(--brand-yellow);      /* solo fondo; texto = --ink */
+  --color-on-highlight: var(--ink);
+
+  /* Estados (separados de la marca) */
+  --color-success: #1F7A4D;
+  --color-warning: #8A5A00;
+  --color-danger: #B3261E;
+  --color-info: #245EA8;
+
+  /* Forma y espacio */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --focus-ring: 3px solid var(--brand-purple);
+}
