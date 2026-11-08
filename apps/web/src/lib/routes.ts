@@ -14,11 +14,28 @@ export const ROUTES = {
   mature: "mature-lessons",
   teachers: "teachers",
   contact: "contact-us",
+  bookings: "bookings",
+  thankYou: "thank-you",
+  faq: "faq",
+  prices: "prices",
+  privacy: "privacy-policy",
+  terms: "terms",
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
 
 export const ROUTE_KEYS = Object.keys(ROUTES) as RouteKey[];
+
+/**
+ * Rutas que no se indexan ni van al sitemap: la confirmación (no tiene sentido
+ * llegar desde un buscador) y los textos legales, pendientes de revisión del
+ * propietario/abogado antes de publicarse como definitivos.
+ */
+export const NOINDEX_ROUTES = ["thankYou", "privacy", "terms"] as const satisfies readonly RouteKey[];
+
+export function isIndexable(route: RouteKey): boolean {
+  return !(NOINDEX_ROUTES as readonly RouteKey[]).includes(route);
+}
 
 /** Ruta con idioma: `localePath("en", "kids")` -> `/en/kids-lessons`; con ancla opcional. */
 export function localePath(locale: Locale, route: RouteKey, hash?: string): string {
@@ -35,31 +52,39 @@ export function languageAlternates(route: RouteKey): Record<string, string> {
   };
 }
 
-/** Destino de "Clase gratis" hasta que exista /bookings: la página de contacto. */
+/** Destino de todos los "Clase gratis": el formulario de solicitud. */
 export function bookingPath(locale: Locale): string {
-  return localePath(locale, "contact");
+  return localePath(locale, "bookings");
 }
 
-/** Navegación principal: rutas reales o anclas de la home (no hay páginas propias para ellas). */
+/** Navegación principal: rutas reales o anclas de la home. */
 export const HEADER_NAV = [
   { key: "lessons", route: "lessons" },
   { key: "how", route: "home", hash: "how" },
-  { key: "prices", route: "home", hash: "prices" },
+  { key: "prices", route: "prices" },
+  { key: "faq", route: "faq" },
   { key: "teachers", route: "teachers" },
   { key: "contact", route: "contact" },
 ] as const satisfies readonly { key: string; route: RouteKey; hash?: string }[];
 
-/** Pie: las páginas de clases por edad y las de la escuela. */
+/** Pie: las páginas de clases por edad, las de la escuela y los textos legales. */
 export const FOOTER_NAV = {
   lessons: [
     { key: "adults", route: "adults" },
     { key: "kids", route: "kids" },
     { key: "mature", route: "mature" },
+    { key: "prices", route: "prices" },
   ],
   school: [
     { key: "lessons", route: "lessons" },
     { key: "teachers", route: "teachers" },
+    { key: "faq", route: "faq" },
     { key: "contact", route: "contact" },
+    { key: "bookings", route: "bookings" },
+  ],
+  legal: [
+    { key: "privacy", route: "privacy" },
+    { key: "terms", route: "terms" },
   ],
 } as const satisfies Record<string, readonly { key: string; route: RouteKey }[]>;
 
@@ -70,5 +95,7 @@ export function activeNavKey(route: RouteKey): HeaderNavKey | undefined {
   if (route === "adults" || route === "kids" || route === "mature" || route === "lessons") return "lessons";
   if (route === "teachers") return "teachers";
   if (route === "contact") return "contact";
+  if (route === "prices") return "prices";
+  if (route === "faq") return "faq";
   return undefined;
 }

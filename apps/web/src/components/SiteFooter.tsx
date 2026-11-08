@@ -66,6 +66,17 @@ export function SiteFooter({ locale }: { locale: Locale }) {
       <div className="border-t-2 border-on-structure/15">
         <div className={`${container} flex flex-wrap items-center justify-between gap-4 py-6`}>
           <p className="text-sm">{t("copyright", { year })}</p>
+          <nav aria-label={tn("footerLegal")} className="sm:mr-auto sm:ml-6">
+            <ul className="flex flex-wrap gap-x-6">
+              {FOOTER_NAV.legal.map((item) => (
+                <li key={item.key}>
+                  <Link href={localePath(locale, item.route)} className={`${footerLink} text-sm`}>
+                    {tn(item.key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <LocaleSwitch locale={locale} tone="dark" />
         </div>
       </div>

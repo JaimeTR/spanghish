@@ -8,6 +8,7 @@ import {
   bookingPath,
   FOOTER_NAV,
   HEADER_NAV,
+  isIndexable,
   languageAlternates,
   localePath,
   ROUTE_KEYS,
@@ -26,6 +27,12 @@ describe("routes", () => {
       mature: "mature-lessons",
       teachers: "teachers",
       contact: "contact-us",
+      bookings: "bookings",
+      thankYou: "thank-you",
+      faq: "faq",
+      prices: "prices",
+      privacy: "privacy-policy",
+      terms: "terms",
     });
   });
 
@@ -42,7 +49,8 @@ describe("routes", () => {
     expect(localePath("es", "home")).toBe("/es");
     expect(localePath("en", "kids")).toBe("/en/kids-lessons");
     expect(localePath("en", "home", "prices")).toBe("/en#prices");
-    expect(bookingPath("es")).toBe("/es/contact-us");
+    expect(bookingPath("es")).toBe("/es/bookings");
+    expect(bookingPath("en")).toBe("/en/bookings");
   });
 
   it("hreflang alternates list both locales plus x-default (Spanish)", () => {
@@ -54,7 +62,7 @@ describe("routes", () => {
   });
 
   it("navigation only points at existing routes and every label exists in both locales", () => {
-    const items = [...HEADER_NAV, ...FOOTER_NAV.lessons, ...FOOTER_NAV.school];
+    const items = [...HEADER_NAV, ...FOOTER_NAV.lessons, ...FOOTER_NAV.school, ...FOOTER_NAV.legal];
     for (const item of items) {
       expect(ROUTE_KEYS).toContain(item.route);
       expect(es.nav[item.key], `es nav.${item.key}`).toBeTruthy();
@@ -62,7 +70,7 @@ describe("routes", () => {
     }
     // Las anclas de la home deben existir como secciones (ids estables).
     const anchors = HEADER_NAV.flatMap((i) => ("hash" in i ? [i.hash] : []));
-    expect(anchors).toEqual(["how", "prices"]);
+    expect(anchors).toEqual(["how"]);
   });
 
   it("marks the right header item as current", () => {
@@ -70,6 +78,18 @@ describe("routes", () => {
     expect(activeNavKey("lessons")).toBe("lessons");
     expect(activeNavKey("teachers")).toBe("teachers");
     expect(activeNavKey("contact")).toBe("contact");
+    expect(activeNavKey("prices")).toBe("prices");
+    expect(activeNavKey("faq")).toBe("faq");
     expect(activeNavKey("home")).toBeUndefined();
+    expect(activeNavKey("bookings")).toBeUndefined();
+  });
+
+  it("keeps the thank-you page and the legal drafts out of search engines", () => {
+    expect(ROUTE_KEYS.filter((r) => !isIndexable(r))).toEqual(["thankYou", "privacy", "terms"]);
+    expect(isIndexable("bookings")).toBe(true);
+  });
+
+  it("the footer links the legal pages", () => {
+    expect(FOOTER_NAV.legal.map((i) => i.route)).toEqual(["privacy", "terms"]);
   });
 });

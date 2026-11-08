@@ -1,17 +1,30 @@
-import { Bubble, SectionQuestion } from "./Bubble";
+import { Bubble, SectionQuestion, type BubbleTone } from "./Bubble";
 import { container } from "./styles";
 
 /**
  * Preguntas frecuentes como conversación: la pregunta del visitante en un
  * bocadillo blanco y la respuesta debajo, como texto corrido. Todo visible
- * (son pocas y cortas: no hace falta acordeón).
+ * (son pocas y cortas: no hace falta acordeón). En /faq se repite un bloque
+ * por tema: `id` distingue cada uno y `className` alterna el color del campo.
  */
-export function Faq({ title, items }: { title: string; items: { key: string; q: string; a: string }[] }) {
+export function Faq({
+  title,
+  items,
+  id = "faq",
+  tone = "purple",
+  className = "bg-cream",
+}: {
+  title: string;
+  items: { key: string; q: string; a: string }[];
+  id?: string;
+  tone?: BubbleTone;
+  className?: string;
+}) {
   return (
-    <section aria-labelledby="faq-title" className="bg-cream py-20 lg:py-28">
+    <section id={id} aria-labelledby={`${id}-title`} className={`py-20 lg:py-28 ${className}`}>
       <div className={`${container} grid gap-12 lg:grid-cols-12`}>
         <div className="lg:col-span-4">
-          <SectionQuestion id="faq-title" tone="purple" tail="left" className="lg:sticky lg:top-28">
+          <SectionQuestion id={`${id}-title`} tone={tone} tail="left" className="lg:sticky lg:top-28">
             {title}
           </SectionQuestion>
         </div>

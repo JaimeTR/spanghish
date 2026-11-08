@@ -139,3 +139,18 @@ const DAY_NAMES: Record<(typeof CONTACT.hours.days)[number], string> = {
 export function serializeJsonLd(data: unknown): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
+
+/** Preguntas frecuentes (solo las que se muestran en la página, con el mismo texto). */
+export function faqPageJsonLd(locale: Locale, path: string, items: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    url: `${SITE_URL}${path}`,
+    inLanguage: locale,
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}

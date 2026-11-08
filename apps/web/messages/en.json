@@ -27,7 +27,12 @@
     "footerLessons": "Lessons",
     "footerSchool": "Spanglish",
     "breadcrumb": "Breadcrumb",
-    "homeCrumb": "Home"
+    "homeCrumb": "Home",
+    "faq": "FAQ",
+    "bookings": "Free lesson",
+    "privacy": "Privacy",
+    "terms": "Terms and cancellations",
+    "footerLegal": "Legal"
   },
   "locales": {
     "es": "Español",
@@ -164,18 +169,18 @@
     },
     "groupsAskTitle": "Looking for a group?",
     "groupsAskBody": "Ask us about dates and times for the upcoming groups.",
-    "groupsAskCta": "Ask us"
+    "groupsAskCta": "Ask us",
+    "seeAll": "See all prices and formats"
   },
   "maribel": {
     "question": "Who is Maribel?",
     "hello": "¡Hola!",
     "name": "I’m Maribel",
-    "body": "Maribel is a native, certified Spanish tutor. She lives in Australia and has more than 4 years of teaching experience.",
-    "body2": "Her goal is that you speak Spanish confidently: practical communication, clear grammar, and a summary with homework after every lesson.",
+    "body": "I’m a native, certified Spanish tutor, and I live in Australia.",
+    "body2": "My goal is for you to speak Spanish with confidence: practical communication, clear grammar, and a summary with homework after every lesson.",
     "facts": {
       "native": "Native speaker",
       "certified": "Certified",
-      "years": "4+ years of experience",
       "based": "Based in Australia"
     }
   },
@@ -188,11 +193,12 @@
   },
   "contact": {
     "question": "Shall we start?",
-    "lead": "Your first lesson is free: 45 minutes, online. Call or email us and we’ll book it.",
+    "lead": "Your first lesson is free: 45 minutes, online. Request it with the form, or call or email us.",
     "phoneLabel": "Call",
     "emailLabel": "Email",
     "hours": "Monday to Saturday, 8am to 5pm.",
-    "note": "Very soon you’ll be able to book your lesson right here on this website."
+    "note": "Prefer to write at your own pace? Request your free lesson with the booking form.",
+    "formCta": "Go to the form"
   },
   "footer": {
     "tagline": "Our goal is that you speak Spanish confidently.",
@@ -285,7 +291,7 @@
     "relatedLessonsBody": "Compare formats and prices for every age.",
     "freeLesson": {
       "question": "Shall we start?",
-      "lead": "Your first lesson is free: 45 minutes, online. Call or email us and we’ll book it.",
+      "lead": "Your first lesson is free: 45 minutes, online. Request it with the form or give us a call.",
       "cta": "Book your free lesson",
       "call": "Call {phone}"
     },
@@ -546,8 +552,8 @@
       "metaTitle": "Contact us and book a free lesson · Spanglish",
       "metaDescription": "Call 0413 178 583 or email hello@spanglish.com.au, Monday to Saturday, 8am to 5pm. Sunshine Coast, Brisbane and online. Your first lesson is free.",
       "title": "Contact us",
-      "ask": "How do I book my free lesson?",
-      "lead": "Call or email us. Your first lesson is free: 45 minutes, online.",
+      "ask": "Got a question?",
+      "lead": "Call or email us. If you’d like your free lesson (45 minutes, online), request it with the booking form.",
       "phoneLabel": "Call",
       "emailLabel": "Email",
       "detailsLabel": "Contact details",
@@ -558,21 +564,562 @@
       "stepsQuestion": "How does the free lesson work?",
       "steps": {
         "contact": {
-          "title": "Call or email us",
-          "body": "By phone Monday to Saturday, 8am to 5pm, or by email."
+          "title": "Request your lesson",
+          "body": "With the booking form, by phone (Monday to Saturday, 8am to 5pm) or by email."
         },
         "tell": {
           "title": "Tell us what you need",
           "body": "Who the lessons are for (adult, kid or mature adult) and your preferred lesson mode."
         },
         "book": {
-          "title": "We book your lesson",
-          "body": "Your first lesson is free: 45 minutes, online."
+          "title": "Maribel replies",
+          "body": "She replies personally to arrange your free lesson: 45 minutes, online."
         }
       },
-      "bookingNote": "Very soon you’ll be able to book your lesson right here, with the new Spanglish platform. Until then, we’ll book it with you by phone or email.",
+      "bookingNote": "You can request your free lesson with the booking form: it only takes a couple of minutes.",
       "socialQuestion": "Follow us?",
-      "socialBody": "Find us as @spanglishworldwide."
+      "socialBody": "Find us as @spanglishworldwide.",
+      "bookingCta": "Go to the form"
+    },
+    "bookings": {
+      "metaTitle": "Book your free Spanish lesson · Spanglish",
+      "metaDescription": "Request your first lesson with Maribel, a native and certified Spanish tutor, for free: 45 minutes, online. For adults, kids and mature learners on the Sunshine Coast, in Brisbane and online.",
+      "titleA": "Your first lesson",
+      "titleB": "is free!",
+      "lead": "Tell us who will be learning and when suits you. Maribel reads every request and replies personally to arrange a day and time.",
+      "ask": "What’s the free lesson like?",
+      "answer": "45 minutes online with Maribel!",
+      "formLink": "Go to the form",
+      "formQuestion": "Tell us a little",
+      "formIntro": "All fields are required unless marked optional.",
+      "optional": "(optional)",
+      "fields": {
+        "name": {
+          "label": "Your name",
+          "hint": "If the lesson is for someone under 18, write your own name (parent or guardian)."
+        },
+        "email": {
+          "label": "Email",
+          "hint": "We’ll reply to this address."
+        },
+        "phone": {
+          "label": "Phone",
+          "hint": "In case you’d rather we call you."
+        },
+        "audience": {
+          "label": "Who is the lesson for?",
+          "options": {
+            "adults": "Adults (14+)",
+            "kids": "Kids (6–13)",
+            "mature": "Mature adults (65+)"
+          }
+        },
+        "place": {
+          "label": "Where would you like to take lessons?",
+          "hint": "The free lesson is online; this helps us plan the next ones.",
+          "options": {
+            "sunshineCoast": "Sunshine Coast",
+            "brisbane": "Brisbane",
+            "online": "Online",
+            "notSure": "Not sure yet"
+          }
+        },
+        "times": {
+          "label": "Which days and times suit you?",
+          "hint": "For example: Tuesday and Thursday afternoons, or Saturday mornings."
+        },
+        "language": {
+          "label": "Which language would you like to learn or practise?",
+          "options": {
+            "spanish": "Spanish",
+            "english": "English"
+          }
+        },
+        "message": {
+          "label": "Message",
+          "hint": "Your level, your goals or any questions."
+        },
+        "consent": {
+          "label": "I agree that Spanglish may use these details only to reply to my request. If the lesson is for someone under 18, I am their parent or legal guardian and I am filling in this form on their behalf. More in the <privacy>privacy policy</privacy>."
+        },
+        "honeypot": "Leave this field empty"
+      },
+      "submit": "Send request",
+      "sending": "Sending…",
+      "errorSummary": "Please check {count, plural, one {# field} other {# fields}}:",
+      "errors": {
+        "name": {
+          "required": "Enter your name.",
+          "tooLong": "Your name is too long (100 characters maximum)."
+        },
+        "email": {
+          "required": "Enter your email.",
+          "email": "Enter a valid email, like name@example.com.",
+          "tooLong": "Your email is too long."
+        },
+        "phone": {
+          "phone": "Enter a valid phone number: digits, spaces and the + sign only.",
+          "tooLong": "Your phone number is too long."
+        },
+        "audience": {
+          "required": "Choose who the lesson is for."
+        },
+        "place": {
+          "required": "Choose where you’d like to take lessons."
+        },
+        "times": {
+          "required": "Tell us which days and times suit you.",
+          "tooLong": "Please shorten the days and times (300 characters maximum)."
+        },
+        "language": {
+          "required": "Choose which language you’d like to learn or practise."
+        },
+        "message": {
+          "tooLong": "Your message is too long (2000 characters maximum)."
+        },
+        "consent": {
+          "consent": "We need your consent to use your details before we can reply."
+        }
+      },
+      "status": {
+        "spam": "We couldn’t send your request. Wait a few seconds and try again, or call or email us.",
+        "unavailable": "We can’t receive requests through the website right now, and yours has not been sent. Call or email us and we’ll book your lesson with you:",
+        "failed": "A technical problem stopped your request from being sent: it has not been sent. Try again in a moment, or call or email us:"
+      },
+      "asideQuestion": "Rather call?",
+      "asideBody": "Monday to Saturday, 8am to 5pm.",
+      "phoneLabel": "Call",
+      "emailLabel": "Email",
+      "nextQuestion": "What happens next?",
+      "next": {
+        "send": {
+          "title": "You send your request",
+          "body": "With the details on this form, nothing more."
+        },
+        "reply": {
+          "title": "Maribel replies",
+          "body": "Personally and as soon as possible, by email or phone."
+        },
+        "lesson": {
+          "title": "You take your free lesson",
+          "body": "45 minutes, online. Then you decide whether to continue."
+        }
+      },
+      "moreQuestions": "Other questions?",
+      "moreFaq": "Read the FAQ",
+      "morePrices": "See the prices"
+    },
+    "thankYou": {
+      "metaTitle": "Thank you for your request · Spanglish",
+      "metaDescription": "We’ve received your request. Maribel will reply personally as soon as possible.",
+      "title": "Thank you!",
+      "lead": "We’ve received your request. Maribel will read it and reply personally as soon as possible, by email or phone.",
+      "ask": "What now?",
+      "answer": "Maribel gets in touch to arrange your lesson.",
+      "nextQuestion": "What happens now?",
+      "next": {
+        "read": {
+          "title": "Maribel reads your request",
+          "body": "To see who will be learning and which days suit you."
+        },
+        "reply": {
+          "title": "She replies",
+          "body": "Personally and as soon as possible, by email or phone."
+        },
+        "lesson": {
+          "title": "You take your free lesson",
+          "body": "45 minutes, online. Then you decide whether to continue."
+        }
+      },
+      "spamNote": "Can’t see her reply? Check your spam folder, or call us on <tel>{phone}</tel>.",
+      "meanwhileQuestion": "In the meantime…",
+      "links": {
+        "lessons": {
+          "title": "Lessons",
+          "body": "Formats and prices for every age."
+        },
+        "prices": {
+          "title": "Prices",
+          "body": "Every published price at a glance."
+        },
+        "faq": {
+          "title": "FAQ",
+          "body": "Payments, formats, kids and mature learners."
+        },
+        "learn": {
+          "title": "Practise now",
+          "body": "Free interactive lessons, A1 to B2."
+        }
+      },
+      "backHome": "Back to the home page"
+    },
+    "faq": {
+      "metaTitle": "Frequently asked questions about Spanish lessons · Spanglish",
+      "metaDescription": "Answers about Spanglish’s Spanish lessons: levels, lesson length, online and face-to-face formats, kids and mature learners, prices and payments, and the free first lesson.",
+      "title": "Frequently asked questions",
+      "lead": "What people ask us most about the lessons. Can’t find your answer? Get in touch and we’ll reply.",
+      "ask": "I’ve got a question…",
+      "answer": "The answer’s probably here!",
+      "jumpLabel": "Topics",
+      "groups": {
+        "lessons": {
+          "title": "About the lessons",
+          "items": {
+            "level": {
+              "q": "Do I need to know any Spanish?",
+              "a": "No. There are lessons for every level, from complete beginner to advanced."
+            },
+            "length": {
+              "q": "How long is a lesson?",
+              "a": "Lessons are 70 minutes long. Online Conversation lessons are 50 minutes, and the free first lesson is 45."
+            },
+            "includes": {
+              "q": "What does each lesson include?",
+              "a": "Materials to follow the lesson, a summary afterwards and homework to prepare for the next one."
+            },
+            "teacher": {
+              "q": "Who teaches the lessons?",
+              "a": "Maribel Mayhua, a native Spanish tutor from Lima, Peru, certified to teach levels A1 to B2 and with more than 4 years of experience. She lives in Australia."
+            }
+          }
+        },
+        "formats": {
+          "title": "Formats and places",
+          "items": {
+            "where": {
+              "q": "Are lessons online or face to face?",
+              "a": "Both. Online from anywhere, and face to face on the Sunshine Coast and in Brisbane: at the tutor’s place, at a library, at a local office or at your place, depending on the format."
+            },
+            "formats": {
+              "q": "Which formats are there?",
+              "a": "Private (1-1), your own group (up to 2 people) or a local group with other people in your area. You can take a 10-week program or pay as you go."
+            },
+            "groups": {
+              "q": "Are there groups I can join?",
+              "a": "Yes. There are 6-week and 9-week beginner groups (the latest editions ran at Maroochydore Library and WOTSO Sippy Downs) and a 10-week Online Conversation program. Dates change with each edition, so ask us about the next ones."
+            },
+            "online": {
+              "q": "What is Online Conversation?",
+              "a": "A 10-week program to practise conversation from home, at intermediate level: one 50-minute online lesson a week. It costs {onlineUpfront} upfront or {onlineLesson} per lesson."
+            }
+          }
+        },
+        "ages": {
+          "title": "Kids and mature learners",
+          "items": {
+            "kids": {
+              "q": "What ages are the kids lessons for?",
+              "a": "For girls and boys aged 6 to 13, with games, songs and visual resources."
+            },
+            "homeschool": {
+              "q": "Do they suit home schooling?",
+              "a": "Yes. They’re ideal for home schooling families and private learners."
+            },
+            "minors": {
+              "q": "If the lesson is for someone under 18, who requests it?",
+              "a": "Their parent or legal guardian. They fill in the form, and lessons are arranged with them."
+            },
+            "mature": {
+              "q": "Isn’t it too late to learn after 65?",
+              "a": "Never! There are lessons for adults over 65, from beginner to advanced: online or face to face, private or with your own group."
+            }
+          }
+        },
+        "payments": {
+          "title": "Prices and payments",
+          "items": {
+            "cost": {
+              "q": "How much do lessons cost?",
+              "a": "Group lessons start from {groupFrom} per person (the final rate depends on your group size) and the mature adults program is {matureLesson} per lesson. Private lesson prices are sent by email. All prices are in Australian dollars (AUD)."
+            },
+            "pay": {
+              "q": "How do I pay?",
+              "a": "By bank transfer. Once you’ve made it, email hello@spanglish.com.au so we can confirm it."
+            },
+            "upfront": {
+              "q": "Do I have to pay everything upfront?",
+              "a": "No. Pay as you go has no upfront commitment. In the mature adults program you pay {matureLesson} per lesson, or {matureUpfront} if you pay for all 10 upfront; in the 6-week and 9-week groups, the full amount upfront or {editionLesson} per lesson."
+            }
+          }
+        },
+        "free": {
+          "title": "The free lesson",
+          "items": {
+            "what": {
+              "q": "What is the free lesson like?",
+              "a": "It’s your first lesson with Maribel: 45 minutes, online. It’s a chance to get a feel for her teaching style, and then you decide whether to continue."
+            },
+            "who": {
+              "q": "Who can request it?",
+              "a": "Anyone who wants to start, at any age. There’s one free lesson per person."
+            },
+            "book": {
+              "q": "How do I request it?",
+              "a": "With the form on the “Free lesson” page, or by calling 0413 178 583, Monday to Saturday, 8am to 5pm. Maribel replies personally to arrange a day and time."
+            }
+          }
+        },
+        "changes": {
+          "title": "Changes and cancellations",
+          "items": {
+            "cancel": {
+              "q": "Can I change or cancel a lesson?",
+              "a": "The conditions for changing, cancelling or making up a lesson are confirmed with Maribel when you book. If you need to change a lesson, let her know as soon as possible by phone or email."
+            }
+          }
+        }
+      },
+      "contactQuestion": "Question not here?",
+      "contactBody": "Email or call us and we’ll reply personally.",
+      "contactCta": "Go to contact"
+    },
+    "prices": {
+      "metaTitle": "Spanish lesson prices and formats · Spanglish",
+      "metaDescription": "Your first lesson is free. Groups from {groupFrom} per person, a mature adults program at {matureLesson} per lesson and a 10-week Online Conversation program for {onlineUpfront}. Prices in AUD.",
+      "title": "Prices and formats",
+      "lead": "Our published prices, in Australian dollars (AUD). And before anything else, your first lesson is free.",
+      "ask": "How much does it cost to learn?",
+      "answer": "Your first lesson is free!",
+      "programsQuestion": "Which programs are there?",
+      "programsIntro": "Programs with a set price. Group dates change with each edition.",
+      "programs": {
+        "mature": {
+          "title": "Mature adults program (65+)",
+          "unit": "per lesson",
+          "details": {
+            "program": "10-lesson program: {matureLesson} per lesson, or {matureUpfront} if you pay for all 10 upfront.",
+            "single": "Single lesson: {matureSingle}.",
+            "mode": "Online or face to face, private or with your own group.",
+            "from": "Rates apply from April 2026."
+          }
+        },
+        "online": {
+          "title": "Online Conversation (10 weeks)",
+          "unit": "upfront",
+          "details": {
+            "lesson": "Or {onlineLesson} per lesson.",
+            "level": "Intermediate level.",
+            "length": "One 50-minute online lesson a week."
+          }
+        },
+        "nineWeek": {
+          "title": "Beginner group (9 weeks)",
+          "unit": "upfront",
+          "details": {
+            "lesson": "Or {editionLesson} per lesson.",
+            "length": "One 70-minute lesson a week.",
+            "place": "Latest edition: Maroochydore Library."
+          }
+        },
+        "sixWeek": {
+          "title": "Beginner group (6 weeks)",
+          "unit": "upfront",
+          "details": {
+            "lesson": "Or {editionLesson} per lesson.",
+            "length": "One 70-minute lesson a week.",
+            "place": "Latest edition: WOTSO Sippy Downs."
+          }
+        }
+      },
+      "datesTitle": "When does the next group start?",
+      "datesBody": "Ask us about dates, times and places for the upcoming editions.",
+      "datesCta": "Ask us",
+      "compareQuestion": "Everything at a glance",
+      "compareCaption": "Options, audience, format, length and price of the lessons",
+      "columns": {
+        "option": "Option",
+        "audience": "Who for",
+        "format": "Format",
+        "length": "Length",
+        "price": "Price"
+      },
+      "rows": {
+        "free": {
+          "option": "First lesson",
+          "audience": "Any age",
+          "format": "Online",
+          "length": "45 min",
+          "price": "Free"
+        },
+        "group": {
+          "option": "Group lessons",
+          "audience": "Adults (14+) and kids (6–13)",
+          "format": "Your own group (max. 2) or a local group",
+          "length": "70 min",
+          "price": "From {groupFrom} per person"
+        },
+        "private": {
+          "option": "Private 1-1 lessons",
+          "audience": "Adults, kids and mature adults",
+          "format": "Online or face to face",
+          "length": "70 min",
+          "price": "By email"
+        },
+        "mature": {
+          "option": "Mature adults program",
+          "audience": "Mature adults (65+)",
+          "format": "Private or your own group, online or face to face",
+          "length": "70 min",
+          "price": "{matureLesson} per lesson ({matureUpfront} for all 10 upfront). Single: {matureSingle}"
+        },
+        "online": {
+          "option": "Online Conversation",
+          "audience": "Intermediate level",
+          "format": "Online, 10 weeks",
+          "length": "50 min",
+          "price": "{onlineUpfront} upfront or {onlineLesson} per lesson"
+        },
+        "editions": {
+          "option": "Beginner groups",
+          "audience": "Beginners",
+          "format": "Face to face, 6 or 9 weeks",
+          "length": "70 min",
+          "price": "{sixWeekUpfront} (6 weeks) or {nineWeekUpfront} (9 weeks) upfront, or {editionLesson} per lesson"
+        }
+      },
+      "notesQuestion": "Good to know",
+      "notes": {
+        "currency": "All prices are in Australian dollars (AUD).",
+        "private": "Private lesson prices are sent by email, depending on the format you choose.",
+        "mature": "Mature adults rates apply from April 2026.",
+        "payment": "Payment is by bank transfer.",
+        "changes": "Change and cancellation conditions are confirmed when you book."
+      },
+      "askPrivate": "Ask for prices by email"
+    },
+    "privacy": {
+      "metaTitle": "Privacy policy · Spanglish",
+      "metaDescription": "What the Spanglish website collects, what we use it for and how you can access or correct it.",
+      "title": "Privacy policy",
+      "updated": "Last updated: November 2026 (under review).",
+      "lead": "In plain words: what you share with us on this website, what we use it for, and how to ask us to show, correct or delete it.",
+      "sections": {
+        "who": {
+          "title": "Who we are",
+          "body": {
+            "p1": "Spanglish is Maribel Mayhua’s Spanish school, with lessons on the Sunshine Coast, in Brisbane and online (Australia).",
+            "p2": "This policy is based on the Australian Privacy Principles (APPs) in the Privacy Act 1988."
+          }
+        },
+        "collect": {
+          "title": "What we collect",
+          "body": {
+            "p1": "Only what you give us. If you request a free lesson with the form: your name, your email, your phone number (if you enter it), who the lesson is for (adults, kids or mature adults), where you’d like to take lessons, the days and times that suit you, the language you’d like to learn or practise, and your message.",
+            "p2": "If you call or email us, whatever you tell us in that call or email."
+          }
+        },
+        "children": {
+          "title": "Children’s information",
+          "body": {
+            "p1": "If the lesson is for someone under 18, the form must be filled in by their parent or legal guardian. We only ask for the age group (for example, kids aged 6 to 13), not a date of birth, and lessons are arranged with the responsible adult."
+          }
+        },
+        "use": {
+          "title": "What we use it for",
+          "body": {
+            "p1": "To reply to your request and organise your lessons. We don’t sell your information, we don’t use it for advertising and we don’t sign you up to any newsletter."
+          }
+        },
+        "storage": {
+          "title": "How it reaches us and where it is kept",
+          "body": {
+            "p1": "When you send the form, your details reach Spanglish by email through an email delivery service. That service and our email provider may store data on servers outside Australia.",
+            "p2": "We keep your details only for as long as we need them to reply to you and organise your lessons."
+          }
+        },
+        "cookies": {
+          "title": "Cookies and analytics",
+          "body": {
+            "p1": "This website doesn’t use analytics tools or advertising cookies. It may only store a technical cookie to remember the language you choose. Our hosting provider may log technical data, such as IP addresses, for security."
+          }
+        },
+        "rights": {
+          "title": "Your rights",
+          "body": {
+            "p1": "You can ask to see the information we hold about you, to correct it or to have it deleted. Email us at {email} or call us on {phone}."
+          }
+        },
+        "complaints": {
+          "title": "If something doesn’t seem right",
+          "body": {
+            "p1": "Contact us first and we’ll try to sort it out. If you’re not satisfied, you can contact the Office of the Australian Information Commissioner (OAIC) at oaic.gov.au."
+          }
+        },
+        "changes": {
+          "title": "Changes to this policy",
+          "body": {
+            "p1": "If we change it, we’ll publish the new version here with its date."
+          }
+        }
+      }
+    },
+    "terms": {
+      "todoLegal": "TODO(legal): there is no published policy for cancellation windows, fees, refunds or make-up lessons. Confirm with the owner (and a legal review) before removing noindex from /privacy-policy and /terms.",
+      "metaTitle": "Terms and cancellations · Spanglish",
+      "metaDescription": "How Spanglish lessons are arranged: the free lesson, prices, payments, and changes or cancellations.",
+      "title": "Terms and cancellations",
+      "updated": "Last updated: November 2026 (under review).",
+      "lead": "The basic conditions of the lessons, in plain language.",
+      "sections": {
+        "lessons": {
+          "title": "The lessons",
+          "body": {
+            "p1": "Lessons are taught by Maribel Mayhua (Spanglish). The format, place, day and time of each lesson are arranged with her before you start."
+          }
+        },
+        "free": {
+          "title": "The free lesson",
+          "body": {
+            "p1": "Your first lesson is free: 45 minutes, online, one per person. Then you decide whether to continue."
+          }
+        },
+        "prices": {
+          "title": "Prices and payments",
+          "body": {
+            "p1": "The prices on the prices page are in Australian dollars (AUD) and may change. If you have any questions about the price of your lessons, ask when you book.",
+            "p2": "Payment is by bank transfer. Once you’ve made it, email us at {email} so we can confirm it."
+          }
+        },
+        "cancellations": {
+          "title": "Changes, cancellations and refunds",
+          "body": {
+            "p1": "The conditions for changing or cancelling a lesson, making up a missed lesson and, where applicable, requesting a refund are confirmed with you when you book.",
+            "p2": "If you need to change a lesson, let Maribel know as soon as possible by phone or email."
+          }
+        },
+        "minors": {
+          "title": "Under-18s",
+          "body": {
+            "p1": "If the student is under 18, the booking is made by their parent or legal guardian, and lessons are arranged with them."
+          }
+        },
+        "consumer": {
+          "title": "Your consumer rights",
+          "body": {
+            "p1": "Nothing on this page limits your rights under the Australian Consumer Law."
+          }
+        },
+        "contact": {
+          "title": "Contact",
+          "body": {
+            "p1": "If you have any questions about these terms, email us at {email} or call us on {phone}."
+          }
+        }
+      }
     }
+  },
+  "notFound": {
+    "metaTitle": "Page not found · Spanglish",
+    "code": "404",
+    "title": "Oops! This page doesn’t exist",
+    "lead": "The link may be mistyped, or the page may have moved. Here’s where you can go next:",
+    "home": "Go to the home page",
+    "lessons": "See the lessons",
+    "booking": "Book a free lesson"
+  },
+  "videos": {
+    "question": "Learn with Maribel’s videos",
+    "intro": "Short, free lessons so you can start practising right away.",
+    "play": "Play video"
   }
 }

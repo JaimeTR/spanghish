@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { isLocale, type Locale } from "@/i18n/routing";
 import { PRICE_VALUES } from "@/lib/prices";
-import { localePath, type RouteKey } from "@/lib/routes";
+import { isIndexable, localePath, type RouteKey } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
 
@@ -11,6 +11,7 @@ export type PageProps = { params: Promise<{ locale: string }> };
 /**
  * Metadatos de una página interior a partir de `page.<namespace>.metaTitle` y
  * `metaDescription`. Devuelve {} si el idioma no existe (el layout da 404).
+ * Las rutas de NOINDEX_ROUTES llevan `robots: noindex`.
  */
 export async function innerPageMetadata(params: PageProps["params"], route: RouteKey, namespace: string): Promise<Metadata> {
   const { locale } = await params;
@@ -23,6 +24,7 @@ export async function innerPageMetadata(params: PageProps["params"], route: Rout
     title: t("metaTitle"),
     description: t("metaDescription", PRICE_VALUES),
     ogAlt: tm("ogAlt"),
+    noindex: !isIndexable(route),
   });
 }
 

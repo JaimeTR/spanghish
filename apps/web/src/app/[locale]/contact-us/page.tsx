@@ -1,15 +1,16 @@
+import Link from "next/link";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Bubble, SectionQuestion } from "@/components/Bubble";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactBubbles } from "@/components/ContactBubbles";
-import { ClockIcon, PinIcon } from "@/components/icons";
+import { ArrowIcon, ClockIcon, PinIcon } from "@/components/icons";
 import { PageShell } from "@/components/PageShell";
 import { SocialLinks } from "@/components/SocialLinks";
-import { container } from "@/components/styles";
+import { btnOnDark, container } from "@/components/styles";
 import { isLocale } from "@/i18n/routing";
 import { crumbsJsonLd, innerPageMetadata, type PageProps } from "@/lib/page-meta";
-import { localePath } from "@/lib/routes";
+import { bookingPath, localePath } from "@/lib/routes";
 import { contactPageJsonLd, organizationJsonLd } from "@/lib/structured-data";
 
 const STEPS = ["contact", "tell", "book"] as const;
@@ -19,8 +20,8 @@ export function generateMetadata({ params }: PageProps) {
 }
 
 /**
- * Contacto y clase gratis. Sin formulario: la reserva online llegará con la
- * nueva plataforma; hasta entonces, teléfono y email reales.
+ * Contacto: preguntas generales por teléfono o email. La clase gratis se pide
+ * con el formulario de /bookings (enlazado aquí); esta página no tiene formulario.
  */
 export default async function ContactPage({ params }: PageProps) {
   const { locale } = await params;
@@ -110,8 +111,17 @@ export default async function ContactPage({ params }: PageProps) {
               </li>
             ))}
           </ol>
-          <Bubble tone="purple" tail="right" className="mt-14 md:ml-auto md:max-w-[42rem]" boxClassName="px-6 py-5 sm:px-8">
+          <Bubble
+            tone="purple"
+            tail="right"
+            className="on-dark mt-14 md:ml-auto md:max-w-[42rem]"
+            boxClassName="flex flex-col items-start gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8"
+          >
             <p className="text-lg leading-relaxed">{t("bookingNote")}</p>
+            <Link href={bookingPath(locale)} className={`${btnOnDark} shrink-0`}>
+              {t("bookingCta")}
+              <ArrowIcon />
+            </Link>
           </Bubble>
         </div>
       </section>

@@ -1,15 +1,19 @@
-import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import type { Locale } from "@/i18n/routing";
+import { bookingPath } from "@/lib/routes";
 import { SectionQuestion } from "../Bubble";
 import { ContactBubbles } from "../ContactBubbles";
-import { ClockIcon } from "../icons";
-import { container } from "../styles";
+import { ArrowIcon } from "../icons";
+import { btnOnDark, container } from "../styles";
 
 /**
- * Cierre: campo fucsia, la acción principal. Sin formulario falso: teléfono y
- * email reales hasta que llegue la reserva online con la nueva plataforma.
+ * Cierre: campo fucsia, la acción principal. Teléfono y email reales, y el
+ * formulario de solicitud de clase gratis (/bookings) para quien prefiera escribir.
  */
 export function Contact() {
   const t = useTranslations("contact");
+  const locale = useLocale() as Locale;
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="on-dark bg-brand-fuchsia py-20 text-on-primary lg:py-28">
@@ -24,10 +28,13 @@ export function Contact() {
 
         <div className="flex flex-col gap-6 lg:col-span-7">
           <ContactBubbles phoneLabel={t("phoneLabel")} emailLabel={t("emailLabel")} />
-          <p className="flex items-start gap-2 text-[1.0625rem] leading-relaxed">
-            <ClockIcon />
-            {t("note")}
-          </p>
+          <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-[26rem] text-[1.0625rem] leading-relaxed">{t("note")}</p>
+            <Link href={bookingPath(locale)} className={`${btnOnDark} shrink-0`}>
+              {t("formCta")}
+              <ArrowIcon />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

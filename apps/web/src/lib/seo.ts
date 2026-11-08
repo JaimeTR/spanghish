@@ -1,6 +1,6 @@
 import type { Metadata, MetadataRoute } from "next";
 import { routing, type Locale } from "../i18n/routing";
-import { languageAlternates, localePath, ROUTE_KEYS, type RouteKey } from "./routes";
+import { isIndexable, languageAlternates, localePath, ROUTE_KEYS, type RouteKey } from "./routes";
 import { SITE_URL } from "./site";
 
 export const OG_IMAGE = { url: "/og-spanglish.png", width: 1200, height: 630 } as const;
@@ -16,16 +16,20 @@ export function pageMetadata({
   title,
   description,
   ogAlt,
+  noindex = false,
 }: {
   locale: Locale;
   route: RouteKey;
   title: string;
   description: string;
   ogAlt: string;
+  /** Fuera de buscadores (se mantiene follow para que los enlaces cuenten). */
+  noindex?: boolean;
 }): Metadata {
   return {
     title,
     description,
+    ...(noindex ? { robots: { index: false, follow: true } } : {}),
     alternates: { canonical: localePath(locale, route), languages: languageAlternates(route) },
     openGraph: {
       type: "website",
@@ -41,8 +45,8 @@ export function pageMetadata({
   };
 }
 
-/** Prioridad orientativa para el sitemap: la home y las clases primero. */
-const PRIORITY: Record<RouteKey, number> = {
+/** Prioridad orientativa para el sitemap: la home, las clases y la reserva primero. */
+const PRIORITY: Partial<Record<RouteKey, number>> = {
   home: 1,
   lessons: 0.9,
   adults: 0.9,
@@ -50,17 +54,23 @@ const PRIORITY: Record<RouteKey, number> = {
   mature: 0.9,
   contact: 0.8,
   teachers: 0.7,
+  bookings: 0.9,
+  prices: 0.8,
+  faq: 0.6,
 };
 
-/** Una entrada por ruta e idioma, cada una con sus alternativas hreflang. */
+/** Rutas del sitemap: todas menos las marcadas como noindex. */
+export const SITEMAP_ROUTES = ROUTE_KEYS.filter(isIndexable);
+
+/** Una entrada por ruta indexable e idioma, cada una con sus alternativas hreflang. */
 export function sitemapEntries(baseUrl: string = SITE_URL, lastModified?: Date): MetadataRoute.Sitemap {
   const abs = (path: string) => `${baseUrl}${path}`;
-  return ROUTE_KEYS.flatMap((route) =>
+  return SITEMAP_ROUTES.flatMap((route) =>
     routing.locales.map((locale) => ({
       url: abs(localePath(locale, route)),
       ...(lastModified ? { lastModified } : {}),
       changeFrequency: "monthly" as const,
-      priority: PRIORITY[route],
+      priority: PRIORITY[route] ?? 0.5,
       alternates: {
         languages: Object.fromEntries(routing.locales.map((l) => [l, abs(localePath(l, route))])),
       },

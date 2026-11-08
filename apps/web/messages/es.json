@@ -27,7 +27,12 @@
     "footerLessons": "Clases",
     "footerSchool": "Spanglish",
     "breadcrumb": "Ruta de navegación",
-    "homeCrumb": "Inicio"
+    "homeCrumb": "Inicio",
+    "faq": "Preguntas",
+    "bookings": "Clase gratis",
+    "privacy": "Privacidad",
+    "terms": "Términos y cancelaciones",
+    "footerLegal": "Legal"
   },
   "locales": {
     "es": "Español",
@@ -164,18 +169,18 @@
     },
     "groupsAskTitle": "¿Buscas un grupo?",
     "groupsAskBody": "Pregúntanos por las fechas y los horarios de los próximos grupos.",
-    "groupsAskCta": "Pregúntanos"
+    "groupsAskCta": "Pregúntanos",
+    "seeAll": "Ver todos los precios y formatos"
   },
   "maribel": {
     "question": "¿Quién es Maribel?",
     "hello": "¡Hola!",
     "name": "Soy Maribel",
-    "body": "Maribel es profesora nativa y certificada de español. Vive en Australia y tiene más de 4 años de experiencia dando clases.",
-    "body2": "Su objetivo es que hables español con confianza: comunicación práctica, gramática clara y un resumen con deberes después de cada clase.",
+    "body": "Soy profesora nativa y certificada de español, y vivo en Australia.",
+    "body2": "Mi objetivo es que hables español con confianza: comunicación práctica, gramática clara y un resumen con deberes después de cada clase.",
     "facts": {
       "native": "Nativa",
       "certified": "Certificada",
-      "years": "+4 años de experiencia",
       "based": "En Australia"
     }
   },
@@ -188,11 +193,12 @@
   },
   "contact": {
     "question": "¿Empezamos?",
-    "lead": "Tu primera clase es gratis: 45 minutos, online. Llámanos o escríbenos y la reservamos.",
+    "lead": "Tu primera clase es gratis: 45 minutos, online. Pídela con el formulario o llámanos o escríbenos.",
     "phoneLabel": "Llama al",
     "emailLabel": "Escribe a",
     "hours": "Lunes a sábado, de 8:00 a 17:00.",
-    "note": "Muy pronto podrás reservar tu clase directamente en esta web."
+    "note": "¿Prefieres escribir con calma? Pide tu clase gratis con el formulario de reserva.",
+    "formCta": "Ir al formulario"
   },
   "footer": {
     "tagline": "Nuestro objetivo es que hables español con confianza.",
@@ -285,7 +291,7 @@
     "relatedLessonsBody": "Compara formatos y precios para cada edad.",
     "freeLesson": {
       "question": "¿Empezamos?",
-      "lead": "Tu primera clase es gratis: 45 minutos, online. Llámanos o escríbenos y la reservamos.",
+      "lead": "Tu primera clase es gratis: 45 minutos, online. Pídela con el formulario o llámanos.",
       "cta": "Reserva tu clase gratis",
       "call": "Llamar al {phone}"
     },
@@ -546,8 +552,8 @@
       "metaTitle": "Contacto y clase gratis · Spanglish",
       "metaDescription": "Llama al 0413 178 583 o escribe a hello@spanglish.com.au, de lunes a sábado de 8:00 a 17:00. Sunshine Coast, Brisbane y online. Tu primera clase es gratis.",
       "title": "Contacto",
-      "ask": "¿Cómo reservo mi clase gratis?",
-      "lead": "Llámanos o escríbenos. Tu primera clase es gratis: 45 minutos, online.",
+      "ask": "¿Tienes alguna pregunta?",
+      "lead": "Llámanos o escríbenos. Si quieres tu clase gratis (45 minutos, online), pídela con el formulario de reserva.",
       "phoneLabel": "Llama al",
       "emailLabel": "Escribe a",
       "detailsLabel": "Datos de contacto",
@@ -558,21 +564,562 @@
       "stepsQuestion": "¿Cómo funciona la clase gratis?",
       "steps": {
         "contact": {
-          "title": "Llámanos o escríbenos",
-          "body": "Por teléfono de lunes a sábado, de 8:00 a 17:00, o por email."
+          "title": "Pide tu clase",
+          "body": "Con el formulario de reserva, por teléfono (de lunes a sábado, de 8:00 a 17:00) o por email."
         },
         "tell": {
           "title": "Cuéntanos qué buscas",
           "body": "Para quién es la clase (adulto, niño o mayor) y el formato que prefieres."
         },
         "book": {
-          "title": "Reservamos tu clase",
-          "body": "Tu primera clase es gratis: 45 minutos, online."
+          "title": "Maribel te responde",
+          "body": "Te responde personalmente para acordar tu clase gratis: 45 minutos, online."
         }
       },
-      "bookingNote": "Muy pronto podrás reservar tu clase directamente en esta web, con la nueva plataforma de Spanglish. Mientras tanto, la reservamos contigo por teléfono o email.",
+      "bookingNote": "Puedes pedir tu clase gratis con el formulario de reserva: solo te lleva un par de minutos.",
       "socialQuestion": "¿Nos sigues?",
-      "socialBody": "Estamos en redes como @spanglishworldwide."
+      "socialBody": "Estamos en redes como @spanglishworldwide.",
+      "bookingCta": "Ir al formulario"
+    },
+    "bookings": {
+      "metaTitle": "Reserva tu clase gratis de español · Spanglish",
+      "metaDescription": "Pide tu primera clase gratis con Maribel, profesora nativa y certificada: 45 minutos, online. Para adultos, niños y mayores en Sunshine Coast, Brisbane y online.",
+      "titleA": "Tu primera clase",
+      "titleB": "¡es gratis!",
+      "lead": "Cuéntanos quién va a aprender y cuándo te viene bien. Maribel lee cada solicitud y te responde personalmente para acordar el día y la hora.",
+      "ask": "¿Cómo es la clase gratis?",
+      "answer": "¡45 minutos online con Maribel!",
+      "formLink": "Ir al formulario",
+      "formQuestion": "Cuéntanos un poco",
+      "formIntro": "Todos los campos son obligatorios salvo los marcados como opcionales.",
+      "optional": "(opcional)",
+      "fields": {
+        "name": {
+          "label": "Tu nombre",
+          "hint": "Si la clase es para un menor, escribe tu nombre (madre, padre o tutor)."
+        },
+        "email": {
+          "label": "Email",
+          "hint": "Te responderemos a este email."
+        },
+        "phone": {
+          "label": "Teléfono",
+          "hint": "Por si prefieres que te llamemos."
+        },
+        "audience": {
+          "label": "¿Para quién es la clase?",
+          "options": {
+            "adults": "Adultos (14+)",
+            "kids": "Niños (6–13)",
+            "mature": "Mayores (65+)"
+          }
+        },
+        "place": {
+          "label": "¿Dónde te gustaría hacer las clases?",
+          "hint": "La clase gratis es online; esto nos ayuda a planear las siguientes.",
+          "options": {
+            "sunshineCoast": "Sunshine Coast",
+            "brisbane": "Brisbane",
+            "online": "Online",
+            "notSure": "Aún no lo sé"
+          }
+        },
+        "times": {
+          "label": "¿Qué días y horas te vienen bien?",
+          "hint": "Por ejemplo: martes y jueves por la tarde, o sábados por la mañana."
+        },
+        "language": {
+          "label": "¿Qué idioma quieres aprender o practicar?",
+          "options": {
+            "spanish": "Español",
+            "english": "Inglés"
+          }
+        },
+        "message": {
+          "label": "Mensaje",
+          "hint": "Tu nivel, tus objetivos o cualquier duda."
+        },
+        "consent": {
+          "label": "Acepto que Spanglish use estos datos solo para responder a mi solicitud. Si la clase es para un menor de 18 años, soy su madre, padre o tutor legal y relleno este formulario en su nombre. Más información en la <privacy>política de privacidad</privacy>."
+        },
+        "honeypot": "Deja este campo vacío"
+      },
+      "submit": "Enviar solicitud",
+      "sending": "Enviando…",
+      "errorSummary": "Revisa {count, plural, one {# campo} other {# campos}}:",
+      "errors": {
+        "name": {
+          "required": "Escribe tu nombre.",
+          "tooLong": "El nombre es demasiado largo (máximo 100 caracteres)."
+        },
+        "email": {
+          "required": "Escribe tu email.",
+          "email": "Escribe un email válido, como nombre@ejemplo.com.",
+          "tooLong": "El email es demasiado largo."
+        },
+        "phone": {
+          "phone": "Escribe un teléfono válido: solo números, espacios y el signo +.",
+          "tooLong": "El teléfono es demasiado largo."
+        },
+        "audience": {
+          "required": "Elige para quién es la clase."
+        },
+        "place": {
+          "required": "Elige dónde te gustaría hacer las clases."
+        },
+        "times": {
+          "required": "Cuéntanos qué días y horas te vienen bien.",
+          "tooLong": "Resume los días y horas (máximo 300 caracteres)."
+        },
+        "language": {
+          "required": "Elige qué idioma quieres aprender o practicar."
+        },
+        "message": {
+          "tooLong": "El mensaje es demasiado largo (máximo 2000 caracteres)."
+        },
+        "consent": {
+          "consent": "Para responderte necesitamos que aceptes el uso de tus datos."
+        }
+      },
+      "status": {
+        "spam": "No hemos podido enviar tu solicitud. Espera unos segundos y vuelve a intentarlo, o llámanos o escríbenos.",
+        "unavailable": "Ahora mismo no podemos recibir solicitudes desde la web y la tuya no se ha enviado. Llámanos o escríbenos y reservamos tu clase contigo:",
+        "failed": "Un problema técnico ha impedido enviar tu solicitud: no se ha enviado. Vuelve a intentarlo en un momento, o llámanos o escríbenos:"
+      },
+      "asideQuestion": "¿Prefieres llamar?",
+      "asideBody": "De lunes a sábado, de 8:00 a 17:00.",
+      "phoneLabel": "Llama al",
+      "emailLabel": "Escribe a",
+      "nextQuestion": "¿Qué pasa después?",
+      "next": {
+        "send": {
+          "title": "Envías la solicitud",
+          "body": "Con los datos de este formulario, nada más."
+        },
+        "reply": {
+          "title": "Maribel te responde",
+          "body": "Personalmente y lo antes posible, por email o por teléfono."
+        },
+        "lesson": {
+          "title": "Haces tu clase gratis",
+          "body": "45 minutos, online. Después decides si quieres seguir."
+        }
+      },
+      "moreQuestions": "¿Tienes otras dudas?",
+      "moreFaq": "Lee las preguntas frecuentes",
+      "morePrices": "Mira los precios"
+    },
+    "thankYou": {
+      "metaTitle": "Gracias por tu solicitud · Spanglish",
+      "metaDescription": "Hemos recibido tu solicitud. Maribel te responderá personalmente lo antes posible.",
+      "title": "¡Gracias!",
+      "lead": "Hemos recibido tu solicitud. Maribel la leerá y te responderá personalmente lo antes posible, por email o por teléfono.",
+      "ask": "¿Y ahora qué?",
+      "answer": "Maribel te escribe para acordar tu clase.",
+      "nextQuestion": "¿Qué pasa ahora?",
+      "next": {
+        "read": {
+          "title": "Maribel lee tu solicitud",
+          "body": "Para saber quién va a aprender y qué días te vienen bien."
+        },
+        "reply": {
+          "title": "Te responde",
+          "body": "Personalmente y lo antes posible, por email o por teléfono."
+        },
+        "lesson": {
+          "title": "Haces tu clase gratis",
+          "body": "45 minutos, online. Después decides si quieres seguir."
+        }
+      },
+      "spamNote": "¿No ves su respuesta? Revisa la carpeta de spam o llámanos al <tel>{phone}</tel>.",
+      "meanwhileQuestion": "Mientras tanto…",
+      "links": {
+        "lessons": {
+          "title": "Las clases",
+          "body": "Formatos y precios para cada edad."
+        },
+        "prices": {
+          "title": "Precios",
+          "body": "Todos los precios publicados, de un vistazo."
+        },
+        "faq": {
+          "title": "Preguntas frecuentes",
+          "body": "Pagos, formatos, niños y mayores."
+        },
+        "learn": {
+          "title": "Practica ya",
+          "body": "Lecciones interactivas gratis, del A1 al B2."
+        }
+      },
+      "backHome": "Volver al inicio"
+    },
+    "faq": {
+      "metaTitle": "Preguntas frecuentes sobre las clases de español · Spanglish",
+      "metaDescription": "Respuestas sobre las clases de español de Spanglish: niveles, duración, formatos online y presenciales, niños y mayores, precios y pagos, y la primera clase gratis.",
+      "title": "Preguntas frecuentes",
+      "lead": "Lo que más nos preguntan sobre las clases. ¿No encuentras tu respuesta? Escríbenos y te contestamos.",
+      "ask": "Tengo una duda…",
+      "answer": "¡Seguro que está aquí!",
+      "jumpLabel": "Temas",
+      "groups": {
+        "lessons": {
+          "title": "Sobre las clases",
+          "items": {
+            "level": {
+              "q": "¿Necesito saber algo de español?",
+              "a": "No. Hay clases para todos los niveles, desde principiante absoluto hasta avanzado."
+            },
+            "length": {
+              "q": "¿Cuánto dura una clase?",
+              "a": "Las clases duran 70 minutos. Las de Conversación online duran 50 minutos, y la primera clase gratis, 45."
+            },
+            "includes": {
+              "q": "¿Qué incluye cada clase?",
+              "a": "Material para seguir la clase, un resumen al terminar y deberes para preparar la siguiente."
+            },
+            "teacher": {
+              "q": "¿Quién da las clases?",
+              "a": "Maribel Mayhua, profesora nativa de Lima (Perú), certificada para enseñar los niveles A1 a B2 y con más de 4 años de experiencia. Vive en Australia."
+            }
+          }
+        },
+        "formats": {
+          "title": "Formatos y lugares",
+          "items": {
+            "where": {
+              "q": "¿Las clases son online o presenciales?",
+              "a": "Las dos cosas. Online desde cualquier lugar, y presenciales en Sunshine Coast y Brisbane: en casa de la profesora, en una biblioteca, en una oficina local o en tu casa, según el formato."
+            },
+            "formats": {
+              "q": "¿Qué formatos hay?",
+              "a": "Individual (1-1), tu propio grupo (hasta 2 personas) o un grupo local con otras personas de tu zona. Puedes hacer un programa de 10 semanas o pagar clase a clase."
+            },
+            "groups": {
+              "q": "¿Hay grupos a los que me pueda apuntar?",
+              "a": "Sí. Se organizan grupos para principiantes de 6 y 9 semanas (las últimas ediciones, en la biblioteca de Maroochydore y en WOTSO Sippy Downs) y un programa de Conversación online de 10 semanas. Las fechas cambian en cada edición: pregúntanos por las próximas."
+            },
+            "online": {
+              "q": "¿Qué es la Conversación online?",
+              "a": "Un programa de 10 semanas para practicar conversación desde casa, de nivel intermedio: una clase online de 50 minutos por semana. Cuesta {onlineUpfront} por adelantado o {onlineLesson} por clase."
+            }
+          }
+        },
+        "ages": {
+          "title": "Niños y mayores",
+          "items": {
+            "kids": {
+              "q": "¿Para qué edades son las clases de niños?",
+              "a": "Para chicas y chicos de 6 a 13 años, con juegos, canciones y recursos visuales."
+            },
+            "homeschool": {
+              "q": "¿Sirven para educación en casa?",
+              "a": "Sí. Son ideales para familias que educan en casa (home schooling) y para estudiantes particulares."
+            },
+            "minors": {
+              "q": "Si la clase es para un menor, ¿quién la pide?",
+              "a": "Su madre, padre o tutor legal. Es quien rellena el formulario y con quien se acuerdan las clases."
+            },
+            "mature": {
+              "q": "¿No es tarde para aprender después de los 65?",
+              "a": "¡Nunca! Hay clases para mayores de 65, de principiante a avanzado: online o presenciales, individuales o con tu propio grupo."
+            }
+          }
+        },
+        "payments": {
+          "title": "Precios y pagos",
+          "items": {
+            "cost": {
+              "q": "¿Cuánto cuestan las clases?",
+              "a": "Las clases en grupo empiezan desde {groupFrom} por persona (el precio final depende del tamaño del grupo) y el programa para mayores cuesta {matureLesson} por clase. El precio de las clases individuales se pide por email. Todos los precios están en dólares australianos (AUD)."
+            },
+            "pay": {
+              "q": "¿Cómo se paga?",
+              "a": "Por transferencia bancaria. Cuando la hagas, escríbenos a hello@spanglish.com.au para que podamos confirmarla."
+            },
+            "upfront": {
+              "q": "¿Tengo que pagar todo por adelantado?",
+              "a": "No. Con el pago por clase no hay compromiso inicial. En el programa para mayores pagas {matureLesson} por clase, o {matureUpfront} si pagas las 10 por adelantado; en los grupos de 6 y 9 semanas, el total por adelantado o {editionLesson} por clase."
+            }
+          }
+        },
+        "free": {
+          "title": "La clase gratis",
+          "items": {
+            "what": {
+              "q": "¿Cómo es la clase gratis?",
+              "a": "Es tu primera clase con Maribel: 45 minutos, online. Sirve para conocer su forma de enseñar y, después, decides si quieres seguir."
+            },
+            "who": {
+              "q": "¿Quién puede pedirla?",
+              "a": "Cualquier persona que quiera empezar, de cualquier edad. Hay una clase gratis por persona."
+            },
+            "book": {
+              "q": "¿Cómo la pido?",
+              "a": "Con el formulario de la página «Clase gratis», o llamando al 0413 178 583 de lunes a sábado, de 8:00 a 17:00. Maribel te responde personalmente para acordar el día y la hora."
+            }
+          }
+        },
+        "changes": {
+          "title": "Cambios y cancelaciones",
+          "items": {
+            "cancel": {
+              "q": "¿Puedo cambiar o cancelar una clase?",
+              "a": "Las condiciones para cambiar, cancelar o recuperar una clase se confirman con Maribel al reservar. Si necesitas cambiar una clase, avísale cuanto antes por teléfono o por email."
+            }
+          }
+        }
+      },
+      "contactQuestion": "¿No está tu pregunta?",
+      "contactBody": "Escríbenos o llámanos y te respondemos personalmente.",
+      "contactCta": "Ir a contacto"
+    },
+    "prices": {
+      "metaTitle": "Precios y formatos de las clases de español · Spanglish",
+      "metaDescription": "Primera clase gratis. Grupos desde {groupFrom} por persona, programa para mayores a {matureLesson} por clase y Conversación online de 10 semanas por {onlineUpfront}. Precios en AUD.",
+      "title": "Precios y formatos",
+      "lead": "Los precios publicados, en dólares australianos (AUD). Y antes de nada, tu primera clase es gratis.",
+      "ask": "¿Cuánto cuesta aprender?",
+      "answer": "¡La primera clase es gratis!",
+      "programsQuestion": "¿Qué programas hay?",
+      "programsIntro": "Programas con precio cerrado. Las fechas de los grupos cambian en cada edición.",
+      "programs": {
+        "mature": {
+          "title": "Programa para mayores (65+)",
+          "unit": "por clase",
+          "details": {
+            "program": "Programa de 10 clases: {matureLesson} por clase, o {matureUpfront} si pagas las 10 por adelantado.",
+            "single": "Clase suelta: {matureSingle}.",
+            "mode": "Online o presencial, individual o con tu propio grupo.",
+            "from": "Tarifas vigentes desde abril de 2026."
+          }
+        },
+        "online": {
+          "title": "Conversación online (10 semanas)",
+          "unit": "por adelantado",
+          "details": {
+            "lesson": "O {onlineLesson} por clase.",
+            "level": "Nivel intermedio.",
+            "length": "Una clase online de 50 minutos por semana."
+          }
+        },
+        "nineWeek": {
+          "title": "Grupo de principiantes (9 semanas)",
+          "unit": "por adelantado",
+          "details": {
+            "lesson": "O {editionLesson} por clase.",
+            "length": "Una clase de 70 minutos por semana.",
+            "place": "Última edición: biblioteca de Maroochydore."
+          }
+        },
+        "sixWeek": {
+          "title": "Grupo de principiantes (6 semanas)",
+          "unit": "por adelantado",
+          "details": {
+            "lesson": "O {editionLesson} por clase.",
+            "length": "Una clase de 70 minutos por semana.",
+            "place": "Última edición: WOTSO Sippy Downs."
+          }
+        }
+      },
+      "datesTitle": "¿Cuándo empieza el próximo grupo?",
+      "datesBody": "Pregúntanos por las fechas, los horarios y los lugares de las próximas ediciones.",
+      "datesCta": "Pregúntanos",
+      "compareQuestion": "Todo de un vistazo",
+      "compareCaption": "Opciones, público, formato, duración y precio de las clases",
+      "columns": {
+        "option": "Opción",
+        "audience": "Para quién",
+        "format": "Formato",
+        "length": "Duración",
+        "price": "Precio"
+      },
+      "rows": {
+        "free": {
+          "option": "Primera clase",
+          "audience": "Cualquier edad",
+          "format": "Online",
+          "length": "45 min",
+          "price": "Gratis"
+        },
+        "group": {
+          "option": "Clases en grupo",
+          "audience": "Adultos (14+) y niños (6–13)",
+          "format": "Tu propio grupo (máx. 2) o grupo local",
+          "length": "70 min",
+          "price": "Desde {groupFrom} por persona"
+        },
+        "private": {
+          "option": "Clases individuales 1-1",
+          "audience": "Adultos, niños y mayores",
+          "format": "Online o presencial",
+          "length": "70 min",
+          "price": "Por email"
+        },
+        "mature": {
+          "option": "Programa para mayores",
+          "audience": "Mayores (65+)",
+          "format": "Individual o tu propio grupo, online o presencial",
+          "length": "70 min",
+          "price": "{matureLesson} por clase ({matureUpfront} las 10 por adelantado). Suelta: {matureSingle}"
+        },
+        "online": {
+          "option": "Conversación online",
+          "audience": "Nivel intermedio",
+          "format": "Online, 10 semanas",
+          "length": "50 min",
+          "price": "{onlineUpfront} por adelantado o {onlineLesson} por clase"
+        },
+        "editions": {
+          "option": "Grupos de principiantes",
+          "audience": "Principiantes",
+          "format": "Presencial, 6 o 9 semanas",
+          "length": "70 min",
+          "price": "{sixWeekUpfront} (6 semanas) o {nineWeekUpfront} (9 semanas) por adelantado, o {editionLesson} por clase"
+        }
+      },
+      "notesQuestion": "A tener en cuenta",
+      "notes": {
+        "currency": "Todos los precios están en dólares australianos (AUD).",
+        "private": "El precio de las clases individuales se envía por email, según el formato que elijas.",
+        "mature": "Las tarifas para mayores se aplican desde abril de 2026.",
+        "payment": "Se paga por transferencia bancaria.",
+        "changes": "Las condiciones de cambio y cancelación se confirman al reservar."
+      },
+      "askPrivate": "Pedir precios por email"
+    },
+    "privacy": {
+      "metaTitle": "Política de privacidad · Spanglish",
+      "metaDescription": "Qué datos recoge la web de Spanglish, para qué los usamos y cómo puedes consultarlos o corregirlos.",
+      "title": "Política de privacidad",
+      "updated": "Última actualización: noviembre de 2026 (versión en revisión).",
+      "lead": "Te explicamos, sin letra pequeña, qué datos nos das en esta web, para qué los usamos y cómo puedes pedirnos que los consultemos, corrijamos o borremos.",
+      "sections": {
+        "who": {
+          "title": "Quiénes somos",
+          "body": {
+            "p1": "Spanglish es la escuela de español de Maribel Mayhua, con clases en Sunshine Coast, Brisbane y online (Australia).",
+            "p2": "Esta política se basa en los Principios Australianos de Privacidad (Australian Privacy Principles, APPs) de la Privacy Act 1988."
+          }
+        },
+        "collect": {
+          "title": "Qué datos recogemos",
+          "body": {
+            "p1": "Solo los que tú nos das. Si pides una clase gratis con el formulario: tu nombre, tu email, tu teléfono (si lo escribes), para quién es la clase (adultos, niños o mayores), dónde te gustaría hacer las clases, los días y horas que te vienen bien, el idioma que quieres aprender o practicar y tu mensaje.",
+            "p2": "Si nos llamas o nos escribes, lo que nos cuentes en esa llamada o ese email."
+          }
+        },
+        "children": {
+          "title": "Datos de menores",
+          "body": {
+            "p1": "Si la clase es para un menor de 18 años, el formulario debe rellenarlo su madre, padre o tutor legal. Solo pedimos el grupo de edad (por ejemplo, niños de 6 a 13 años), no la fecha de nacimiento, y las clases se acuerdan con la persona adulta responsable."
+          }
+        },
+        "use": {
+          "title": "Para qué los usamos",
+          "body": {
+            "p1": "Para responder a tu solicitud y organizar tus clases. No vendemos tus datos, no los usamos para publicidad y no te suscribimos a ningún boletín."
+          }
+        },
+        "storage": {
+          "title": "Cómo llegan y dónde se guardan",
+          "body": {
+            "p1": "Cuando envías el formulario, tus datos llegan a Spanglish por email a través de un servicio de envío de correo. Ese servicio y nuestro proveedor de correo pueden guardar los datos en servidores fuera de Australia.",
+            "p2": "Guardamos tus datos solo el tiempo necesario para responderte y organizar tus clases."
+          }
+        },
+        "cookies": {
+          "title": "Cookies y analítica",
+          "body": {
+            "p1": "Esta web no usa herramientas de analítica ni cookies de publicidad. Solo puede guardar una cookie técnica para recordar el idioma que eliges. Nuestro proveedor de alojamiento puede registrar datos técnicos, como la dirección IP, por seguridad."
+          }
+        },
+        "rights": {
+          "title": "Tus derechos",
+          "body": {
+            "p1": "Puedes pedirnos ver los datos que tenemos sobre ti, corregirlos o que los borremos. Escríbenos a {email} o llámanos al {phone}."
+          }
+        },
+        "complaints": {
+          "title": "Si algo no te parece bien",
+          "body": {
+            "p1": "Escríbenos primero e intentaremos resolverlo. Si no quedas conforme, puedes acudir a la Office of the Australian Information Commissioner (OAIC), en oaic.gov.au."
+          }
+        },
+        "changes": {
+          "title": "Cambios en esta política",
+          "body": {
+            "p1": "Si la cambiamos, publicaremos aquí la nueva versión con su fecha."
+          }
+        }
+      }
+    },
+    "terms": {
+      "todoLegal": "TODO(legal): no hay política publicada de plazos de cancelación, cargos, reembolsos ni recuperación de clases. Confirmar con la propietaria (y revisión legal) antes de quitar el noindex de /privacy-policy y /terms.",
+      "metaTitle": "Términos y cancelaciones · Spanglish",
+      "metaDescription": "Cómo se acuerdan las clases de Spanglish, la clase gratis, los precios, los pagos y los cambios o cancelaciones.",
+      "title": "Términos y cancelaciones",
+      "updated": "Última actualización: noviembre de 2026 (versión en revisión).",
+      "lead": "Las condiciones básicas de las clases, en lenguaje claro.",
+      "sections": {
+        "lessons": {
+          "title": "Las clases",
+          "body": {
+            "p1": "Las clases las da Maribel Mayhua (Spanglish). El formato, el lugar, el día y la hora de cada clase se acuerdan con ella antes de empezar."
+          }
+        },
+        "free": {
+          "title": "La clase gratis",
+          "body": {
+            "p1": "La primera clase es gratis: 45 minutos, online, una por persona. Después decides si quieres seguir."
+          }
+        },
+        "prices": {
+          "title": "Precios y pagos",
+          "body": {
+            "p1": "Los precios publicados en la página de precios están en dólares australianos (AUD) y pueden cambiar. Si tienes dudas sobre el precio de tus clases, pregúntalo al reservar.",
+            "p2": "El pago se hace por transferencia bancaria. Cuando la hagas, escríbenos a {email} para que podamos confirmarla."
+          }
+        },
+        "cancellations": {
+          "title": "Cambios, cancelaciones y reembolsos",
+          "body": {
+            "p1": "Las condiciones para cambiar o cancelar una clase, recuperar una clase perdida y, en su caso, pedir un reembolso se confirman contigo al reservar.",
+            "p2": "Si necesitas cambiar una clase, avisa a Maribel cuanto antes por teléfono o por email."
+          }
+        },
+        "minors": {
+          "title": "Menores",
+          "body": {
+            "p1": "Si el alumno es menor de 18 años, la reserva la hace su madre, padre o tutor legal, que es con quien se acuerdan las clases."
+          }
+        },
+        "consumer": {
+          "title": "Tus derechos como consumidor",
+          "body": {
+            "p1": "Nada de lo que dice esta página limita los derechos que te da la Ley Australiana del Consumidor (Australian Consumer Law)."
+          }
+        },
+        "contact": {
+          "title": "Contacto",
+          "body": {
+            "p1": "Para cualquier duda sobre estas condiciones, escríbenos a {email} o llámanos al {phone}."
+          }
+        }
+      }
     }
+  },
+  "notFound": {
+    "metaTitle": "Página no encontrada · Spanglish",
+    "code": "404",
+    "title": "¡Uy! Esta página no existe",
+    "lead": "Puede que el enlace esté mal escrito o que la página haya cambiado de sitio. Te ayudamos a seguir:",
+    "home": "Ir al inicio",
+    "lessons": "Ver las clases",
+    "booking": "Reservar clase gratis"
+  },
+  "videos": {
+    "question": "Aprende con los videos de Maribel",
+    "intro": "Clases cortas y gratis para empezar a practicar ya. Los títulos están en inglés.",
+    "play": "Reproducir video"
   }
 }
