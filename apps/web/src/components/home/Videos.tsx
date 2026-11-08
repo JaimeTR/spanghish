@@ -20,7 +20,7 @@ export function Videos() {
 
         <ul className="mt-14 grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
           {VIDEOS.map((v) => (
-            <li key={v.id}>
+            <li key={v.id} id={`video-${v.id}`}>
               <VideoCard
                 id={v.id}
                 title={v.title}

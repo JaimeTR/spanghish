@@ -31,7 +31,16 @@
     "bookings": "Clase gratis",
     "privacy": "Privacidad",
     "terms": "Términos y cancelaciones",
-    "footerLegal": "Legal"
+    "footerLegal": "Legal",
+    "resources": "Recursos",
+    "online": "Conversación online",
+    "allLessons": "Todas las clases",
+    "adultsShort": "Adultos",
+    "kidsShort": "Niños",
+    "matureShort": "Mayores",
+    "showLessons": "Mostrar clases",
+    "login": "Entrar",
+    "loginSuffix": "al portal de alumnos"
   },
   "locales": {
     "es": "Español",
@@ -93,7 +102,8 @@
     "online": {
       "tag": "Nuevo",
       "title": "Conversación online",
-      "body": "Un programa de 10 semanas para practicar conversación desde casa."
+      "body": "Un programa de 10 semanas para practicar conversación desde casa.",
+      "more": "Ver cómo es"
     },
     "soonLabel": "Próximamente",
     "soonDele": "Preparación del examen DELE",
@@ -1105,6 +1115,183 @@
             "p1": "Para cualquier duda sobre estas condiciones, escríbenos a {email} o llámanos al {phone}."
           }
         }
+      }
+    },
+    "online": {
+      "metaTitle": "Conversación online en español (10 semanas, nivel intermedio) · Spanglish",
+      "metaDescription": "Practica conversación en español desde casa: programa online de 10 semanas para nivel intermedio, una clase de 50 minutos por semana. {onlineUpfront} por adelantado o {onlineLesson} por clase (AUD).",
+      "title": "Conversación online",
+      "tag": "Nuevo",
+      "lead": "Un programa de 10 semanas para practicar conversación en español desde casa. Para estudiantes de nivel intermedio.",
+      "ask": "¿Y si practico sin salir de casa?",
+      "answer": "¡Prepárate un café y a conversar!",
+      "seeDetails": "Ver formato y precio",
+      "who": {
+        "question": "¿Para quién es?",
+        "body": "Para estudiantes de nivel intermedio que quieren conversar solo en español, desde la comodidad de su casa. Si estás empezando, las clases para adultos, niños y mayores van desde principiante.",
+        "tags": {
+          "level": "Nivel intermedio",
+          "online": "Desde casa",
+          "people": "Con gente nueva"
+        }
+      },
+      "how": {
+        "intro": "Una clase online por semana, durante 10 semanas.",
+        "coffee": {
+          "title": "Con un café, desde casa",
+          "body": "Te conectas desde tu casa, con tu café, y la clase es solo en español."
+        },
+        "people": {
+          "title": "Gente nueva",
+          "body": "Conoces a otras personas que también están aprendiendo y practicas con ellas."
+        },
+        "guided": {
+          "title": "Conversaciones guiadas",
+          "body": "Conversaciones divertidas y guiadas para que practiques tu español hablando."
+        }
+      },
+      "minutes": "50",
+      "minutesLabel": "minutos por clase",
+      "facts": {
+        "question": "¿Cómo es el programa?",
+        "format": {
+          "label": "Formato",
+          "value": "Online, en grupo"
+        },
+        "level": {
+          "label": "Nivel",
+          "value": "Intermedio"
+        },
+        "length": {
+          "label": "Duración",
+          "value": "10 semanas, una clase por semana"
+        },
+        "lesson": {
+          "label": "Cada clase",
+          "value": "50 minutos"
+        }
+      },
+      "prices": {
+        "upfront": {
+          "amount": "{onlineUpfront}",
+          "unit": "por adelantado",
+          "title": "Las 10 semanas",
+          "body": "Pagas el programa completo al empezar."
+        },
+        "lesson": {
+          "amount": "{onlineLesson}",
+          "unit": "por clase",
+          "title": "Clase a clase",
+          "body": "Pagas después de cada clase."
+        }
+      },
+      "pricesNote": "Precios en dólares australianos (AUD). Se paga por transferencia bancaria.",
+      "datesTitle": "¿Cuándo empieza la próxima edición?",
+      "datesBody": "Las fechas y el horario cambian en cada edición. Escríbenos y te contamos cuándo empieza la próxima.",
+      "datesCta": "Preguntar por las fechas",
+      "signupQuestion": "¿Cómo me apunto?",
+      "signup": {
+        "free": {
+          "title": "Pide tu clase gratis",
+          "body": "Rellena el formulario y, en el mensaje, cuéntanos que te interesa la Conversación online."
+        },
+        "reply": {
+          "title": "Maribel te responde",
+          "body": "Te escribe personalmente para conocer tu nivel y contarte las fechas de la próxima edición."
+        },
+        "start": {
+          "title": "Empiezas a conversar",
+          "body": "Eliges si pagas las 10 semanas por adelantado o clase a clase."
+        }
+      },
+      "faq": {
+        "level": {
+          "q": "¿Qué nivel necesito?",
+          "a": "Es un programa para nivel intermedio. Si estás empezando, hay clases para adultos, niños y mayores desde principiante absoluto."
+        },
+        "length": {
+          "q": "¿Cuánto dura?",
+          "a": "10 semanas, con una clase online de 50 minutos por semana."
+        },
+        "upfront": {
+          "q": "¿Tengo que pagar todo por adelantado?",
+          "a": "No. Puedes pagar {onlineUpfront} por las 10 semanas al empezar, o {onlineLesson} después de cada clase."
+        },
+        "when": {
+          "q": "¿Cuándo empieza?",
+          "a": "Las fechas y el horario cambian en cada edición. Escríbenos a hello@spanglish.com.au y te contamos cuándo empieza la próxima."
+        }
+      }
+    },
+    "resources": {
+      "metaTitle": "Recursos gratis para aprender español · Spanglish",
+      "metaDescription": "Videos gratis de Maribel para aprender español, lecciones interactivas y qué recursos tendrás con una cuenta o como alumna o alumno de Spanglish.",
+      "titleA": "Recursos para",
+      "titleB": "aprender español",
+      "lead": "Videos y lecciones para practicar por tu cuenta, gratis. Aquí te contamos qué puedes usar hoy y qué está por llegar.",
+      "ask": "¿Puedo practicar entre clases?",
+      "answer": "¡Claro! Empieza por los videos de Maribel.",
+      "toVideos": "Ver los videos",
+      "toAccess": "Qué es libre y qué no",
+      "learn": {
+        "question": "Lecciones interactivas gratis",
+        "body": "Del alfabeto a los verbos, pasando por sustantivos, artículos, colores y números. Hay lecciones para adultos y para niños.",
+        "moving": "Hoy están en la web actual de Spanglish. Las estamos pasando a la nueva plataforma, así que pronto las tendrás aquí."
+      },
+      "access": {
+        "question": "¿Qué puedo usar y cómo?",
+        "intro": "Algunos recursos son libres y otros necesitan una cuenta. Así queda cada uno:",
+        "soon": "Próximamente",
+        "open": "Abrir",
+        "locked": "Entra para verlo",
+        "lockedLabel": "Con acceso restringido",
+        "tiers": {
+          "public": {
+            "title": "Libre",
+            "status": "Sin cuenta, para todo el mundo"
+          },
+          "account": {
+            "title": "Con cuenta",
+            "status": "Próximamente"
+          },
+          "enrolled": {
+            "title": "Solo alumnos",
+            "status": "Para alumnos matriculados"
+          }
+        },
+        "items": {
+          "video": {
+            "meta": "Video · gratis"
+          },
+          "learnLegacy": {
+            "title": "Lecciones interactivas de la web actual",
+            "meta": "Del alfabeto a los verbos"
+          },
+          "worksheets": {
+            "title": "Fichas descargables",
+            "meta": "Para imprimir y practicar"
+          },
+          "vocabulary": {
+            "title": "Vocabulario",
+            "meta": "Palabras por temas"
+          },
+          "interactive": {
+            "title": "Lecciones interactivas A1–C2",
+            "meta": "Ordenadas por nivel, en la nueva plataforma"
+          },
+          "recordings": {
+            "title": "Grabaciones de clase",
+            "meta": "Para repasar cada clase"
+          },
+          "coursework": {
+            "title": "Tareas y material del curso",
+            "meta": "Deberes, resúmenes y materiales"
+          }
+        },
+        "accountNote": "Todavía no se pueden crear cuentas desde la web. Cuando estén abiertas, lo verás aquí.",
+        "studentsNote": "Si ya eres alumna o alumno, entra con tu cuenta; si aún no, reserva tu clase gratis.",
+        "studentsCta": "Reserva tu clase gratis",
+        "discount": "Los alumnos matriculados tienen un 30 % de descuento en los recursos digitales."
       }
     }
   },

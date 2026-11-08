@@ -12,6 +12,19 @@ export const CONTACT = {
   hours: { days: ["Mo", "Tu", "We", "Th", "Fr", "Sa"], opens: "08:00", closes: "17:00" },
 } as const;
 
+/**
+ * Portal de alumnos (apps/app). Solo se enlaza a su login, que va por idioma
+ * (/es/login, /en/login). El alta pública está cerrada: las cuentas las crea
+ * la administración.
+ */
+export const APP_URL = (process.env.NEXT_PUBLIC_APP_URL ?? "https://app.spanglish.com.au").replace(/\/$/, "");
+export const APP_LOGIN_URL = `${APP_URL}/login`;
+
+/** Login del portal en el idioma de la página. */
+export function appLoginUrl(locale: "es" | "en"): string {
+  return `${APP_URL}/${locale}/login`;
+}
+
 /** Lecciones interactivas gratis de la web actual (hasta migrarlas a /learn). */
 export const LEARN_URL = "https://spanglish.com.au/learn-spanish/";
 

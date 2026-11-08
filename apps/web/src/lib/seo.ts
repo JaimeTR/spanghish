@@ -52,6 +52,8 @@ const PRIORITY: Partial<Record<RouteKey, number>> = {
   adults: 0.9,
   kids: 0.9,
   mature: 0.9,
+  online: 0.8,
+  resources: 0.6,
   contact: 0.8,
   teachers: 0.7,
   bookings: 0.9,

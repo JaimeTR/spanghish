@@ -1,6 +1,8 @@
 // Iconos de trazo propios (2.4px, extremos redondeados). Siempre decorativos:
 // el texto del enlace o del botón lleva el significado.
 
+import type { ReactNode } from "react";
+
 export function ArrowIcon({ className = "size-5" }: { className?: string }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 20 20" className={className} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
@@ -55,6 +57,31 @@ export function CheckIcon({ className = "mt-1 size-5 shrink-0 text-brand-yellow"
   return (
     <svg aria-hidden="true" viewBox="0 0 20 20" className={className} fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 10.5l4 4 8-9" />
+    </svg>
+  );
+}
+
+export function LockIcon({ className = "size-4" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className={className} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4" y="9" width="12" height="9" rx="2.5" />
+      <path d="M7 9V6.5a3 3 0 0 1 6 0V9" />
+    </svg>
+  );
+}
+
+/** Icono de cada tipo de recurso (hojas, palabras, lecciones, grabación, tareas). */
+export function ResourceIcon({ kind, className = "size-7" }: { kind: string; className?: string }) {
+  const paths: Record<string, ReactNode> = {
+    lessons: <path d="M3 5.5C5.5 4 8 4 10 5.5 12 4 14.5 4 17 5.5v10C14.5 14 12 14 10 15.5 8 14 5.5 14 3 15.5zM10 5.5v10" />,
+    worksheets: <path d="M5 2.5h7l3.5 3.5v11.5H5zM12 2.5V6h3.5M8 10h5M8 13h5" />,
+    vocabulary: <path d="M3.5 4.5h13a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5H9l-4 3v-3H3.5A1.5 1.5 0 0 1 2 12V6a1.5 1.5 0 0 1 1.5-1.5zM6 8h8M6 10.5h5" />,
+    recordings: <path d="M2.5 5.5h10a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 1 13V7a1.5 1.5 0 0 1 1.5-1.5zM14 9l5-3v8l-5-3" />,
+    coursework: <path d="M6 3.5h8a1.5 1.5 0 0 1 1.5 1.5v11.5a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5V5A1.5 1.5 0 0 1 6 3.5zM8 2.5h4v2H8zM7.5 10l1.8 1.8L13 8.2M7.5 14.5h5" />,
+  };
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className={className} fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+      {paths[kind] ?? paths.lessons}
     </svg>
   );
 }

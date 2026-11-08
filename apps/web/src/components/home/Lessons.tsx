@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import { localePath } from "@/lib/routes";
 import { AudienceTile } from "../AudienceTile";
 import { SectionQuestion } from "../Bubble";
+import { ArrowIcon } from "../icons";
 import { People, PEOPLE_BY_FORMAT } from "../People";
 import { container } from "../styles";
 
@@ -50,13 +52,25 @@ export function Lessons() {
             body={t("mature.body")}
             image={{ src: "/img/lessons-mature.jpg", sizes: "(min-width: 1024px) 22rem, (min-width: 640px) 50vw, 100vw", position: "40% 40%" }}
           />
-          <li className="on-dark relative flex flex-col justify-between gap-6 overflow-hidden rounded-lg bg-brand-burgundy p-6 text-on-primary sm:col-span-2 sm:p-8 lg:col-span-6 lg:flex-row lg:items-center">
+          {/* Bloque entero clicable (enlace estirado desde el h3), como AudienceTile. */}
+          <li className="group on-dark relative flex flex-col justify-between gap-6 overflow-hidden rounded-lg bg-brand-burgundy p-6 text-on-primary transition-transform duration-200 ease-out hover:-translate-y-1 has-[a:focus-visible]:outline-[3px] has-[a:focus-visible]:outline-offset-[3px] has-[a:focus-visible]:outline-[var(--brand-purple)] has-[a:focus-visible]:outline-solid motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:col-span-2 sm:p-8 lg:col-span-6 lg:flex-row lg:items-center">
             <div className="max-w-[36rem]">
               <span className="inline-block rounded-full bg-brand-yellow px-3 py-1 text-sm font-bold text-ink">
                 {t("online.tag")}
               </span>
-              <h3 className="mt-3 font-display text-[clamp(1.9rem,4vw,2.75rem)] leading-none">{t("online.title")}</h3>
+              <h3 className="mt-3 font-display text-[clamp(1.9rem,4vw,2.75rem)] leading-none">
+                <Link
+                  href={localePath(locale, "online")}
+                  className="text-current no-underline outline-none after:absolute after:inset-0 after:content-['']"
+                >
+                  {t("online.title")}
+                </Link>
+              </h3>
               <p className="mt-3 text-lg leading-relaxed">{t("online.body")}</p>
+              <span aria-hidden="true" className="mt-5 inline-flex items-center gap-2 font-bold underline decoration-2 underline-offset-4 group-hover:decoration-[3px]">
+                {t("online.more")}
+                <ArrowIcon />
+              </span>
             </div>
             <ScreenChat />
           </li>

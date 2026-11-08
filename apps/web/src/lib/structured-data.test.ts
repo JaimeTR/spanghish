@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   breadcrumbJsonLd,
   lessonServiceJsonLd,
+  onlineCourseJsonLd,
   organizationJsonLd,
   serializeJsonLd,
   teacherJsonLd,
@@ -43,6 +44,25 @@ describe("page JSON-LD", () => {
     expect(data.offers[0]).toMatchObject({ priceCurrency: "AUD", priceSpecification: { minPrice: 30 } });
     expect(data.offers[1]).toMatchObject({ priceCurrency: "AUD", price: 0 });
     expect(data).not.toHaveProperty("aggregateRating");
+  });
+
+  it("online conversations are an online Course with the two published AUD prices and no dates", () => {
+    const data = onlineCourseJsonLd({
+      path: "/en/online-conversations",
+      name: "Online conversations",
+      description: "x",
+      offers: [
+        { description: "Upfront", price: 245 },
+        { description: "Per lesson", price: 25 },
+      ],
+    });
+    expect(data["@type"]).toBe("Course");
+    expect(data.provider["@id"]).toMatch(/#organization$/);
+    expect(data.url).toMatch(/\/en\/online-conversations$/);
+    expect(data.hasCourseInstance).toMatchObject({ courseMode: "Online", courseSchedule: { repeatCount: 10, duration: "PT50M" } });
+    expect(data.offers.map((o) => o.price)).toEqual([245, 25]);
+    expect(data.offers.every((o) => o.priceCurrency === "AUD")).toBe(true);
+    expect(JSON.stringify(data)).not.toMatch(/startDate|endDate/);
   });
 
   it("teacher is a Person working for the school, without invented data", () => {

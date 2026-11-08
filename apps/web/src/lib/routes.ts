@@ -12,6 +12,8 @@ export const ROUTES = {
   adults: "adult-lessons",
   kids: "kids-lessons",
   mature: "mature-lessons",
+  online: "online-conversations",
+  resources: "resources",
   teachers: "teachers",
   contact: "contact-us",
   bookings: "bookings",

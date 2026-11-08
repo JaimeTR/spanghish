@@ -31,7 +31,16 @@
     "bookings": "Free lesson",
     "privacy": "Privacy",
     "terms": "Terms and cancellations",
-    "footerLegal": "Legal"
+    "footerLegal": "Legal",
+    "resources": "Resources",
+    "online": "Online conversations",
+    "allLessons": "All lessons",
+    "adultsShort": "Adults",
+    "kidsShort": "Kids",
+    "matureShort": "Mature adults",
+    "showLessons": "Show lessons",
+    "login": "Sign in",
+    "loginSuffix": "to the student portal"
   },
   "locales": {
     "es": "Español",
@@ -93,7 +102,8 @@
     "online": {
       "tag": "New",
       "title": "Online conversations",
-      "body": "A 10-week program to practise conversation from home."
+      "body": "A 10-week program to practise conversation from home.",
+      "more": "See what it’s like"
     },
     "soonLabel": "Coming soon",
     "soonDele": "DELE exam training",
@@ -1105,6 +1115,183 @@
             "p1": "If you have any questions about these terms, email us at {email} or call us on {phone}."
           }
         }
+      }
+    },
+    "online": {
+      "metaTitle": "Online Spanish conversations (10 weeks, intermediate) · Spanglish",
+      "metaDescription": "Practise Spanish conversation from home: a 10-week online program for intermediate students, one 50-minute lesson a week. {onlineUpfront} upfront or {onlineLesson} per lesson (AUD).",
+      "title": "Online conversations",
+      "tag": "New",
+      "lead": "A 10-week program to practise Spanish conversation from home. For intermediate students.",
+      "ask": "What if I could practise from home?",
+      "answer": "Make a coffee and let’s chat!",
+      "seeDetails": "See format and price",
+      "who": {
+        "question": "Who is it for?",
+        "body": "For intermediate students who want to talk only in Spanish, from the comfort of their own home. If you’re just starting out, the adult, kids and mature adult lessons begin at beginner level.",
+        "tags": {
+          "level": "Intermediate level",
+          "online": "From home",
+          "people": "Meet new people"
+        }
+      },
+      "how": {
+        "intro": "One online lesson a week, for 10 weeks.",
+        "coffee": {
+          "title": "A coffee, from home",
+          "body": "You join from home, coffee in hand, and the lesson is only in Spanish."
+        },
+        "people": {
+          "title": "New people",
+          "body": "You meet other people who are learning too, and practise with them."
+        },
+        "guided": {
+          "title": "Guided conversations",
+          "body": "Fun, guided conversations so you practise your Spanish by speaking it."
+        }
+      },
+      "minutes": "50",
+      "minutesLabel": "minutes per lesson",
+      "facts": {
+        "question": "What’s the program like?",
+        "format": {
+          "label": "Format",
+          "value": "Online, in a group"
+        },
+        "level": {
+          "label": "Level",
+          "value": "Intermediate"
+        },
+        "length": {
+          "label": "Length",
+          "value": "10 weeks, one lesson a week"
+        },
+        "lesson": {
+          "label": "Each lesson",
+          "value": "50 minutes"
+        }
+      },
+      "prices": {
+        "upfront": {
+          "amount": "{onlineUpfront}",
+          "unit": "upfront",
+          "title": "All 10 weeks",
+          "body": "You pay for the whole program when you start."
+        },
+        "lesson": {
+          "amount": "{onlineLesson}",
+          "unit": "per lesson",
+          "title": "Lesson by lesson",
+          "body": "You pay after every lesson."
+        }
+      },
+      "pricesNote": "Prices in Australian dollars (AUD). Payment is by bank transfer.",
+      "datesTitle": "When does the next one start?",
+      "datesBody": "Dates and times change with each edition. Email us and we’ll tell you when the next one starts.",
+      "datesCta": "Ask about dates",
+      "signupQuestion": "How do I join?",
+      "signup": {
+        "free": {
+          "title": "Book your free lesson",
+          "body": "Fill in the form and, in the message, tell us you’re interested in the online conversations."
+        },
+        "reply": {
+          "title": "Maribel replies",
+          "body": "She writes to you personally to get a sense of your level and share the dates of the next edition."
+        },
+        "start": {
+          "title": "Start talking",
+          "body": "You choose whether to pay for the 10 weeks upfront or lesson by lesson."
+        }
+      },
+      "faq": {
+        "level": {
+          "q": "What level do I need?",
+          "a": "It’s a program for intermediate students. If you’re just starting out, there are adult, kids and mature adult lessons from complete beginner."
+        },
+        "length": {
+          "q": "How long is it?",
+          "a": "10 weeks, with one 50-minute online lesson a week."
+        },
+        "upfront": {
+          "q": "Do I have to pay everything upfront?",
+          "a": "No. You can pay {onlineUpfront} for the 10 weeks when you start, or {onlineLesson} after every lesson."
+        },
+        "when": {
+          "q": "When does it start?",
+          "a": "Dates and times change with each edition. Email us at hello@spanglish.com.au and we’ll tell you when the next one starts."
+        }
+      }
+    },
+    "resources": {
+      "metaTitle": "Free resources to learn Spanish · Spanglish",
+      "metaDescription": "Maribel’s free videos to learn Spanish, interactive lessons, and what you’ll get with an account or as a Spanglish student.",
+      "titleA": "Resources to",
+      "titleB": "learn Spanish",
+      "lead": "Videos and lessons to practise on your own, for free. Here’s what you can use today and what’s on the way.",
+      "ask": "Can I practise between lessons?",
+      "answer": "Of course! Start with Maribel’s videos.",
+      "toVideos": "Watch the videos",
+      "toAccess": "What’s free and what isn’t",
+      "learn": {
+        "question": "Free interactive lessons",
+        "body": "From the alphabet to verbs, via nouns, articles, colours and numbers. There are lessons for adults and for kids.",
+        "moving": "Today they live on the current Spanglish website. We’re moving them to the new platform, so you’ll find them here soon."
+      },
+      "access": {
+        "question": "What can I use, and how?",
+        "intro": "Some resources are open to everyone and others need an account. Here’s where each one stands:",
+        "soon": "Coming soon",
+        "open": "Open",
+        "locked": "Sign in to see it",
+        "lockedLabel": "Restricted access",
+        "tiers": {
+          "public": {
+            "title": "Open",
+            "status": "No account, for everyone"
+          },
+          "account": {
+            "title": "With an account",
+            "status": "Coming soon"
+          },
+          "enrolled": {
+            "title": "Students only",
+            "status": "For enrolled students"
+          }
+        },
+        "items": {
+          "video": {
+            "meta": "Video · free"
+          },
+          "learnLegacy": {
+            "title": "Interactive lessons on the current website",
+            "meta": "From the alphabet to verbs"
+          },
+          "worksheets": {
+            "title": "Downloadable worksheets",
+            "meta": "To print and practise"
+          },
+          "vocabulary": {
+            "title": "Vocabulary",
+            "meta": "Words by topic"
+          },
+          "interactive": {
+            "title": "Interactive lessons A1–C2",
+            "meta": "Sorted by level, on the new platform"
+          },
+          "recordings": {
+            "title": "Lesson recordings",
+            "meta": "To go over each lesson"
+          },
+          "coursework": {
+            "title": "Homework and course materials",
+            "meta": "Homework, summaries and materials"
+          }
+        },
+        "accountNote": "Accounts can’t be created from the website yet. You’ll see it here once they open.",
+        "studentsNote": "If you’re already a student, sign in with your account; if not yet, book your free lesson.",
+        "studentsCta": "Book your free lesson",
+        "discount": "Enrolled students get 30% off digital resources."
       }
     }
   },

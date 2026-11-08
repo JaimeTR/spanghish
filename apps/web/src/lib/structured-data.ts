@@ -95,6 +95,47 @@ export function lessonServiceJsonLd({
   };
 }
 
+/**
+ * Conversación online como Course: solo datos publicados (nivel intermedio,
+ * 10 semanas, una clase online de 50 minutos por semana y sus dos precios en
+ * AUD). Sin fechas: cambian en cada edición.
+ */
+export function onlineCourseJsonLd({
+  path,
+  name,
+  description,
+  offers,
+}: {
+  path: string;
+  name: string;
+  description: string;
+  offers: { description: string; price: number }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name,
+    description,
+    url: `${SITE_URL}${path}`,
+    // El curso se da en español, sea cual sea el idioma de la página.
+    inLanguage: "es",
+    educationalLevel: "Intermediate",
+    provider: ORG_REF,
+    hasCourseInstance: {
+      "@type": "CourseInstance",
+      courseMode: "Online",
+      courseSchedule: { "@type": "Schedule", repeatFrequency: "P1W", repeatCount: 10, duration: "PT50M" },
+    },
+    offers: offers.map((o) => ({
+      "@type": "Offer",
+      category: "Paid",
+      description: o.description,
+      price: o.price,
+      priceCurrency: "AUD",
+    })),
+  };
+}
+
 /** La profesora, con lo que publica su ficha: nativa (Lima), certificada A1–B2. */
 export function teacherJsonLd(path: string, description: string, jobTitle: string) {
   return {
