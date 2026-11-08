@@ -211,3 +211,43 @@ a {
     visibility: visible;
   }
 }
+
+/* ---- Desplegable "Clases" de la cabecera ------------------------------ */
+
+/* Cerrado: invisible (fuera del orden de tabulación y del árbol accesible). */
+.nav-panel {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.nav-panel[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Sale desde la cola, como los bocadillos del hero; al cerrar se encoge un poco. */
+  .nav-panel {
+    transform: translateY(-6px) scale(0.96);
+    transform-origin: 6.25rem 0;
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      visibility 0s linear 160ms;
+  }
+  .nav-panel[data-open="true"] {
+    transform: none;
+    transition:
+      opacity 200ms ease,
+      transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s;
+  }
+}
+
+/* ---- Pasos del formulario -------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .form-step {
+    animation: rise 450ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+}

@@ -64,7 +64,8 @@ describe("routes", () => {
   });
 
   it("navigation only points at existing routes and every label exists in both locales", () => {
-    const items = [...HEADER_NAV, ...FOOTER_NAV.lessons, ...FOOTER_NAV.school, ...FOOTER_NAV.legal];
+    const children = HEADER_NAV.flatMap((i) => ("children" in i ? i.children : []));
+    const items = [...HEADER_NAV, ...children, ...FOOTER_NAV.lessons, ...FOOTER_NAV.school, ...FOOTER_NAV.legal];
     for (const item of items) {
       expect(ROUTE_KEYS).toContain(item.route);
       expect(es.nav[item.key], `es nav.${item.key}`).toBeTruthy();
@@ -74,8 +75,29 @@ describe("routes", () => {
     expect(HEADER_NAV.every((i) => !("hash" in i))).toBe(true);
   });
 
+  it("the header lists the important pages, with the lessons sub-pages under Clases", () => {
+    expect(HEADER_NAV.map((i) => i.route)).toEqual(["lessons", "prices", "resources", "faq", "teachers", "contact"]);
+    const lessons = HEADER_NAV.find((i) => i.key === "lessons");
+    expect(lessons && "children" in lessons && lessons.children.map((c) => c.route)).toEqual([
+      "lessons",
+      "adults",
+      "kids",
+      "mature",
+      "online",
+    ]);
+  });
+
+  it("the footer links the online conversations and the resources", () => {
+    expect(FOOTER_NAV.lessons.map((i) => i.route)).toContain("online");
+    expect(FOOTER_NAV.school.map((i) => i.route)).toContain("resources");
+  });
+
   it("marks the right header item as current", () => {
     expect(activeNavKey("kids")).toBe("lessons");
+    expect(activeNavKey("adults")).toBe("lessons");
+    expect(activeNavKey("mature")).toBe("lessons");
+    expect(activeNavKey("online")).toBe("lessons");
+    expect(activeNavKey("resources")).toBe("resources");
     expect(activeNavKey("lessons")).toBe("lessons");
     expect(activeNavKey("teachers")).toBe("teachers");
     expect(activeNavKey("contact")).toBe("contact");

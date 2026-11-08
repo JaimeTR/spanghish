@@ -34,7 +34,7 @@ export function PageShell({
       >
         {t("skip")}
       </a>
-      <SiteHeader locale={locale} current={activeNavKey(route)} />
+      <SiteHeader locale={locale} current={activeNavKey(route)} route={route} />
       <main id="main" tabIndex={-1} className="outline-none">
         {children}
       </main>

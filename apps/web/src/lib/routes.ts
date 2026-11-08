@@ -59,27 +59,47 @@ export function bookingPath(locale: Locale): string {
   return localePath(locale, "bookings");
 }
 
-/** Navegación principal: solo páginas importantes (nada que lleve a una sección). */
+/** Subpágina de un grupo de la cabecera (p. ej. las clases por público). */
+export type NavChild = { key: string; route: RouteKey };
+
+/**
+ * Navegación principal: solo páginas importantes (nada que lleve a una sección).
+ * "Clases" agrupa sus subpáginas: el enlace va a /lessons y un botón aparte
+ * despliega el resto (patrón disclosure).
+ */
 export const HEADER_NAV = [
-  { key: "lessons", route: "lessons" },
+  {
+    key: "lessons",
+    route: "lessons",
+    children: [
+      { key: "allLessons", route: "lessons" },
+      { key: "adultsShort", route: "adults" },
+      { key: "kidsShort", route: "kids" },
+      { key: "matureShort", route: "mature" },
+      { key: "online", route: "online" },
+    ],
+  },
   { key: "prices", route: "prices" },
+  { key: "resources", route: "resources" },
   { key: "faq", route: "faq" },
   { key: "teachers", route: "teachers" },
   { key: "contact", route: "contact" },
-] as const satisfies readonly { key: string; route: RouteKey }[];
+] as const satisfies readonly { key: string; route: RouteKey; children?: readonly NavChild[] }[];
 
-/** Pie: las páginas de clases por edad, las de la escuela y los textos legales. */
+/** Pie: las páginas de clases (por edad y la conversación online), las de la escuela y los textos legales. */
 export const FOOTER_NAV = {
   lessons: [
     { key: "adults", route: "adults" },
     { key: "kids", route: "kids" },
     { key: "mature", route: "mature" },
+    { key: "online", route: "online" },
     { key: "prices", route: "prices" },
   ],
   school: [
     { key: "lessons", route: "lessons" },
     { key: "teachers", route: "teachers" },
     { key: "faq", route: "faq" },
+    { key: "resources", route: "resources" },
     { key: "contact", route: "contact" },
     { key: "bookings", route: "bookings" },
   ],
@@ -93,10 +113,9 @@ export type HeaderNavKey = (typeof HEADER_NAV)[number]["key"];
 
 /** Ruta activa en la cabecera para cada página (aria-current). */
 export function activeNavKey(route: RouteKey): HeaderNavKey | undefined {
-  if (route === "adults" || route === "kids" || route === "mature" || route === "lessons") return "lessons";
-  if (route === "teachers") return "teachers";
-  if (route === "contact") return "contact";
-  if (route === "prices") return "prices";
-  if (route === "faq") return "faq";
+  for (const item of HEADER_NAV) {
+    if (item.route === route) return item.key;
+    if ("children" in item && item.children.some((c) => c.route === route)) return item.key;
+  }
   return undefined;
 }
