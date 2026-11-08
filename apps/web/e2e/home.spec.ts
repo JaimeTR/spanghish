@@ -163,21 +163,41 @@ test.describe("home sections with Maribel's content", () => {
 
   test("testimonials render and Maribel speaks in the first person without years of experience", async ({ page }) => {
     await page.goto("/es");
-    await expect(page.locator("#testimonials blockquote")).toHaveCount(5);
+    await expect(page.locator("#testimonials li:not([aria-hidden]) blockquote")).toHaveCount(5);
     const maribel = page.locator("#maribel");
     await expect(maribel).toContainText("Soy profesora nativa");
     await expect(maribel).not.toContainText(/4\s*años/);
   });
 
-  test("testimonials show one at a time, move with the avatars and advance by themselves", async ({ page }) => {
+  test("testimonials move by themselves, with no dots, and short ones keep a minimum height", async ({ page }) => {
     await page.goto("/es");
     const group = page.getByRole("group", { name: "Opiniones de alumnos" });
     await group.scrollIntoViewIfNeeded();
-    await expect(group.getByText("Maribel is an excellent Spanish tutor.")).toBeVisible();
-    await expect(group.getByText("Perfect! Was a good introductory lesson")).toBeHidden();
-    await group.getByRole("button", { name: "Opinión 4 de 5: Ben" }).click();
-    await expect(group.getByText("Perfect! Maribel was kind")).toBeVisible();
+    await expect(group.getByRole("button")).toHaveCount(0);
+    const track = group.locator(".t-track");
     await page.mouse.move(0, 0);
-    await expect(group.getByText("Perfect! Was a good introductory lesson")).toBeVisible({ timeout: 12_000 });
+    const x0 = (await track.boundingBox())!.x;
+    await expect.poll(async () => (await track.boundingBox())!.x, { timeout: 15_000 }).toBeLessThan(x0 - 100);
+    const heights = await group
+      .locator("li:not([aria-hidden]) blockquote")
+      .evaluateAll((els) => els.map((e) => Math.round(e.parentElement!.getBoundingClientRect().height)));
+    for (const h of heights) expect(h).toBeGreaterThanOrEqual(240);
+  });
+
+  test("testimonials show two at once on large screens and one on mobile", async ({ page }) => {
+    for (const [width, perView] of [[1440, 2], [375, 1]] as const) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/es");
+      const group = page.getByRole("group", { name: "Opiniones de alumnos" });
+      await group.scrollIntoViewIfNeeded();
+      const visible = await group.locator("li:not([aria-hidden])").evaluateAll((els) => {
+        const vp = els[0]!.closest(".t-viewport")!.getBoundingClientRect();
+        return els.filter((e) => {
+          const r = e.getBoundingClientRect();
+          return r.left >= vp.left - 4 && r.right <= vp.right + 4;
+        }).length;
+      });
+      expect(visible).toBe(perView);
+    }
   });
 });
