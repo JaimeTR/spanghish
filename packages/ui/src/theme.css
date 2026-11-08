@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "../tokens.css";
+
+/* Expone los tokens de marca como tema de Tailwind v4.
+   `inline` mantiene la referencia a var(--...) en tiempo de ejecución. */
+@theme inline {
+  --color-*: initial;
+
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-fuchsia: var(--brand-fuchsia);
+  --color-brand-burgundy: var(--brand-burgundy);
+  --color-brand-purple: var(--brand-purple);
+
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-cream: var(--cream);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-line: var(--line);
+
+  --color-bg: var(--color-bg);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-on-primary: var(--color-on-primary);
+  --color-structure: var(--color-structure);
+  --color-on-structure: var(--color-on-structure);
+  --color-highlight: var(--color-highlight);
+  --color-on-highlight: var(--color-on-highlight);
+
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+  --color-info: var(--color-info);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
