@@ -10,7 +10,21 @@ import { test } from "@playwright/test";
 test.skip(!process.env.DESIGN_SHOTS, "DESIGN_SHOTS no definido");
 
 const dir = path.resolve(__dirname, "../.design-preview");
-const ALL = ["", "lessons", "adult-lessons", "kids-lessons", "mature-lessons", "teachers", "contact-us"];
+const ALL = [
+  "",
+  "lessons",
+  "adult-lessons",
+  "kids-lessons",
+  "mature-lessons",
+  "teachers",
+  "contact-us",
+  "bookings",
+  "prices",
+  "faq",
+  "thank-you",
+  "privacy-policy",
+  "terms",
+];
 const only = process.env.SHOTS_ONLY?.split(",").map((s) => (s === "home" ? "" : s));
 const PAGES = only ? ALL.filter((p) => only.includes(p)) : ALL;
 
@@ -26,6 +40,7 @@ for (const slug of PAGES) {
         await page.evaluate(() => document.fonts.ready);
         // Recorre la página para que carguen las imágenes diferidas (logo del pie).
         await page.evaluate(async () => {
+          document.querySelectorAll<HTMLImageElement>('img[loading="lazy"]').forEach((i) => (i.loading = "eager"));
           for (let y = 0; y < document.body.scrollHeight; y += 600) {
             window.scrollTo(0, y);
             await new Promise((r) => setTimeout(r, 40));

@@ -20,6 +20,9 @@ export default defineConfig({
     command: `pnpm build && pnpm exec next start --hostname 127.0.0.1 --port ${PORT}`,
     url: `${BASE_URL}/es`,
     reuseExistingServer: !process.env.CI,
+    // Sin Resend en la e2e: las solicitudes de /bookings se escriben en la consola
+    // (ver src/lib/leads.ts). Nunca definir LEADS_LOG_ONLY en un despliegue real.
+    env: { LEADS_LOG_ONLY: "1" },
     timeout: 300_000,
   },
 });

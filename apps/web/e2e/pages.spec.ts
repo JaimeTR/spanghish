@@ -1,5 +1,5 @@
-import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { expectNoAxeViolations } from "./helpers";
 
 /** Páginas interiores: slug (igual en ambos idiomas), h1 y título por idioma. */
 const PAGES = [
@@ -33,23 +33,42 @@ const PAGES = [
     es: { h1: "Contacto", title: /^Contacto y clase gratis/ },
     en: { h1: "Contact us", title: /^Contact us and book a free lesson/ },
   },
+  {
+    slug: "bookings",
+    es: { h1: "Tu primera clase ¡es gratis!", title: /^Reserva tu clase gratis de español/ },
+    en: { h1: "Your first lesson is free!", title: /^Book your free Spanish lesson/ },
+  },
+  {
+    slug: "prices",
+    es: { h1: "Precios y formatos", title: /^Precios y formatos de las clases de español/ },
+    en: { h1: "Prices and formats", title: /^Spanish lesson prices and formats/ },
+  },
+  {
+    slug: "faq",
+    es: { h1: "Preguntas frecuentes", title: /^Preguntas frecuentes sobre las clases/ },
+    en: { h1: "Frequently asked questions", title: /^Frequently asked questions about Spanish lessons/ },
+  },
+  {
+    slug: "thank-you",
+    noindex: true,
+    es: { h1: "¡Gracias!", title: /^Gracias por tu solicitud/ },
+    en: { h1: "Thank you!", title: /^Thank you for your request/ },
+  },
+  {
+    slug: "privacy-policy",
+    noindex: true,
+    es: { h1: "Política de privacidad", title: /^Política de privacidad/ },
+    en: { h1: "Privacy policy", title: /^Privacy policy/ },
+  },
+  {
+    slug: "terms",
+    noindex: true,
+    es: { h1: "Términos y cancelaciones", title: /^Términos y cancelaciones/ },
+    en: { h1: "Terms and cancellations", title: /^Terms and cancellations/ },
+  },
 ] as const;
 
 const LOCALES = ["es", "en"] as const;
-
-async function expectNoAxeViolations(page: Page) {
-  // Mide el estado final: sin bloques a medio aparecer ni animaciones en curso.
-  await page.evaluate(async () => {
-    document.querySelectorAll(".reveal-pending").forEach((el) => el.classList.remove("reveal-pending"));
-    await Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined)));
-  });
-  const { violations } = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
-    .analyze();
-  expect(
-    violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`),
-  ).toEqual([]);
-}
 
 for (const p of PAGES) {
   for (const locale of LOCALES) {
@@ -69,6 +88,9 @@ for (const p of PAGES) {
         );
       }
       await expect(page.locator('meta[property="og:title"]')).toHaveAttribute("content", p[locale].title);
+      const robots = page.locator('meta[name="robots"]');
+      if ("noindex" in p) await expect(robots).toHaveAttribute("content", /noindex/);
+      else await expect(robots).toHaveCount(0);
       for (const script of await page.locator('script[type="application/ld+json"]').allTextContents()) {
         expect(() => JSON.parse(script)).not.toThrow();
       }
@@ -111,9 +133,28 @@ test("header and footer links reach every inner page", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   }
 
-  // Desde una página interior, las anclas de la home siguen funcionando.
   await header.getByRole("link", { name: "Precios" }).click();
-  await expect(page).toHaveURL(/\/es#prices$/);
+  await expect(page).toHaveURL(/\/es\/prices$/);
+  await expect(header.getByRole("link", { name: "Precios" })).toHaveAttribute("aria-current", "page");
+
+  await header.getByRole("link", { name: "Preguntas" }).click();
+  await expect(page).toHaveURL(/\/es\/faq$/);
+  await expect(header.getByRole("link", { name: "Preguntas" })).toHaveAttribute("aria-current", "page");
+
+  // Desde una página interior, las anclas de la home siguen funcionando.
+  await header.getByRole("link", { name: "Cómo son" }).click();
+  await expect(page).toHaveURL(/\/es#how$/);
+
+  // Pie: precios, preguntas y los textos legales.
+  const legal = page.getByRole("navigation", { name: "Legal" });
+  await legal.getByRole("link", { name: "Privacidad" }).click();
+  await expect(page).toHaveURL(/\/es\/privacy-policy$/);
+  await legal.getByRole("link", { name: "Términos y cancelaciones" }).click();
+  await expect(page).toHaveURL(/\/es\/terms$/);
+  await footer.getByRole("link", { name: "Preguntas" }).click();
+  await expect(page).toHaveURL(/\/es\/faq$/);
+  await footer.getByRole("link", { name: "Precios" }).click();
+  await expect(page).toHaveURL(/\/es\/prices$/);
 });
 
 test("home audience blocks link to their pages", async ({ page }) => {
@@ -122,13 +163,20 @@ test("home audience blocks link to their pages", async ({ page }) => {
   await expect(page).toHaveURL(/\/en\/kids-lessons$/);
 });
 
-test("the free-lesson CTA on an inner page goes to contact", async ({ page }) => {
+test("the free-lesson CTA on an inner page goes to the booking form", async ({ page }) => {
   await page.goto("/en/mature-lessons");
   await page.getByRole("main").getByRole("link", { name: "Book your free lesson" }).first().click();
-  await expect(page).toHaveURL(/\/en\/contact-us$/);
+  await expect(page).toHaveURL(/\/en\/bookings$/);
+  await expect(page.locator("main form")).toHaveCount(1);
   await expect(page.locator('main a[href="tel:+61413178583"]')).toBeVisible();
-  await expect(page.locator('main a[href="mailto:hello@spanglish.com.au"]')).toBeVisible();
+});
+
+test("contact is for general questions and links to the booking form", async ({ page }) => {
+  await page.goto("/es/contact-us");
   await expect(page.locator("main form")).toHaveCount(0);
+  await expect(page.locator('main a[href="mailto:hello@spanglish.com.au"]').first()).toBeVisible();
+  await page.getByRole("main").getByRole("link", { name: "Ir al formulario" }).click();
+  await expect(page).toHaveURL(/\/es\/bookings$/);
 });
 
 test("language switch keeps the inner path", async ({ page }) => {
@@ -191,12 +239,18 @@ test.describe("old URLs without a locale", () => {
   });
 });
 
-test("sitemap lists every route in both locales and robots points at it", async ({ request }) => {
+test("sitemap lists every indexable route in both locales and robots points at it", async ({ request }) => {
   const xml = await (await request.get("/sitemap.xml")).text();
   for (const locale of LOCALES) {
     expect(xml).toMatch(new RegExp(`<loc>https?://[^<]+/${locale}</loc>`));
-    for (const p of PAGES) expect(xml).toMatch(new RegExp(`<loc>https?://[^<]+/${locale}/${p.slug}</loc>`));
+    for (const p of PAGES) {
+      const entry = new RegExp(`<loc>https?://[^<]+/${locale}/${p.slug}</loc>`);
+      // Confirmación y textos legales (noindex) quedan fuera.
+      if ("noindex" in p) expect(xml, p.slug).not.toMatch(entry);
+      else expect(xml, p.slug).toMatch(entry);
+    }
   }
+  expect(xml).toMatch(/hreflang="en" href="https?:\/\/[^"]+\/en\/bookings"/);
   const robots = await (await request.get("/robots.txt")).text();
   expect(robots).toMatch(/Sitemap: https?:\/\/\S+\/sitemap\.xml/);
 });

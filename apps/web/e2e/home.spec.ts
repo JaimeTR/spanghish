@@ -1,19 +1,5 @@
-import AxeBuilder from "@axe-core/playwright";
-import { expect, test, type Page } from "@playwright/test";
-
-async function expectNoAxeViolations(page: Page) {
-  // Mide el estado final: sin bloques a medio aparecer ni animaciones en curso.
-  await page.evaluate(async () => {
-    document.querySelectorAll(".reveal-pending").forEach((el) => el.classList.remove("reveal-pending"));
-    await Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined)));
-  });
-  const { violations } = await new AxeBuilder({ page })
-    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
-    .analyze();
-  expect(
-    violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`),
-  ).toEqual([]);
-}
+import { expect, test } from "@playwright/test";
+import { expectNoAxeViolations } from "./helpers";
 
 const LOCALES = [
   { locale: "es", h1: "¡Habla español con confianza!", cta: "Reserva tu clase gratis", menu: "Menú" },
@@ -25,7 +11,7 @@ for (const { locale, h1, cta } of LOCALES) {
     await page.goto(`/${locale}`);
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(h1);
-    await expect(page.getByRole("link", { name: cta })).toHaveAttribute("href", `/${locale}/contact-us`);
+    await expect(page.getByRole("link", { name: cta })).toHaveAttribute("href", `/${locale}/bookings`);
     await expect(page.locator('a[href="tel:+61413178583"]').first()).toBeVisible();
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveCount(1);
     const jsonLd = await page.locator('script[type="application/ld+json"]').textContent();
@@ -97,7 +83,7 @@ test.describe("mobile", () => {
     await button.click();
     await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Prices" }).click();
     await expect(button).toHaveAttribute("aria-expanded", "false");
-    await expect(page).toHaveURL(/#prices$/);
+    await expect(page).toHaveURL(/\/en\/prices$/);
   });
 });
 
