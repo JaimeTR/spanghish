@@ -16,26 +16,26 @@
   --line: #E6DDC8;
 
   /* Roles semánticos */
-  --color-bg: var(--cream);
-  --color-text: var(--ink);
-  --color-text-muted: var(--ink-muted);
-  --color-primary: var(--brand-fuchsia);       /* blanco sobre él: 5.1:1 */
-  --color-primary-hover: var(--brand-burgundy);
-  --color-on-primary: #FFFFFF;
-  --color-structure: var(--brand-purple);      /* sidebar, cabeceras */
-  --color-on-structure: #FFFFFF;
-  --color-highlight: var(--brand-yellow);      /* solo fondo; texto = --ink */
-  --color-on-highlight: var(--ink);
+  --role-bg: var(--cream);
+  --role-text: var(--ink);
+  --role-text-muted: var(--ink-muted);
+  --role-primary: var(--brand-fuchsia);       /* blanco sobre él: 5.1:1 */
+  --role-primary-hover: var(--brand-burgundy);
+  --role-on-primary: #FFFFFF;
+  --role-structure: var(--brand-purple);      /* sidebar, cabeceras */
+  --role-on-structure: #FFFFFF;
+  --role-highlight: var(--brand-yellow);      /* solo fondo; texto = --ink */
+  --role-on-highlight: var(--ink);
 
   /* Estados (separados de la marca) */
-  --color-success: #1F7A4D;
-  --color-warning: #8A5A00;
-  --color-danger: #B3261E;
-  --color-info: #245EA8;
+  --role-success: #1F7A4D;
+  --role-warning: #8A5A00;
+  --role-danger: #B3261E;
+  --role-info: #245EA8;
 
   /* Forma y espacio */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 22px;
+  --shape-sm: 8px;
+  --shape-md: 14px;
+  --shape-lg: 22px;
   --focus-ring: 3px solid var(--brand-purple);
 }

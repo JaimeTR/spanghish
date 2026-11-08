@@ -2,6 +2,6 @@
 @source "../../../../packages/ui/src";
 
 body {
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--role-bg);
+  color: var(--role-text);
 }

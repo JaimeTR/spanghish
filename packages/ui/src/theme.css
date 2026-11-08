@@ -18,23 +18,23 @@
   --color-surface-sunken: var(--surface-sunken);
   --color-line: var(--line);
 
-  --color-bg: var(--color-bg);
-  --color-text: var(--color-text);
-  --color-text-muted: var(--color-text-muted);
-  --color-primary: var(--color-primary);
-  --color-primary-hover: var(--color-primary-hover);
-  --color-on-primary: var(--color-on-primary);
-  --color-structure: var(--color-structure);
-  --color-on-structure: var(--color-on-structure);
-  --color-highlight: var(--color-highlight);
-  --color-on-highlight: var(--color-on-highlight);
+  --color-bg: var(--role-bg);
+  --color-text: var(--role-text);
+  --color-text-muted: var(--role-text-muted);
+  --color-primary: var(--role-primary);
+  --color-primary-hover: var(--role-primary-hover);
+  --color-on-primary: var(--role-on-primary);
+  --color-structure: var(--role-structure);
+  --color-on-structure: var(--role-on-structure);
+  --color-highlight: var(--role-highlight);
+  --color-on-highlight: var(--role-on-highlight);
 
-  --color-success: var(--color-success);
-  --color-warning: var(--color-warning);
-  --color-danger: var(--color-danger);
-  --color-info: var(--color-info);
+  --color-success: var(--role-success);
+  --color-warning: var(--role-warning);
+  --color-danger: var(--role-danger);
+  --color-info: var(--role-info);
 
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
+  --radius-sm: var(--shape-sm);
+  --radius-md: var(--shape-md);
+  --radius-lg: var(--shape-lg);
 }
