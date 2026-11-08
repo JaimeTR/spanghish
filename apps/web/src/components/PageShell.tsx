@@ -24,8 +24,10 @@ export function PageShell({
 }) {
   const t = useTranslations("a11y");
 
+  // Un único nodo raíz: con varios (fragmento), Next hace scrollIntoView de cada
+  // uno al navegar y, con scroll suave, la página terminaba cerca del final.
   return (
-    <>
+    <div>
       <a
         href="#main"
         className="fixed top-3 left-3 z-50 -translate-y-24 rounded-full bg-ink px-5 py-3 font-bold text-cream no-underline [--focus-color:var(--brand-yellow)] focus:translate-y-0"
@@ -41,6 +43,6 @@ export function PageShell({
       {jsonLd.map((data, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />
       ))}
-    </>
+    </div>
   );
 }

@@ -63,7 +63,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${display.variable} ${body.variable}`}>
+    <html lang={locale} className={`${display.variable} ${body.variable}`} data-scroll-behavior="smooth">
       <body>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>

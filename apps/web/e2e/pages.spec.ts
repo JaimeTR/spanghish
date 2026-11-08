@@ -253,3 +253,14 @@ test("sitemap lists every indexable route in both locales and robots points at i
   const robots = await (await request.get("/robots.txt")).text();
   expect(robots).toMatch(/Sitemap: https?:\/\/\S+\/sitemap\.xml/);
 });
+
+test("navigating from a scrolled page lands at the top of the new page", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  for (const [label, url] of [["Clases", /\/es\/lessons$/], ["Precios", /\/es\/prices$/], ["Conócenos", /\/es\/teachers$/]] as const) {
+    await page.goto("/es");
+    await page.evaluate(() => window.scrollTo({ top: 3000, behavior: "instant" }));
+    await page.getByRole("navigation", { name: "Navegación principal" }).getByRole("link", { name: label, exact: true }).click();
+    await expect(page).toHaveURL(url);
+    await expect.poll(() => page.evaluate(() => Math.round(window.scrollY)), { timeout: 5000 }).toBe(0);
+  }
+});
