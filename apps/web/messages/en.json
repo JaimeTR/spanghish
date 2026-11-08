@@ -16,13 +16,23 @@
     "lessons": "Lessons",
     "how": "How it works",
     "prices": "Prices",
-    "maribel": "Maribel",
     "contact": "Contact",
     "menu": "Menu",
     "cta": "Free lesson",
-    "localeLabel": "Language"
+    "localeLabel": "Language",
+    "teachers": "Meet us",
+    "adults": "Adult lessons",
+    "kids": "Kids lessons",
+    "mature": "Mature adult lessons",
+    "footerLessons": "Lessons",
+    "footerSchool": "Spanglish",
+    "breadcrumb": "Breadcrumb",
+    "homeCrumb": "Home"
   },
-  "locales": { "es": "Español", "en": "English" },
+  "locales": {
+    "es": "Español",
+    "en": "English"
+  },
   "hero": {
     "titleA": "Speak Spanish",
     "titleB": "with confidence!",
@@ -82,10 +92,22 @@
     "minutesLabel": "minutes per lesson",
     "minutesNote": "Plenty of time to talk, ask and practise.",
     "items": {
-      "practical": { "title": "Practical communication", "body": "The Spanish you use in real conversations." },
-      "grammar": { "title": "Clear grammar", "body": "Simple explanations, no fuss." },
-      "materials": { "title": "Materials", "body": "Support materials for every lesson." },
-      "summary": { "title": "Summary and homework", "body": "After each lesson you get a summary and homework." }
+      "practical": {
+        "title": "Practical communication",
+        "body": "The Spanish you use in real conversations."
+      },
+      "grammar": {
+        "title": "Clear grammar",
+        "body": "Simple explanations, no fuss."
+      },
+      "materials": {
+        "title": "Materials",
+        "body": "Support materials for every lesson."
+      },
+      "summary": {
+        "title": "Summary and homework",
+        "body": "After each lesson you get a summary and homework."
+      }
     },
     "placesTitle": "Online or face to face",
     "places": "Online, at local libraries, in offices or at home, on the Sunshine Coast and in Brisbane."
@@ -154,5 +176,379 @@
     "follow": "Follow us at @spanglishworldwide",
     "contactTitle": "Contact",
     "copyright": "© {year} Spanglish"
+  },
+  "common": {
+    "formatsQuestion": "How can I take the lessons?",
+    "formats": {
+      "private": "Private 1-1",
+      "own": "Your own group",
+      "local": "Local group",
+      "maxTwo": "Max. 2 people"
+    },
+    "places": {
+      "online": "Online",
+      "tutorPlace": "At the tutor’s place",
+      "library": "At a local library",
+      "yourPlace": "At your place",
+      "localOffice": "At a local office",
+      "homeStudy": "Face to face (home-study)",
+      "libraryF2F": "Face to face, at a library",
+      "yourPlaceF2F": "Face to face, at your place",
+      "custom": "Face to face, wherever suits you"
+    },
+    "groups": {
+      "program10": {
+        "title": "10-week program",
+        "body": "10 structured lessons for steady progress."
+      },
+      "payg": {
+        "title": "Pay as you go",
+        "body": "One lesson at a time, with no upfront commitment."
+      },
+      "modes": {
+        "title": "Choose your mode",
+        "body": "Private or with your own group. Then choose the 10-lesson program or single lessons."
+      }
+    },
+    "howQuestion": "What is a lesson like?",
+    "minutes": "70",
+    "minutesLabel": "minutes per lesson",
+    "includesTitle": "Every lesson includes",
+    "includes": {
+      "materials": "Materials to follow the lesson",
+      "summary": "A summary afterwards",
+      "homework": "Homework to prepare for the next one"
+    },
+    "pricesQuestion": "How much does it cost?",
+    "pricesNote": "Prices in Australian dollars (AUD).",
+    "prices": {
+      "free": {
+        "amount": "Free",
+        "title": "First lesson",
+        "body": "45 minutes, online."
+      },
+      "group": {
+        "from": "from",
+        "amount": "$30",
+        "unit": "per person",
+        "title": "Group lessons",
+        "body": "The final rate depends on your group size."
+      },
+      "privateAsk": {
+        "amount": "By email",
+        "title": "Private lessons",
+        "body": "Email us with your preferred lesson mode and we’ll send you current pricing.",
+        "cta": "Ask for prices"
+      },
+      "program": {
+        "amount": "$40",
+        "unit": "per lesson",
+        "title": "10-lesson program",
+        "body": "Or $390 if you pay for all 10 lessons upfront."
+      },
+      "single": {
+        "amount": "$45",
+        "unit": "per lesson",
+        "title": "Single lesson",
+        "body": "Pay for each lesson as you go."
+      }
+    },
+    "faqQuestion": "Any questions?",
+    "relatedQuestion": "Looking for something else?",
+    "relatedTeachers": "Meet Maribel",
+    "relatedTeachersBody": "Your tutor: native, certified and with 4+ years of experience.",
+    "relatedLessons": "All lessons",
+    "relatedLessonsBody": "Compare formats and prices for every age.",
+    "freeLesson": {
+      "question": "Shall we start?",
+      "lead": "Your first lesson is free: 45 minutes, online. Call or email us and we’ll book it.",
+      "cta": "Book your free lesson",
+      "call": "Call {phone}"
+    },
+    "audiences": {
+      "adults": {
+        "age": "14+",
+        "name": "Adults",
+        "ageText": "14 and over"
+      },
+      "kids": {
+        "age": "6–13",
+        "name": "Kids",
+        "ageText": "aged 6 to 13"
+      },
+      "mature": {
+        "age": "65+",
+        "name": "Mature adults",
+        "ageText": "65 and over"
+      }
+    },
+    "seePrices": "See prices",
+    "sendEmail": "Send an email"
+  },
+  "page": {
+    "lessons": {
+      "metaTitle": "Spanish lessons for adults, kids and mature learners · Spanglish",
+      "metaDescription": "Spanish lessons for adults (14+), kids (6 to 13) and mature adults (65+): private, your own group or a local group. Online, on the Sunshine Coast and in Brisbane.",
+      "title": "Spanish lessons",
+      "lead": "For adults, kids and mature learners. Pick your group to see what lessons are like, the formats and the prices.",
+      "audiences": {
+        "adults": "Young adults, professionals, students and travellers. Beginner to advanced.",
+        "kids": "With games, songs and visual resources. Ideal for home schooling.",
+        "mature": "Beginner to advanced, private or with your own group."
+      },
+      "compareQuestion": "What’s on offer for each age?",
+      "compareIntro": "Published formats and prices for each age group.",
+      "compareCaption": "Formats and prices by age group",
+      "rowPrograms": "Programs",
+      "rowPrice": "Price",
+      "rows": {
+        "private": "Online, at the tutor’s place or at a local library.",
+        "privateMature": "Online, or face to face (home-study) or at a library.",
+        "own": "Up to 2 people: online, at your place or at the tutor’s place.",
+        "ownMature": "Face to face, at your place or wherever suits you.",
+        "local": "At a local office.",
+        "none": "Not available",
+        "programs": "10-week program or pay as you go.",
+        "programsMature": "10-lesson program or single lessons.",
+        "price": "Groups from $30 per person. Private: prices by email.",
+        "priceMature": "$40 per lesson in the 10-lesson program ($390 upfront). Single lesson: $45."
+      }
+    },
+    "adults": {
+      "metaTitle": "Spanish lessons for adults (14+) · Spanglish",
+      "metaDescription": "Spanish lessons for adults aged 14 and over, beginner to advanced, with a native, certified tutor. Online, on the Sunshine Coast and in Brisbane. Your first lesson is free.",
+      "titleA": "Spanish lessons",
+      "titleB": "for adults",
+      "lead": "For young adults, professionals, students and travellers aged 14 and over, from complete beginner to advanced.",
+      "ask": "What if I’m starting from zero?",
+      "answer": "No problem! There are lessons from beginner to advanced.",
+      "who": {
+        "question": "Who are they for?",
+        "body": "For anyone who wants to speak Spanish with confidence: for travel, for work, for study, for personal growth, or just to enjoy the language.",
+        "tags": {
+          "travel": "Travel",
+          "work": "Work",
+          "study": "Study",
+          "growth": "Personal growth",
+          "enjoy": "Enjoying the language"
+        }
+      },
+      "how": {
+        "intro": "With a native, certified tutor: practical communication, clear grammar and the confidence to speak.",
+        "visual": {
+          "title": "Visual resources",
+          "body": "Images and materials for every topic."
+        },
+        "roleplay": {
+          "title": "Role-plays",
+          "body": "Real-life situations to practise what you’ll say."
+        },
+        "conversation": {
+          "title": "Real conversations",
+          "body": "The Spanish people use every day."
+        },
+        "exercises": {
+          "title": "Guided exercises",
+          "body": "Step by step, with your tutor’s help."
+        }
+      },
+      "faq": {
+        "level": {
+          "q": "Do I need to know any Spanish?",
+          "a": "No. There are lessons for every level, from complete beginner to advanced."
+        },
+        "length": {
+          "q": "How long is a lesson?",
+          "a": "70 minutes. It includes materials, a summary afterwards and homework for the next lesson."
+        },
+        "payg": {
+          "q": "Can I pay lesson by lesson?",
+          "a": "Yes. Pay as you go has no upfront commitment: private lessons (online or at the tutor’s place) or your own group of up to 2 people."
+        },
+        "private": {
+          "q": "How much is a private lesson?",
+          "a": "Email hello@spanglish.com.au with your preferred lesson mode and we’ll send you current pricing. Group rates start from $30 per person."
+        }
+      }
+    },
+    "kids": {
+      "metaTitle": "Spanish lessons for kids (aged 6 to 13) · Spanglish",
+      "metaDescription": "Spanish lessons for kids aged 6 to 13, with games, songs and visual resources. Online, on the Sunshine Coast and in Brisbane. Ideal for home schooling. Your first lesson is free.",
+      "titleA": "Spanish lessons",
+      "titleB": "for kids",
+      "lead": "For girls and boys aged 6 to 13. Ideal for home schooling families and private learners.",
+      "ask": "How do kids learn?",
+      "answer": "By playing! With games, songs and visual resources.",
+      "who": {
+        "question": "Who are they for?",
+        "body": "To help kids aged 6 to 13 speak Spanish naturally and confidently, with a native, certified tutor.",
+        "tags": {
+          "ages": "Aged 6 to 13",
+          "homeschool": "Home schooling",
+          "private": "Private learners"
+        }
+      },
+      "how": {
+        "intro": "Active, practical lessons so kids speak Spanish naturally and gain confidence.",
+        "visual": {
+          "title": "Visual resources",
+          "body": "Images and materials for every topic."
+        },
+        "games": {
+          "title": "Games",
+          "body": "They learn the language while they play."
+        },
+        "songs": {
+          "title": "Songs",
+          "body": "To listen, repeat and remember."
+        },
+        "exercises": {
+          "title": "Guided exercises",
+          "body": "Step-by-step practice to build confidence."
+        }
+      },
+      "faq": {
+        "ages": {
+          "q": "What ages are they for?",
+          "a": "For girls and boys aged 6 to 13."
+        },
+        "homeschool": {
+          "q": "Do they suit home schooling?",
+          "a": "Yes. The lessons are ideal for home schooling families and private learners."
+        },
+        "length": {
+          "q": "How long is a lesson?",
+          "a": "70 minutes. It includes materials, a summary afterwards and homework for the next lesson."
+        },
+        "private": {
+          "q": "How much is a private lesson?",
+          "a": "Email hello@spanglish.com.au with your preferred lesson mode and we’ll send you current pricing. Group rates start from $30 per person."
+        }
+      }
+    },
+    "mature": {
+      "metaTitle": "Spanish lessons for mature adults (65+) · Spanglish",
+      "metaDescription": "Spanish lessons for adults over 65, beginner to advanced: online or face to face, private or with your own group. 10-lesson program at $40 per lesson. Your first lesson is free.",
+      "titleA": "Spanish lessons",
+      "titleB": "for mature adults",
+      "lead": "For adults aged 65 and over, from complete beginner to advanced. Online or face to face, private or with your own group.",
+      "ask": "Isn’t it too late to learn?",
+      "answer": "¡Nunca! Never: there are lessons from beginner to advanced.",
+      "who": {
+        "question": "Who are they for?",
+        "body": "For adults aged 65 and over, whether you’re starting from zero or already at an advanced level. Take private lessons or learn with your own group.",
+        "tags": {
+          "beginners": "From beginner",
+          "advanced": "To advanced",
+          "groups": "Groups available"
+        }
+      },
+      "how": {
+        "intro": "Practical lessons with a native, certified tutor.",
+        "repetition": {
+          "title": "Repeat to remember",
+          "body": "We revisit vocabulary and grammar so you can recall them in conversation."
+        },
+        "social": {
+          "title": "Meet people",
+          "body": "In a group or one-on-one, learning is a chance to make friends and feel less lonely."
+        },
+        "memory": {
+          "title": "An active mind",
+          "body": "Learning a language builds new neural pathways and may help memory and mental agility."
+        }
+      },
+      "faq": {
+        "level": {
+          "q": "Do I need to know any Spanish?",
+          "a": "No. There are lessons from complete beginner to advanced."
+        },
+        "upfront": {
+          "q": "Do I have to pay for all 10 lessons upfront?",
+          "a": "No. In the 10-lesson program you pay $40 per lesson, or $390 if you pay for all 10 upfront. You can also pay as you go: $45 per lesson."
+        },
+        "friends": {
+          "q": "Can I take lessons with friends?",
+          "a": "Yes. With your own group, face to face at your place or wherever suits you."
+        },
+        "length": {
+          "q": "How long is a lesson?",
+          "a": "70 minutes. It includes materials, a summary afterwards and homework for the next lesson."
+        }
+      },
+      "ratesFrom": "Rates apply from April 2026."
+    },
+    "teachers": {
+      "metaTitle": "Meet us: Maribel Mayhua, Spanish tutor · Spanglish",
+      "metaDescription": "Maribel Mayhua is a native Spanish tutor from Lima, Peru, certified for levels A1 to B2, with more than 4 years of experience. She lives in Australia.",
+      "title": "Meet us",
+      "lead": "Our goal is that you speak Spanish confidently. Meet the person who will teach you.",
+      "ask": "Who will teach me?",
+      "answer": "¡Hola! I’m Maribel.",
+      "name": "Maribel Mayhua",
+      "role": "Spanish tutor",
+      "intro": "I’m Maribel, from Lima, Peru, and I’m a passionate Spanish teacher.",
+      "mission": "My mission is to help you keep learning and progressing in Spanish, until you speak it with confidence.",
+      "factsLabel": "Maribel at a glance",
+      "facts": {
+        "native": "Native speaker, from Lima, Peru",
+        "certified": "Certified to teach levels A1, A2, B1 and B2",
+        "years": "4+ years of experience",
+        "based": "Based in Australia"
+      },
+      "approachQuestion": "What are her lessons like?",
+      "approachIntro": "70 minutes to talk, ask and practise, with everything you need to keep going afterwards.",
+      "approach": {
+        "practical": {
+          "title": "Practical communication",
+          "body": "The Spanish you use in real conversations."
+        },
+        "grammar": {
+          "title": "Clear grammar",
+          "body": "Simple explanations, no fuss."
+        },
+        "materials": {
+          "title": "Materials",
+          "body": "Support materials for every lesson."
+        },
+        "summary": {
+          "title": "Summary and homework",
+          "body": "After each lesson you get a summary and homework."
+        }
+      },
+      "classesQuestion": "Who does she teach?"
+    },
+    "contact": {
+      "metaTitle": "Contact us and book a free lesson · Spanglish",
+      "metaDescription": "Call 0413 178 583 or email hello@spanglish.com.au, Monday to Saturday, 8am to 5pm. Sunshine Coast, Brisbane and online. Your first lesson is free.",
+      "title": "Contact us",
+      "ask": "How do I book my free lesson?",
+      "lead": "Call or email us. Your first lesson is free: 45 minutes, online.",
+      "phoneLabel": "Call",
+      "emailLabel": "Email",
+      "detailsLabel": "Contact details",
+      "hoursLabel": "Hours",
+      "hours": "Monday to Saturday, 8am to 5pm. We take calls during these hours.",
+      "areasLabel": "Where",
+      "areas": "Face-to-face lessons on the Sunshine Coast and in Brisbane. Online from anywhere.",
+      "stepsQuestion": "How does the free lesson work?",
+      "steps": {
+        "contact": {
+          "title": "Call or email us",
+          "body": "By phone Monday to Saturday, 8am to 5pm, or by email."
+        },
+        "tell": {
+          "title": "Tell us what you need",
+          "body": "Who the lessons are for (adult, kid or mature adult) and your preferred lesson mode."
+        },
+        "book": {
+          "title": "We book your lesson",
+          "body": "Your first lesson is free: 45 minutes, online."
+        }
+      },
+      "bookingNote": "Very soon you’ll be able to book your lesson right here, with the new Spanglish platform. Until then, we’ll book it with you by phone or email.",
+      "socialQuestion": "Follow us?",
+      "socialBody": "Find us as @spanglishworldwide."
+    }
   }
 }

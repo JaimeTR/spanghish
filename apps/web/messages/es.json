@@ -16,13 +16,23 @@
     "lessons": "Clases",
     "how": "Cómo son",
     "prices": "Precios",
-    "maribel": "Maribel",
     "contact": "Contacto",
     "menu": "Menú",
     "cta": "Clase gratis",
-    "localeLabel": "Idioma"
+    "localeLabel": "Idioma",
+    "teachers": "Conócenos",
+    "adults": "Clases para adultos",
+    "kids": "Clases para niños",
+    "mature": "Clases para mayores",
+    "footerLessons": "Clases",
+    "footerSchool": "Spanglish",
+    "breadcrumb": "Ruta de navegación",
+    "homeCrumb": "Inicio"
   },
-  "locales": { "es": "Español", "en": "English" },
+  "locales": {
+    "es": "Español",
+    "en": "English"
+  },
   "hero": {
     "titleA": "¡Habla español",
     "titleB": "con confianza!",
@@ -82,10 +92,22 @@
     "minutesLabel": "minutos por clase",
     "minutesNote": "Con tiempo de sobra para hablar, preguntar y practicar.",
     "items": {
-      "practical": { "title": "Comunicación práctica", "body": "El español que usas en conversaciones reales." },
-      "grammar": { "title": "Gramática clara", "body": "Explicaciones sencillas, sin complicaciones." },
-      "materials": { "title": "Materiales", "body": "Material de apoyo para cada clase." },
-      "summary": { "title": "Resumen y deberes", "body": "Después de cada clase recibes un resumen y deberes." }
+      "practical": {
+        "title": "Comunicación práctica",
+        "body": "El español que usas en conversaciones reales."
+      },
+      "grammar": {
+        "title": "Gramática clara",
+        "body": "Explicaciones sencillas, sin complicaciones."
+      },
+      "materials": {
+        "title": "Materiales",
+        "body": "Material de apoyo para cada clase."
+      },
+      "summary": {
+        "title": "Resumen y deberes",
+        "body": "Después de cada clase recibes un resumen y deberes."
+      }
     },
     "placesTitle": "Online o presencial",
     "places": "Online, en bibliotecas locales, en oficinas o en casa, en Sunshine Coast y Brisbane."
@@ -154,5 +176,379 @@
     "follow": "Síguenos en @spanglishworldwide",
     "contactTitle": "Contacto",
     "copyright": "© {year} Spanglish"
+  },
+  "common": {
+    "formatsQuestion": "¿Cómo puedo hacer las clases?",
+    "formats": {
+      "private": "Individual 1-1",
+      "own": "Tu propio grupo",
+      "local": "Grupo local",
+      "maxTwo": "Máximo 2 personas"
+    },
+    "places": {
+      "online": "Online",
+      "tutorPlace": "En casa de la profesora",
+      "library": "En una biblioteca local",
+      "yourPlace": "En tu casa",
+      "localOffice": "En una oficina local",
+      "homeStudy": "Presencial, en casa (home-study)",
+      "libraryF2F": "Presencial, en una biblioteca",
+      "yourPlaceF2F": "Presencial, en tu casa",
+      "custom": "Presencial, donde tú prefieras"
+    },
+    "groups": {
+      "program10": {
+        "title": "Programa de 10 semanas",
+        "body": "10 clases estructuradas para avanzar con constancia."
+      },
+      "payg": {
+        "title": "Pago por clase",
+        "body": "Clase a clase, sin compromiso por adelantado."
+      },
+      "modes": {
+        "title": "Elige la modalidad",
+        "body": "Individual o con tu propio grupo. Después eliges entre el programa de 10 clases o clases sueltas."
+      }
+    },
+    "howQuestion": "¿Cómo es una clase?",
+    "minutes": "70",
+    "minutesLabel": "minutos por clase",
+    "includesTitle": "En cada clase",
+    "includes": {
+      "materials": "Materiales para seguir la clase",
+      "summary": "Un resumen al terminar",
+      "homework": "Deberes para preparar la siguiente"
+    },
+    "pricesQuestion": "¿Cuánto cuesta?",
+    "pricesNote": "Precios en dólares australianos (AUD).",
+    "prices": {
+      "free": {
+        "amount": "Gratis",
+        "title": "Primera clase",
+        "body": "45 minutos, online."
+      },
+      "group": {
+        "from": "desde",
+        "amount": "$30",
+        "unit": "por persona",
+        "title": "Clases en grupo",
+        "body": "El precio final depende del tamaño del grupo."
+      },
+      "privateAsk": {
+        "amount": "Por email",
+        "title": "Clases individuales",
+        "body": "Escríbenos con el formato que prefieres y te enviamos los precios actuales.",
+        "cta": "Pedir precios"
+      },
+      "program": {
+        "amount": "$40",
+        "unit": "por clase",
+        "title": "Programa de 10 clases",
+        "body": "O $390 si pagas las 10 clases por adelantado."
+      },
+      "single": {
+        "amount": "$45",
+        "unit": "por clase",
+        "title": "Clase suelta",
+        "body": "Pagas cada clase por separado."
+      }
+    },
+    "faqQuestion": "¿Tienes dudas?",
+    "relatedQuestion": "¿Buscas otra cosa?",
+    "relatedTeachers": "Conoce a Maribel",
+    "relatedTeachersBody": "Tu profesora: nativa, certificada y con más de 4 años de experiencia.",
+    "relatedLessons": "Todas las clases",
+    "relatedLessonsBody": "Compara formatos y precios para cada edad.",
+    "freeLesson": {
+      "question": "¿Empezamos?",
+      "lead": "Tu primera clase es gratis: 45 minutos, online. Llámanos o escríbenos y la reservamos.",
+      "cta": "Reserva tu clase gratis",
+      "call": "Llamar al {phone}"
+    },
+    "audiences": {
+      "adults": {
+        "age": "14+",
+        "name": "Adultos",
+        "ageText": "desde 14 años"
+      },
+      "kids": {
+        "age": "6–13",
+        "name": "Niños",
+        "ageText": "de 6 a 13 años"
+      },
+      "mature": {
+        "age": "65+",
+        "name": "Mayores",
+        "ageText": "mayores de 65"
+      }
+    },
+    "seePrices": "Ver precios",
+    "sendEmail": "Escribir un email"
+  },
+  "page": {
+    "lessons": {
+      "metaTitle": "Clases de español para adultos, niños y mayores · Spanglish",
+      "metaDescription": "Clases de español para adultos (14+), niños (6 a 13) y mayores (65+): individuales, en tu propio grupo o en un grupo local. Online, en Sunshine Coast y Brisbane.",
+      "title": "Clases de español",
+      "lead": "Para adultos, niños y mayores. Elige tu grupo para ver cómo son las clases, los formatos y los precios.",
+      "audiences": {
+        "adults": "Jóvenes adultos, profesionales, estudiantes y viajeros. De principiante a avanzado.",
+        "kids": "Con juegos, canciones y recursos visuales. Ideal para educación en casa.",
+        "mature": "De principiante a avanzado, en clase individual o con tu propio grupo."
+      },
+      "compareQuestion": "¿Qué hay para cada edad?",
+      "compareIntro": "Formatos y precios publicados para cada grupo de edad.",
+      "compareCaption": "Formatos y precios por grupo de edad",
+      "rowPrograms": "Programas",
+      "rowPrice": "Precio",
+      "rows": {
+        "private": "Online, en casa de la profesora o en una biblioteca local.",
+        "privateMature": "Online, o presencial en casa (home-study) o en una biblioteca.",
+        "own": "Hasta 2 personas: online, en tu casa o en casa de la profesora.",
+        "ownMature": "Presencial, en tu casa o donde tú prefieras.",
+        "local": "En una oficina local.",
+        "none": "No disponible",
+        "programs": "Programa de 10 semanas o pago por clase.",
+        "programsMature": "Programa de 10 clases o clases sueltas.",
+        "price": "Grupos desde $30 por persona. Individuales: precio por email.",
+        "priceMature": "$40 por clase en el programa de 10 ($390 por adelantado). Clase suelta: $45."
+      }
+    },
+    "adults": {
+      "metaTitle": "Clases de español para adultos (14+) · Spanglish",
+      "metaDescription": "Clases de español para adultos desde 14 años, de principiante a avanzado, con una profesora nativa y certificada. Online, en Sunshine Coast y Brisbane. Primera clase gratis.",
+      "titleA": "Clases de español",
+      "titleB": "para adultos",
+      "lead": "Para jóvenes adultos, profesionales, estudiantes y viajeros desde los 14 años, desde principiante absoluto hasta nivel avanzado.",
+      "ask": "¿Y si empiezo desde cero?",
+      "answer": "¡Sin problema! Hay clases desde principiante hasta avanzado.",
+      "who": {
+        "question": "¿Para quién son?",
+        "body": "Para quien quiere hablar español con confianza: para viajar, para el trabajo, para los estudios, para crecer como persona o por el gusto de disfrutar el idioma.",
+        "tags": {
+          "travel": "Viajar",
+          "work": "Trabajo",
+          "study": "Estudios",
+          "growth": "Crecimiento personal",
+          "enjoy": "Disfrutar el idioma"
+        }
+      },
+      "how": {
+        "intro": "Con una profesora nativa y certificada: comunicación práctica, gramática clara y confianza para hablar.",
+        "visual": {
+          "title": "Recursos visuales",
+          "body": "Imágenes y materiales que acompañan cada tema."
+        },
+        "roleplay": {
+          "title": "Role-plays",
+          "body": "Situaciones de la vida real para practicar lo que vas a decir."
+        },
+        "conversation": {
+          "title": "Conversaciones reales",
+          "body": "El español que se usa en el día a día."
+        },
+        "exercises": {
+          "title": "Ejercicios guiados",
+          "body": "Paso a paso, con la ayuda de la profesora."
+        }
+      },
+      "faq": {
+        "level": {
+          "q": "¿Necesito saber algo de español?",
+          "a": "No. Hay clases para todos los niveles, desde principiante absoluto hasta avanzado."
+        },
+        "length": {
+          "q": "¿Cuánto dura una clase?",
+          "a": "70 minutos. Incluye materiales, un resumen al terminar y deberes para la siguiente clase."
+        },
+        "payg": {
+          "q": "¿Puedo pagar clase a clase?",
+          "a": "Sí. Con el pago por clase no hay compromiso por adelantado: clases individuales (online o en casa de la profesora) o en tu propio grupo de hasta 2 personas."
+        },
+        "private": {
+          "q": "¿Cuánto cuesta una clase individual?",
+          "a": "Escríbenos a hello@spanglish.com.au con el formato que prefieres y te enviamos los precios actuales. Las clases en grupo empiezan desde $30 por persona."
+        }
+      }
+    },
+    "kids": {
+      "metaTitle": "Clases de español para niños (6 a 13 años) · Spanglish",
+      "metaDescription": "Clases de español para niños y niñas de 6 a 13 años, con juegos, canciones y recursos visuales. Online, en Sunshine Coast y Brisbane. Ideal para educación en casa. Primera clase gratis.",
+      "titleA": "Clases de español",
+      "titleB": "para niños",
+      "lead": "Para niños y niñas de 6 a 13 años. Ideal para familias que educan en casa (homeschooling) y para clases particulares.",
+      "ask": "¿Cómo aprenden los niños?",
+      "answer": "¡Jugando! Con juegos, canciones y recursos visuales.",
+      "who": {
+        "question": "¿Para quién son?",
+        "body": "Para que niños y niñas de 6 a 13 años hablen español con naturalidad y confianza, con una profesora nativa y certificada.",
+        "tags": {
+          "ages": "De 6 a 13 años",
+          "homeschool": "Educación en casa",
+          "private": "Clases particulares"
+        }
+      },
+      "how": {
+        "intro": "Clases activas y prácticas para que hablen español con naturalidad y ganen confianza.",
+        "visual": {
+          "title": "Recursos visuales",
+          "body": "Imágenes y materiales para cada tema."
+        },
+        "games": {
+          "title": "Juegos",
+          "body": "Aprenden el idioma mientras juegan."
+        },
+        "songs": {
+          "title": "Canciones",
+          "body": "Para escuchar, repetir y recordar."
+        },
+        "exercises": {
+          "title": "Ejercicios guiados",
+          "body": "Práctica paso a paso para ganar confianza."
+        }
+      },
+      "faq": {
+        "ages": {
+          "q": "¿Para qué edades son?",
+          "a": "Para niños y niñas de 6 a 13 años."
+        },
+        "homeschool": {
+          "q": "¿Sirven para la educación en casa?",
+          "a": "Sí. Las clases son ideales para familias que educan en casa (homeschooling) y para alumnos particulares."
+        },
+        "length": {
+          "q": "¿Cuánto dura una clase?",
+          "a": "70 minutos. Incluye materiales, un resumen al terminar y deberes para la siguiente clase."
+        },
+        "private": {
+          "q": "¿Cuánto cuesta una clase individual?",
+          "a": "Escríbenos a hello@spanglish.com.au con el formato que prefieres y te enviamos los precios actuales. Las clases en grupo empiezan desde $30 por persona."
+        }
+      }
+    },
+    "mature": {
+      "metaTitle": "Clases de español para mayores (65+) · Spanglish",
+      "metaDescription": "Clases de español para mayores de 65, de principiante a avanzado: online o presenciales, individuales o en tu propio grupo. Programa de 10 clases a $40 por clase. Primera clase gratis.",
+      "titleA": "Clases de español",
+      "titleB": "para mayores",
+      "lead": "Para mayores de 65, desde principiante absoluto hasta nivel avanzado. Online o presenciales, individuales o con tu propio grupo.",
+      "ask": "¿No es tarde para aprender?",
+      "answer": "¡Nunca! Hay clases desde principiante hasta avanzado.",
+      "who": {
+        "question": "¿Para quién son?",
+        "body": "Para mayores de 65, tanto si empiezas de cero como si ya tienes un nivel avanzado. Puedes hacer clases individuales o con tu propio grupo.",
+        "tags": {
+          "beginners": "Desde principiante",
+          "advanced": "Hasta nivel avanzado",
+          "groups": "También en grupo"
+        }
+      },
+      "how": {
+        "intro": "Clases prácticas con una profesora nativa y certificada.",
+        "repetition": {
+          "title": "Repetir para recordar",
+          "body": "Repasamos vocabulario y gramática para que los recuerdes cuando conversas."
+        },
+        "social": {
+          "title": "Conocer gente",
+          "body": "En grupo o en clase individual, aprender es una ocasión para hacer amistades y sentirse menos solo."
+        },
+        "memory": {
+          "title": "Mente activa",
+          "body": "Aprender un idioma crea nuevas conexiones en el cerebro y puede ayudar a la memoria y a la agilidad mental."
+        }
+      },
+      "faq": {
+        "level": {
+          "q": "¿Necesito saber algo de español?",
+          "a": "No. Hay clases desde principiante absoluto hasta nivel avanzado."
+        },
+        "upfront": {
+          "q": "¿Tengo que pagar las 10 clases por adelantado?",
+          "a": "No. En el programa de 10 clases pagas $40 por clase, o $390 si pagas las 10 por adelantado. También puedes pagar clase a clase: $45 por clase."
+        },
+        "friends": {
+          "q": "¿Puedo hacer las clases con amigos?",
+          "a": "Sí. Con tu propio grupo, en clases presenciales en tu casa o donde tú prefieras."
+        },
+        "length": {
+          "q": "¿Cuánto dura una clase?",
+          "a": "70 minutos. Incluye materiales, un resumen al terminar y deberes para la siguiente clase."
+        }
+      },
+      "ratesFrom": "Tarifas vigentes desde abril de 2026."
+    },
+    "teachers": {
+      "metaTitle": "Conócenos: Maribel Mayhua, profesora de español · Spanglish",
+      "metaDescription": "Maribel Mayhua es profesora de español nativa, de Lima (Perú), certificada para los niveles A1 a B2, con más de 4 años de experiencia. Vive en Australia.",
+      "title": "Conócenos",
+      "lead": "Nuestro objetivo es que hables español con confianza. Te presentamos a quien te dará clase.",
+      "ask": "¿Quién me va a dar clase?",
+      "answer": "¡Hola! Soy Maribel.",
+      "name": "Maribel Mayhua",
+      "role": "Profesora de español",
+      "intro": "Soy Maribel, de Lima (Perú), y me apasiona enseñar español.",
+      "mission": "Mi misión es ayudarte a seguir aprendiendo y avanzando en español, hasta que lo hables con confianza.",
+      "factsLabel": "Maribel en pocas palabras",
+      "facts": {
+        "native": "Nativa, de Lima (Perú)",
+        "certified": "Certificada para enseñar los niveles A1, A2, B1 y B2",
+        "years": "Más de 4 años de experiencia",
+        "based": "Vive en Australia"
+      },
+      "approachQuestion": "¿Cómo son sus clases?",
+      "approachIntro": "70 minutos para hablar, preguntar y practicar, con lo necesario para seguir después.",
+      "approach": {
+        "practical": {
+          "title": "Comunicación práctica",
+          "body": "El español que usas en conversaciones reales."
+        },
+        "grammar": {
+          "title": "Gramática clara",
+          "body": "Explicaciones sencillas, sin complicaciones."
+        },
+        "materials": {
+          "title": "Materiales",
+          "body": "Material de apoyo para cada clase."
+        },
+        "summary": {
+          "title": "Resumen y deberes",
+          "body": "Después de cada clase recibes un resumen y deberes."
+        }
+      },
+      "classesQuestion": "¿A quién da clase?"
+    },
+    "contact": {
+      "metaTitle": "Contacto y clase gratis · Spanglish",
+      "metaDescription": "Llama al 0413 178 583 o escribe a hello@spanglish.com.au, de lunes a sábado de 8:00 a 17:00. Sunshine Coast, Brisbane y online. Tu primera clase es gratis.",
+      "title": "Contacto",
+      "ask": "¿Cómo reservo mi clase gratis?",
+      "lead": "Llámanos o escríbenos. Tu primera clase es gratis: 45 minutos, online.",
+      "phoneLabel": "Llama al",
+      "emailLabel": "Escribe a",
+      "detailsLabel": "Datos de contacto",
+      "hoursLabel": "Horario",
+      "hours": "Lunes a sábado, de 8:00 a 17:00. Atendemos llamadas en ese horario.",
+      "areasLabel": "Dónde",
+      "areas": "Clases presenciales en Sunshine Coast y Brisbane. Online, desde cualquier lugar.",
+      "stepsQuestion": "¿Cómo funciona la clase gratis?",
+      "steps": {
+        "contact": {
+          "title": "Llámanos o escríbenos",
+          "body": "Por teléfono de lunes a sábado, de 8:00 a 17:00, o por email."
+        },
+        "tell": {
+          "title": "Cuéntanos qué buscas",
+          "body": "Para quién es la clase (adulto, niño o mayor) y el formato que prefieres."
+        },
+        "book": {
+          "title": "Reservamos tu clase",
+          "body": "Tu primera clase es gratis: 45 minutos, online."
+        }
+      },
+      "bookingNote": "Muy pronto podrás reservar tu clase directamente en esta web, con la nueva plataforma de Spanglish. Mientras tanto, la reservamos contigo por teléfono o email.",
+      "socialQuestion": "¿Nos sigues?",
+      "socialBody": "Estamos en redes como @spanglishworldwide."
+    }
   }
 }

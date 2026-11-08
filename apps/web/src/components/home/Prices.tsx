@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Bubble, SectionQuestion } from "../Bubble";
+import { PriceItem } from "../PriceItem";
 import { btnPrimary, container } from "../styles";
 
 /**
@@ -51,45 +52,12 @@ export function Prices() {
             <h3 className="font-display text-[1.75rem] leading-tight text-brand-burgundy">{t("groupsAskTitle")}</h3>
             <p className="mt-1 leading-relaxed text-ink">{t("groupsAskBody")}</p>
           </div>
+          {/* Misma página: la sección de contacto de la home está justo debajo. */}
           <a href="#contact" className={`${btnPrimary} shrink-0`}>
             {t("groupsAskCta")}
           </a>
         </Bubble>
       </div>
     </section>
-  );
-}
-
-function PriceItem({
-  amount,
-  title,
-  body,
-  pre,
-  unit,
-  highlight = false,
-}: {
-  amount: string;
-  title: string;
-  body?: string;
-  pre?: string;
-  unit?: string;
-  highlight?: boolean;
-}) {
-  return (
-    <li className="flex flex-col gap-2 border-b-2 border-ink/15 py-7 md:pr-6 lg:border-b-0 lg:border-l-2 lg:pl-6 lg:first:border-l-0 lg:first:pl-0">
-      <h3 className="order-2 text-lg font-extrabold text-ink">{title}</h3>
-      <p className="order-1 flex flex-wrap items-baseline gap-x-2 text-brand-fuchsia">
-        {pre && <span className="font-semibold text-ink-muted">{pre}</span>}
-        <span
-          className={`font-display leading-none ${
-            highlight ? "lettering text-[clamp(3rem,6vw,4rem)]" : "text-[clamp(3rem,6vw,4rem)] text-brand-purple"
-          }`}
-        >
-          {amount}
-        </span>
-        {unit && <span className="font-semibold text-ink-muted">{unit}</span>}
-      </p>
-      {body && <p className="order-3 leading-relaxed text-ink-muted">{body}</p>}
-    </li>
   );
 }

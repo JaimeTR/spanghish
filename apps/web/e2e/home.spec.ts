@@ -20,7 +20,7 @@ for (const { locale, h1, cta } of LOCALES) {
     await page.goto(`/${locale}`);
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(h1);
-    await expect(page.getByRole("link", { name: cta })).toHaveAttribute("href", "#contact");
+    await expect(page.getByRole("link", { name: cta })).toHaveAttribute("href", `/${locale}/contact-us`);
     await expect(page.locator('a[href="tel:+61413178583"]').first()).toBeVisible();
     await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveCount(1);
     const jsonLd = await page.locator('script[type="application/ld+json"]').textContent();

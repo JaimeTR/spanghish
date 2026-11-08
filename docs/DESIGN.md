@@ -25,6 +25,8 @@ Tokens en `packages/ui/tokens.css`. Logo en `brand/`.
 - Gesto de marca: el **bocadillo** del logo. Las secciones se abren con una pregunta en bocadillo (`SectionQuestion`) y la extrusión burdeos sin desenfoque del logo (`--bubble-shadow`) se usa solo en bocadillos y en el rotulado (`.lettering`).
 - Campos de color por sección: amarillo (hero), crema, morado, crema, burdeos, arena, fucsia, morado (pie). Fucsia sobre amarillo (3.7:1) solo en texto grande.
 - Foco: 3px morado; dentro de `.on-dark` (morado, burdeos, fucsia) pasa a amarillo.
+- Páginas interiores: cada público conserva su color de la home (adultos fucsia, niños amarillo, mayores morado; Conócenos burdeos; Contacto fucsia). El hero abre con la pregunta del visitante en un bocadillo blanco y la respuesta en el color opuesto (`PageHero` + `HeroChat`). Recorrido: quién → cómo es una clase (hilo de bocadillos sobre morado) → formatos → precios → dudas → otras páginas → clase gratis (`FreeLessonBand`, fucsia).
+- Rutas: `apps/web/src/lib/routes.ts` es la única fuente de los slugs (los de la web antigua, iguales en es/en).
 
 ## Pendiente
 Tipografías del portal (apps/app), modo oscuro, escala tipográfica, componentes shadcn tematizados, logo SVG.

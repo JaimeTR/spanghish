@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { LEARN_URL } from "@/lib/site";
 import { SectionQuestion } from "../Bubble";
+import { ExternalIcon } from "../icons";
 import { btnInk, container } from "../styles";
 
 const LEVELS = [
@@ -26,9 +27,7 @@ export function LearnNow() {
           <div className="mt-8 flex flex-col items-start gap-3">
             <a href={LEARN_URL} rel="noopener noreferrer" className={btnInk}>
               {t("cta")}
-              <svg aria-hidden="true" viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M7 4h9v9M16 4L5 15" />
-              </svg>
+              <ExternalIcon />
               <span className="sr-only">{ta("external")}</span>
             </a>
             <p className="text-sm text-ink-muted">{t("note")}</p>

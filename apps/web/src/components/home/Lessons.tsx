@@ -1,5 +1,9 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import type { Locale } from "@/i18n/routing";
+import { localePath } from "@/lib/routes";
+import { AudienceTile } from "../AudienceTile";
 import { SectionQuestion } from "../Bubble";
+import { People, PEOPLE_BY_FORMAT } from "../People";
 import { container } from "../styles";
 
 /**
@@ -8,6 +12,7 @@ import { container } from "../styles";
  */
 export function Lessons() {
   const t = useTranslations("lessons");
+  const locale = useLocale() as Locale;
 
   return (
     <section id="lessons" aria-labelledby="lessons-title" className="bg-cream py-20 lg:py-28">
@@ -20,20 +25,23 @@ export function Lessons() {
         </div>
 
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-6 lg:gap-5">
-          <Audience
-            className="bg-brand-fuchsia text-on-primary sm:col-span-2 lg:col-span-4 lg:row-span-2 lg:min-h-[25rem]"
+          <AudienceTile
+            href={localePath(locale, "adults")}
+            className="on-dark bg-brand-fuchsia text-on-primary sm:col-span-2 lg:col-span-4 lg:row-span-2 lg:min-h-[25rem]"
             age={t("adults.age")}
             title={t("adults.title")}
             body={t("adults.body")}
             big
           />
-          <Audience
+          <AudienceTile
+            href={localePath(locale, "kids")}
             className="bg-brand-yellow text-ink lg:col-span-2"
             age={t("kids.age")}
             title={t("kids.title")}
             body={t("kids.body")}
           />
-          <Audience
+          <AudienceTile
+            href={localePath(locale, "mature")}
             className="on-dark bg-brand-purple text-on-structure lg:col-span-2"
             age={t("mature.age")}
             title={t("mature.title")}
@@ -66,9 +74,9 @@ export function Lessons() {
           {t("formatsTitle")}
         </h3>
         <ul className="mt-8 grid gap-x-8 gap-y-10 md:grid-cols-3">
-          {(["private", "own", "local"] as const).map((key, i) => (
+          {(["private", "own", "local"] as const).map((key) => (
             <li key={key} className="border-t-2 border-ink pt-5">
-              <People count={i === 0 ? 1 : i === 1 ? 2 : 5} />
+              <People count={PEOPLE_BY_FORMAT[key]} />
               <h4 className="mt-4 text-xl font-extrabold text-ink">{t(`formats.${key}.title`)}</h4>
               <p className="mt-1.5 leading-relaxed text-ink-muted">{t(`formats.${key}.body`)}</p>
             </li>
@@ -76,53 +84,6 @@ export function Lessons() {
         </ul>
       </div>
     </section>
-  );
-}
-
-function Audience({
-  className,
-  age,
-  title,
-  body,
-  big = false,
-}: {
-  className: string;
-  age: string;
-  title: string;
-  body: string;
-  big?: boolean;
-}) {
-  return (
-    <li className={`relative flex flex-col justify-between gap-8 overflow-hidden rounded-lg p-6 sm:p-8 ${className}`}>
-      <p
-        aria-hidden="true"
-        className={`font-display leading-[0.85] ${big ? "text-[clamp(5rem,15vw,10rem)]" : "text-[clamp(4rem,9vw,5.5rem)]"}`}
-      >
-        {age}
-      </p>
-      <div>
-        <h3 className={`font-display leading-none ${big ? "text-[clamp(2.1rem,4.5vw,3.25rem)]" : "text-[2rem]"}`}>
-          {title}
-          <span className="sr-only"> ({age})</span>
-        </h3>
-        <p className={`mt-3 leading-relaxed ${big ? "max-w-[28rem] text-lg sm:text-xl" : "text-base"}`}>{body}</p>
-      </div>
-    </li>
-  );
-}
-
-/** Círculos por persona: 1, 2 o un grupo. Geometría, no ilustración. */
-function People({ count }: { count: number }) {
-  const colors = ["#D71950", "#592F85", "#FCD404", "#8F0831", "#D71950"];
-  return (
-    <svg aria-hidden="true" viewBox={`0 0 ${count * 26 + 10} 40`} width={count * 26 + 10} height={40} className="block">
-      {Array.from({ length: count }, (_, i) => (
-        <g key={i} transform={`translate(${i * 26} 0)`}>
-          <circle cx="18" cy="12" r="8" fill={colors[i]} />
-          <path d="M4 40c0-9 6-15 14-15s14 6 14 15z" fill={colors[i]} />
-        </g>
-      ))}
-    </svg>
   );
 }
 

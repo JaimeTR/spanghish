@@ -1,66 +1,66 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
-import { CONTACT, NAV_ITEMS, SOCIAL } from "@/lib/site";
+import { FOOTER_NAV, localePath } from "@/lib/routes";
+import { CONTACT } from "@/lib/site";
 import { LocaleSwitch } from "./LocaleSwitch";
+import { SocialLinks } from "./SocialLinks";
 import { container } from "./styles";
+
+const footerLink = "inline-flex min-h-11 items-center font-semibold text-on-structure no-underline hover:underline";
 
 export function SiteFooter({ locale }: { locale: Locale }) {
   const t = useTranslations("footer");
   const tn = useTranslations("nav");
-  const ta = useTranslations("a11y");
   const year = new Date().getFullYear();
 
   return (
     <footer className="on-dark bg-brand-purple text-on-structure">
       <div className={`${container} grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-12`}>
-        <div className="lg:col-span-5">
-          <Image src="/logo-spanglish.png" alt="Spanglish" width={110} height={87} />
+        <div className="md:col-span-2 lg:col-span-4">
+          <Link href={localePath(locale, "home")} className="inline-block rounded-md">
+            <Image src="/logo-spanglish.png" alt={tn("home")} width={110} height={87} />
+          </Link>
           <p className="mt-5 max-w-[22rem] font-display text-[1.75rem] leading-tight text-brand-yellow">{t("tagline")}</p>
           <p className="mt-3 font-semibold">{t("areas")}</p>
         </div>
 
-        <nav aria-label={tn("footerLabel")} className="lg:col-span-3">
-          <ul className="flex flex-col">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.key}>
-                <a href={item.href} className="inline-flex min-h-11 items-center font-semibold text-on-structure no-underline hover:underline">
-                  {tn(item.key)}
-                </a>
-              </li>
-            ))}
-          </ul>
+        <nav aria-label={tn("footerLabel")} className="grid grid-cols-2 gap-8 lg:col-span-4">
+          {(["lessons", "school"] as const).map((group) => (
+            <div key={group}>
+              <h2 className="font-display text-2xl text-brand-yellow">
+                {tn(group === "lessons" ? "footerLessons" : "footerSchool")}
+              </h2>
+              <ul className="mt-2 flex flex-col">
+                {FOOTER_NAV[group].map((item) => (
+                  <li key={item.key}>
+                    <Link href={localePath(locale, item.route)} className={footerLink}>
+                      {tn(item.key)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </nav>
 
         <div className="lg:col-span-4">
           <h2 className="font-display text-2xl text-brand-yellow">{t("contactTitle")}</h2>
           <ul className="mt-2 flex flex-col">
             <li>
-              <a href={`tel:${CONTACT.phoneE164}`} className="inline-flex min-h-11 items-center font-semibold text-on-structure hover:no-underline">
+              <a href={`tel:${CONTACT.phoneE164}`} className={footerLink}>
                 {CONTACT.phoneDisplay}
               </a>
             </li>
             <li>
-              <a href={`mailto:${CONTACT.email}`} className="inline-flex min-h-11 items-center font-semibold text-on-structure hover:no-underline">
+              <a href={`mailto:${CONTACT.email}`} className={footerLink}>
                 {CONTACT.email}
               </a>
             </li>
           </ul>
           <p className="mt-6 font-semibold">{t("follow")}</p>
-          <ul className="mt-3 flex flex-wrap gap-2">
-            {SOCIAL.map((s) => (
-              <li key={s.key}>
-                <a
-                  href={s.href}
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center rounded-full border-2 border-on-structure/35 px-4 text-sm font-bold text-on-structure no-underline hover:border-brand-yellow hover:bg-brand-yellow hover:text-ink"
-                >
-                  {s.label}
-                  <span className="sr-only"> {ta("opensSite", { name: s.label })}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          <SocialLinks className="mt-3" />
         </div>
       </div>
       <div className="border-t-2 border-on-structure/15">

@@ -1,6 +1,10 @@
-import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import type { Locale } from "@/i18n/routing";
+import { localePath } from "@/lib/routes";
 import { Bubble, SectionQuestion } from "../Bubble";
-import { container } from "../styles";
+import { ArrowIcon } from "../icons";
+import { btnOnDarkOutline, container } from "../styles";
 
 const FACTS = ["native", "certified", "years", "based"] as const;
 
@@ -10,6 +14,8 @@ const FACTS = ["native", "certified", "years", "based"] as const;
  */
 export function Maribel() {
   const t = useTranslations("maribel");
+  const tc = useTranslations("common");
+  const locale = useLocale() as Locale;
 
   return (
     <section id="maribel" aria-labelledby="maribel-title" className="on-dark bg-brand-burgundy py-20 text-on-primary lg:py-28">
@@ -20,6 +26,10 @@ export function Maribel() {
           </SectionQuestion>
           <p className="mt-10 max-w-[34rem] text-xl leading-relaxed sm:text-[1.375rem]">{t("body")}</p>
           <p className="mt-5 max-w-[34rem] text-lg leading-relaxed text-on-primary/90">{t("body2")}</p>
+          <Link href={localePath(locale, "teachers")} className={`${btnOnDarkOutline} mt-8`}>
+            {tc("relatedTeachers")}
+            <ArrowIcon />
+          </Link>
         </div>
 
         <div className="lg:col-span-6">

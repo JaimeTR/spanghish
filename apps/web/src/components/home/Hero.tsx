@@ -1,6 +1,9 @@
-import { useTranslations } from "next-intl";
-import { BOOKING_HREF } from "@/lib/site";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
+import type { Locale } from "@/i18n/routing";
+import { bookingPath, localePath } from "@/lib/routes";
 import { Bubble } from "../Bubble";
+import { ArrowIcon, SparkIcon } from "../icons";
 import { btnInk, btnPrimary, container } from "../styles";
 
 /**
@@ -9,6 +12,7 @@ import { btnInk, btnPrimary, container } from "../styles";
  */
 export function Hero() {
   const t = useTranslations("hero");
+  const locale = useLocale() as Locale;
 
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden bg-brand-yellow">
@@ -20,16 +24,16 @@ export function Hero() {
           </h1>
           <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-ink sm:text-xl">{t("lead")}</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href={BOOKING_HREF} className={btnPrimary}>
+            <Link href={bookingPath(locale)} className={btnPrimary}>
               {t("cta")}
-              <Arrow />
-            </a>
-            <a href="#lessons" className={btnInk}>
+              <ArrowIcon />
+            </Link>
+            <Link href={localePath(locale, "lessons")} className={btnInk}>
               {t("secondary")}
-            </a>
+            </Link>
           </div>
           <p className="mt-5 flex items-start gap-2 font-semibold text-brand-burgundy">
-            <Spark />
+            <SparkIcon />
             {t("free")}
           </p>
         </div>
@@ -68,21 +72,5 @@ export function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-function Arrow() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 10h11M11 5l5 5-5 5" />
-    </svg>
-  );
-}
-
-function Spark() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className="mt-0.5 size-5 shrink-0" fill="currentColor">
-      <path d="M10 1.5l2 6.1 6.5.4-5.1 4 1.8 6.5L10 14.8l-5.2 3.7 1.8-6.5L1.5 8l6.5-.4L10 1.5z" />
-    </svg>
   );
 }

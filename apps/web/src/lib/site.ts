@@ -22,17 +22,3 @@ export const SOCIAL = [
   { key: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/spanglishworldwide" },
   { key: "threads", label: "Threads", href: "https://www.threads.com/@spanglishworldwide" },
 ] as const;
-
-/** Anclas de la home. Los ids son estables e iguales en ambos idiomas. */
-export const NAV_ITEMS = [
-  { key: "lessons", href: "#lessons" },
-  { key: "how", href: "#how" },
-  { key: "prices", href: "#prices" },
-  { key: "maribel", href: "#maribel" },
-  { key: "contact", href: "#contact" },
-] as const;
-
-export type NavKey = (typeof NAV_ITEMS)[number]["key"];
-
-/** Destino del botón principal hasta que exista /bookings en la nueva web. */
-export const BOOKING_HREF = "#contact";
