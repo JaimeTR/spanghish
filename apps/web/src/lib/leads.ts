@@ -13,10 +13,24 @@ import type { ContactData } from "./contact";
  *
  * LEADS_LOG_ONLY=1 fuerza el modo consola también en producción. Solo para la
  * e2e (que compila y arranca en modo producción); no definirla en un despliegue.
+ *
+ * "order": pedido pagado de la tienda (lo envía el webhook de Stripe). La
+ * ENTREGA DE LOS ARCHIVOS ES MANUAL por ahora: este email avisa a Maribel, que
+ * envía los materiales al cliente respondiendo al email.
  */
 export type BookingLead = BookingData & { locale: Locale; kind: "booking" };
 export type ContactLead = ContactData & { locale: Locale; kind: "contact" };
-export type Lead = BookingLead | ContactLead;
+export type OrderLead = {
+  kind: "order";
+  locale: Locale;
+  /** Email del cliente que recoge Stripe (puede faltar). */
+  email: string;
+  sessionId: string;
+  items: { id: string; name: string; amountCents: number }[];
+  totalCents: number;
+  currency: string;
+};
+export type Lead = BookingLead | ContactLead | OrderLead;
 
 export type DeliveryResult =
   | { ok: true; via: "email" | "log" }
@@ -38,13 +52,34 @@ const LABELS: Record<string, string> = {
   locale: "Website language",
 };
 
-const FIELDS: Record<Lead["kind"], string[]> = {
+const FIELDS: Record<Exclude<Lead["kind"], "order">, string[]> = {
   booking: ["name", "email", "phone", "audience", "place", "times", "language", "message", "locale"],
   contact: ["name", "email", "phone", "message", "locale"],
 };
 
+function money(cents: number, currency: string): string {
+  return `$${(cents / 100).toFixed(2)} ${currency.toUpperCase()}`;
+}
+
+function orderEmailText(lead: OrderLead): string {
+  return [
+    "New paid order from the spanglish.com.au shop",
+    "",
+    `Customer email: ${lead.email || "- (not provided: check the payment in the Stripe dashboard)"}`,
+    "Products:",
+    ...lead.items.map((i) => `- ${i.name} (${i.id}): ${money(i.amountCents, lead.currency)}`),
+    `Total paid: ${money(lead.totalCents, lead.currency)}`,
+    `Stripe Checkout session: ${lead.sessionId}`,
+    `Website language: ${lead.locale}`,
+    "",
+    "DELIVERY IS MANUAL: reply to this email and attach the files for the customer.",
+    "Stripe may resend the same notification: if this session id was already handled, ignore this email.",
+  ].join("\n");
+}
+
 /** Cuerpo en texto plano (sin HTML: nada que escapar ni inyectar). */
 export function leadEmailText(lead: Lead): string {
+  if (lead.kind === "order") return orderEmailText(lead);
   const record = lead as unknown as Record<string, string>;
   const lines = FIELDS[lead.kind].map((k) => `${LABELS[k]}: ${record[k] || "-"}`);
   const title =
@@ -61,6 +96,7 @@ export function leadEmailText(lead: Lead): string {
 
 /** Asunto en una línea y acotado (el nombre ya llega sin saltos de línea). */
 export function leadSubject(lead: Lead): string {
+  if (lead.kind === "order") return `Paid order (send the files): ${lead.sessionId}`.replace(/[\r\n]+/g, " ").slice(0, 150);
   return `${lead.kind === "contact" ? "Contact message" : "Free lesson request"}: ${lead.name}`.replace(/[\r\n]+/g, " ").slice(0, 150);
 }
 
@@ -81,7 +117,7 @@ export async function deliverLead(
         body: JSON.stringify({
           from,
           to: to.split(",").map((s) => s.trim()).filter(Boolean),
-          reply_to: lead.email,
+          ...(lead.email ? { reply_to: lead.email } : {}),
           subject: leadSubject(lead),
           text: leadEmailText(lead),
         }),
