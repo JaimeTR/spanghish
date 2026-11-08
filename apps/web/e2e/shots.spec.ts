@@ -5,33 +5,41 @@ import { test } from "@playwright/test";
  * Capturas de página completa para revisión de diseño. Solo con DESIGN_SHOTS=1:
  *   DESIGN_SHOTS=1 pnpm --filter @spanglish/web e2e shots
  * Se guardan en apps/web/.design-preview/ (no se versiona).
+ * SHOTS_ONLY=teachers,contact-us limita las páginas.
  */
 test.skip(!process.env.DESIGN_SHOTS, "DESIGN_SHOTS no definido");
 
 const dir = path.resolve(__dirname, "../.design-preview");
+const ALL = ["", "lessons", "adult-lessons", "kids-lessons", "mature-lessons", "teachers", "contact-us"];
+const only = process.env.SHOTS_ONLY?.split(",").map((s) => (s === "home" ? "" : s));
+const PAGES = only ? ALL.filter((p) => only.includes(p)) : ALL;
 
-for (const locale of ["es", "en"] as const) {
-  for (const width of [375, 1440] as const) {
-    test(`shot ${locale} ${width}`, async ({ page }) => {
-      await page.emulateMedia({ reducedMotion: "reduce" });
-      await page.setViewportSize({ width, height: width === 375 ? 812 : 900 });
-      await page.goto(`/${locale}`);
-      await page.evaluate(() => document.fonts.ready);
-      // Recorre la página para que carguen las imágenes diferidas (logo del pie).
-      await page.evaluate(async () => {
-        for (let y = 0; y < document.body.scrollHeight; y += 600) {
-          window.scrollTo(0, y);
-          await new Promise((r) => setTimeout(r, 40));
+for (const slug of PAGES) {
+  const name = slug || "home";
+  for (const locale of ["es", "en"] as const) {
+    for (const width of [375, 1440] as const) {
+      test(`shot ${name} ${locale} ${width}`, async ({ page }) => {
+        test.setTimeout(90_000);
+        await page.emulateMedia({ reducedMotion: "reduce" });
+        await page.setViewportSize({ width, height: width === 375 ? 812 : 900 });
+        await page.goto(slug ? `/${locale}/${slug}` : `/${locale}`);
+        await page.evaluate(() => document.fonts.ready);
+        // Recorre la página para que carguen las imágenes diferidas (logo del pie).
+        await page.evaluate(async () => {
+          for (let y = 0; y < document.body.scrollHeight; y += 600) {
+            window.scrollTo(0, y);
+            await new Promise((r) => setTimeout(r, 40));
+          }
+          window.scrollTo(0, 0);
+        });
+        await page.waitForFunction(() => [...document.images].every((i) => i.complete && i.naturalWidth > 0));
+        await page.screenshot({ path: path.join(dir, `${name}-${locale}-${width}-fold.png`) });
+        await page.screenshot({ path: path.join(dir, `${name}-${locale}-${width}.png`), fullPage: true });
+        if (width === 375 && !slug) {
+          await page.getByRole("button", { name: locale === "es" ? "Menú" : "Menu" }).click();
+          await page.screenshot({ path: path.join(dir, `${name}-${locale}-${width}-menu.png`) });
         }
-        window.scrollTo(0, 0);
       });
-      await page.waitForFunction(() => [...document.images].every((i) => i.complete && i.naturalWidth > 0));
-      await page.screenshot({ path: path.join(dir, `home-${locale}-${width}-fold.png`) });
-      await page.screenshot({ path: path.join(dir, `home-${locale}-${width}.png`), fullPage: true });
-      if (width === 375) {
-        await page.getByRole("button", { name: locale === "es" ? "Menú" : "Menu" }).click();
-        await page.screenshot({ path: path.join(dir, `home-${locale}-${width}-menu.png`) });
-      }
-    });
+    }
   }
 }
