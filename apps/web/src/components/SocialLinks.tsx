@@ -15,7 +15,7 @@ export function SocialLinks({ className = "", tone = "dark" }: { className?: str
           <a
             href={s.href}
             rel="noopener noreferrer"
-            className={`inline-flex min-h-11 items-center rounded-full border-2 px-4 text-sm font-bold no-underline transition-colors duration-150 ${pill}`}
+            className={`inline-flex min-h-11 items-center rounded-full border-2 px-4 text-sm font-bold no-underline transition-[color,background-color,border-color,transform] duration-200 ease-out hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 ${pill}`}
           >
             {s.label}
             <span className="sr-only"> {t("opensSite", { name: s.label })}</span>

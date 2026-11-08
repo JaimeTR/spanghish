@@ -82,3 +82,75 @@ a {
     transform: none;
   }
 }
+
+/* ---- Hero deslizante -------------------------------------------------- */
+
+/* Las diapositivas se funden; la inactiva no recibe clics (además lleva `inert`). */
+.hero-slide {
+  opacity: 0;
+  visibility: hidden;
+}
+.hero-slide[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-slide {
+    transform: translateX(2.5rem);
+    transition:
+      opacity 500ms ease,
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 500ms;
+  }
+  .hero-slide[data-active="true"] {
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  /* Texto: entra escalonado cada vez que su diapositiva se activa. */
+  .hero-slide[data-active="true"] .enter {
+    animation: rise 650ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: calc(var(--e, 0) * 90ms + 120ms);
+  }
+  /* Burbujas: se montan desde su cola, una tras otra. */
+  .hero-slide .pop-in {
+    opacity: 0;
+  }
+  .hero-slide[data-active="true"] .pop-in {
+    opacity: 1;
+    animation: pop-in 560ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 240ms + 250ms);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.86);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Aparición al hacer scroll ------------------------------------------ */
+/* Solo se oculta lo que el script marca como pendiente: sin JS todo se ve. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    transition:
+      opacity 650ms ease,
+      transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-reveal].reveal-pending {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}

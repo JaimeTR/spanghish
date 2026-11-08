@@ -38,6 +38,11 @@ const PAGES = [
 const LOCALES = ["es", "en"] as const;
 
 async function expectNoAxeViolations(page: Page) {
+  // Mide el estado final: sin bloques a medio aparecer ni animaciones en curso.
+  await page.evaluate(async () => {
+    document.querySelectorAll(".reveal-pending").forEach((el) => el.classList.remove("reveal-pending"));
+    await Promise.all(document.getAnimations().map((a) => a.finished.catch(() => undefined)));
+  });
   const { violations } = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .analyze();

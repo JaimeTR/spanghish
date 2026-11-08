@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import { activeNavKey, type RouteKey } from "@/lib/routes";
 import { serializeJsonLd } from "@/lib/structured-data";
+import { RevealOnScroll } from "./RevealOnScroll";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
@@ -36,6 +37,7 @@ export function PageShell({
         {children}
       </main>
       <SiteFooter locale={locale} />
+      <RevealOnScroll />
       {jsonLd.map((data, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />
       ))}

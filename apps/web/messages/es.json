@@ -42,7 +42,35 @@
     "free": "Tu primera clase es gratis: 45 minutos, online.",
     "chat1": "Hi! Quiero aprender español.",
     "chat2": "¡Genial! Empezamos con una clase gratis.",
-    "chat3": "¡Perfecto!"
+    "chat3": "¡Perfecto!",
+    "slides": {
+      "kids": {
+        "titleA": "¡Español para",
+        "titleB": "niños y niñas!",
+        "lead": "Clases prácticas con Maribel para niños y niñas de 6 a 13 años.",
+        "secondary": "Ver clases para niños",
+        "chat1": "Hi! My name is Leo.",
+        "chat2": "¡Hola, Leo! ¿Cómo estás?",
+        "chat3": "¡Muy bien!"
+      },
+      "mature": {
+        "titleA": "Nunca es tarde",
+        "titleB": "para hablar español",
+        "lead": "Un programa de 10 clases pensado para personas mayores de 65 años.",
+        "secondary": "Ver clases para mayores",
+        "chat1": "I am 70. Can I learn?",
+        "chat2": "¡Claro que sí! Empezamos hoy.",
+        "chat3": "¡Bienvenido!"
+      }
+    },
+    "slider": {
+      "label": "Destacados",
+      "prev": "Diapositiva anterior",
+      "next": "Diapositiva siguiente",
+      "pause": "Pausar el cambio automático",
+      "play": "Reanudar el cambio automático",
+      "goTo": "Ir a la diapositiva {n} de {total}"
+    }
   },
   "lessons": {
     "question": "¿Para quién son las clases?",

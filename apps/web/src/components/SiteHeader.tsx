@@ -29,7 +29,7 @@ export function SiteHeader({ locale, current }: { locale: Locale; current?: Head
                 <Link
                   href={item.href}
                   aria-current={item.current ? "page" : undefined}
-                  className="inline-flex min-h-11 items-center rounded-full px-3 font-semibold whitespace-nowrap text-ink no-underline decoration-brand-fuchsia decoration-[3px] hover:underline aria-[current=page]:underline xl:px-3.5"
+                  className="inline-flex min-h-11 items-center rounded-full px-3 font-semibold whitespace-nowrap text-ink no-underline decoration-brand-fuchsia decoration-[3px] transition-colors duration-200 hover:bg-ink/8 hover:underline aria-[current=page]:underline xl:px-3.5"
                 >
                   {t(item.key)}
                 </Link>

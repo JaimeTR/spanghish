@@ -8,7 +8,7 @@ import { LocaleSwitch } from "./LocaleSwitch";
 import { SocialLinks } from "./SocialLinks";
 import { container } from "./styles";
 
-const footerLink = "inline-flex min-h-11 items-center font-semibold text-on-structure no-underline hover:underline";
+const footerLink = "inline-flex min-h-11 items-center font-semibold text-on-structure no-underline transition-opacity duration-200 hover:underline hover:opacity-80";
 
 export function SiteFooter({ locale }: { locale: Locale }) {
   const t = useTranslations("footer");
