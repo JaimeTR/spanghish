@@ -41,6 +41,39 @@ no se repiten aquí.
   archivo aborta si la base no es la local.
 - Nunca subir archivos `.env*` (solo `.env.example`) ni claves.
 
+## Tienda y pagos (apps/web)
+
+`/shop` vende los tres materiales digitales reales de la web anterior. Precios e ids en una sola
+fuente: `apps/web/src/lib/shop.ts` (centavos de AUD). El carrito vive en el navegador
+(localStorage); el pago es Stripe Checkout (página alojada por Stripe: los datos de la tarjeta no
+pasan por la web). El servidor reconstruye las líneas del pago a partir de los ids; nunca usa
+precios que lleguen del navegador.
+
+Probar en local con claves de prueba de Stripe:
+
+1. En `apps/web/.env.local`: `STRIPE_SECRET_KEY=sk_test_...` y `NEXT_PUBLIC_SITE_URL=http://localhost:3000`.
+2. `stripe listen --forward-to localhost:3000/api/stripe/webhook` y copiar el `whsec_...` que
+   muestra a `STRIPE_WEBHOOK_SECRET`.
+3. `pnpm --filter @spanglish/web dev`, añadir materiales al carrito, "Ir a pagar" y pagar con la
+   tarjeta de prueba `4242 4242 4242 4242`. El webhook (`checkout.session.completed`) manda el
+   pedido a Maribel por el mismo canal que las solicitudes (Resend; sin Resend, a la consola).
+
+**La entrega de los archivos es MANUAL por ahora**: tras el pago Maribel recibe un email con el
+cliente, los productos, el total y el id de la sesión, y le envía los materiales respondiendo a ese
+email. Stripe puede reenviar un aviso: el id de sesión del asunto permite detectar duplicados.
+Fase 2: guardar los pedidos, subir los archivos a un almacenamiento privado y enviar al cliente
+un enlace de descarga firmado y con caducidad desde el propio webhook.
+
+Pendiente de la propietaria:
+
+- Claves de Stripe (cuenta en AUD) y el endpoint del webhook en producción
+  (`https://spanglish.com.au/api/stripe/webhook`, evento `checkout.session.completed` y
+  `checkout.session.async_payment_succeeded`).
+- Los archivos de cada material y su formato (no publicado: la web no dice PDF ni páginas).
+- La descripción real de "El Abecedario – The Alphabet" (la publicada era texto de plantilla).
+- Si los precios incluyen GST: hoy no se calcula ningún impuesto (`automatic_tax` desactivado).
+- La política de reembolsos de materiales digitales (en `/terms` hay un `TODO(legal)`).
+
 ## Estructura del repo
 
 - `apps/app`: plataforma educativa (Next.js).
