@@ -1,0 +1,7 @@
+@import "@spanglish/ui/theme.css";
+@source "../../../../packages/ui/src";
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
