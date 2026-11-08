@@ -68,9 +68,8 @@ describe("routes", () => {
       expect(es.nav[item.key], `es nav.${item.key}`).toBeTruthy();
       expect(en.nav[item.key], `en nav.${item.key}`).toBeTruthy();
     }
-    // Las anclas de la home deben existir como secciones (ids estables).
-    const anchors = HEADER_NAV.flatMap((i) => ("hash" in i ? [i.hash] : []));
-    expect(anchors).toEqual(["how"]);
+    // La cabecera enlaza solo a páginas, no a secciones (anclas) de la home.
+    expect(HEADER_NAV.every((i) => !("hash" in i))).toBe(true);
   });
 
   it("marks the right header item as current", () => {

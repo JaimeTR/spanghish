@@ -129,7 +129,7 @@ test.describe("header fit", () => {
       await page.setViewportSize({ width, height: 800 });
       await page.goto("/es/faq");
       const items = page.getByRole("navigation", { name: "Navegación principal" }).getByRole("listitem");
-      await expect(items).toHaveCount(6);
+      await expect(items).toHaveCount(5);
       const tops = await items.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
       expect(new Set(tops).size).toBe(1);
       const cta = await page.locator("header").getByRole("link", { name: "Clase gratis" }).boundingBox();

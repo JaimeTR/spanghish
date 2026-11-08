@@ -11,7 +11,7 @@ export function SiteHeader({ locale, current }: { locale: Locale; current?: Head
   const t = useTranslations("nav");
   const items = HEADER_NAV.map((item) => ({
     key: item.key,
-    href: localePath(locale, item.route, "hash" in item ? item.hash : undefined),
+    href: localePath(locale, item.route),
     current: item.key === current,
   }));
 

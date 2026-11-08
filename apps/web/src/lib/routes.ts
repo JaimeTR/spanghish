@@ -57,15 +57,14 @@ export function bookingPath(locale: Locale): string {
   return localePath(locale, "bookings");
 }
 
-/** Navegación principal: rutas reales o anclas de la home. */
+/** Navegación principal: solo páginas importantes (nada que lleve a una sección). */
 export const HEADER_NAV = [
   { key: "lessons", route: "lessons" },
-  { key: "how", route: "home", hash: "how" },
   { key: "prices", route: "prices" },
   { key: "faq", route: "faq" },
   { key: "teachers", route: "teachers" },
   { key: "contact", route: "contact" },
-] as const satisfies readonly { key: string; route: RouteKey; hash?: string }[];
+] as const satisfies readonly { key: string; route: RouteKey }[];
 
 /** Pie: las páginas de clases por edad, las de la escuela y los textos legales. */
 export const FOOTER_NAV = {

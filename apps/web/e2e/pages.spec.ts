@@ -141,9 +141,8 @@ test("header and footer links reach every inner page", async ({ page }) => {
   await expect(page).toHaveURL(/\/es\/faq$/);
   await expect(header.getByRole("link", { name: "Preguntas" })).toHaveAttribute("aria-current", "page");
 
-  // Desde una página interior, las anclas de la home siguen funcionando.
-  await header.getByRole("link", { name: "Cómo son" }).click();
-  await expect(page).toHaveURL(/\/es#how$/);
+  // La cabecera solo enlaza a páginas: no hay accesos directos a secciones de la home.
+  await expect(header.getByRole("link", { name: "Cómo son" })).toHaveCount(0);
 
   // Pie: precios, preguntas y los textos legales.
   const legal = page.getByRole("navigation", { name: "Legal" });
