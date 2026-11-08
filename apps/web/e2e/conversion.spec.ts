@@ -151,7 +151,7 @@ test.describe("header fit", () => {
       await page.setViewportSize({ width, height: 800 });
       await page.goto("/es/faq");
       const items = page.getByRole("navigation", { name: "Navegación principal" }).getByRole("listitem");
-      // Clases (con su desplegable cerrado), Precios, Recursos, Preguntas, Conócenos y Contacto.
+      // Clases y Recursos (con sus desplegables cerrados), Precios, Preguntas, Conócenos y Contacto.
       await expect(items).toHaveCount(6);
       const tops = await items.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
       expect(new Set(tops).size).toBe(1);
@@ -162,6 +162,13 @@ test.describe("header fit", () => {
       expect(login).not.toBeNull();
       expect(Math.abs(login!.y + login!.height / 2 - (cta!.y + cta!.height / 2))).toBeLessThan(4);
       expect(login!.width).toBeLessThan(width < 1180 ? 60 : 140);
+      // El carrito, en la misma línea y con su nombre accesible.
+      const cart = await page.locator("header").getByRole("button", { name: "Carrito, 0 artículos" }).boundingBox();
+      expect(cart).not.toBeNull();
+      expect(Math.abs(cart!.y + cart!.height / 2 - (cta!.y + cta!.height / 2))).toBeLessThan(4);
+      expect(cart!.width).toBeGreaterThanOrEqual(44);
+      const resources = page.getByRole("navigation", { name: "Navegación principal" }).getByRole("button", { name: "Mostrar recursos" });
+      expect(Math.abs((await resources.boundingBox())!.y - (await items.first().boundingBox())!.y)).toBeLessThan(4);
       expect(await horizontalOverflow(page)).toBe(0);
     });
   }

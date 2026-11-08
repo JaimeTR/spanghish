@@ -18,6 +18,10 @@ const ALL = [
   "mature-lessons",
   "online-conversations",
   "resources",
+  "learn",
+  "learn/alphabet",
+  "learn/nouns-and-articles",
+  "shop",
   "teachers",
   "contact-us",
   "bookings",
@@ -31,7 +35,7 @@ const only = process.env.SHOTS_ONLY?.split(",").map((s) => (s === "home" ? "" : 
 const PAGES = only ? ALL.filter((p) => only.includes(p)) : ALL;
 
 for (const slug of PAGES) {
-  const name = slug || "home";
+  const name = slug.replaceAll("/", "-") || "home";
   for (const locale of ["es", "en"] as const) {
     for (const width of [375, 1440] as const) {
       test(`shot ${name} ${locale} ${width}`, async ({ page }) => {
@@ -82,5 +86,19 @@ for (const locale of ["es", "en"] as const) {
       .getByRole("button", { name: locale === "es" ? "Clases" : "Lessons" })
       .click();
     await page.screenshot({ path: path.join(dir, `nav-mobile-lessons-${locale}-375.png`) });
+  });
+}
+
+/** Carrito abierto con dos materiales (1440 y 375). */
+for (const width of [1440, 375] as const) {
+  test(`shot cart dialog es ${width}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.setViewportSize({ width, height: width === 375 ? 812 : 900 });
+    await page.goto("/es/shop");
+    await page.evaluate(() => document.fonts.ready);
+    for (const i of [0, 1]) await page.locator("#products article").nth(i).getByRole("button", { name: "Añadir al carrito" }).click();
+    await page.locator("header").getByRole("button", { name: /^Carrito/ }).click();
+    await page.getByRole("dialog").waitFor();
+    await page.screenshot({ path: path.join(dir, `cart-dialog-es-${width}.png`) });
   });
 }

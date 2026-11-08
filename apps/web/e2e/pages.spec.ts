@@ -59,6 +59,32 @@ const PAGES = [
     en: { h1: "Frequently asked questions", title: /^Frequently asked questions about Spanish lessons/ },
   },
   {
+    slug: "learn",
+    es: { h1: "Aprende ahora", title: /^Aprende ahora: lecciones interactivas gratis/ },
+    en: { h1: "Learn now", title: /^Learn now: free interactive Spanish lessons/ },
+  },
+  {
+    slug: "learn/alphabet",
+    es: { h1: "The Spanish Alphabet", title: /^El alfabeto español: lección interactiva gratis/ },
+    en: { h1: "The Spanish Alphabet", title: /^The Spanish alphabet: free interactive lesson/ },
+  },
+  {
+    slug: "learn/nouns-and-articles",
+    es: { h1: "Spanish Nouns & Articles", title: /^Sustantivos y artículos en español/ },
+    en: { h1: "Spanish Nouns & Articles", title: /^Spanish nouns and articles: free interactive lesson/ },
+  },
+  {
+    slug: "shop",
+    es: { h1: "Tienda de materiales", title: /^Tienda de materiales para aprender español/ },
+    en: { h1: "Materials shop", title: /^Shop: materials to learn Spanish/ },
+  },
+  {
+    slug: "shop/success",
+    noindex: true,
+    es: { h1: "Gracias por tu compra", title: /^Pago de tu pedido/ },
+    en: { h1: "Thanks for your purchase", title: /^Your order payment/ },
+  },
+  {
     slug: "thank-you",
     noindex: true,
     es: { h1: "¡Gracias!", title: /^Gracias por tu solicitud/ },

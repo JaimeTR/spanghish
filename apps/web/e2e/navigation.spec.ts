@@ -215,10 +215,15 @@ test.describe("resources page", () => {
     await expect(videos.locator("iframe")).toHaveAttribute("src", /youtube-nocookie\.com\/embed\/GilfeIjZm_g/);
   });
 
-  test("the interactive lessons link out to the current website", async ({ page }) => {
+  test("the interactive lessons go to Aprende ahora and the materials preview to the shop", async ({ page }) => {
     await page.goto("/es/resources");
-    const links = page.locator('main a[href="https://spanglish.com.au/learn-spanish/"]');
-    await expect(links).toHaveCount(2);
+    await expect(page.locator('main a[href*="spanglish.com.au/learn-spanish"]')).toHaveCount(0);
+    await expect(page.locator('main a[href="/es/learn"]')).toHaveCount(2);
+    const materials = page.locator('section[aria-labelledby="materials-title"]');
+    await expect(materials.getByRole("heading", { level: 2 })).toHaveText("Materiales descargables");
+    await expect(materials.locator('a[href^="/es/shop"]')).toHaveCount(4);
+    await materials.getByRole("link", { name: /Spanish Regular Verbs Basic/ }).click();
+    await expect(page).toHaveURL(/\/es\/shop#product-spanish-regular-verbs-basic$/);
   });
 });
 
