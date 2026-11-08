@@ -1,16 +1,12 @@
-import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
-import { use } from "react";
+import { notFound, redirect } from "next/navigation";
+import { isLocale } from "@/i18n/routing";
+import { roleHomePath } from "@/lib/access";
+import { getSessionUser } from "@/lib/session";
 
-export default function HomePage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = use(params);
-  setRequestLocale(locale);
-  const t = useTranslations("home");
-
-  return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col justify-center gap-3 p-6">
-      <h1 className="text-3xl font-bold text-structure">{t("title")}</h1>
-      <p className="text-text-muted">{t("placeholder")}</p>
-    </main>
-  );
+/** /<locale>: con sesión, a la zona de su rol principal; si no, al login. */
+export default async function LocaleRoot({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  if (!isLocale(locale)) notFound();
+  const user = await getSessionUser();
+  redirect(user && user.roles.length > 0 ? roleHomePath(user.roles, locale) : `/${locale}/login`);
 }

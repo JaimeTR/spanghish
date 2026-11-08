@@ -1,1 +1,40 @@
-{ "meta": { "title": "Spanglish | App" }, "home": { "title": "Spanglish", "placeholder": "Your learning space will be here soon." } }
+{
+  "meta": {
+    "title": "Spanglish | App"
+  },
+  "login": {
+    "title": "Sign in",
+    "intro": "Use the email and password the school gave you.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "forgot": "Forgot your password?",
+    "errors": {
+      "credentials": "Incorrect email or password.",
+      "suspended": "Your account is suspended. Please contact the administrator.",
+      "no_access": "Your account does not have access yet. Please contact the administrator.",
+      "unavailable": "We couldn't sign you in. Please try again in a few minutes."
+    }
+  },
+  "forgot": {
+    "title": "Reset your password",
+    "intro": "Enter your email and we'll send you a link to create a new password.",
+    "email": "Email",
+    "submit": "Send link",
+    "submitting": "Sending…",
+    "sent": "If an account exists for that email, you'll receive a link in a few minutes. Please check your spam folder too.",
+    "invalid": "Please enter a valid email address.",
+    "back": "Back to sign in"
+  },
+  "shell": {
+    "logout": "Sign out"
+  },
+  "areas": {
+    "admin": "Administration",
+    "teacher": "Teacher",
+    "student": "Student",
+    "guardian": "Guardian",
+    "placeholder": "This dashboard will be available soon."
+  }
+}

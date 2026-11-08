@@ -1,21 +1,10 @@
 import "server-only";
-import { toSessionUser, type SessionUser } from "./access";
+import { cache } from "react";
+import type { SessionUser } from "./access";
+import { loadSessionUser } from "./load-session-user";
 import { createClient } from "./supabase/server";
 
-export async function getSessionUser(): Promise<SessionUser | null> {
-  const supabase = await createClient();
-  // getUser valida el JWT contra Auth; getSession no sirve para autorizar.
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) return null;
-
-  const [profile, roles] = await Promise.all([
-    supabase
-      .from("profiles")
-      .select("id, status, preferred_locale")
-      .eq("id", data.user.id)
-      .maybeSingle(),
-    supabase.from("user_roles").select("role").eq("user_id", data.user.id),
-  ]);
-  if (!profile.data) return null;
-  return toSessionUser(profile.data, roles.data ?? []);
-}
+/** Una sola consulta por petición aunque la llamen el layout y la página. */
+export const getSessionUser = cache(async (): Promise<SessionUser | null> => {
+  return loadSessionUser(await createClient());
+});
