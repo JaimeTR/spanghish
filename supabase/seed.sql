@@ -18,6 +18,26 @@
 -- token como cadena vacía (no NULL) y una fila en auth.identities por usuario.
 -- ===========================================================================
 
+-- ---------------------------------------------------------------------------
+-- Guarda: aborta si la base no es el stack local de la CLI.
+-- Marcador elegido (verificado en el contenedor local): la CLI fija, a nivel de
+-- base de datos, app.settings.jwt_secret = el secreto de demostración público
+-- 'super-secret-jwt-token-with-at-least-32-characters-long'. Un proyecto alojado
+-- (y sus ramas de preview) nunca usa ese secreto; si el ajuste no existe o es
+-- otro valor, el seed falla antes de crear nada. inet_server_addr() no sirve
+-- (es NULL por socket Unix). NUNCA usar `supabase db push --include-seed` ni
+-- Supabase Branching con este archivo.
+-- ---------------------------------------------------------------------------
+do $guard$
+begin
+  if coalesce(current_setting('app.settings.jwt_secret', true), '')
+     <> 'super-secret-jwt-token-with-at-least-32-characters-long' then
+    raise exception 'seed.sql es SOLO DESARROLLO LOCAL: esta base no es el stack local de Supabase'
+      using errcode = 'P0001';
+  end if;
+end
+$guard$;
+
 with seed_users (id, email, full_name) as (
   values
     ('a0000000-0000-4000-8000-000000000001'::uuid, 'admin@spanglish.test', 'Admin Local'),
