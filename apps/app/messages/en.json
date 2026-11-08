@@ -28,7 +28,33 @@
     "back": "Back to sign in"
   },
   "shell": {
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "skipToContent": "Skip to content",
+    "menu": "Menu",
+    "home": "Spanglish, home",
+    "areaSwitcher": "Switch area",
+    "signedInAs": "Signed in as {name}",
+    "localeLabel": "Language"
+  },
+  "locales": {
+    "es": "Español",
+    "en": "English"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "soon": "Soon",
+    "items": {
+      "dashboard": "Dashboard",
+      "students": "Students",
+      "teachers": "Teachers",
+      "languages": "Languages and levels",
+      "today": "Today",
+      "groups": "My groups",
+      "learning": "My learning",
+      "schedule": "Schedule",
+      "library": "Library",
+      "overview": "Overview"
+    }
   },
   "areas": {
     "admin": "Administration",
@@ -36,5 +62,29 @@
     "student": "Student",
     "guardian": "Guardian",
     "placeholder": "This dashboard will be available soon."
+  },
+  "home": {
+    "greeting": "Hi, {name}",
+    "greetingNoName": "Hi",
+    "admin": {
+      "intro": "The school's management dashboard.",
+      "summaryTitle": "Overview",
+      "summaryEmpty": "Student, teacher and class figures will appear here once you start adding them."
+    },
+    "teacher": {
+      "intro": "Your teaching day.",
+      "todayTitle": "Today's classes",
+      "todayEmpty": "No classes scheduled yet."
+    },
+    "student": {
+      "intro": "Your classes and progress will show up here.",
+      "nextTitle": "Your next class",
+      "nextEmpty": "No classes scheduled yet."
+    },
+    "guardian": {
+      "intro": "Your children's progress will show up here.",
+      "summaryTitle": "Overview",
+      "summaryEmpty": "No students are linked to your account yet."
+    }
   }
 }

@@ -5,3 +5,13 @@ body {
   background: var(--role-bg);
   color: var(--role-text);
 }
+
+/* Superficies del navegador con la paleta de marca. */
+::selection {
+  background: var(--brand-yellow);
+  color: var(--ink);
+}
+:root {
+  caret-color: var(--brand-purple);
+  accent-color: var(--brand-fuchsia);
+}

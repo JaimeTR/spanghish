@@ -28,7 +28,33 @@
     "back": "Volver a iniciar sesión"
   },
   "shell": {
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "skipToContent": "Saltar al contenido",
+    "menu": "Menú",
+    "home": "Spanglish, inicio",
+    "areaSwitcher": "Cambiar de área",
+    "signedInAs": "Sesión de {name}",
+    "localeLabel": "Idioma"
+  },
+  "locales": {
+    "es": "Español",
+    "en": "English"
+  },
+  "nav": {
+    "label": "Navegación principal",
+    "soon": "Pronto",
+    "items": {
+      "dashboard": "Panel",
+      "students": "Alumnos",
+      "teachers": "Docentes",
+      "languages": "Idiomas y niveles",
+      "today": "Hoy",
+      "groups": "Mis grupos",
+      "learning": "Mi aprendizaje",
+      "schedule": "Horario",
+      "library": "Biblioteca",
+      "overview": "Resumen"
+    }
   },
   "areas": {
     "admin": "Administración",
@@ -36,5 +62,29 @@
     "student": "Alumno",
     "guardian": "Tutor",
     "placeholder": "Este panel estará disponible pronto."
+  },
+  "home": {
+    "greeting": "Hola, {name}",
+    "greetingNoName": "Hola",
+    "admin": {
+      "intro": "Panel de gestión de la escuela.",
+      "summaryTitle": "Resumen",
+      "summaryEmpty": "Los indicadores de alumnos, docentes y clases aparecerán aquí cuando empieces a registrarlos."
+    },
+    "teacher": {
+      "intro": "Tu jornada de clases.",
+      "todayTitle": "Clases de hoy",
+      "todayEmpty": "No hay clases programadas todavía."
+    },
+    "student": {
+      "intro": "Aquí verás tus clases y tu progreso.",
+      "nextTitle": "Tu próxima clase",
+      "nextEmpty": "No hay clases programadas todavía."
+    },
+    "guardian": {
+      "intro": "Aquí verás el progreso de tus hijos o hijas.",
+      "summaryTitle": "Resumen",
+      "summaryEmpty": "Todavía no hay alumnos vinculados a tu cuenta."
+    }
   }
 }
