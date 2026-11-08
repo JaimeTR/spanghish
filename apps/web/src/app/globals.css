@@ -173,24 +173,41 @@ a {
 }
 
 /* ---- Opiniones que pasan ------------------------------------------------- */
-/* Cada paso desplaza una tarjeta; --per es cuántas se ven a la vez. */
-.t-track {
-  transform: translateX(calc(var(--p, 0) * -100% / var(--per, 1)));
-  transition: transform var(--anim, 650ms) cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
+/* Una a la vez: se funden entre sí; la inactiva no recibe foco (lleva `inert`). */
+.t-slide {
+  opacity: 0;
+  visibility: hidden;
 }
-/* Sin movimiento: todas a la vista, en cuadrícula, sin copias. */
-@media (prefers-reduced-motion: reduce) {
-  .t-viewport {
-    overflow: visible;
+.t-slide[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .t-stage {
+    transition: height 500ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .t-track {
-    flex-wrap: wrap;
+  .t-slide {
+    transform: translateY(1.5rem) scale(0.97);
+    transition:
+      opacity 450ms ease,
+      transform 650ms cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 450ms;
+  }
+  .t-slide[data-active="true"] {
     transform: none;
-    transition: none;
-    row-gap: 2.5rem;
+    transition-delay: 0.45s, 0.1s, 0s;
   }
-  .t-clone {
-    display: none;
+}
+/* Sin movimiento: todas visibles, una debajo de otra. */
+@media (prefers-reduced-motion: reduce) {
+  .t-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    height: auto !important;
+  }
+  .t-slide {
+    opacity: 1;
+    visibility: visible;
   }
 }

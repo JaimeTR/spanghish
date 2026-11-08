@@ -9,13 +9,11 @@ import { Bubble } from "./Bubble";
  */
 export function MaribelPhoto({
   alt,
-  tail = "right",
   className = "",
   sizes = "(min-width: 1024px) 20rem, 70vw",
   priority = false,
 }: {
   alt: string;
-  tail?: "left" | "right";
   className?: string;
   sizes?: string;
   priority?: boolean;
@@ -24,11 +22,11 @@ export function MaribelPhoto({
     <div className={`group relative ${className}`}>
       <span
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 bottom-4 -z-0 translate-x-3 translate-y-3 rotate-[5deg] rounded-[2.25rem] bg-brand-fuchsia transition-transform duration-500 ease-out group-hover:translate-x-1.5 group-hover:translate-y-1.5 group-hover:rotate-[1deg] motion-reduce:transition-none"
+        className="absolute inset-0 -z-0 translate-x-3 translate-y-3 rotate-[5deg] rounded-[2.25rem] bg-brand-fuchsia transition-transform duration-500 ease-out group-hover:translate-x-1.5 group-hover:translate-y-1.5 group-hover:rotate-[1deg] motion-reduce:transition-none"
       />
       <Bubble
         tone="yellow"
-        tail={tail}
+        tail="none"
         shadow
         className="relative z-10 transition-transform duration-500 ease-out group-hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0"
         boxClassName="relative aspect-[4/5] overflow-hidden !rounded-[2.25rem] bg-brand-yellow"

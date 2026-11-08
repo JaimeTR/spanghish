@@ -56,7 +56,7 @@ export function Maribel() {
               ))}
             </ul>
           </Bubble>
-          <MaribelPhoto alt={t("photoAlt")} tail="left" className="mx-auto mt-8 w-[min(72%,16rem)] sm:w-[17rem] lg:mr-4 lg:ml-auto" />
+          <MaribelPhoto alt={t("photoAlt")} className="mx-auto mt-8 w-[min(72%,16rem)] sm:w-[17rem] lg:mr-4 lg:ml-auto" />
         </div>
       </div>
     </section>
