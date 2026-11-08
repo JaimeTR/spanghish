@@ -717,7 +717,12 @@
       },
       "moreQuestions": "¿Tienes otras dudas?",
       "moreFaq": "Lee las preguntas frecuentes",
-      "morePrices": "Mira los precios"
+      "morePrices": "Mira los precios",
+      "stepLabel": "Paso {n} de {total}",
+      "step1": "Sobre ti",
+      "step2": "Tu clase",
+      "back": "Atrás",
+      "nextStep": "Siguiente"
     },
     "thankYou": {
       "metaTitle": "Gracias por tu solicitud · Spanglish",
@@ -1292,6 +1297,64 @@
         "studentsNote": "Si ya eres alumna o alumno, entra con tu cuenta; si aún no, reserva tu clase gratis.",
         "studentsCta": "Reserva tu clase gratis",
         "discount": "Los alumnos matriculados tienen un 30 % de descuento en los recursos digitales."
+      }
+    },
+    "contactForm": {
+      "question": "Escríbenos",
+      "intro": "Para preguntas sobre clases, precios o lo que necesites. Maribel te responde personalmente.",
+      "bookingNote": "¿Quieres tu clase gratis? Pídela con el formulario de reserva.",
+      "bookingLink": "Ir al formulario de clase gratis",
+      "fields": {
+        "name": {
+          "label": "Tu nombre"
+        },
+        "email": {
+          "label": "Tu email",
+          "hint": "Te responderemos aquí."
+        },
+        "phone": {
+          "label": "Teléfono",
+          "hint": "Solo si prefieres que te llamemos."
+        },
+        "message": {
+          "label": "Tu mensaje",
+          "hint": "Cuéntanos qué necesitas."
+        },
+        "consent": {
+          "label": "Acepto que Spanglish use estos datos solo para responder a mi mensaje. Más información en la <privacy>política de privacidad</privacy>."
+        },
+        "honeypot": "Deja este campo vacío"
+      },
+      "optional": "(opcional)",
+      "submit": "Enviar mensaje",
+      "sending": "Enviando…",
+      "errorSummary": "Revisa {count, plural, one {# campo} other {# campos}}:",
+      "errors": {
+        "name": {
+          "required": "Escribe tu nombre.",
+          "tooLong": "El nombre es demasiado largo (máximo 100 caracteres)."
+        },
+        "email": {
+          "required": "Escribe tu email.",
+          "email": "Escribe un email válido, como nombre@ejemplo.com.",
+          "tooLong": "El email es demasiado largo."
+        },
+        "phone": {
+          "phone": "Escribe un teléfono válido: solo números, espacios y el signo +.",
+          "tooLong": "El teléfono es demasiado largo."
+        },
+        "message": {
+          "required": "Escribe tu mensaje.",
+          "tooLong": "El mensaje es demasiado largo (máximo 2000 caracteres)."
+        },
+        "consent": {
+          "consent": "Para responderte necesitamos que aceptes el uso de tus datos."
+        }
+      },
+      "status": {
+        "spam": "No hemos podido enviar tu mensaje. Espera unos segundos y vuelve a intentarlo, o llámanos o escríbenos.",
+        "unavailable": "Ahora mismo no podemos recibir mensajes desde la web y el tuyo no se ha enviado. Llámanos o escríbenos:",
+        "failed": "Un problema técnico impidió enviar tu mensaje: no se ha enviado. Inténtalo de nuevo en un momento, o llámanos o escríbenos:"
       }
     }
   },

@@ -141,3 +141,6 @@ export function isLikelySpam(input: Input, now: number = Date.now()): boolean {
   const elapsed = now - started;
   return elapsed < MIN_FILL_MS || elapsed > MAX_FILL_MS;
 }
+
+// Reutilizados por el formulario de contacto (mismas reglas de texto, email y teléfono).
+export { text as readText, EMAIL, PHONE_CHARS };

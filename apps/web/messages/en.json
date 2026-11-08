@@ -717,7 +717,12 @@
       },
       "moreQuestions": "Other questions?",
       "moreFaq": "Read the FAQ",
-      "morePrices": "See the prices"
+      "morePrices": "See the prices",
+      "stepLabel": "Step {n} of {total}",
+      "step1": "About you",
+      "step2": "Your lesson",
+      "back": "Back",
+      "nextStep": "Next"
     },
     "thankYou": {
       "metaTitle": "Thank you for your request · Spanglish",
@@ -1292,6 +1297,64 @@
         "studentsNote": "If you’re already a student, sign in with your account; if not yet, book your free lesson.",
         "studentsCta": "Book your free lesson",
         "discount": "Enrolled students get 30% off digital resources."
+      }
+    },
+    "contactForm": {
+      "question": "Send us a message",
+      "intro": "For questions about lessons, prices or anything else. Maribel replies personally.",
+      "bookingNote": "Want your free lesson? Request it with the booking form.",
+      "bookingLink": "Go to the free lesson form",
+      "fields": {
+        "name": {
+          "label": "Your name"
+        },
+        "email": {
+          "label": "Your email",
+          "hint": "We’ll reply here."
+        },
+        "phone": {
+          "label": "Phone",
+          "hint": "Only if you’d rather we call you."
+        },
+        "message": {
+          "label": "Your message",
+          "hint": "Tell us what you need."
+        },
+        "consent": {
+          "label": "I agree that Spanglish may use these details only to reply to my message. More in the <privacy>privacy policy</privacy>."
+        },
+        "honeypot": "Leave this field empty"
+      },
+      "optional": "(optional)",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "errorSummary": "Please check {count, plural, one {# field} other {# fields}}:",
+      "errors": {
+        "name": {
+          "required": "Enter your name.",
+          "tooLong": "Your name is too long (100 characters maximum)."
+        },
+        "email": {
+          "required": "Enter your email.",
+          "email": "Enter a valid email, like name@example.com.",
+          "tooLong": "Your email is too long."
+        },
+        "phone": {
+          "phone": "Enter a valid phone number: digits, spaces and the + sign only.",
+          "tooLong": "Your phone number is too long."
+        },
+        "message": {
+          "required": "Enter your message.",
+          "tooLong": "Your message is too long (2000 characters maximum)."
+        },
+        "consent": {
+          "consent": "We need your consent to use your details before we can reply."
+        }
+      },
+      "status": {
+        "spam": "We couldn’t send your message. Wait a few seconds and try again, or call or email us.",
+        "unavailable": "We can’t receive messages through the website right now, and yours has not been sent. Call or email us:",
+        "failed": "A technical problem stopped your message from being sent: it has not been sent. Try again in a moment, or call or email us:"
       }
     }
   },

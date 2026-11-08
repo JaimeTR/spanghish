@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState, useEffect, useRef, useState, startTransition, type FormEvent, type ReactNode } from "react";
+import { useActionState, useEffect, useRef, useState, useSyncExternalStore, startTransition, type FormEvent, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { submitBooking, type BookingState } from "@/app/[locale]/bookings/actions";
 import type { Locale } from "@/i18n/routing";
@@ -18,18 +18,22 @@ import {
   type BookingField,
 } from "@/lib/booking";
 import { CONTACT } from "@/lib/site";
+import { ErrorText, ChoiceField, TextField } from "./FormFields";
 import { ArrowIcon } from "./icons";
 import { btnPrimary } from "./styles";
-
-const fieldBase =
-  "block w-full rounded-[1rem] border-2 bg-surface px-4 py-3 text-lg text-ink transition-colors duration-200 hover:border-brand-purple";
-const fieldOk = "border-ink/35";
-const fieldBad = "border-danger";
 
 type Values = Record<"name" | "email" | "phone" | "audience" | "place" | "times" | "language" | "message", string> & {
   consent: boolean;
 };
 const EMPTY: Values = { name: "", email: "", phone: "", audience: "", place: "", times: "", language: "", message: "", consent: false };
+
+const subscribeNever = () => () => {};
+
+/** Qué campos van en cada paso: 1) quién eres y para quién, 2) cómo y cuándo. */
+const STEP_FIELDS: Record<1 | 2, readonly BookingField[]> = {
+  1: ["name", "email", "phone", "audience"],
+  2: ["place", "times", "language", "message", "consent"],
+};
 
 /** Id del control al que lleva cada error del resumen (en radios, la primera opción). */
 function fieldId(field: BookingField): string {
@@ -50,6 +54,11 @@ export function BookingForm({ locale, privacyHref }: { locale: Locale; privacyHr
   const [values, setValues] = useState<Values>(EMPTY);
   // Errores del último envío validado en el navegador (null = pasó la validación).
   const [clientErrors, setClientErrors] = useState<BookingErrors | null>(null);
+  const [step, setStep] = useState<1 | 2>(1);
+  // Sin JavaScript se ven los dos pasos juntos (el formulario sigue funcionando).
+  const ready = useSyncExternalStore(subscribeNever, () => true, () => false);
+  const stepHeading = useRef<HTMLHeadingElement>(null);
+  const firstRender = useRef(true);
   const startedAt = useRef("");
   const summaryRef = useRef<HTMLDivElement>(null);
   const statusRef = useRef<HTMLDivElement>(null);
@@ -58,6 +67,15 @@ export function BookingForm({ locale, privacyHref }: { locale: Locale; privacyHr
   useEffect(() => {
     startedAt.current = String(Date.now());
   }, []);
+
+  // Al cambiar de paso, el foco va al título del paso (no en la primera carga).
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    stepHeading.current?.focus();
+  }, [step]);
 
   // Tras cada intento fallido, el foco va al resumen de errores o al aviso.
   useEffect(() => {
@@ -74,16 +92,42 @@ export function BookingForm({ locale, privacyHref }: { locale: Locale; privacyHr
     setValues((v) => ({ ...v, [name]: value }));
   };
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
+  function formData(form: HTMLFormElement) {
+    const data = new FormData(form);
     data.set(STARTED_AT_FIELD, startedAt.current);
-    const result = validateBooking(data);
-    setClientErrors(result.ok ? null : result.errors);
-    if (result.ok) startTransition(() => formAction(data));
+    return data;
   }
 
-  const errorList = BOOKING_FIELDS.filter((f) => errors[f]);
+  /** Paso 1 -> 2: solo se validan los campos del primer paso. */
+  function goNext(form: HTMLFormElement) {
+    const result = validateBooking(formData(form));
+    const errs = result.ok ? {} : result.errors;
+    const mine = STEP_FIELDS[1].filter((f) => errs[f]);
+    if (mine.length > 0) {
+      setClientErrors(Object.fromEntries(mine.map((f) => [f, errs[f]])) as BookingErrors);
+      return;
+    }
+    setClientErrors(null);
+    setStep(2);
+  }
+
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    // Intro dentro del paso 1 = "Siguiente", no enviar.
+    if (ready && step === 1) return goNext(e.currentTarget);
+    const data = formData(e.currentTarget);
+    const result = validateBooking(data);
+    setClientErrors(result.ok ? null : result.errors);
+    if (!result.ok) {
+      // Si falta algo del paso 1 (p. ej. se saltó), se vuelve a él.
+      if (STEP_FIELDS[1].some((f) => result.errors[f])) setStep(1);
+      return;
+    }
+    startTransition(() => formAction(data));
+  }
+
+  const visible = (f: BookingField) => !ready || (STEP_FIELDS[step] as readonly BookingField[]).includes(f);
+  const errorList = BOOKING_FIELDS.filter((f) => errors[f] && visible(f));
   const message = (field: BookingField) => {
     const code = errors[field];
     if (!code) return undefined;
@@ -153,6 +197,27 @@ export function BookingForm({ locale, privacyHref }: { locale: Locale; privacyHr
         <input id="f-website" type="text" name={HONEYPOT_FIELD} tabIndex={-1} autoComplete="off" defaultValue="" />
       </div>
 
+      {/* Progreso: dos pasos cortos en lugar de un formulario largo. */}
+      {ready && (
+        <div aria-hidden="false">
+          <p className="font-bold text-brand-purple">
+            {t("stepLabel", { n: step, total: 2 })}
+          </p>
+          <div aria-hidden="true" className="mt-2 flex gap-2">
+            {[1, 2].map((n) => (
+              <span
+                key={n}
+                className={`h-2 flex-1 rounded-full transition-colors duration-500 ${n <= step ? "bg-brand-fuchsia" : "bg-ink/15"}`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div hidden={ready && step !== 1} className="form-step flex flex-col gap-8">
+        <h3 ref={step === 1 ? stepHeading : undefined} tabIndex={-1} className="font-display text-[1.75rem] leading-none text-brand-purple outline-none">
+          {t("step1")}
+        </h3>
       <TextField
         field="name"
         label={t("fields.name.label")}
@@ -201,6 +266,20 @@ export function BookingForm({ locale, privacyHref }: { locale: Locale; privacyHr
         error={message("audience")}
         describedBy={described("audience", false)}
       />
+        {ready && (
+          <div>
+            <button type="submit" className={`${btnPrimary} cursor-pointer`}>
+              {t("nextStep")}
+              <ArrowIcon />
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div hidden={ready && step !== 2} className="form-step flex flex-col gap-8">
+        <h3 ref={step === 2 ? stepHeading : undefined} tabIndex={-1} className="font-display text-[1.75rem] leading-none text-brand-purple outline-none">
+          {t("step2")}
+        </h3>
       <ChoiceField
         field="place"
         label={t("fields.place.label")}
@@ -272,145 +351,25 @@ export function BookingForm({ locale, privacyHref }: { locale: Locale; privacyHr
         <ErrorText field="consent" text={message("consent")} />
       </div>
 
-      <div>
+      <div className="flex flex-wrap items-center gap-3">
+        {ready && (
+          <button
+            type="button"
+            onClick={() => {
+              setClientErrors(null);
+              setStep(1);
+            }}
+            className="inline-flex min-h-12 cursor-pointer items-center justify-center rounded-full border-2 border-ink px-6 py-3 text-[1.0625rem] font-bold text-ink transition-colors duration-200 hover:bg-ink hover:text-cream"
+          >
+            {t("back")}
+          </button>
+        )}
         <button type="submit" disabled={pending} className={`${btnPrimary} cursor-pointer disabled:cursor-wait disabled:opacity-80`}>
           {pending ? t("sending") : t("submit")}
           {!pending && <ArrowIcon />}
         </button>
       </div>
-    </form>
-  );
-}
-
-function ErrorText({ field, text }: { field: BookingField; text?: string }) {
-  if (!text) return null;
-  return (
-    <p id={`f-${field}-error`} className="mt-2 font-semibold text-danger">
-      {text}
-    </p>
-  );
-}
-
-function Label({ htmlFor, label, optional }: { htmlFor: string; label: string; optional?: string }) {
-  return (
-    <label htmlFor={htmlFor} className="block text-lg font-extrabold text-ink">
-      {label}
-      {optional && <span className="font-semibold text-ink-muted"> {optional}</span>}
-    </label>
-  );
-}
-
-function TextField({
-  field,
-  label,
-  optional,
-  hint,
-  error,
-  describedBy,
-  multiline = false,
-  rows,
-  type = "text",
-  autoComplete,
-  value,
-  onChange,
-  maxLength,
-}: {
-  field: BookingField;
-  label: string;
-  optional?: string;
-  hint?: string;
-  error?: string;
-  describedBy?: string;
-  multiline?: boolean;
-  rows?: number;
-  type?: "text" | "email" | "tel";
-  autoComplete?: string;
-  value: string;
-  onChange: (e: { target: HTMLInputElement | HTMLTextAreaElement }) => void;
-  maxLength: number;
-}) {
-  const id = `f-${field}`;
-  const common = {
-    id,
-    name: field,
-    value,
-    onChange,
-    maxLength,
-    "aria-invalid": error ? true : undefined,
-    "aria-describedby": describedBy,
-    className: `${fieldBase} ${error ? fieldBad : fieldOk} mt-2`,
-  };
-  return (
-    <div>
-      <Label htmlFor={id} label={label} optional={optional} />
-      {hint && (
-        <p id={`${id}-hint`} className="mt-0.5 text-ink-muted">
-          {hint}
-        </p>
-      )}
-      {multiline ? (
-        <textarea {...common} rows={rows} autoComplete="off" />
-      ) : (
-        <input {...common} type={type} autoComplete={autoComplete} spellCheck={type === "text" ? undefined : false} />
-      )}
-      <ErrorText field={field} text={error} />
-    </div>
-  );
-}
-
-function ChoiceField({
-  field,
-  label,
-  hint,
-  options,
-  value,
-  onChange,
-  error,
-  describedBy,
-}: {
-  field: BookingField;
-  label: string;
-  hint?: string;
-  options: { value: string; label: string }[];
-  value: string;
-  onChange: (e: { target: HTMLInputElement }) => void;
-  error?: string;
-  describedBy?: string;
-}) {
-  return (
-    <fieldset aria-describedby={describedBy}>
-      <legend className="text-lg font-extrabold text-ink">{label}</legend>
-      {hint && (
-        <p id={`f-${field}-hint`} className="mt-0.5 text-ink-muted">
-          {hint}
-        </p>
-      )}
-      <div className="mt-3 flex flex-wrap gap-2">
-        {options.map((o) => {
-          const id = `f-${field}-${o.value}`;
-          return (
-            <label
-              key={o.value}
-              htmlFor={id}
-              className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-full border-2 bg-surface px-4 py-2 font-semibold text-ink transition-colors duration-200 hover:border-brand-purple has-[:checked]:border-brand-purple has-[:checked]:bg-brand-purple has-[:checked]:text-on-structure has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-[var(--focus-color)] ${
-                error ? fieldBad : "border-ink/20"
-              }`}
-            >
-              <input
-                id={id}
-                type="radio"
-                name={field}
-                value={o.value}
-                checked={value === o.value}
-                onChange={onChange}
-                className="size-5 shrink-0 accent-brand-yellow focus-visible:outline-none"
-              />
-              {o.label}
-            </label>
-          );
-        })}
       </div>
-      <ErrorText field={field} text={error} />
-    </fieldset>
+    </form>
   );
 }

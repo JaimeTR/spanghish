@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Bubble, SectionQuestion } from "@/components/Bubble";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ContactBubbles } from "@/components/ContactBubbles";
+import { ContactForm } from "@/components/ContactForm";
 import { ArrowIcon, ClockIcon, PinIcon } from "@/components/icons";
 import { PageShell } from "@/components/PageShell";
 import { SocialLinks } from "@/components/SocialLinks";
@@ -20,8 +21,8 @@ export function generateMetadata({ params }: PageProps) {
 }
 
 /**
- * Contacto: preguntas generales por teléfono o email. La clase gratis se pide
- * con el formulario de /bookings (enlazado aquí); esta página no tiene formulario.
+ * Contacto: preguntas generales por teléfono, email o con el formulario corto de
+ * esta página. La clase gratis se pide con el formulario por pasos de /bookings.
  */
 export default async function ContactPage({ params }: PageProps) {
   const { locale } = await params;
@@ -29,6 +30,7 @@ export default async function ContactPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "page.contact" });
+  const tf = await getTranslations({ locale, namespace: "page.contactForm" });
   const tn = await getTranslations({ locale, namespace: "nav" });
   const tm = await getTranslations({ locale, namespace: "meta" });
   const path = localePath(locale, "contact");
@@ -91,6 +93,28 @@ export default async function ContactPage({ params }: PageProps) {
               <dd className="mt-1 max-w-[30rem] pl-11 text-lg leading-relaxed text-ink">{t("areas")}</dd>
             </div>
           </dl>
+        </div>
+      </section>
+
+      {/* Escríbenos: formulario de contacto general (la clase gratis tiene el suyo en /bookings) */}
+      <section id="message" aria-labelledby="form-title" className="bg-surface-sunken py-20 lg:py-28">
+        <div className={`${container} grid items-start gap-x-14 gap-y-10 lg:grid-cols-12`}>
+          <div className="flex flex-col items-start gap-5 lg:col-span-5 lg:pt-4">
+            <SectionQuestion id="form-title" tone="fuchsia">
+              {tf("question")}
+            </SectionQuestion>
+            <p className="max-w-[30rem] text-lg leading-relaxed text-ink">{tf("intro")}</p>
+            <p className="max-w-[30rem] text-lg leading-relaxed text-ink-muted">{tf("bookingNote")}</p>
+            <Link href={bookingPath(locale)} className="inline-flex min-h-11 items-center gap-2 font-bold text-brand-purple underline underline-offset-4">
+              {tf("bookingLink")}
+              <ArrowIcon />
+            </Link>
+          </div>
+          <div className="lg:col-span-7">
+            <Bubble tone="white" tail="right" shadow boxClassName="px-6 py-8 sm:px-10 sm:py-10">
+              <ContactForm locale={locale} privacyHref={localePath(locale, "privacy")} />
+            </Bubble>
+          </div>
         </div>
       </section>
 

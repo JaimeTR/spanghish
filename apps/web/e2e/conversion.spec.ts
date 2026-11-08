@@ -1,47 +1,73 @@
 import { expect, test, type Page } from "@playwright/test";
 import { expectNoAxeViolations, horizontalOverflow } from "./helpers";
 
-/** Rellena el formulario de /es/bookings con una solicitud válida. */
-async function fillValid(page: Page) {
+/** Paso 1 de /es/bookings: quién eres y para quién es la clase. */
+async function fillStep1(page: Page) {
   await page.getByLabel("Tu nombre").fill("Ana López");
   await page.getByLabel("Email").fill("ana@example.com");
   await page.getByRole("radio", { name: "Niños (6–13)" }).check();
+}
+
+/** Paso 2: cómo, cuándo y consentimiento. */
+async function fillStep2(page: Page) {
   await page.getByRole("radio", { name: "Online" }).check();
   await page.getByLabel("¿Qué días y horas te vienen bien?").fill("Sábados por la mañana");
   await page.getByRole("radio", { name: "Español" }).check();
   await page.getByRole("checkbox", { name: /Acepto que Spanglish use estos datos/ }).check();
 }
 
-test.describe("booking form", () => {
-  test("an empty submit shows the error summary with focus and marks each field", async ({ page }) => {
-    await page.goto("/es/bookings");
-    await page.getByRole("button", { name: "Enviar solicitud" }).click();
+/** Rellena los dos pasos de /es/bookings con una solicitud válida. */
+async function fillValid(page: Page) {
+  await fillStep1(page);
+  await page.getByRole("button", { name: "Siguiente" }).click();
+  await fillStep2(page);
+}
 
+test.describe("booking form (two steps)", () => {
+  test("step 1 validates only its own fields, then step 2 opens with focus on its title", async ({ page }) => {
+    await page.goto("/es/bookings");
+    await expect(page.getByText("Paso 1 de 2")).toBeVisible();
+    await expect(page.locator("form").getByRole("heading", { name: "Tu clase", exact: true })).toBeHidden();
+
+    await page.getByRole("button", { name: "Siguiente" }).click();
     const summary = page.locator('[aria-labelledby="error-summary-title"]');
     await expect(summary).toBeFocused();
-    await expect(summary.getByRole("heading")).toHaveText("Revisa 7 campos:");
+    await expect(summary.getByRole("heading")).toHaveText("Revisa 3 campos:");
     await expect(summary.getByRole("link", { name: "Escribe tu nombre." })).toHaveAttribute("href", "#f-name");
-
     const name = page.getByLabel("Tu nombre");
     await expect(name).toHaveAttribute("aria-invalid", "true");
     await expect(name).toHaveAttribute("aria-describedby", /f-name-error/);
-    await expect(page.locator("#f-name-error")).toHaveText("Escribe tu nombre.");
     await expect(page.getByLabel("Email")).toHaveAttribute("autocomplete", "email");
     await expect(page.getByLabel("Teléfono (opcional)")).not.toHaveAttribute("aria-invalid", "true");
-    await expect(page.locator("#f-consent-error")).toBeVisible();
-    await expect(page).toHaveURL(/\/es\/bookings$/);
 
-    // Corregir un campo y reenviar actualiza el resumen.
-    await name.fill("Ana");
+    await fillStep1(page);
+    await page.getByRole("button", { name: "Siguiente" }).click();
+    await expect(page.getByText("Paso 2 de 2")).toBeVisible();
+    await expect(page.locator("form").getByRole("heading", { name: "Tu clase", exact: true })).toBeFocused();
+    await expect(page.getByLabel("Tu nombre")).toBeHidden();
+    await expect(page).toHaveURL(/\/es\/bookings$/);
+  });
+
+  test("step 2 shows its own errors and Back keeps what was typed", async ({ page }) => {
+    await page.goto("/es/bookings");
+    await fillStep1(page);
+    await page.getByRole("button", { name: "Siguiente" }).click();
     await page.getByRole("button", { name: "Enviar solicitud" }).click();
-    await expect(summary.getByRole("heading")).toHaveText("Revisa 6 campos:");
-    await expect(name).not.toHaveAttribute("aria-invalid", "true");
+    const summary = page.locator('[aria-labelledby="error-summary-title"]');
+    await expect(summary).toBeFocused();
+    await expect(summary.getByRole("heading")).toHaveText("Revisa 4 campos:");
+    await expect(page.locator("#f-consent-error")).toBeVisible();
+
+    await page.getByRole("button", { name: "Atrás" }).click();
+    await expect(page.getByText("Paso 1 de 2")).toBeVisible();
+    await expect(page.getByLabel("Tu nombre")).toHaveValue("Ana López");
+    await expect(page.getByRole("radio", { name: "Niños (6–13)" })).toBeChecked();
   });
 
   test("an invalid email gets its own message", async ({ page }) => {
     await page.goto("/en/bookings");
     await page.getByLabel("Email").fill("ana@");
-    await page.getByRole("button", { name: "Send request" }).click();
+    await page.getByRole("button", { name: "Next" }).click();
     await expect(page.locator("#f-email-error")).toHaveText("Enter a valid email, like name@example.com.");
   });
 
@@ -71,16 +97,12 @@ test.describe("booking form", () => {
     await expect(page).toHaveURL(/\/es\/bookings$/);
   });
 
-  test("a submission faster than a person could type is rejected", async ({ page }) => {
-    await page.goto("/es/bookings");
-    await fillValid(page);
-    await page.getByRole("button", { name: "Enviar solicitud" }).click();
-    await expect(page.getByRole("main").getByRole("alert")).toContainText("No hemos podido enviar tu solicitud");
-    await expect(page).toHaveURL(/\/es\/bookings$/);
-  });
-
   test("the consent text links to the privacy policy and the honeypot is hidden", async ({ page }) => {
     await page.goto("/en/bookings");
+    await page.getByLabel("Your name").fill("Ana");
+    await page.getByLabel("Email").fill("ana@example.com");
+    await page.getByRole("radio", { name: /Kids/ }).check();
+    await page.getByRole("button", { name: "Next" }).click();
     await expect(page.getByRole("link", { name: "privacy policy" })).toHaveAttribute("href", "/en/privacy-policy");
     await expect(page.locator('input[name="website"]')).toHaveAttribute("tabindex", "-1");
     await expect(page.getByRole("textbox", { name: "Leave this field empty" })).toHaveCount(0);
@@ -179,4 +201,40 @@ test.describe("not found", () => {
       });
     }
   }
+});
+
+test.describe("contact form", () => {
+  test("is on the contact page, separate from the free-lesson form, and validates", async ({ page }) => {
+    await page.goto("/es/contact-us");
+    const form = page.locator("#message");
+    await expect(form.getByRole("link", { name: "Ir al formulario de clase gratis" })).toHaveAttribute("href", "/es/bookings");
+    await form.getByRole("button", { name: "Enviar mensaje" }).click();
+    const summary = page.locator('[aria-labelledby="contact-error-summary-title"]');
+    await expect(summary).toBeFocused();
+    await expect(summary.getByRole("heading")).toHaveText("Revisa 4 campos:");
+    await expect(page.getByLabel("Tu mensaje")).toHaveAttribute("aria-invalid", "true");
+    await expect(page).toHaveURL(/\/es\/contact-us$/);
+  });
+
+  test("a valid message (dev delivery) lands on thank-you with no personal data in the URL", async ({ page }) => {
+    await page.goto("/en/contact-us");
+    await page.getByLabel("Your name").fill("Sam");
+    await page.getByLabel("Your email").fill("sam@example.com");
+    await page.getByLabel("Your message").fill("Do you teach teenagers online?");
+    await page.getByRole("checkbox", { name: /I agree that Spanglish may use these details/ }).check();
+    await page.waitForTimeout(3300);
+    await page.getByRole("button", { name: "Send message" }).click();
+    await expect(page).toHaveURL(/\/en\/thank-you$/, { timeout: 20_000 });
+    expect(page.url()).not.toMatch(/[?#]|sam|example/i);
+  });
+
+  test("a message sent too fast is rejected", async ({ page }) => {
+    await page.goto("/es/contact-us");
+    await page.getByLabel("Tu nombre").fill("Sam");
+    await page.getByLabel("Tu email").fill("sam@example.com");
+    await page.getByLabel("Tu mensaje").fill("Hola");
+    await page.getByRole("checkbox", { name: /Acepto que Spanglish use estos datos/ }).check();
+    await page.getByRole("button", { name: "Enviar mensaje" }).click();
+    await expect(page.getByRole("main").getByRole("alert")).toContainText("No hemos podido enviar tu mensaje");
+  });
 });

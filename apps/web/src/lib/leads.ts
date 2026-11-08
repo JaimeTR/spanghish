@@ -1,5 +1,6 @@
 import type { Locale } from "../i18n/routing";
 import type { BookingData } from "./booking";
+import type { ContactData } from "./contact";
 
 /**
  * Entrega de solicitudes (leads). Adaptador sin SDK:
@@ -13,7 +14,9 @@ import type { BookingData } from "./booking";
  * LEADS_LOG_ONLY=1 fuerza el modo consola también en producción. Solo para la
  * e2e (que compila y arranca en modo producción); no definirla en un despliegue.
  */
-export type Lead = BookingData & { locale: Locale; kind: "booking" };
+export type BookingLead = BookingData & { locale: Locale; kind: "booking" };
+export type ContactLead = ContactData & { locale: Locale; kind: "contact" };
+export type Lead = BookingLead | ContactLead;
 
 export type DeliveryResult =
   | { ok: true; via: "email" | "log" }
@@ -23,7 +26,7 @@ type Env = Partial<Record<string, string | undefined>>;
 
 const RESEND_URL = "https://api.resend.com/emails";
 
-const LABELS: Record<keyof Omit<Lead, "kind" | "consent">, string> = {
+const LABELS: Record<string, string> = {
   name: "Name",
   email: "Email",
   phone: "Phone",
@@ -35,11 +38,19 @@ const LABELS: Record<keyof Omit<Lead, "kind" | "consent">, string> = {
   locale: "Website language",
 };
 
+const FIELDS: Record<Lead["kind"], string[]> = {
+  booking: ["name", "email", "phone", "audience", "place", "times", "language", "message", "locale"],
+  contact: ["name", "email", "phone", "message", "locale"],
+};
+
 /** Cuerpo en texto plano (sin HTML: nada que escapar ni inyectar). */
 export function leadEmailText(lead: Lead): string {
-  const lines = (Object.keys(LABELS) as (keyof typeof LABELS)[]).map((k) => `${LABELS[k]}: ${lead[k] || "-"}`);
+  const record = lead as unknown as Record<string, string>;
+  const lines = FIELDS[lead.kind].map((k) => `${LABELS[k]}: ${record[k] || "-"}`);
+  const title =
+    lead.kind === "contact" ? "New contact message from spanglish.com.au" : "New free-lesson request from spanglish.com.au";
   return [
-    "New free-lesson request from spanglish.com.au",
+    title,
     "",
     ...lines,
     "Consent: yes (data used only to reply; under-18s: form filled in by a parent/guardian)",
@@ -50,7 +61,7 @@ export function leadEmailText(lead: Lead): string {
 
 /** Asunto en una línea y acotado (el nombre ya llega sin saltos de línea). */
 export function leadSubject(lead: Lead): string {
-  return `Free lesson request: ${lead.name}`.replace(/[\r\n]+/g, " ").slice(0, 150);
+  return `${lead.kind === "contact" ? "Contact message" : "Free lesson request"}: ${lead.name}`.replace(/[\r\n]+/g, " ").slice(0, 150);
 }
 
 export async function deliverLead(
