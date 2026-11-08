@@ -81,33 +81,40 @@ export function Hero() {
         {/* Conversación ilustrativa (decorativa: el mensaje real está en el texto). */}
         <div aria-hidden="true" className="relative mx-auto w-full max-w-[26rem] lg:col-span-5 lg:max-w-none">
           <div className="flex flex-col gap-5">
-            <Bubble
-              tone="white"
-              tail="left"
-              shadow
-              className="pop-in mr-10 origin-bottom-left self-start transition-transform duration-300 ease-out hover:-rotate-1 hover:scale-[1.03]"
-              boxClassName="px-6 py-4 font-display text-[clamp(1.4rem,3.4vw,1.9rem)] leading-tight"
-            >
-              {s.chats[0]}
-            </Bubble>
-            <Bubble
-              tone="fuchsia"
-              tail="right"
-              shadow
-              className="pop-in ml-8 origin-bottom-right self-end transition-transform duration-300 ease-out hover:rotate-1 hover:scale-[1.03] [--i:1]"
-              boxClassName="px-6 py-5 font-display text-[clamp(1.6rem,4vw,2.4rem)] leading-[1.05]"
-            >
-              {s.chats[1]}
-            </Bubble>
-            <Bubble
-              tone="purple"
-              tail="left"
-              shadow
-              className="pop-in origin-bottom-left self-start transition-transform duration-300 ease-out hover:-rotate-1 hover:scale-[1.03] [--i:2]"
-              boxClassName="px-6 py-3 font-display text-[clamp(1.4rem,3.2vw,1.8rem)]"
-            >
-              {s.chats[2]}
-            </Bubble>
+            {/* Cada burbuja flota suavemente (envoltorio) sobre su entrada y su hover (burbuja). */}
+            <div className="float mr-10 self-start">
+              <Bubble
+                tone="white"
+                tail="left"
+                shadow
+                className="pop-in origin-bottom-left transition-transform duration-300 ease-out hover:-rotate-1 hover:scale-[1.03]"
+                boxClassName="px-6 py-4 font-display text-[clamp(1.4rem,3.4vw,1.9rem)] leading-tight"
+              >
+                {s.chats[0]}
+              </Bubble>
+            </div>
+            <div className="float ml-8 self-end [--f:1]">
+              <Bubble
+                tone="fuchsia"
+                tail="right"
+                shadow
+                className="pop-in origin-bottom-right transition-transform duration-300 ease-out hover:rotate-1 hover:scale-[1.03] [--i:1]"
+                boxClassName="px-6 py-5 font-display text-[clamp(1.6rem,4vw,2.4rem)] leading-[1.05]"
+              >
+                {s.chats[1]}
+              </Bubble>
+            </div>
+            <div className="float self-start [--f:2]">
+              <Bubble
+                tone="purple"
+                tail="left"
+                shadow
+                className="pop-in origin-bottom-left transition-transform duration-300 ease-out hover:-rotate-1 hover:scale-[1.03] [--i:2]"
+                boxClassName="px-6 py-3 font-display text-[clamp(1.4rem,3.2vw,1.8rem)]"
+              >
+                {s.chats[2]}
+              </Bubble>
+            </div>
           </div>
         </div>
       </div>
@@ -120,10 +127,6 @@ export function Hero() {
         slides={slides}
         labels={{
           region: t("slider.label"),
-          prev: t("slider.prev"),
-          next: t("slider.next"),
-          pause: t("slider.pause"),
-          play: t("slider.play"),
           goTo: KEYS.map((_, i) => t("slider.goTo", { n: i + 1, total: KEYS.length })),
         }}
       />

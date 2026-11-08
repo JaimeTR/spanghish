@@ -115,13 +115,15 @@ for (const width of [360, 1440]) {
 }
 
 test.describe("hero slider", () => {
-  test("shows one slide at a time and moves with the arrows and dots", async ({ page }) => {
+  test("shows one slide at a time and moves with the dots", async ({ page }) => {
     await page.goto("/es");
     const region = page.getByRole("group", { name: "Destacados" });
     await expect(region.getByText("¡Habla español", { exact: false }).first()).toBeVisible();
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+    // Solo puntos: sin flechas ni botón de pausa.
+    await expect(page.getByRole("button", { name: /siguiente|anterior|Pausar/i })).toHaveCount(0);
 
-    await page.getByRole("button", { name: "Diapositiva siguiente" }).click();
+    await page.getByRole("button", { name: "Ir a la diapositiva 2 de 3" }).click();
     await expect(region.getByText("¡Español para")).toBeVisible();
     await expect(region.getByRole("link", { name: "Ver clases para niños" })).toHaveAttribute("href", "/es/kids-lessons");
 
@@ -129,17 +131,14 @@ test.describe("hero slider", () => {
     await expect(region.getByText("Nunca es tarde")).toBeVisible();
     await expect(region.getByRole("link", { name: "Ver clases para mayores" })).toHaveAttribute("href", "/es/mature-lessons");
 
-    await page.getByRole("button", { name: "Diapositiva siguiente" }).click(); // vuelve a la primera
+    await page.getByRole("button", { name: "Ir a la diapositiva 1 de 3" }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("¡Habla español con confianza!");
   });
 
-  test("hidden slides are not focusable and rotation can be paused", async ({ page }) => {
+  test("hidden slides are not reachable", async ({ page }) => {
     await page.goto("/en");
     const links = page.getByRole("group", { name: "Highlights" }).getByRole("link", { name: /See kids lessons/ });
     await expect(links).toHaveCount(0); // inert: fuera del árbol de accesibilidad
-    const pause = page.getByRole("button", { name: "Pause automatic rotation" });
-    await pause.click();
-    await expect(page.getByRole("button", { name: "Resume automatic rotation" })).toHaveAttribute("aria-pressed", "true");
   });
 
   test("advances by itself", async ({ page }) => {
@@ -147,14 +146,21 @@ test.describe("hero slider", () => {
     await page.mouse.move(0, 0);
     await expect(page.getByRole("group", { name: "Destacados" }).getByText("¡Español para")).toBeVisible({ timeout: 12_000 });
   });
+
+  test("stops advancing while the pointer rests on the hero", async ({ page }) => {
+    await page.goto("/es");
+    await page.getByRole("heading", { level: 1 }).hover();
+    await page.waitForTimeout(9000);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("group", { name: "Destacados" }).getByText("¡Español para")).toBeHidden();
+  });
 });
 
 test.describe("hero slider with reduced motion", () => {
   test.use({ reducedMotion: "reduce" });
-  test("does not rotate by itself and hides the pause button", async ({ page }) => {
+  test("does not rotate by itself", async ({ page }) => {
     await page.goto("/es");
     await page.waitForTimeout(8000);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Pausar el cambio automático" })).toHaveCount(0);
   });
 });

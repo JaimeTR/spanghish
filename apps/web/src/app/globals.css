@@ -124,6 +124,23 @@ a {
   }
 }
 
+/* Las burbujas del hero flotan con un vaivén lento, desfasadas entre sí. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-slide[data-active="true"] .float {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: calc(var(--f, 0) * -2s);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-7px) rotate(0.6deg);
+  }
+}
+
 @keyframes rise {
   from {
     opacity: 0;

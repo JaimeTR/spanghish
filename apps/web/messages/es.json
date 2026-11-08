@@ -65,10 +65,6 @@
     },
     "slider": {
       "label": "Destacados",
-      "prev": "Diapositiva anterior",
-      "next": "Diapositiva siguiente",
-      "pause": "Pausar el cambio automático",
-      "play": "Reanudar el cambio automático",
       "goTo": "Ir a la diapositiva {n} de {total}"
     }
   },
