@@ -10,12 +10,45 @@ Estructura: monorepo pnpm + Turborepo (`apps/*`, `packages/*`).
 
 ## Cómo correr en local
 
-1. `pnpm install`
-2. `pnpm supabase start` (requiere Docker) y `pnpm supabase db reset` (migraciones + `supabase/seed.sql`).
-3. Variables de la app: `pnpm supabase status -o env` da `API_URL` y `ANON_KEY` para
-   `apps/app/.env.local` (ver `.env.example`; nunca subir valores).
-4. `pnpm dev`. Pruebas: `pnpm test`, `pnpm supabase test db` y `pnpm --filter @spanglish/app e2e`.
+Requisitos: Node 22+, pnpm 9.7 (`corepack enable`) y Docker Desktop en ejecución.
 
-**`supabase/seed.sql` es solo para el stack local**: crea usuarios con una contraseña
-pública. Nunca usar `supabase db push --include-seed` ni Supabase Branching con este
-seed. El propio archivo aborta si la base no es la local.
+1. `pnpm install`
+2. `pnpm supabase start` (levanta el stack local) y `pnpm supabase db reset` (migraciones + `supabase/seed.sql`).
+3. Variables de la app: `pnpm supabase status -o env` da `API_URL` y `ANON_KEY`; copiarlos a
+   `apps/app/.env.local` (git-ignored; ver `.env.example`).
+4. `pnpm dev`.
+5. Al terminar: `pnpm supabase stop`.
+
+### Usuarios de prueba (solo desarrollo)
+
+El seed crea cuatro usuarios locales (admin, teacher, student, suspended; correos
+`*@spanglish.test`). Los correos y la contraseña de desarrollo están en `supabase/seed.sql`;
+no se repiten aquí.
+
+### Pruebas
+
+- Unitarias: `pnpm test` (también `pnpm lint`, `pnpm typecheck`, `pnpm build`).
+- Base de datos (pgTAP): `pnpm supabase test db`.
+- e2e (Playwright, requiere Supabase local con seed): `pnpm --filter @spanglish/app e2e`.
+  La primera vez: `pnpm --filter @spanglish/app exec playwright install chromium`.
+
+### Reglas
+
+- `supabase/seed.sql` es solo para el stack local: crea usuarios con contraseña pública.
+  Nunca usar `supabase db push --include-seed` ni Supabase Branching con este seed. El propio
+  archivo aborta si la base no es la local.
+- Nunca subir archivos `.env*` (solo `.env.example`) ni claves.
+
+## Estructura del repo
+
+- `apps/app`: plataforma educativa (Next.js).
+- `apps/web`: web pública (Next.js).
+- `packages/ui`: componentes compartidos.
+- `supabase/`: configuración, migraciones, seed local y pruebas pgTAP.
+- `docs/`: plan y decisiones. `.github/workflows/ci.yml`: CI (check, db, e2e).
+
+## Estado del proyecto
+
+Hito 1A (cimientos) completo: monorepo, base de datos con roles y RLS, autenticación,
+shell por rol y CI. Siguiente: hito 1B (programas, cursos, grupos, matrículas, calendario,
+sesiones, asistencia y paneles de administradora y docente).

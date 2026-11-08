@@ -6,9 +6,21 @@ on:
   pull_request:
     branches: [main, develop]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Servicios de Supabase que no hacen falta en CI (auth, db, storage y API sí).
+  SUPABASE_EXCLUDE: studio,imgproxy,edge-runtime,logflare,vector,supavisor,postgres-meta,realtime
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -20,3 +32,59 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
+      - run: pnpm build
+
+  db:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Levantar Supabase local
+        run: pnpm supabase start -x "$SUPABASE_EXCLUDE"
+      - name: Migraciones y seed (solo local)
+        run: pnpm supabase db reset
+      - name: Pruebas pgTAP
+        run: pnpm supabase test db
+      - name: Detener Supabase
+        if: always()
+        run: pnpm supabase stop --no-backup
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Levantar Supabase local
+        run: pnpm supabase start -x "$SUPABASE_EXCLUDE"
+      - name: Migraciones y seed (solo local)
+        run: pnpm supabase db reset
+      - name: Instalar Chromium de Playwright
+        run: pnpm --filter @spanglish/app exec playwright install --with-deps chromium
+      # Las claves demo se leen en runtime con `supabase status` (ver playwright.config.ts).
+      - name: e2e
+        run: pnpm --filter @spanglish/app e2e
+      - name: Subir trazas de Playwright
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: |
+            apps/app/test-results/
+            apps/app/playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Detener Supabase
+        if: always()
+        run: pnpm supabase stop --no-backup
