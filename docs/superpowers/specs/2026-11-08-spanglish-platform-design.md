@@ -83,7 +83,8 @@ Elección de tipografías, estructura exacta de tablas, librería de calendario,
 - **Infraestructura:** Supabase en región Sydney; plan gratuito en desarrollo, plan de pago al lanzar.
 - **Lecciones:** el formato final se decide al ver los datos de WordPress. Se incluye un editor de lecciones para la administradora y las docentes en el hito 2.
 
-## 12. Pendiente de Maribel (solo ella o el cliente puede responder)
-1. ¿Está registrada para GST? ¿Tiene cuenta de Stripe o quiere crearla? Sin respuesta: se diseñan precios con GST incluido opcional y recibos numerados.
-2. Acceso de administrador a WordPress (Hostinger) para exportar las ~60 lecciones y medios, y quién controla el DNS de spanglish.com.au.
-3. Fecha objetivo de lanzamiento y cuándo se apaga o conserva el WordPress.
+## 12. Respuestas del desarrollador (2026-11-08) y estado
+- Stripe: Maribel ya tiene cuenta; los datos fiscales (GST) se pueden ajustar después. No bloquea.
+- Lecciones: se copian rastreando la web pública actual. No se necesita acceso a WordPress.
+- DNS y fecha de lanzamiento: no se necesitan para empezar. Se desarrolla ya.
+- Diseño aprobado por el desarrollador para pasar al plan.
