@@ -10,6 +10,8 @@ export type SessionUser = {
   roles: AppRole[];
   status: SessionStatus;
   locale: Locale;
+  /** profiles.full_name recortado; ausente si está vacío. Solo para mostrar. */
+  name?: string;
 };
 
 const ROLE_PRIORITY: readonly AppRole[] = ["admin", "teacher", "student", "guardian"];
@@ -54,12 +56,18 @@ export function isSafeRedirect(next: string | null): boolean {
   return !/[\\\u0000-\u001f\u007f]/.test(next);
 }
 
-type ProfileRow = { id: string; status: UserStatus; preferred_locale: Locale };
+type ProfileRow = {
+  id: string;
+  status: UserStatus;
+  preferred_locale: Locale;
+  full_name?: string | null;
+};
 type RoleRow = { role: AppRole };
 
 /** Un usuario suspendido no tiene acceso: se descartan sus roles. */
 export function toSessionUser(profile: ProfileRow, roleRows: RoleRow[]): SessionUser {
   const suspended = profile.status === "suspended";
+  const name = profile.full_name?.trim();
   return {
     id: profile.id,
     roles: suspended
@@ -67,5 +75,6 @@ export function toSessionUser(profile: ProfileRow, roleRows: RoleRow[]): Session
       : roleRows.map((r) => r.role).filter((r): r is AppRole => ROLE_PRIORITY.includes(r)),
     status: profile.status,
     locale: isLocale(profile.preferred_locale) ? profile.preferred_locale : "es",
+    ...(name && !suspended ? { name } : {}),
   };
 }

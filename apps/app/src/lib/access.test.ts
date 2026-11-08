@@ -105,6 +105,18 @@ describe("toSessionUser", () => {
     expect(u).toEqual({ id: "u1", roles: [], status: "suspended", locale: "en" });
     expect(roleHomePath(u.roles, u.locale)).toBe("/en/login");
   });
+  it("keeps the trimmed full_name as name and omits a blank one", () => {
+    const named = toSessionUser(
+      { id: "u5", status: "active", preferred_locale: "es", full_name: "  Ana Pérez " },
+      [{ role: "student" }],
+    );
+    expect(named.name).toBe("Ana Pérez");
+    const blank = toSessionUser(
+      { id: "u6", status: "active", preferred_locale: "es", full_name: "   " },
+      [{ role: "student" }],
+    );
+    expect(blank.name).toBeUndefined();
+  });
   it("teacher with student role keeps both roles", () => {
     const u = toSessionUser(
       { id: "u2", status: "active", preferred_locale: "es" },
