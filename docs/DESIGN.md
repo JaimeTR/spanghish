@@ -20,5 +20,11 @@ Tokens en `packages/ui/tokens.css`. Logo en `brand/`.
 | amarillo / morado | 6.7 |
 | ink-muted / crema | 6.7 |
 
+## Web pública (apps/web)
+- Tipografías: **Lilita One** (rotulado: titulares, precios, bocadillos; gruesa y redondeada como las letras del logo) + **Figtree** (texto; sans cálida y legible). Ambas con `latin-ext` (ñ, á, ¡, ¿), servidas por `next/font`.
+- Gesto de marca: el **bocadillo** del logo. Las secciones se abren con una pregunta en bocadillo (`SectionQuestion`) y la extrusión burdeos sin desenfoque del logo (`--bubble-shadow`) se usa solo en bocadillos y en el rotulado (`.lettering`).
+- Campos de color por sección: amarillo (hero), crema, morado, crema, burdeos, arena, fucsia, morado (pie). Fucsia sobre amarillo (3.7:1) solo en texto grande.
+- Foco: 3px morado; dentro de `.on-dark` (morado, burdeos, fucsia) pasa a amarillo.
+
 ## Pendiente
-Tipografías (pendiente de marca), modo oscuro, escala tipográfica, componentes shadcn tematizados, logo SVG.
+Tipografías del portal (apps/app), modo oscuro, escala tipográfica, componentes shadcn tematizados, logo SVG.

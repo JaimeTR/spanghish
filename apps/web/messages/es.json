@@ -1,1 +1,158 @@
-{ "meta": { "title": "Spanglish" }, "home": { "title": "Spanglish", "cta": "Empezar" } }
+{
+  "meta": {
+    "title": "Spanglish · Clases de español en Sunshine Coast, Brisbane y online",
+    "description": "Habla español con confianza. Clases con Maribel, profesora nativa y certificada, para adultos, niños y mayores en Sunshine Coast, Brisbane y online. Primera clase gratis.",
+    "ogAlt": "Logo de Spanglish: un bocadillo amarillo con las letras ¡SPANGLISH!"
+  },
+  "a11y": {
+    "skip": "Saltar al contenido",
+    "external": "(se abre la web actual de Spanglish)",
+    "opensSite": "(abre {name})"
+  },
+  "nav": {
+    "label": "Navegación principal",
+    "footerLabel": "Navegación del pie de página",
+    "home": "Spanglish, inicio",
+    "lessons": "Clases",
+    "how": "Cómo son",
+    "prices": "Precios",
+    "maribel": "Maribel",
+    "contact": "Contacto",
+    "menu": "Menú",
+    "cta": "Clase gratis",
+    "localeLabel": "Idioma"
+  },
+  "locales": { "es": "Español", "en": "English" },
+  "hero": {
+    "titleA": "¡Habla español",
+    "titleB": "con confianza!",
+    "lead": "Clases prácticas con Maribel, profesora nativa y certificada. Para adultos, niños y mayores en Sunshine Coast, Brisbane y online.",
+    "cta": "Reserva tu clase gratis",
+    "secondary": "Ver las clases",
+    "free": "Tu primera clase es gratis: 45 minutos, online.",
+    "chat1": "Hi! Quiero aprender español.",
+    "chat2": "¡Genial! Empezamos con una clase gratis.",
+    "chat3": "¡Perfecto!"
+  },
+  "lessons": {
+    "question": "¿Para quién son las clases?",
+    "intro": "Para quien quiera hablar español de verdad, a cualquier edad. Elige tu grupo y el formato que mejor te encaje.",
+    "adults": {
+      "age": "14+",
+      "title": "Adultos",
+      "body": "Comunicación práctica para el día a día, con explicaciones de gramática claras."
+    },
+    "kids": {
+      "age": "6–13",
+      "title": "Niños",
+      "body": "Español para niños y niñas de 6 a 13 años."
+    },
+    "mature": {
+      "age": "65+",
+      "title": "Mayores",
+      "body": "Un programa de 10 clases pensado para mayores de 65."
+    },
+    "online": {
+      "tag": "Nuevo",
+      "title": "Conversación online",
+      "body": "Un programa de 10 semanas para practicar conversación desde casa."
+    },
+    "soonLabel": "Próximamente",
+    "soonDele": "Preparación del examen DELE",
+    "soonAfter": "After school",
+    "formatsTitle": "Tres formatos",
+    "formats": {
+      "private": {
+        "title": "Individual 1-1",
+        "body": "Online, en casa de la profesora o en una biblioteca local."
+      },
+      "own": {
+        "title": "Tu propio grupo",
+        "body": "Con quien tú quieras, hasta 2 personas."
+      },
+      "local": {
+        "title": "Grupo local",
+        "body": "Aprende con otras personas de tu zona."
+      }
+    }
+  },
+  "how": {
+    "question": "¿Cómo es una clase?",
+    "minutes": "70",
+    "minutesLabel": "minutos por clase",
+    "minutesNote": "Con tiempo de sobra para hablar, preguntar y practicar.",
+    "items": {
+      "practical": { "title": "Comunicación práctica", "body": "El español que usas en conversaciones reales." },
+      "grammar": { "title": "Gramática clara", "body": "Explicaciones sencillas, sin complicaciones." },
+      "materials": { "title": "Materiales", "body": "Material de apoyo para cada clase." },
+      "summary": { "title": "Resumen y deberes", "body": "Después de cada clase recibes un resumen y deberes." }
+    },
+    "placesTitle": "Online o presencial",
+    "places": "Online, en bibliotecas locales, en oficinas o en casa, en Sunshine Coast y Brisbane."
+  },
+  "prices": {
+    "question": "¿Cuánto cuesta?",
+    "intro": "Precios publicados en dólares australianos (AUD).",
+    "free": {
+      "amount": "Gratis",
+      "title": "Primera clase",
+      "body": "45 minutos, online."
+    },
+    "groups": {
+      "from": "desde",
+      "amount": "$30",
+      "unit": "por persona",
+      "title": "Clases en grupo"
+    },
+    "mature": {
+      "amount": "$40",
+      "unit": "por clase",
+      "title": "Programa para mayores",
+      "body": "10 clases: $390 si las pagas por adelantado. Clase suelta: $45."
+    },
+    "online": {
+      "amount": "$245",
+      "unit": "10 semanas",
+      "title": "Conversación online",
+      "body": "Programa de 10 semanas: $25 por clase."
+    },
+    "groupsAskTitle": "¿Buscas un grupo?",
+    "groupsAskBody": "Pregúntanos por las fechas y los horarios de los próximos grupos.",
+    "groupsAskCta": "Pregúntanos"
+  },
+  "maribel": {
+    "question": "¿Quién es Maribel?",
+    "hello": "¡Hola!",
+    "name": "Soy Maribel",
+    "body": "Maribel es profesora nativa y certificada de español. Vive en Australia y tiene más de 4 años de experiencia dando clases.",
+    "body2": "Su objetivo es que hables español con confianza: comunicación práctica, gramática clara y un resumen con deberes después de cada clase.",
+    "facts": {
+      "native": "Nativa",
+      "certified": "Certificada",
+      "years": "+4 años de experiencia",
+      "based": "En Australia"
+    }
+  },
+  "learn": {
+    "question": "¿Quieres practicar ya?",
+    "body": "Lecciones interactivas gratis, del alfabeto a los verbos, pasando por sustantivos y artículos. Para adultos y niños, de nivel A1 a B2. También hay materiales digitales a bajo coste.",
+    "levelsLabel": "Niveles",
+    "cta": "Ir a las lecciones gratis",
+    "note": "De momento están en la web actual de Spanglish."
+  },
+  "contact": {
+    "question": "¿Empezamos?",
+    "lead": "Tu primera clase es gratis: 45 minutos, online. Llámanos o escríbenos y la reservamos.",
+    "phoneLabel": "Llama al",
+    "emailLabel": "Escribe a",
+    "hours": "Lunes a sábado, de 8:00 a 17:00.",
+    "note": "Muy pronto podrás reservar tu clase directamente en esta web."
+  },
+  "footer": {
+    "tagline": "Nuestro objetivo es que hables español con confianza.",
+    "areas": "Sunshine Coast · Brisbane · Online",
+    "follow": "Síguenos en @spanglishworldwide",
+    "contactTitle": "Contacto",
+    "copyright": "© {year} Spanglish"
+  }
+}

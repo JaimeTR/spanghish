@@ -1,7 +1,84 @@
 @import "@spanglish/ui/theme.css";
 @source "../../../../packages/ui/src";
 
+/* Tipografías de la web pública (next/font las sirve desde el propio sitio). */
+@theme inline {
+  --font-display: var(--font-lilita), "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-sans: var(--font-figtree), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+:root {
+  /* Anillo de foco: morado sobre fondos claros; las secciones oscuras lo cambian a amarillo. */
+  --focus-color: var(--brand-purple);
+  /* Sombra extruida del logo (burdeos, sin desenfoque): solo en bocadillos. */
+  --bubble-shadow: 6px 6px 0 var(--brand-burgundy);
+  scroll-padding-top: 5.5rem;
+  scrollbar-color: var(--brand-purple) var(--surface-sunken);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--role-bg);
   color: var(--role-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--brand-yellow);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 3px;
+}
+
+.on-dark {
+  --focus-color: var(--brand-yellow);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 2px;
+}
+
+/* Rotulado como el del logo: letra fucsia con sombra burdeos extruida. */
+.lettering {
+  font-family: var(--font-display);
+  letter-spacing: 0.005em;
+  text-shadow: 0.045em 0.05em 0 var(--brand-burgundy);
+}
+
+/* La conversación del hero aparece una vez, burbuja a burbuja, desde la cola. */
+@media (prefers-reduced-motion: no-preference) {
+  .pop {
+    animation: pop 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 260ms + 150ms);
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: translateY(14px) scale(0.86);
+  }
+  to {
+    transform: none;
+  }
 }

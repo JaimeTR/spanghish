@@ -1,1 +1,158 @@
-{ "meta": { "title": "Spanglish" }, "home": { "title": "Spanglish", "cta": "Get started" } }
+{
+  "meta": {
+    "title": "Spanglish · Spanish lessons on the Sunshine Coast, in Brisbane and online",
+    "description": "Speak Spanish with confidence. Lessons with Maribel, a native and certified tutor, for adults, kids and mature learners on the Sunshine Coast, in Brisbane and online. Your first lesson is free.",
+    "ogAlt": "Spanglish logo: a yellow speech bubble with the letters ¡SPANGLISH!"
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "external": "(opens the current Spanglish website)",
+    "opensSite": "(opens {name})"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "footerLabel": "Footer navigation",
+    "home": "Spanglish, home",
+    "lessons": "Lessons",
+    "how": "How it works",
+    "prices": "Prices",
+    "maribel": "Maribel",
+    "contact": "Contact",
+    "menu": "Menu",
+    "cta": "Free lesson",
+    "localeLabel": "Language"
+  },
+  "locales": { "es": "Español", "en": "English" },
+  "hero": {
+    "titleA": "Speak Spanish",
+    "titleB": "with confidence!",
+    "lead": "Practical lessons with Maribel, a native and certified Spanish tutor. For adults, kids and mature learners on the Sunshine Coast, in Brisbane and online.",
+    "cta": "Book your free lesson",
+    "secondary": "See lessons",
+    "free": "Your first lesson is free: 45 minutes, online.",
+    "chat1": "¡Hola! I want to learn Spanish.",
+    "chat2": "¡Genial! Let’s start with a free lesson.",
+    "chat3": "¡Perfecto!"
+  },
+  "lessons": {
+    "question": "Who are the lessons for?",
+    "intro": "For anyone who wants to really speak Spanish, at any age. Pick your group and the format that suits you best.",
+    "adults": {
+      "age": "14+",
+      "title": "Adults",
+      "body": "Practical communication for everyday life, with clear grammar explanations."
+    },
+    "kids": {
+      "age": "6–13",
+      "title": "Kids",
+      "body": "Spanish for girls and boys aged 6 to 13."
+    },
+    "mature": {
+      "age": "65+",
+      "title": "Mature adults",
+      "body": "A 10-lesson program designed for learners over 65."
+    },
+    "online": {
+      "tag": "New",
+      "title": "Online conversations",
+      "body": "A 10-week program to practise conversation from home."
+    },
+    "soonLabel": "Coming soon",
+    "soonDele": "DELE exam training",
+    "soonAfter": "After school",
+    "formatsTitle": "Three formats",
+    "formats": {
+      "private": {
+        "title": "Private 1-1",
+        "body": "Online, at the tutor’s place or at a local library."
+      },
+      "own": {
+        "title": "Your own group",
+        "body": "With whoever you like, up to 2 people."
+      },
+      "local": {
+        "title": "Local group",
+        "body": "Learn with other people in your area."
+      }
+    }
+  },
+  "how": {
+    "question": "What is a lesson like?",
+    "minutes": "70",
+    "minutesLabel": "minutes per lesson",
+    "minutesNote": "Plenty of time to talk, ask and practise.",
+    "items": {
+      "practical": { "title": "Practical communication", "body": "The Spanish you use in real conversations." },
+      "grammar": { "title": "Clear grammar", "body": "Simple explanations, no fuss." },
+      "materials": { "title": "Materials", "body": "Support materials for every lesson." },
+      "summary": { "title": "Summary and homework", "body": "After each lesson you get a summary and homework." }
+    },
+    "placesTitle": "Online or face to face",
+    "places": "Online, at local libraries, in offices or at home, on the Sunshine Coast and in Brisbane."
+  },
+  "prices": {
+    "question": "How much does it cost?",
+    "intro": "Published prices in Australian dollars (AUD).",
+    "free": {
+      "amount": "Free",
+      "title": "First lesson",
+      "body": "45 minutes, online."
+    },
+    "groups": {
+      "from": "from",
+      "amount": "$30",
+      "unit": "per person",
+      "title": "Group lessons"
+    },
+    "mature": {
+      "amount": "$40",
+      "unit": "per lesson",
+      "title": "Mature adults program",
+      "body": "10 lessons: $390 paid upfront. Single lesson: $45."
+    },
+    "online": {
+      "amount": "$245",
+      "unit": "10 weeks",
+      "title": "Online conversations",
+      "body": "10-week program: $25 per class."
+    },
+    "groupsAskTitle": "Looking for a group?",
+    "groupsAskBody": "Ask us about dates and times for the upcoming groups.",
+    "groupsAskCta": "Ask us"
+  },
+  "maribel": {
+    "question": "Who is Maribel?",
+    "hello": "¡Hola!",
+    "name": "I’m Maribel",
+    "body": "Maribel is a native, certified Spanish tutor. She lives in Australia and has more than 4 years of teaching experience.",
+    "body2": "Her goal is that you speak Spanish confidently: practical communication, clear grammar, and a summary with homework after every lesson.",
+    "facts": {
+      "native": "Native speaker",
+      "certified": "Certified",
+      "years": "4+ years of experience",
+      "based": "Based in Australia"
+    }
+  },
+  "learn": {
+    "question": "Want to practise right now?",
+    "body": "Free interactive lessons, from the alphabet to verbs, via nouns and articles. For adults and kids, levels A1 to B2. Low-cost digital materials are available too.",
+    "levelsLabel": "Levels",
+    "cta": "Go to the free lessons",
+    "note": "For now they live on the current Spanglish website."
+  },
+  "contact": {
+    "question": "Shall we start?",
+    "lead": "Your first lesson is free: 45 minutes, online. Call or email us and we’ll book it.",
+    "phoneLabel": "Call",
+    "emailLabel": "Email",
+    "hours": "Monday to Saturday, 8am to 5pm.",
+    "note": "Very soon you’ll be able to book your lesson right here on this website."
+  },
+  "footer": {
+    "tagline": "Our goal is that you speak Spanish confidently.",
+    "areas": "Sunshine Coast · Brisbane · Online",
+    "follow": "Follow us at @spanglishworldwide",
+    "contactTitle": "Contact",
+    "copyright": "© {year} Spanglish"
+  }
+}
