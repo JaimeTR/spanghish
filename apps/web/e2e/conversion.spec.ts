@@ -150,6 +150,10 @@ test.describe("header fit", () => {
     test(`the header nav fits on one line at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 800 });
       await page.goto("/es/faq");
+      // Sin nada en el carrito no hay botón; con un artículo aparece y sigue en la misma línea.
+      await expect(page.locator("header").getByRole("button", { name: /^Carrito/ })).toHaveCount(0);
+      await page.evaluate(() => window.localStorage.setItem("spanglish.cart.v1", JSON.stringify({ ids: ["alphabet"] })));
+      await page.reload();
       const items = page.getByRole("navigation", { name: "Navegación principal" }).getByRole("listitem");
       // Clases y Recursos (con sus desplegables cerrados), Precios, Preguntas, Conócenos y Contacto.
       await expect(items).toHaveCount(6);
@@ -163,7 +167,7 @@ test.describe("header fit", () => {
       expect(Math.abs(login!.y + login!.height / 2 - (cta!.y + cta!.height / 2))).toBeLessThan(4);
       expect(login!.width).toBeLessThan(width < 1180 ? 60 : 140);
       // El carrito, en la misma línea y con su nombre accesible.
-      const cart = await page.locator("header").getByRole("button", { name: "Carrito, 0 artículos" }).boundingBox();
+      const cart = await page.locator("header").getByRole("button", { name: "Carrito, 1 artículo" }).boundingBox();
       expect(cart).not.toBeNull();
       expect(Math.abs(cart!.y + cart!.height / 2 - (cta!.y + cta!.height / 2))).toBeLessThan(4);
       expect(cart!.width).toBeGreaterThanOrEqual(44);

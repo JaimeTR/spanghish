@@ -40,7 +40,8 @@ test.describe("shop and cart", () => {
 
   test("add and remove update the badge; the cart survives a reload", async ({ page }) => {
     await page.goto("/es/shop");
-    await expect(cartButton(page, 0)).toBeVisible();
+    // Vacío: no hay botón de carrito en la cabecera; aparece al añadir algo.
+    await expect(page.locator("header").getByRole("button", { name: /^Carrito/ })).toHaveCount(0);
     await addToCart(page, "Regular Verbs in Spanish");
     await expect(cartButton(page, 1)).toBeVisible();
     await addToCart(page, "El Abecedario – The Alphabet");
@@ -85,13 +86,17 @@ test.describe("shop and cart", () => {
     await expect(dialog).toBeHidden();
   });
 
-  test("an empty cart says so and links to the shop", async ({ page }) => {
-    await page.goto("/en/faq");
-    await cartButton(page, 0, "en").click();
+  test("removing the last item leaves the panel saying the cart is empty, and the button goes away", async ({ page }) => {
+    await page.goto("/en/shop");
+    const card = page.locator("article").filter({ has: page.getByRole("heading", { name: "Regular Verbs in Spanish", exact: true }) });
+    await card.getByRole("button", { name: "Add to cart" }).click();
+    await cartButton(page, 1, "en").click();
     const dialog = page.getByRole("dialog", { name: "Your cart" });
+    await dialog.getByRole("button", { name: /^Remove / }).click();
     await expect(dialog).toContainText("Your cart is empty.");
     await dialog.getByRole("link", { name: "Go to the shop" }).click();
     await expect(page).toHaveURL(/\/en\/shop$/);
+    await expect(page.locator("header").getByRole("button", { name: /^Cart/ })).toHaveCount(0);
   });
 
   test("checkout without a Stripe key shows the honest message and does not redirect", async ({ page }) => {
@@ -156,10 +161,11 @@ test.describe("navigation: Recursos group", () => {
     await expect(nav.getByRole("link", { name: "Tienda de materiales", exact: true })).toHaveAttribute("aria-current", "page");
   });
 
-  test("mobile: Recursos expands with the shop and the cart button stays visible", async ({ page }) => {
+  test("mobile: Recursos expands with the shop and no cart button while the cart is empty", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto("/en");
-    await expect(cartButton(page, 0, "en")).toBeVisible();
+    await page.evaluate(() => window.localStorage.setItem("spanglish.cart.v1", JSON.stringify({ ids: [] })));
+    await expect(page.locator("header").getByRole("button", { name: /^Cart/ })).toHaveCount(0);
     await page.getByRole("button", { name: "Menu" }).click();
     const nav = page.getByRole("navigation", { name: "Main navigation" });
     await nav.getByRole("button", { name: "Resources" }).click();

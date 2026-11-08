@@ -262,6 +262,10 @@ a {
   .cart-dialog[open]::backdrop {
     animation: fade-in 200ms ease;
   }
+  /* El botón del carrito aparece (solo cuando hay algo añadido) con un pequeño rebote. */
+  .cart-appear {
+    animation: cart-appear 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
   /* El número del carrito da un saltito al cambiar. */
   .cart-badge {
     animation: badge-bump 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -296,5 +300,12 @@ a {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes cart-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.4) translateY(-6px);
   }
 }

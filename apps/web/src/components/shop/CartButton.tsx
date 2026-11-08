@@ -23,8 +23,8 @@ export function CartIcon({ className = "size-6" }: { className?: string }) {
 }
 
 /**
- * Botón del carrito en la cabecera (siempre visible) con el número de
- * artículos, y el panel del carrito: un <dialog> nativo con showModal (foco
+ * Botón del carrito en la cabecera, con el número de artículos: solo aparece
+ * cuando hay algo añadido (entra con una animación suave). Y el panel del carrito: un <dialog> nativo con showModal (foco
  * atrapado, Escape cierra y el foco vuelve al botón).
  */
 export function CartButton({ locale }: { locale: Locale }) {
@@ -43,24 +43,26 @@ export function CartButton({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <button
-        type="button"
-        aria-haspopup="dialog"
-        aria-label={t("button", { count })}
-        onClick={() => setOpen(true)}
-        className="relative inline-flex size-11 shrink-0 items-center justify-center rounded-full text-ink transition-[background-color,transform] duration-200 hover:bg-ink/8 active:scale-95 motion-reduce:active:scale-100"
-      >
-        <CartIcon />
-        {count > 0 && (
-          <span
-            key={count}
-            aria-hidden="true"
-            className="cart-badge absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-fuchsia px-1 text-xs leading-none font-extrabold text-on-primary ring-2 ring-cream"
-          >
-            {count}
-          </span>
-        )}
-      </button>
+      {count > 0 && (
+        <button
+          type="button"
+          aria-haspopup="dialog"
+          aria-label={t("button", { count })}
+          onClick={() => setOpen(true)}
+          className="cart-appear relative inline-flex size-11 shrink-0 items-center justify-center rounded-full text-ink transition-[background-color,transform] duration-200 hover:bg-ink/8 active:scale-95 motion-reduce:active:scale-100"
+        >
+          <CartIcon />
+          {count > 0 && (
+            <span
+              key={count}
+              aria-hidden="true"
+              className="cart-badge absolute -top-0.5 -right-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-fuchsia px-1 text-xs leading-none font-extrabold text-on-primary ring-2 ring-cream"
+            >
+              {count}
+            </span>
+          )}
+        </button>
+      )}
 
       <dialog
         ref={dialogRef}
