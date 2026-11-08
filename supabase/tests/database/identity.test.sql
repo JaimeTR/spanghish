@@ -4,7 +4,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(32);
+select plan(39);
 
 -- ---------------------------------------------------------------------------
 -- Datos de prueba: usuarios creados directamente en auth.users (como postgres).
@@ -56,10 +56,22 @@ select is_empty(
 );
 alter table public.profiles drop constraint tmp_force_fail;
 
--- Roles y estados de partida (como postgres).
+-- Un nombre de metadatos demasiado largo no rompe el alta: se recorta a 200.
+insert into auth.users (id, instance_id, aud, role, email, raw_user_meta_data, raw_app_meta_data, created_at, updated_at)
+values ('77777777-7777-7777-7777-777777777777', '00000000-0000-0000-0000-000000000000', 'authenticated',
+        'authenticated', 'longname@test.local', jsonb_build_object('full_name', repeat('x', 300)), '{}', now(), now());
+select is(
+  (select char_length(full_name) from public.profiles where id = '77777777-7777-7777-7777-777777777777'),
+  200,
+  'signup truncates long full_name to 200 chars'
+);
+
+-- Roles y estados de partida (como postgres). El suspendido es además admin,
+-- para comprobar que un admin suspendido no puede escribir.
 insert into public.user_roles (user_id, role) values
   ('33333333-3333-3333-3333-333333333333', 'teacher'),
-  ('44444444-4444-4444-4444-444444444444', 'admin');
+  ('44444444-4444-4444-4444-444444444444', 'admin'),
+  ('55555555-5555-5555-5555-555555555555', 'admin');
 update public.profiles set status = 'suspended' where id = '55555555-5555-5555-5555-555555555555';
 
 -- ---------------------------------------------------------------------------
@@ -93,6 +105,12 @@ select results_eq(
   $$ select full_name, preferred_locale from public.profiles where id = '11111111-1111-1111-1111-111111111111' $$,
   $$ values ('Uno'::text, 'en'::text) $$,
   'own allowed fields were updated'
+);
+select throws_ok(
+  $$ update public.profiles set full_name = repeat('y', 201) where id = '11111111-1111-1111-1111-111111111111' $$,
+  '23514',
+  null,
+  'full_name is limited to 200 chars'
 );
 select throws_ok(
   $$ update public.profiles set preferred_locale = 'fr' where id = '11111111-1111-1111-1111-111111111111' $$,
@@ -143,6 +161,25 @@ select is(
   'teacher only sees own profile'
 );
 
+-- teacher cannot update or delete user_roles (RLS: 0 filas, sin error)
+update public.user_roles set role = 'admin' where user_id = '33333333-3333-3333-3333-333333333333';
+update public.user_roles set role = 'teacher' where user_id = '11111111-1111-1111-1111-111111111111';
+delete from public.user_roles where user_id = '33333333-3333-3333-3333-333333333333';
+delete from public.user_roles where user_id = '22222222-2222-2222-2222-222222222222';
+
+reset role;
+select results_eq(
+  $$ select role::text from public.user_roles where user_id = '33333333-3333-3333-3333-333333333333' order by 1 $$,
+  array['student', 'teacher'],
+  'teacher cannot update or delete user_roles: own roles unchanged'
+);
+select results_eq(
+  $$ select role::text from public.user_roles where user_id = '22222222-2222-2222-2222-222222222222' $$,
+  array['student'],
+  'teacher cannot delete other users roles'
+);
+set local role authenticated;
+
 -- ---------------------------------------------------------------------------
 -- Suspendido
 -- ---------------------------------------------------------------------------
@@ -153,6 +190,28 @@ select is_empty($$ select 1 from public.profiles $$, 'suspended user sees no row
 select is_empty($$ select 1 from public.user_roles $$, 'suspended user sees no rows: user_roles');
 select ok(not public.has_role('student'), 'suspended user has no effective role');
 
+-- Intentos de escritura de un usuario suspendido (además admin).
+update public.profiles set status = 'active', full_name = 'reactivado'
+  where id = '55555555-5555-5555-5555-555555555555';
+select throws_ok(
+  $$ insert into public.user_roles (user_id, role) values ('22222222-2222-2222-2222-222222222222', 'teacher') $$,
+  '42501',
+  null,
+  'suspended admin cannot insert into user_roles'
+);
+
+reset role;
+select results_eq(
+  $$ select status, full_name from public.profiles where id = '55555555-5555-5555-5555-555555555555' $$,
+  $$ values ('suspended'::text, 'Suspended'::text) $$,
+  'suspended user cannot reactivate or edit own profile'
+);
+select is_empty(
+  $$ select 1 from public.user_roles where user_id = '22222222-2222-2222-2222-222222222222' and role = 'teacher' $$,
+  'suspended admin insert left no row'
+);
+set local role authenticated;
+
 -- ---------------------------------------------------------------------------
 -- Administrador
 -- ---------------------------------------------------------------------------
@@ -160,7 +219,7 @@ set local request.jwt.claims = '{"sub":"44444444-4444-4444-4444-444444444444","r
 
 select is(
   (select count(*)::int from public.profiles where email like '%@test.local'),
-  5,
+  6,
   'admin can select all profiles'
 );
 select lives_ok(

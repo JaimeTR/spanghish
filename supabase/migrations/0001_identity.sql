@@ -18,7 +18,7 @@ create type public.app_role as enum ('admin', 'teacher', 'student', 'guardian');
 
 create table public.profiles (
   id uuid primary key references auth.users (id) on delete cascade,
-  full_name text,
+  full_name text check (char_length(full_name) <= 200),
   email text,
   preferred_locale text not null default 'es' check (preferred_locale in ('es', 'en')),
   status text not null default 'active' check (status in ('active', 'suspended')),
@@ -101,7 +101,8 @@ set search_path = ''
 as $$
 begin
   insert into public.profiles (id, email, full_name)
-  values (new.id, new.email, new.raw_user_meta_data ->> 'full_name');
+  -- Recorte a 200 para no romper el alta con metadatos largos (check de profiles).
+  values (new.id, new.email, left(new.raw_user_meta_data ->> 'full_name', 200));
 
   insert into public.user_roles (user_id, role)
   values (new.id, 'student');
@@ -128,6 +129,12 @@ create trigger on_auth_user_created
 --     authenticated si quien llama no es admin.
 --   * El trigger también mantiene updated_at.
 -- Roles con privilegios superiores (postgres, service_role) no están limitados.
+--
+-- AVISO para migraciones futuras: el guard solo actúa cuando current_user es
+-- 'authenticated'. Una función SECURITY DEFINER (propiedad de postgres) que
+-- actualice profiles se ejecuta como postgres y SE SALTA este control: debe
+-- volver a comprobar por sí misma (has_role('admin'), is_active()) antes de
+-- cambiar status u otras columnas protegidas.
 -- ---------------------------------------------------------------------------
 create function public.profiles_before_update()
 returns trigger
