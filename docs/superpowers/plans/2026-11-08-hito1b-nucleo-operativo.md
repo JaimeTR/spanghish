@@ -677,6 +677,17 @@ Cada fase es software funcionando, con su propio PR hacia `develop` y CI verde. 
 8. **"Una clase gratuita por persona":** ¿se identifica por email, por teléfono o por familia (hermanos)?
 9. **¿Una matrícula en pausa conserva la plaza?** (el plan: sí).
 
+### Respuestas aprobadas (2026-11-08): se usan los valores por defecto del plan
+1. Grupo local: 8 por defecto y tope duro de 20; el "grupo propio" es siempre de 2 como máximo.
+2. Una ausencia sin aviso consume una clase del pack; con 24 h o más de aviso cuenta como justificada.
+3. Los packs no caducan salvo que la administradora ponga una fecha; valen para cualquier programa del mismo idioma.
+4. Lista de espera manual y por orden de llegada: la administradora ofrece la plaza.
+5. Las docentes no crean grupos ni cambian horarios; sí cancelan, mueven y recuperan sesiones.
+6. Las docentes no ven teléfono ni email de alumnos o tutores.
+7. En 1B solo el segmento niños es "menor" (`is_minor`); los de 14 a 17 se inscriben con un adulto en la solicitud (anotado en el lead) y su cuenta propia queda para el hito 2. Pendiente de revisión legal.
+8. La "clase gratis" se identifica por email (más límite por teléfono en `submit_lead`).
+9. Una matrícula en pausa conserva la plaza.
+
 ## Fuera de este plan
 - **Hito 2:** portal de alumno y tutor (próxima clase, solicitudes desde el portal), biblioteca, grabaciones, lecciones interactivas, tareas, progreso, notificaciones por email (Resend), recursos con `access_level` (`apps/web/src/lib/resources.ts` seguirá estático hasta entonces).
 - **Hito 3:** Stripe y pagos externos con conciliación (marcar matrícula pagada), pedidos de la tienda en BD, horario público generado desde grupos `is_public`, CMS, migración y 301, límites de intentos y endurecimiento del Auth remoto, procedimiento de borrado por privacidad.
