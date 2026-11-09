@@ -78,3 +78,28 @@ where user_id = 'a0000000-0000-4000-8000-000000000001' and role = 'student';
 
 update public.profiles set status = 'suspended'
 where id = 'a0000000-0000-4000-8000-000000000004';
+
+-- ---------------------------------------------------------------------------
+-- Catálogo de desarrollo (0008): 2 sedes, 1 programa, 1 edición y 2 precios.
+-- IDs fijos (b0…) para las e2e (SEED_IDS en apps/app/e2e/fixtures.ts).
+-- ---------------------------------------------------------------------------
+insert into public.locations (id, name, kind, region, address, map_url) values
+  ('b0000000-0000-4000-8000-000000000001', 'Biblioteca Local', 'library', 'sunshine_coast',
+   'Calle de prueba 1', 'https://maps.example.com/biblioteca-local'),
+  ('b0000000-0000-4000-8000-000000000002', 'Online', 'online', 'online', null, null);
+
+insert into public.programs (id, code, name_es, name_en, language_code, audience, format, level_id,
+                             duration_weeks, lesson_minutes, is_public)
+select 'b0000000-0000-4000-8000-000000000101', 'adults-a1-local', 'Adultos A1 (local)', 'Adults A1 (local)',
+       'es', 'adults', 'local_group', l.id, 9, 70, true
+from public.levels l
+where l.language_code = 'es' and l.code = 'A1';
+
+insert into public.program_editions (id, program_id, label_es, label_en, starts_on, ends_on, status) values
+  ('b0000000-0000-4000-8000-000000000201', 'b0000000-0000-4000-8000-000000000101',
+   'Edición de prueba', 'Test edition', '2027-02-01', '2027-04-02', 'open');
+
+insert into public.program_prices (id, program_id, edition_id, location_id, kind, amount_cents, lessons_included) values
+  ('b0000000-0000-4000-8000-000000000301', 'b0000000-0000-4000-8000-000000000101', null, null, 'per_lesson', 3500, null),
+  ('b0000000-0000-4000-8000-000000000302', 'b0000000-0000-4000-8000-000000000101',
+   'b0000000-0000-4000-8000-000000000201', null, 'upfront', 31000, null);

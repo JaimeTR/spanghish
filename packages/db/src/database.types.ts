@@ -53,6 +53,20 @@ isOneToOne: false
       referencedColumns: ["code"]
     }
                   ]
+                },"locations": {
+                  Row: {
+                    "active": boolean,"address": string | null,"created_at": string,"id": string,"kind": Database["public"]['Enums']["location_kind"],"map_url": string | null,"name": string,"region": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"address"?: string | null,"created_at"?: string,"id"?: string,"kind": Database["public"]['Enums']["location_kind"],"map_url"?: string | null,"name": string,"region": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"address"?: string | null,"created_at"?: string,"id"?: string,"kind"?: Database["public"]['Enums']["location_kind"],"map_url"?: string | null,"name"?: string,"region"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"profiles": {
                   Row: {
                     "created_at": string,"email": string | null,"full_name": string | null,"id": string,"preferred_locale": string,"status": string,"updated_at": string
@@ -66,6 +80,84 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"program_editions": {
+                  Row: {
+                    "created_at": string,"ends_on": string,"id": string,"label_en": string | null,"label_es": string | null,"program_id": string,"starts_on": string,"status": Database["public"]['Enums']["edition_status"],"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"ends_on": string,"id"?: string,"label_en"?: string | null,"label_es"?: string | null,"program_id": string,"starts_on": string,"status"?: Database["public"]['Enums']["edition_status"],"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"ends_on"?: string,"id"?: string,"label_en"?: string | null,"label_es"?: string | null,"program_id"?: string,"starts_on"?: string,"status"?: Database["public"]['Enums']["edition_status"],"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "program_editions_program_id_fkey"
+      columns: ["program_id"]
+isOneToOne: false
+      referencedRelation: "programs"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"program_prices": {
+                  Row: {
+                    "active": boolean,"amount_cents": number,"created_at": string,"currency": string,"edition_id": string | null,"id": string,"kind": Database["public"]['Enums']["price_kind"],"label_en": string | null,"label_es": string | null,"lessons_included": number | null,"location_id": string | null,"program_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"amount_cents": number,"created_at"?: string,"currency"?: string,"edition_id"?: string | null,"id"?: string,"kind": Database["public"]['Enums']["price_kind"],"label_en"?: string | null,"label_es"?: string | null,"lessons_included"?: number | null,"location_id"?: string | null,"program_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"amount_cents"?: number,"created_at"?: string,"currency"?: string,"edition_id"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["price_kind"],"label_en"?: string | null,"label_es"?: string | null,"lessons_included"?: number | null,"location_id"?: string | null,"program_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "program_prices_edition_fk"
+      columns: ["edition_id","program_id"]
+isOneToOne: false
+      referencedRelation: "program_editions"
+      referencedColumns: ["id","program_id"]
+    },{
+      foreignKeyName: "program_prices_location_id_fkey"
+      columns: ["location_id"]
+isOneToOne: false
+      referencedRelation: "locations"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "program_prices_program_id_fkey"
+      columns: ["program_id"]
+isOneToOne: false
+      referencedRelation: "programs"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"programs": {
+                  Row: {
+                    "active": boolean,"audience": Database["public"]['Enums']["audience_segment"],"code": string,"created_at": string,"description_en": string | null,"description_es": string | null,"duration_weeks": number | null,"format": Database["public"]['Enums']["lesson_format"],"id": string,"is_public": boolean,"language_code": string,"lesson_minutes": number,"level_id": string | null,"name_en": string,"name_es": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"audience": Database["public"]['Enums']["audience_segment"],"code": string,"created_at"?: string,"description_en"?: string | null,"description_es"?: string | null,"duration_weeks"?: number | null,"format": Database["public"]['Enums']["lesson_format"],"id"?: string,"is_public"?: boolean,"language_code": string,"lesson_minutes"?: number,"level_id"?: string | null,"name_en": string,"name_es": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "active"?: boolean,"audience"?: Database["public"]['Enums']["audience_segment"],"code"?: string,"created_at"?: string,"description_en"?: string | null,"description_es"?: string | null,"duration_weeks"?: number | null,"format"?: Database["public"]['Enums']["lesson_format"],"id"?: string,"is_public"?: boolean,"language_code"?: string,"lesson_minutes"?: number,"level_id"?: string | null,"name_en"?: string,"name_es"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "programs_language_code_fkey"
+      columns: ["language_code"]
+isOneToOne: false
+      referencedRelation: "languages"
+      referencedColumns: ["code"]
+    },{
+      foreignKeyName: "programs_level_id_fkey"
+      columns: ["level_id"]
+isOneToOne: false
+      referencedRelation: "levels"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"user_roles": {
                   Row: {
@@ -110,7 +202,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "admin"|"teacher"|"student"|"guardian"
+            "app_role": "admin"|"teacher"|"student"|"guardian","audience_segment": "kids"|"adults"|"mature","edition_status": "draft"|"open"|"closed"|"cancelled","lesson_format": "individual"|"own_group"|"local_group","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -226,7 +318,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["admin", "teacher", "student", "guardian"]
+            "app_role": ["admin", "teacher", "student", "guardian"],"audience_segment": ["kids", "adults", "mature"],"edition_status": ["draft", "open", "closed", "cancelled"],"lesson_format": ["individual", "own_group", "local_group"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"]
           }
         }
 } as const
