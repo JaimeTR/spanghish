@@ -86,6 +86,15 @@ test("admin registers an adult and grants portal access", async ({ page }) => {
     studentId = new URL(page.url()).pathname.split("/").pop()!;
 
     await expect(page.getByLabel("Correo electrónico")).toHaveValue(email);
+    // Editar la ficha: datos y contacto privado.
+    const details = page.getByRole("region", { name: "Datos" });
+    await details.getByLabel("Teléfono", { exact: true }).fill("0400 999 888");
+    await details.getByLabel("Notas internas").fill("Prefiere los martes");
+    await details.getByRole("button", { name: "Guardar ficha" }).click();
+    await expect(details.getByRole("status")).toHaveText("Cambios guardados.");
+    await page.reload();
+    await expect(details.getByLabel("Teléfono", { exact: true })).toHaveValue("0400 999 888");
+    await expect(details.getByLabel("Notas internas")).toHaveValue("Prefiere los martes");
     const portal = page.getByRole("region", { name: "Acceso al portal" });
     await portal.getByRole("button", { name: "Dar acceso al portal" }).click();
     await expect(portal).toContainText("Este alumno ya tiene cuenta en el portal.");

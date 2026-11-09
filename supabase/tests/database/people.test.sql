@@ -6,7 +6,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(37);
+select plan(39);
 
 insert into auth.users (id, instance_id, aud, role, email, raw_user_meta_data, raw_app_meta_data, created_at, updated_at)
 values
@@ -211,6 +211,25 @@ select ok(
   not has_function_privilege('authenticated', 'public.has_current_consent(uuid, public.consent_kind)', 'execute')
   and not has_function_privilege('anon', 'public.has_current_consent(uuid, public.consent_kind)', 'execute'),
   'has_current_consent is internal (no EXECUTE for API roles)'
+);
+
+select ok(
+  not has_function_privilege('anon', 'public.current_student_ids()', 'execute')
+  and not has_function_privilege('anon', 'public.guarded_student_ids()', 'execute')
+  and not has_function_privilege('anon', 'public.current_guardian_ids()', 'execute')
+  and not has_function_privilege('anon', 'public.can_view_student(uuid)', 'execute')
+  and not has_function_privilege('anon', 'public.create_student(jsonb)', 'execute')
+  and not has_function_privilege('service_role', 'public.create_student(jsonb)', 'execute'),
+  'people helper functions are not executable by anon (create_student neither by service_role)'
+);
+select ok(
+  (select bool_and(p.prosecdef and p.proconfig @> array['search_path=""'])
+   from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+   where n.nspname = 'public'
+     and p.proname in ('check_linked_profile', 'consents_before_insert', 'current_student_ids',
+                       'current_guardian_ids', 'guarded_student_ids', 'can_view_student',
+                       'has_current_consent', 'create_student')),
+  'every security definer function of 0009 pins an empty search_path'
 );
 
 -- ---------------------------------------------------------------------------
