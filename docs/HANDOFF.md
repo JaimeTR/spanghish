@@ -2,6 +2,13 @@
 
 Última actualización: 2026-11-09. Repositorio: `JaimeTR/spanghish` (público). Cliente: Maribel Mayhua (profesora de español, Australia). Producto: web pública bilingüe (es/en) + plataforma educativa privada. Stack: pnpm + Turborepo, Next.js 16, Tailwind v4, next-intl, Supabase (Postgres/Auth/Storage/RLS), Stripe.
 
+## 0. Estado de ramas (actualizado 2026-11-09, tras la integración directa)
+- **`main` = producción (última versión estable) y `develop` = desarrollo.** Hoy apuntan al MISMO commit, que integra TODO lo construido: cimientos 1A, web pública completa, 1B fases 1 y 2, y el hito Contenido (fases 0 y 2 parcial). Se integró uniendo directamente las ramas `chore/project-foundation`, `feat/web-conversion-pages` (que incluye home e interiores) y `feat/contenido-fase2` (que incluye 1B fases 1-2 y contenido fase 0). Único conflicto: `apps/web/next.config.ts` (resuelto: redirecciones de WordPress + `@spanglish/content`).
+- Verificado en el árbol integrado: `pnpm lint`, `pnpm typecheck`, `pnpm test` (web 80, app 185, content 13, ui 4) y `pnpm build` de ambas apps. NO se ejecutó la suite e2e completa ni el CI de GitHub tras la integración.
+- **Aviso:** `develop`/`main` contienen 12 pruebas e2e nuevas que FALLAN (`apps/app/e2e/admin-resources.spec.ts` y `admin-lessons.spec.ts`, ver §5.2). Si el CI ejecuta la e2e de la app, saldrá en rojo hasta corregirlas. Convención desde ahora: trabajar en ramas `feat/*` desde `develop`, PR a `develop`, y `main` se actualiza desde `develop` cuando esté verde.
+- La rama por defecto del repositorio en GitHub sigue siendo `chore/project-foundation`; cambiarla a `main` desde Settings → Branches. Los PRs #2, #3, #5, #6, #7, #8 y #9 quedan obsoletos (su contenido ya está en `develop`/`main`): cerrarlos.
+- La sección 1 describe el historial de ramas apiladas, ahora solo informativo.
+
 ## 1. Cadena de ramas y PRs (fusionar EN ESTE ORDEN)
 
 | Orden | Rama | PR | Contenido |
