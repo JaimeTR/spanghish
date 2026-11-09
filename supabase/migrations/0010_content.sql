@@ -471,3 +471,377 @@ insert into public.resources (kind, access_level, status, title_es, title_en, ti
 select public.enable_audit('public.resources');
 select public.enable_audit('public.lessons');
 select public.enable_audit('public.lesson_blocks');
+
+-- ===========================================================================
+-- Parte 2: lecturas públicas (RPC), orden y salud
+-- ===========================================================================
+-- La web no tiene privilegios de tabla: lee con la clave anon por estas RPC
+-- security definer, que fijan columnas y filas. Solo devuelven lo publicado;
+-- lo bloqueado para quien llama solo sale como "teaser" (si teaser_public) y
+-- sin ningún origen (video, enlace ni archivo). Una cuenta suspendida cuenta
+-- como anónima (content_tier() = 'public').
+
+create function public.list_published_resources()
+returns table (
+  id uuid,
+  kind public.resource_kind,
+  access_level public.access_level,
+  locked boolean,
+  title_es text,
+  title_en text,
+  title_lang text,
+  description_es text,
+  description_en text,
+  level_code text,
+  audience public.audience_segment,
+  sort_order integer,
+  thumbnail_path text,
+  youtube_id text,
+  external_url text,
+  has_file boolean
+)
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  with t as (select public.content_tier() as tier)
+  select
+    r.id,
+    r.kind,
+    r.access_level,
+    r.access_level > t.tier,
+    r.title_es,
+    r.title_en,
+    r.title_lang,
+    r.description_es,
+    r.description_en,
+    lv.code,
+    r.audience,
+    r.sort_order,
+    r.thumbnail_path,
+    case when r.access_level <= t.tier then r.youtube_id end,
+    case when r.access_level <= t.tier then r.external_url end,
+    r.access_level <= t.tier and r.file_path is not null
+  from public.resources r
+  cross join t
+  left join public.levels lv on lv.id = r.level_id
+  where r.status = 'published'
+    and (r.access_level <= t.tier or r.teaser_public)
+  order by r.access_level, r.sort_order, r.id;
+$$;
+
+comment on function public.list_published_resources() is
+  'Recursos publicados para quien llama; lo bloqueado solo como teaser (sin origen). Lectura de la web.';
+
+create function public.list_published_lessons()
+returns table (
+  id uuid,
+  slug text,
+  kind public.lesson_kind,
+  component_key text,
+  category public.learn_category,
+  level_code text,
+  access_level public.access_level,
+  locked boolean,
+  title_es text,
+  title_en text,
+  summary_es text,
+  summary_en text,
+  sort_order integer
+)
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  with t as (select public.content_tier() as tier)
+  select
+    l.id,
+    l.slug,
+    l.kind,
+    l.component_key,
+    l.category,
+    lv.code,
+    l.access_level,
+    l.access_level > t.tier,
+    l.title_es,
+    l.title_en,
+    l.summary_es,
+    l.summary_en,
+    l.sort_order
+  from public.lessons l
+  cross join t
+  left join public.levels lv on lv.id = l.level_id
+  where l.status = 'published'
+    and (l.access_level <= t.tier or l.teaser_public)
+  order by l.category, lv.code nulls first, l.sort_order, l.id;
+$$;
+
+comment on function public.list_published_lessons() is
+  'Lecciones publicadas para quien llama; lo bloqueado solo como teaser. Lectura de la web.';
+
+create function public.get_published_lesson(p_slug text)
+returns jsonb
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select jsonb_build_object(
+    'lesson', jsonb_build_object(
+      'id', l.id,
+      'slug', l.slug,
+      'kind', l.kind,
+      'component_key', l.component_key,
+      'category', l.category,
+      'level_code', lv.code,
+      'access_level', l.access_level,
+      'title_es', l.title_es,
+      'title_en', l.title_en,
+      'summary_es', l.summary_es,
+      'summary_en', l.summary_en,
+      'sort_order', l.sort_order
+    ),
+    'blocks', coalesce((
+      select jsonb_agg(jsonb_build_object(
+        'id', b.id,
+        'position', b.position,
+        'kind', b.kind,
+        'body_es', b.body_es,
+        'body_en', b.body_en,
+        'image_path', b.image_path,
+        'image_width', b.image_width,
+        'image_height', b.image_height,
+        'alt_es', b.alt_es,
+        'alt_en', b.alt_en,
+        'youtube_id', b.youtube_id,
+        'options_es', b.options_es,
+        'options_en', b.options_en,
+        'correct_option', b.correct_option,
+        'explanation_es', b.explanation_es,
+        'explanation_en', b.explanation_en
+      ) order by b.position)
+      from public.lesson_blocks b
+      where b.lesson_id = l.id
+    ), '[]'::jsonb)
+  )
+  from public.lessons l
+  left join public.levels lv on lv.id = l.level_id
+  where l.slug = p_slug
+    and l.status = 'published'
+    and l.kind = 'article'
+    and l.access_level <= public.content_tier();
+$$;
+
+comment on function public.get_published_lesson(text) is
+  'Lección artículo publicada y accesible con sus bloques; null si no existe, es interactiva o está bloqueada.';
+
+create function public.resource_file_path(p_resource_id uuid)
+returns text
+language sql
+stable
+security definer
+set search_path = ''
+as $$
+  select r.file_path
+  from public.resources r
+  where r.id = p_resource_id
+    and r.status = 'published'
+    and r.file_path is not null
+    and r.access_level <= public.content_tier();
+$$;
+
+comment on function public.resource_file_path(uuid) is
+  'Ruta del archivo de un recurso publicado y accesible para quien llama (para firmarla); si no, null.';
+
+-- ---------------------------------------------------------------------------
+-- Orden manual (security invoker: la RLS de admin decide la escritura).
+-- Intercambian sort_order/position con el vecino del mismo grupo.
+-- ---------------------------------------------------------------------------
+create function public.move_resource(p_resource_id uuid, p_direction text)
+returns void
+language plpgsql
+set search_path = ''
+as $$
+declare
+  v_level public.access_level;
+  v_order integer;
+  v_other_id uuid;
+  v_other_order integer;
+begin
+  if not public.has_role('admin') then
+    raise exception 'forbidden' using errcode = '42501';
+  end if;
+  if p_direction is null or p_direction not in ('up', 'down') then
+    raise exception 'invalid_direction' using errcode = '22023';
+  end if;
+
+  select r.access_level, r.sort_order into v_level, v_order
+  from public.resources r where r.id = p_resource_id
+  for update;
+  if not found then
+    raise exception 'not_found' using errcode = 'P0001';
+  end if;
+
+  if p_direction = 'up' then
+    select r.id, r.sort_order into v_other_id, v_other_order
+    from public.resources r
+    where r.access_level = v_level and (r.sort_order, r.id) < (v_order, p_resource_id)
+    order by r.sort_order desc, r.id desc
+    limit 1
+    for update;
+  else
+    select r.id, r.sort_order into v_other_id, v_other_order
+    from public.resources r
+    where r.access_level = v_level and (r.sort_order, r.id) > (v_order, p_resource_id)
+    order by r.sort_order, r.id
+    limit 1
+    for update;
+  end if;
+
+  if v_other_id is null then
+    return;
+  end if;
+  update public.resources set sort_order = v_other_order where id = p_resource_id;
+  update public.resources set sort_order = v_order where id = v_other_id;
+end;
+$$;
+
+create function public.move_lesson(p_lesson_id uuid, p_direction text)
+returns void
+language plpgsql
+set search_path = ''
+as $$
+declare
+  v_category public.learn_category;
+  v_level_id uuid;
+  v_order integer;
+  v_other_id uuid;
+  v_other_order integer;
+begin
+  if not public.has_role('admin') then
+    raise exception 'forbidden' using errcode = '42501';
+  end if;
+  if p_direction is null or p_direction not in ('up', 'down') then
+    raise exception 'invalid_direction' using errcode = '22023';
+  end if;
+
+  select l.category, l.level_id, l.sort_order into v_category, v_level_id, v_order
+  from public.lessons l where l.id = p_lesson_id
+  for update;
+  if not found then
+    raise exception 'not_found' using errcode = 'P0001';
+  end if;
+
+  if p_direction = 'up' then
+    select l.id, l.sort_order into v_other_id, v_other_order
+    from public.lessons l
+    where l.category = v_category and l.level_id is not distinct from v_level_id
+      and (l.sort_order, l.id) < (v_order, p_lesson_id)
+    order by l.sort_order desc, l.id desc
+    limit 1
+    for update;
+  else
+    select l.id, l.sort_order into v_other_id, v_other_order
+    from public.lessons l
+    where l.category = v_category and l.level_id is not distinct from v_level_id
+      and (l.sort_order, l.id) > (v_order, p_lesson_id)
+    order by l.sort_order, l.id
+    limit 1
+    for update;
+  end if;
+
+  if v_other_id is null then
+    return;
+  end if;
+  update public.lessons set sort_order = v_other_order where id = p_lesson_id;
+  update public.lessons set sort_order = v_order where id = v_other_id;
+end;
+$$;
+
+create function public.move_lesson_block(p_block_id uuid, p_direction text)
+returns void
+language plpgsql
+set search_path = ''
+as $$
+declare
+  v_lesson_id uuid;
+  v_position integer;
+  v_other_id uuid;
+  v_other_position integer;
+begin
+  if not public.has_role('admin') then
+    raise exception 'forbidden' using errcode = '42501';
+  end if;
+  if p_direction is null or p_direction not in ('up', 'down') then
+    raise exception 'invalid_direction' using errcode = '22023';
+  end if;
+
+  select b.lesson_id, b.position into v_lesson_id, v_position
+  from public.lesson_blocks b where b.id = p_block_id
+  for update;
+  if not found then
+    raise exception 'not_found' using errcode = 'P0001';
+  end if;
+
+  if p_direction = 'up' then
+    select b.id, b.position into v_other_id, v_other_position
+    from public.lesson_blocks b
+    where b.lesson_id = v_lesson_id and b.position < v_position
+    order by b.position desc
+    limit 1
+    for update;
+  else
+    select b.id, b.position into v_other_id, v_other_position
+    from public.lesson_blocks b
+    where b.lesson_id = v_lesson_id and b.position > v_position
+    order by b.position
+    limit 1
+    for update;
+  end if;
+
+  if v_other_id is null then
+    return;
+  end if;
+  -- lesson_blocks_position_unique es diferible: el intercambio se comprueba al final.
+  update public.lesson_blocks set position = v_other_position where id = p_block_id;
+  update public.lesson_blocks set position = v_position where id = v_other_id;
+end;
+$$;
+
+comment on function public.move_resource(uuid, text) is 'Sube o baja un recurso dentro de su nivel de acceso (admin).';
+comment on function public.move_lesson(uuid, text) is 'Sube o baja una lección dentro de su categoría y nivel (admin).';
+comment on function public.move_lesson_block(uuid, text) is 'Sube o baja un bloque dentro de su lección (admin).';
+
+-- ---------------------------------------------------------------------------
+-- Salud (la web y el entorno demo comprueban que la base responde)
+-- ---------------------------------------------------------------------------
+create function public.health_ping()
+returns boolean
+language sql
+stable
+set search_path = ''
+as $$
+  select true;
+$$;
+
+comment on function public.health_ping() is 'Siempre true: comprueba que la API de la base responde.';
+
+revoke execute on function public.list_published_resources() from public, anon, authenticated, service_role;
+revoke execute on function public.list_published_lessons() from public, anon, authenticated, service_role;
+revoke execute on function public.get_published_lesson(text) from public, anon, authenticated, service_role;
+revoke execute on function public.resource_file_path(uuid) from public, anon, authenticated, service_role;
+revoke execute on function public.move_resource(uuid, text) from public, anon, authenticated, service_role;
+revoke execute on function public.move_lesson(uuid, text) from public, anon, authenticated, service_role;
+revoke execute on function public.move_lesson_block(uuid, text) from public, anon, authenticated, service_role;
+revoke execute on function public.health_ping() from public, anon, authenticated, service_role;
+
+grant execute on function public.list_published_resources() to anon, authenticated;
+grant execute on function public.list_published_lessons() to anon, authenticated;
+grant execute on function public.get_published_lesson(text) to anon, authenticated;
+grant execute on function public.resource_file_path(uuid) to anon, authenticated;
+grant execute on function public.move_resource(uuid, text) to authenticated;
+grant execute on function public.move_lesson(uuid, text) to authenticated;
+grant execute on function public.move_lesson_block(uuid, text) to authenticated;
+grant execute on function public.health_ping() to anon, authenticated;

@@ -466,6 +466,9 @@ isOneToOne: false
 "enable_audit":
 { Args: { "p_table": unknown }; Returns: undefined
                            },
+"get_published_lesson":
+{ Args: { "p_slug": string }; Returns: Json
+                           },
 "guarded_student_ids":
 { Args: Record<PropertyKey, never>; Returns: string[]
                            },
@@ -478,8 +481,33 @@ isOneToOne: false
 "has_role":
 { Args: { "r": Database["public"]['Enums']["app_role"] }; Returns: boolean
                            },
+"health_ping":
+{ Args: Record<PropertyKey, never>; Returns: boolean
+                           },
 "is_active":
 { Args: Record<PropertyKey, never>; Returns: boolean
+                           },
+"list_published_lessons":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "access_level": Database["public"]['Enums']["access_level"],"category": Database["public"]['Enums']["learn_category"],"component_key": string,"id": string,"kind": Database["public"]['Enums']["lesson_kind"],"level_code": string,"locked": boolean,"slug": string,"sort_order": number,"summary_en": string,"summary_es": string,"title_en": string,"title_es": string
+            }[]
+                           },
+"list_published_resources":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "access_level": Database["public"]['Enums']["access_level"],"audience": Database["public"]['Enums']["audience_segment"],"description_en": string,"description_es": string,"external_url": string,"has_file": boolean,"id": string,"kind": Database["public"]['Enums']["resource_kind"],"level_code": string,"locked": boolean,"sort_order": number,"thumbnail_path": string,"title_en": string,"title_es": string,"title_lang": string,"youtube_id": string
+            }[]
+                           },
+"move_lesson":
+{ Args: { "p_direction": string,"p_lesson_id": string }; Returns: undefined
+                           },
+"move_lesson_block":
+{ Args: { "p_block_id": string,"p_direction": string }; Returns: undefined
+                           },
+"move_resource":
+{ Args: { "p_direction": string,"p_resource_id": string }; Returns: undefined
+                           },
+"resource_file_path":
+{ Args: { "p_resource_id": string }; Returns: string
                            },
 "text_items_within":
 { Args: { "p_items": (string)[],"p_max": number,"p_min": number }; Returns: boolean

@@ -9,7 +9,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(59);
+select plan(87);
 
 insert into auth.users (id, instance_id, aud, role, email, raw_user_meta_data, raw_app_meta_data, created_at, updated_at)
 values
@@ -211,6 +211,148 @@ select is(
   0::bigint,
   'suspended admin reads nothing'
 );
+
+-- ---------------------------------------------------------------------------
+-- Lecturas públicas (RPC)
+-- ---------------------------------------------------------------------------
+create function pg_temp.d1_rpc_resources()
+returns table (r text, locked boolean, youtube_id text, external_url text, has_file boolean)
+language sql as $$
+  select right(id::text, 2), locked, youtube_id, external_url, has_file
+  from public.list_published_resources() where id::text like 'd13%' order by 1;
+$$;
+create function pg_temp.d1_rpc_lessons()
+returns table (l text, locked boolean)
+language sql as $$
+  select right(id::text, 2), locked from public.list_published_lessons() where id::text like 'd14%' order by 1;
+$$;
+grant execute on function pg_temp.d1_rpc_resources() to anon, authenticated;
+grant execute on function pg_temp.d1_rpc_lessons() to anon, authenticated;
+
+set local role anon;
+set local request.jwt.claims = '{"role":"anon"}';
+select results_eq('select * from pg_temp.d1_rpc_resources()',
+  $$ values ('01'::text, false, null::text, 'https://example.com/r1'::text, false),
+            ('02', true, null, null, false),
+            ('03', true, null, null, false),
+            ('10', true, null, null, false) $$,
+  'anon gets public rows unlocked and account/enrolled rows locked without sources');
+select ok(not exists (select 1 from pg_temp.d1_rpc_resources() where r = '09'),
+  'a locked row with teaser_public false is not returned');
+select ok(
+  not exists (select 1 from pg_temp.d1_rpc_resources() where r = '04')
+  and not exists (select 1 from pg_temp.d1_rpc_lessons() where l = '14'),
+  'drafts never appear in list_published_resources or list_published_lessons (anon)');
+select results_eq('select * from pg_temp.d1_rpc_lessons()',
+  $$ values ('11'::text, false), ('12', true), ('13', true) $$,
+  'anon gets the public lesson unlocked and account/enrolled lessons as teasers');
+select results_eq(
+  $$ select b ->> 'kind' from jsonb_array_elements(public.get_published_lesson('d1-public') -> 'blocks') b $$,
+  $$ values ('text'::text), ('quiz') $$,
+  'get_published_lesson returns blocks in position order for anon on a public lesson');
+select ok(
+  public.get_published_lesson('d1-account') is null
+  and public.get_published_lesson('alphabet') is null
+  and public.get_published_lesson('d1-draft') is null
+  and public.get_published_lesson('no-such-lesson') is null,
+  'get_published_lesson returns null for anon on an account lesson and for an interactive lesson');
+select is(public.resource_file_path('d1300000-0000-4000-8000-000000000010'), null,
+  'resource_file_path is null for anon on an account resource and set for visitor: anon');
+select throws_ok(
+  $$ select public.move_resource('d1300000-0000-4000-8000-000000000001', 'up') $$,
+  '42501', null, 'anon cannot execute move_resource');
+select is(public.health_ping(), true, 'anon can execute health_ping');
+
+set local role authenticated;
+set local request.jwt.claims = '{"sub":"d1000000-0000-4000-8000-0000000000c2","role":"authenticated"}';
+select results_eq('select * from pg_temp.d1_rpc_resources()',
+  $$ values ('01'::text, false, null::text, 'https://example.com/r1'::text, false),
+            ('02', false, null, 'https://example.com/r2', false),
+            ('03', true, null, null, false),
+            ('10', false, null, null, true) $$,
+  'visitor gets account rows unlocked and enrolled rows locked');
+select is(public.resource_file_path('d1300000-0000-4000-8000-000000000010'),
+  'resources/d1300000-0000-4000-8000-000000000010/d1600000-0000-4000-8000-000000000010.pdf',
+  'resource_file_path is null for anon on an account resource and set for visitor: visitor');
+select ok(public.get_published_lesson('d1-enrolled') is null and public.get_published_lesson('d1-account') is not null,
+  'visitor reads the account lesson but not the enrolled one');
+
+set local request.jwt.claims = '{"sub":"d1000000-0000-4000-8000-0000000000e1","role":"authenticated"}';
+select results_eq('select r, locked from pg_temp.d1_rpc_resources()',
+  $$ values ('01'::text, false), ('02', true), ('03', true), ('10', true) $$,
+  'a suspended account is treated as anonymous by the RPC');
+select is(public.resource_file_path('d1300000-0000-4000-8000-000000000010'), null,
+  'a suspended account cannot get a file path');
+
+set local request.jwt.claims = '{"sub":"d1000000-0000-4000-8000-0000000000c1","role":"authenticated"}';
+select results_eq('select r, locked from pg_temp.d1_rpc_resources()',
+  $$ values ('01'::text, false), ('02', false), ('03', false), ('09', false), ('10', false) $$,
+  'student1 gets every published resource unlocked');
+
+-- ---------------------------------------------------------------------------
+-- Orden manual
+-- ---------------------------------------------------------------------------
+set local request.jwt.claims = '{"sub":"d1000000-0000-4000-8000-0000000000a1","role":"authenticated"}';
+create temporary table d1_before on commit drop as
+  select id, sort_order from public.resources where id in
+    ('d1300000-0000-4000-8000-000000000001', 'd1300000-0000-4000-8000-000000000004');
+set local request.jwt.claims = '{"sub":"d1000000-0000-4000-8000-0000000000b1","role":"authenticated"}';
+select throws_ok(
+  $$ select public.move_resource('d1300000-0000-4000-8000-000000000004', 'up') $$,
+  '42501', 'forbidden', 'teacher1 calling move_resource raises forbidden (42501) and changes nothing');
+
+set local request.jwt.claims = '{"sub":"d1000000-0000-4000-8000-0000000000a1","role":"authenticated"}';
+select results_eq(
+  $$ select sort_order from public.resources where id = 'd1300000-0000-4000-8000-000000000004' $$,
+  $$ select sort_order from d1_before where id = 'd1300000-0000-4000-8000-000000000004' $$,
+  'teacher1 calling move_resource changes nothing');
+select lives_ok($$ select public.move_resource('d1300000-0000-4000-8000-000000000004', 'up') $$,
+  'admin moves a resource up');
+select results_eq(
+  $$ select (select sort_order from public.resources where id = 'd1300000-0000-4000-8000-000000000004'),
+            (select sort_order from public.resources where id = 'd1300000-0000-4000-8000-000000000001') $$,
+  $$ select (select sort_order from d1_before where id = 'd1300000-0000-4000-8000-000000000001'),
+            (select sort_order from d1_before where id = 'd1300000-0000-4000-8000-000000000004') $$,
+  'move_resource swaps with the neighbour in the same access level');
+
+select lives_ok($$ select public.move_lesson_block('d1500000-0000-4000-8000-000000000011', 'up') $$,
+  'move_lesson_block at the top with up runs');
+select results_eq(
+  $$ select right(id::text, 2), position from public.lesson_blocks
+     where lesson_id = 'd1400000-0000-4000-8000-000000000011' order by position $$,
+  $$ values ('11'::text, 10), ('21', 20) $$,
+  'move_lesson_block at the top with ''up'' changes nothing');
+select public.move_lesson_block('d1500000-0000-4000-8000-000000000011', 'down');
+select lives_ok('set constraints public.lesson_blocks_position_unique immediate',
+  'swapping two blocks keeps positions unique');
+select results_eq(
+  $$ select right(id::text, 2), position from public.lesson_blocks
+     where lesson_id = 'd1400000-0000-4000-8000-000000000011' order by position $$,
+  $$ values ('21'::text, 10), ('11', 20) $$,
+  'move_lesson_block down swaps with the next block');
+set constraints public.lesson_blocks_position_unique deferred;
+select public.move_lesson_block('d1500000-0000-4000-8000-000000000011', 'up');
+
+select ok(
+  (select sort_order from public.lessons where id = 'd1400000-0000-4000-8000-000000000012')
+  < (select sort_order from public.lessons where id = 'd1400000-0000-4000-8000-000000000013'),
+  'L2 comes before L3 in their category and level');
+select public.move_lesson('d1400000-0000-4000-8000-000000000013', 'up');
+select ok(
+  (select sort_order from public.lessons where id = 'd1400000-0000-4000-8000-000000000013')
+  < (select sort_order from public.lessons where id = 'd1400000-0000-4000-8000-000000000012'),
+  'move_lesson swaps with the neighbour in the same category and level');
+
+select throws_ok($$ select public.move_resource('d1300000-0000-4000-8000-0000000000ff', 'up') $$,
+  'P0001', 'not_found', 'admin calling move_resource with an unknown id raises not_found');
+select throws_ok($$ select public.move_resource('d1300000-0000-4000-8000-000000000001', 'left') $$,
+  '22023', null, 'move_resource with ''left'' raises 22023');
+select ok(
+  not has_function_privilege('anon', 'public.move_lesson(uuid, text)', 'execute')
+  and not has_function_privilege('anon', 'public.move_lesson_block(uuid, text)', 'execute')
+  and has_function_privilege('anon', 'public.list_published_lessons()', 'execute')
+  and has_function_privilege('anon', 'public.get_published_lesson(text)', 'execute'),
+  'anon executes only the public read RPC, not the ordering ones');
 
 -- ---------------------------------------------------------------------------
 -- Escritura: solo admin
