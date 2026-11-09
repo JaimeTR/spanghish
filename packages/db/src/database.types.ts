@@ -419,6 +419,32 @@ isOneToOne: true
       referencedColumns: ["id"]
     }
                   ]
+                },"teacher_profiles": {
+                  Row: {
+                    "body_en": string,"body_es": string,"created_at": string,"created_by": string | null,"enrol_en": string | null,"enrol_es": string | null,"enrol_title_en": string | null,"enrol_title_es": string | null,"facts_en": (string)[],"facts_es": (string)[],"id": string,"intro_en": string,"intro_es": string,"meta_description_en": string,"meta_description_es": string,"name": string,"photo_alt_en": string,"photo_alt_es": string,"photo_path": string | null,"photo_position": string,"profile_id": string | null,"published_at": string | null,"role_en": string,"role_es": string,"show_approach": boolean,"slug": string,"sort_order": number,"specialty_en": string | null,"specialty_es": string | null,"status": Database["public"]['Enums']["content_status"],"tagline_en": string,"tagline_es": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body_en": string,"body_es": string,"created_at"?: string,"created_by"?: string | null,"enrol_en"?: string | null,"enrol_es"?: string | null,"enrol_title_en"?: string | null,"enrol_title_es"?: string | null,"facts_en"?: (string)[],"facts_es"?: (string)[],"id"?: string,"intro_en": string,"intro_es": string,"meta_description_en": string,"meta_description_es": string,"name": string,"photo_alt_en": string,"photo_alt_es": string,"photo_path"?: string | null,"photo_position"?: string,"profile_id"?: string | null,"published_at"?: string | null,"role_en": string,"role_es": string,"show_approach"?: boolean,"slug": string,"sort_order": number,"specialty_en"?: string | null,"specialty_es"?: string | null,"status"?: Database["public"]['Enums']["content_status"],"tagline_en": string,"tagline_es": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "body_en"?: string,"body_es"?: string,"created_at"?: string,"created_by"?: string | null,"enrol_en"?: string | null,"enrol_es"?: string | null,"enrol_title_en"?: string | null,"enrol_title_es"?: string | null,"facts_en"?: (string)[],"facts_es"?: (string)[],"id"?: string,"intro_en"?: string,"intro_es"?: string,"meta_description_en"?: string,"meta_description_es"?: string,"name"?: string,"photo_alt_en"?: string,"photo_alt_es"?: string,"photo_path"?: string | null,"photo_position"?: string,"profile_id"?: string | null,"published_at"?: string | null,"role_en"?: string,"role_es"?: string,"show_approach"?: boolean,"slug"?: string,"sort_order"?: number,"specialty_en"?: string | null,"specialty_es"?: string | null,"status"?: Database["public"]['Enums']["content_status"],"tagline_en"?: string,"tagline_es"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "teacher_profiles_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "teacher_profiles_profile_id_fkey"
+      columns: ["profile_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"user_roles": {
                   Row: {
                     "role": Database["public"]['Enums']["app_role"],"user_id": string
@@ -500,6 +526,11 @@ isOneToOne: false
               "access_level": Database["public"]['Enums']["access_level"],"audience": Database["public"]['Enums']["audience_segment"],"description_en": string,"description_es": string,"external_url": string,"has_file": boolean,"id": string,"kind": Database["public"]['Enums']["resource_kind"],"level_code": string,"locked": boolean,"sort_order": number,"thumbnail_path": string,"title_en": string,"title_es": string,"title_lang": string,"youtube_id": string
             }[]
                            },
+"list_published_teachers":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "body_en": string,"body_es": string,"enrol_en": string,"enrol_es": string,"enrol_title_en": string,"enrol_title_es": string,"facts_en": (string)[],"facts_es": (string)[],"intro_en": string,"intro_es": string,"meta_description_en": string,"meta_description_es": string,"name": string,"photo_alt_en": string,"photo_alt_es": string,"photo_path": string,"photo_position": string,"role_en": string,"role_es": string,"show_approach": boolean,"slug": string,"sort_order": number,"specialty_en": string,"specialty_es": string,"tagline_en": string,"tagline_es": string
+            }[]
+                           },
 "move_lesson":
 { Args: { "p_direction": string,"p_lesson_id": string }; Returns: undefined
                            },
@@ -508,6 +539,9 @@ isOneToOne: false
                            },
 "move_resource":
 { Args: { "p_direction": string,"p_resource_id": string }; Returns: undefined
+                           },
+"move_teacher_profile":
+{ Args: { "p_direction": string,"p_id": string }; Returns: undefined
                            },
 "resource_file_path":
 { Args: { "p_resource_id": string }; Returns: string

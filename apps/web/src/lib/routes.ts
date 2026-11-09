@@ -95,9 +95,15 @@ export const HEADER_NAV = [
       { key: "shop", route: "shop" },
     ],
   },
-  { key: "faq", route: "faq" },
   { key: "teachers", route: "teachers" },
-  { key: "contact", route: "contact" },
+  {
+    key: "contact",
+    route: "contact",
+    children: [
+      { key: "writeUs", route: "contact" },
+      { key: "faq", route: "faq" },
+    ],
+  },
 ] as const satisfies readonly { key: string; route: RouteKey; children?: readonly NavChild[] }[];
 
 /** Pie: las páginas de clases (por edad y la conversación online), las de la escuela y los textos legales. */

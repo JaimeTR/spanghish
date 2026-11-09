@@ -35,8 +35,8 @@ const PAGES = [
   },
   {
     slug: "teachers",
-    es: { h1: "Conócenos", title: /^Conócenos: Maribel Mayhua/ },
-    en: { h1: "Meet us", title: /^Meet us: Maribel Mayhua/ },
+    es: { h1: "Conócenos", title: /^Conócenos: nuestras profesoras/ },
+    en: { h1: "Meet us", title: /^Meet us: our Spanish tutors/ },
   },
   {
     slug: "contact-us",
@@ -175,9 +175,10 @@ test("header and footer links reach every inner page", async ({ page }) => {
   await expect(page).toHaveURL(/\/es\/prices$/);
   await expect(header.getByRole("link", { name: "Precios" })).toHaveAttribute("aria-current", "page");
 
+  await header.getByRole("button", { name: "Mostrar contacto" }).click();
   await header.getByRole("link", { name: "Preguntas" }).click();
   await expect(page).toHaveURL(/\/es\/faq$/);
-  await expect(header.getByRole("link", { name: "Preguntas" })).toHaveAttribute("aria-current", "page");
+  await expect(header.getByRole("link", { name: "Contacto", exact: true })).toHaveAttribute("aria-current", "true");
 
   // La cabecera solo enlaza a páginas: no hay accesos directos a secciones de la home.
   await expect(header.getByRole("link", { name: "Cómo son" })).toHaveCount(0);

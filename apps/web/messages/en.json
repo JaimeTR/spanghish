@@ -44,7 +44,9 @@
     "allResources": "All resources",
     "learn": "Learn now",
     "shop": "Materials shop",
-    "showResources": "Show resources"
+    "showResources": "Show resources",
+    "showContact": "Show contact",
+    "writeUs": "Write to us"
   },
   "locales": {
     "es": "Español",
@@ -523,22 +525,19 @@
       "ratesFrom": "Rates apply from April 2026."
     },
     "teachers": {
-      "metaTitle": "Meet us: Maribel Mayhua, Spanish tutor · Spanglish",
-      "metaDescription": "Maribel Mayhua is a native Spanish tutor from Lima, Peru, certified for levels A1 to B2. She lives in Australia.",
+      "metaTitle": "Meet us: our Spanish tutors · Spanglish",
+      "metaDescription": "Meet the Spanglish tutors and choose who you would like to learn Spanish with.",
       "title": "Meet us",
-      "lead": "Our goal is that you speak Spanish confidently. Meet the person who will teach you.",
+      "lead": "Our goal is that you speak Spanish confidently. Meet the people who will teach you.",
       "ask": "Who will teach me?",
-      "answer": "¡Hola! I’m Maribel.",
-      "name": "Maribel Mayhua",
-      "role": "Spanish tutor",
-      "intro": "I’m Maribel, from Lima, Peru, and I’m a passionate Spanish teacher.",
-      "mission": "My mission is to help you keep learning and progressing in Spanish, until you speak it with confidence.",
-      "factsLabel": "Maribel at a glance",
-      "facts": {
-        "native": "Native speaker, from Lima, Peru",
-        "certified": "Certified to teach levels A1, A2, B1 and B2",
-        "based": "Based in Australia"
-      },
+      "answer": "¡Hola! We're {names}.",
+      "answerOne": "¡Hola! I'm {name}.",
+      "factsLabel": "{name} at a glance",
+      "viewProfile": "View profile",
+      "viewProfileOf": "View profile of {name}",
+      "allTeachers": "All tutors",
+      "profileMetaTitle": "{name}, Spanish tutor · Spanglish",
+      "specialtyLabel": "Speciality",
       "approachQuestion": "What are her lessons like?",
       "approachIntro": "70 minutes to talk, ask and practise, with everything you need to keep going afterwards.",
       "approach": {
@@ -559,8 +558,40 @@
           "body": "After each lesson you get a summary and homework."
         }
       },
-      "classesQuestion": "Who does she teach?"
+      "classesQuestion": "Who does she teach?",
+      "people": {
+        "maribel": {
+          "role": "Spanish tutor",
+          "tagline": "Native speaker from Lima, Peru, certified for levels A1 to B2.",
+          "metaDescription": "Maribel Mayhua is a native Spanish tutor from Lima, Peru, certified for levels A1 to B2. She lives in Australia.",
+          "intro": "I'm Maribel, from Lima, Peru, and I'm a passionate Spanish teacher.",
+          "body": "My mission is to help you keep learning and progressing in Spanish, until you speak it with confidence.",
+          "facts": [
+            "Native speaker, from Lima, Peru",
+            "Certified to teach levels A1, A2, B1 and B2",
+            "Based in Australia"
+          ],
+          "photoAlt": "Portrait of Maribel Mayhua, Spanish tutor"
+        },
+        "pamela": {
+          "role": "Spanish tutor",
+          "tagline": "Psychologist and traveller: Spanish for travellers.",
+          "metaDescription": "Pamela Rojas is a Spanish teacher, psychologist and tireless traveller, specialising in teaching Spanish to travellers.",
+          "intro": "¡Hola! I'm a Spanish teacher, a psychologist and a tireless traveller.",
+          "body": "My international experience has given me countless stories, fascinating cultures and a unique perspective that I want to share with you. Learning a new language can be a real adventure, and I promise my lessons will be no exception. Let's have fun while you progress with confidence! Join me and let's explore the world together, one word at a time.",
+          "specialty": "I specialise in teaching Spanish to travellers, combining a deep knowledge of the language and the customs of Latin America with a dose of humour and wisdom. My lessons prepare you to live authentic experiences, communicate with confidence and make the most of your trip.",
+          "enrolTitle": "Enrol with me",
+          "enrol": "I'll guide you through effective, fun learning. Every word will bring you closer to new cultures and adventures. Join my lessons and start this exciting language journey today!",
+          "facts": [
+            "Spanish teacher, psychologist and traveller",
+            "Specialist in Spanish for travellers",
+            "For Portuguese-speaking students"
+          ],
+          "photoAlt": "Portrait of Pamela Rojas, Spanish tutor"
+        }
+      }
     },
+
     "contact": {
       "metaTitle": "Contact us and book a free lesson · Spanglish",
       "metaDescription": "Call 0413 178 583 or email hello@spanglish.com.au, Monday to Saturday, 8am to 5pm. Sunshine Coast, Brisbane and online. Your first lesson is free.",

@@ -84,7 +84,7 @@ describe("routes", () => {
   });
 
   it("the header lists the important pages, with the lessons sub-pages under Clases", () => {
-    expect(HEADER_NAV.map((i) => i.route)).toEqual(["lessons", "prices", "resources", "faq", "teachers", "contact"]);
+    expect(HEADER_NAV.map((i) => i.route)).toEqual(["lessons", "prices", "resources", "teachers", "contact"]);
     const lessons = HEADER_NAV.find((i) => i.key === "lessons");
     expect(lessons && "children" in lessons && lessons.children.map((c) => c.route)).toEqual([
       "lessons",
@@ -123,7 +123,7 @@ describe("routes", () => {
     expect(activeNavKey("teachers")).toBe("teachers");
     expect(activeNavKey("contact")).toBe("contact");
     expect(activeNavKey("prices")).toBe("prices");
-    expect(activeNavKey("faq")).toBe("faq");
+    expect(activeNavKey("faq")).toBe("contact");
     expect(activeNavKey("home")).toBeUndefined();
     expect(activeNavKey("bookings")).toBeUndefined();
   });

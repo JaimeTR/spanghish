@@ -136,12 +136,12 @@ export function onlineCourseJsonLd({
   };
 }
 
-/** La profesora, con lo que publica su ficha: nativa (Lima), certificada A1–B2. */
-export function teacherJsonLd(path: string, description: string, jobTitle: string) {
+/** Una profesora, con lo que publica su ficha (por defecto, Maribel). */
+export function teacherJsonLd(path: string, description: string, jobTitle: string, name = "Maribel Mayhua") {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Maribel Mayhua",
+    name,
     jobTitle,
     description,
     url: `${SITE_URL}${path}`,
