@@ -18,13 +18,15 @@ const SUB_STYLE: Partial<Record<RouteKey, { tone: NavTone; age?: "adults" | "kid
   mature: { tone: "purple", age: "mature" },
   online: { tone: "burgundy" },
   learn: { tone: "yellow" },
+  faq: { tone: "yellow" },
   shop: { tone: "fuchsia" },
 };
 
 /** Botón que despliega cada grupo y posición de la cola del panel (apunta al chevrón). */
-const GROUP: Partial<Record<HeaderNavKey, { toggle: "showLessons" | "showResources"; tail: string }>> = {
+const GROUP: Partial<Record<HeaderNavKey, { toggle: "showLessons" | "showResources" | "showContact"; tail: string }>> = {
   lessons: { toggle: "showLessons", tail: "left-[5.25rem] xl:left-[5.75rem]" },
   resources: { toggle: "showResources", tail: "left-[6.4rem] xl:left-[6.9rem]" },
+  contact: { toggle: "showContact", tail: "left-[6.4rem] xl:left-[6.9rem]" },
 };
 
 export function SiteHeader({

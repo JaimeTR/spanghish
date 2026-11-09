@@ -44,7 +44,9 @@
     "allResources": "All resources",
     "learn": "Learn now",
     "shop": "Materials shop",
-    "showResources": "Show resources"
+    "showResources": "Show resources",
+    "showContact": "Show contact",
+    "writeUs": "Write to us"
   },
   "locales": {
     "es": "Español",
