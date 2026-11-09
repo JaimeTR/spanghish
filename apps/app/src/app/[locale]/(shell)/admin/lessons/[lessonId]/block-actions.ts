@@ -29,7 +29,9 @@ export async function saveBlock(_prev: ActionState, formData: FormData): Promise
 export async function moveBlock(formData: FormData): Promise<void> {
   const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin"); const parsed = parseForm(moveSchema, formData); if (!parsed.ok) return;
   const db = await createClient(); const { data: block } = await db.from("lesson_blocks").select("lesson_id, lessons(status)").eq("id", parsed.data.id).maybeSingle();
-  await db.rpc("move_lesson_block", { p_block_id: parsed.data.id, p_direction: parsed.data.direction }); if (block) await refresh(locale, block.lesson_id, block.lessons?.status === "published");
+  const { error } = await db.rpc("move_lesson_block", { p_block_id: parsed.data.id, p_direction: parsed.data.direction });
+  if (error) throw error;
+  if (block) await refresh(locale, block.lesson_id, block.lessons?.status === "published");
 }
 export async function deleteBlock(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin"); const blockId = formData.get("id"); const lessonId = formData.get("lessonId");

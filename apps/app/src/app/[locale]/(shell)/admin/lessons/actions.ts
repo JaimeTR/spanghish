@@ -33,7 +33,9 @@ export async function setLessonPublished(_prev: ActionState, formData: FormData)
 export async function moveLesson(formData: FormData): Promise<void> {
   const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin"); const parsed = parseForm(moveSchema, formData); if (!parsed.ok) return;
   const db = await createClient(); const { data: lesson } = await db.from("lessons").select("status").eq("id", parsed.data.id).maybeSingle();
-  await db.rpc("move_lesson", { p_lesson_id: parsed.data.id, p_direction: parsed.data.direction }); revalidatePath(`/${locale}/admin/lessons`); if (lesson?.status === "published") await pingWebRevalidate();
+  const { error } = await db.rpc("move_lesson", { p_lesson_id: parsed.data.id, p_direction: parsed.data.direction });
+  if (error) throw error;
+  revalidatePath(`/${locale}/admin/lessons`); if (lesson?.status === "published") await pingWebRevalidate();
 }
 export async function deleteLesson(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin"); const id = formData.get("id"); if (typeof id !== "string") return { status: "error", error: "not_found" };

@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { expect, test } from "@playwright/test";
-import { adminClient, expectPath, login } from "./fixtures";
+import { adminClient, expectPath, login, signOut } from "./fixtures";
 
 const NEW_PASSWORD = "Nueva-clave-e2e-2026";
 
@@ -41,7 +41,7 @@ test("reset-password with a recovery token sets a new password and lands in the 
     await expectPath(page, "/es/teacher");
 
     // La contraseña nueva sirve para entrar.
-    await page.getByRole("button", { name: "Cerrar sesión" }).click();
+    await signOut(page);
     await expectPath(page, "/es/login");
     await login(page, email, { password: NEW_PASSWORD });
     await expectPath(page, "/es/teacher");

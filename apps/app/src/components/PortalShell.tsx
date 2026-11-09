@@ -1,12 +1,10 @@
-import Image from "next/image";
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import type { AppRole } from "@/lib/access";
 import { logout } from "@/lib/auth-actions";
-import { Sidebar } from "./Sidebar";
+import { DesktopSidebar } from "./DesktopSidebar";
 import { Topbar } from "./Topbar";
-import { onLightFocus, onStructureFocus } from "./shell-styles";
+import { onLightFocus } from "./shell-styles";
 
 /**
  * Marco del portal: barra lateral morada (escritorio), barra superior y
@@ -37,15 +35,7 @@ export function PortalShell({
         {t("skipToContent")}
       </a>
 
-      <aside className="hidden bg-structure text-on-structure lg:sticky lg:top-0 lg:flex lg:h-dvh lg:w-72 lg:shrink-0 lg:flex-col lg:gap-8 lg:px-4 lg:py-6">
-        <Link
-          href={`/${locale}/${area}`}
-          className={`self-start rounded-sm px-2 ${onStructureFocus}`}
-        >
-          <Image src="/logo-spanglish.png" alt={t("home")} width={88} height={70} priority />
-        </Link>
-        <Sidebar role={area} locale={locale} />
-      </aside>
+      <DesktopSidebar area={area} locale={locale} />
 
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar name={name} roles={roles} area={area} locale={locale} logout={logout} />

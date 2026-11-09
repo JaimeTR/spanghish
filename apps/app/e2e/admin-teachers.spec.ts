@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { adminClient, expectNoAxeViolations, expectPath, login, USERS } from "./fixtures";
+import { adminClient, expectNoAxeViolations, expectPath, login, USERS, signOut } from "./fixtures";
 
 const NEW_PASSWORD = "Docente-e2e-clave-2026";
 
@@ -35,7 +35,7 @@ test("admin invites a teacher who sets a password and lands on /es/teacher", asy
     // La docente elige contraseña con el enlace de recuperación.
     const link = await admin.auth.admin.generateLink({ type: "recovery", email });
     expect(link.error).toBeNull();
-    await page.getByRole("button", { name: "Cerrar sesión" }).click();
+    await signOut(page);
     await expectPath(page, "/es/login");
     await page.goto(`/es/reset-password?token_hash=${link.data.properties!.hashed_token}&type=recovery`);
     await page.getByLabel("Contraseña nueva").fill(NEW_PASSWORD);

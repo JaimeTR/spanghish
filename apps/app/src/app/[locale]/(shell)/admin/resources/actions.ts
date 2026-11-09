@@ -29,6 +29,7 @@ export async function saveResource(_prev: ActionState<ResourceField>, formData: 
       const { error } = await supabase.from("resources").update(updateValues).eq("id", data.id);
       if (error) return { status: "error", error: toDomainError(error) };
       if (clearsFile && prior?.file_path) await supabase.storage.from("resource-files").remove([prior.file_path]);
+      revalidatePath(`/${locale}/admin/resources/${data.id}`);
       await changed(locale, prior?.status === "published");
       return { status: "ok" };
     }

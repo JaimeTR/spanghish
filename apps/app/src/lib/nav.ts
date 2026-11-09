@@ -75,29 +75,87 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.d("groups"),
     a.d("enrollments"),
     a.d("attendance"),
-    a.d("payments"),
     a.d("leads"),
-    a.r("catalog", "catalog"),
     a.r("students", "students"),
     a.r("teachers", "teachers"),
     a.r("content", "resources"),
     a.r("lessons", "lessons"),
+    a.r("catalog", "catalog"),
+    a.d("payments"),
     a.r("settings", "settings/consent-texts"),
   ],
-  teacher: [t.d("today"), t.d("groups"), t.d("calendar"), t.d("attendance"), t.d("resources"), t.d("requests")],
+  teacher: [t.d("today"), t.d("groups"), t.d("calendar"), t.d("attendance"), t.d("requests"), t.d("resources")],
   student: [
     s.r("home", ""),
     s.d("schedule"),
     s.d("courses"),
+    s.d("requests"),
     s.d("resources"),
     s.d("learn"),
     s.d("assignments"),
     s.d("progress"),
     s.d("payments"),
-    s.d("requests"),
   ],
   guardian: [g.d("children"), g.d("schedule"), g.d("payments"), g.d("consents"), g.d("resources")],
 };
+
+/** Grupos del menú lateral (claves de `nav.groups`). `null` = sin título, arriba del todo. */
+export type NavGroup = "operation" | "people" | "content" | "management" | "classes" | "learn" | "family" | "account";
+
+/** A qué grupo pertenece cada módulo, por área. Lo que no aparece va sin título. */
+const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
+  admin: {
+    calendar: "operation",
+    groups: "operation",
+    enrollments: "operation",
+    attendance: "operation",
+    leads: "operation",
+    students: "people",
+    teachers: "people",
+    content: "content",
+    lessons: "content",
+    catalog: "management",
+    payments: "management",
+    settings: "management",
+  },
+  teacher: {
+    today: "classes",
+    groups: "classes",
+    calendar: "classes",
+    attendance: "classes",
+    requests: "classes",
+    resources: "learn",
+  },
+  student: {
+    schedule: "classes",
+    courses: "classes",
+    requests: "classes",
+    resources: "learn",
+    learn: "learn",
+    assignments: "learn",
+    progress: "learn",
+    payments: "account",
+  },
+  guardian: {
+    children: "family",
+    schedule: "family",
+    payments: "family",
+    consents: "family",
+    resources: "learn",
+  },
+};
+
+/** Menú de un área partido en grupos consecutivos, en el orden de `NAV`. */
+export function navGroupsFor(role: AppRole): { group: NavGroup | null; items: NavItem[] }[] {
+  const groups: { group: NavGroup | null; items: NavItem[] }[] = [];
+  for (const item of NAV[role]) {
+    const group = GROUP_OF[role][item.key] ?? null;
+    const last = groups[groups.length - 1];
+    if (last && last.group === group) last.items.push(item);
+    else groups.push({ group, items: [item] });
+  }
+  return groups;
+}
 
 export function navItemsFor(role: AppRole): NavItem[] {
   return [...NAV[role]];

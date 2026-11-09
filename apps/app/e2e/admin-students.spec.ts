@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { adminClient, expectNoAxeViolations, expectPath, login, SEED_IDS, USERS } from "./fixtures";
+import { adminClient, expectNoAxeViolations, expectPath, login, SEED_IDS, USERS, signOut } from "./fixtures";
 
 async function loginAdmin(page: Page) {
   await login(page, USERS.admin);
@@ -167,7 +167,7 @@ test("teacher and guardian cannot open the students admin", async ({ page }) => 
   await expectPath(page, "/es/teacher");
   await page.goto(`/es/admin/students/${SEED_IDS.students.local}`);
   await expectPath(page, "/es/teacher");
-  await page.getByRole("button", { name: "Cerrar sesión" }).click();
+  await signOut(page);
   await expectPath(page, "/es/login");
   await login(page, USERS.guardian);
   await expectPath(page, "/es/guardian");

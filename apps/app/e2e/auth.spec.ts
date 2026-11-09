@@ -5,8 +5,7 @@ import {
   expectPath,
   login,
   loginError,
-  USERS,
-} from "./fixtures";
+  USERS, signOut } from "./fixtures";
 
 test("admin logs in and lands on /es/admin", async ({ page }) => {
   await login(page, USERS.admin);
@@ -131,7 +130,7 @@ test("a suspended user with an already open session loses access on the next req
 test("logout clears the session", async ({ page }) => {
   await login(page, USERS.student);
   await expectPath(page, "/es/student");
-  await page.getByRole("button", { name: "Cerrar sesión" }).click();
+  await signOut(page);
   await expectPath(page, "/es/login");
   await page.goto("/es/student");
   await expectPath(page, "/es/login?next=%2Fes%2Fstudent");

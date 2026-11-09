@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { expectPath, login, USERS } from "./fixtures";
+import { expectPath, login, USERS, signOut } from "./fixtures";
 
 const MAIN_NAV = "Navegación principal";
 
@@ -72,7 +72,7 @@ test.describe("mobile", () => {
     await login(page, USERS.student);
     await expectPath(page, "/es/student");
     await page.getByRole("button", { name: "Menú" }).click();
-    await page.getByRole("button", { name: "Cerrar sesión" }).click();
+    await signOut(page);
     await expectPath(page, "/es/login");
   });
 });

@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
-import { devModules, NAV, navItemsFor, navUrl, switchableAreas } from "./nav";
+import { devModules, NAV, navGroupsFor, navItemsFor, navUrl, switchableAreas } from "./nav";
 import { swapLocale } from "./locale-path";
 
 const ROLES = ["admin", "teacher", "student", "guardian"] as const;
@@ -24,13 +24,13 @@ describe("NAV", () => {
       "groups",
       "enrollments",
       "attendance",
-      "payments",
       "leads",
-      "catalog",
       "students",
       "teachers",
       "content",
       "lessons",
+      "catalog",
+      "payments",
       "settings",
     ]);
     expect(NAV.teacher.map((i) => i.key)).toEqual([
@@ -38,21 +38,31 @@ describe("NAV", () => {
       "groups",
       "calendar",
       "attendance",
-      "resources",
       "requests",
+      "resources",
     ]);
     expect(NAV.student.map((i) => i.key)).toEqual([
       "home",
       "schedule",
       "courses",
+      "requests",
       "resources",
       "learn",
       "assignments",
       "progress",
       "payments",
-      "requests",
     ]);
     expect(NAV.guardian.map((i) => i.key)).toEqual(["children", "schedule", "payments", "consents", "resources"]);
+  });
+
+  it("navGroupsFor keeps every module once, in order, and never repeats a group", () => {
+    for (const role of ROLES) {
+      const groups = navGroupsFor(role);
+      expect(groups.flatMap((g) => g.items.map((i) => i.key))).toEqual(NAV[role].map((i) => i.key));
+      const titled = groups.map((g) => g.group).filter((g) => g !== null);
+      expect(new Set(titled).size, `${role} repite un grupo`).toBe(titled.length);
+    }
+    expect(navGroupsFor("admin").map((g) => g.group)).toEqual([null, "operation", "people", "content", "management"]);
   });
 
   it("marks as ready only the modules that exist", () => {
@@ -61,11 +71,11 @@ describe("NAV", () => {
     );
     expect(readyKeys).toEqual([
       "admin.dashboard",
-      "admin.catalog",
       "admin.students",
       "admin.teachers",
       "admin.content",
       "admin.lessons",
+      "admin.catalog",
       "admin.settings",
       "student.home",
     ]);
@@ -113,8 +123,8 @@ describe("NAV", () => {
       "groups",
       "enrollments",
       "attendance",
-      "payments",
       "leads",
+      "payments",
     ]);
     expect(devModules("teacher")).toHaveLength(6);
     expect(devModules("student")).toHaveLength(8);

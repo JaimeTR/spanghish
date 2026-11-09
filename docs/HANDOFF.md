@@ -2,12 +2,12 @@
 
 Última actualización: 2026-11-09. Repositorio: `JaimeTR/spanghish` (público). Cliente: Maribel Mayhua (profesora de español, Australia). Producto: web pública bilingüe (es/en) + plataforma educativa privada. Stack: pnpm + Turborepo, Next.js 16, Tailwind v4, next-intl, Supabase (Postgres/Auth/Storage/RLS), Stripe.
 
-## 0. Estado de ramas (actualizado 2026-11-09, tras la integración directa)
-- **`main` = producción (última versión estable) y `develop` = desarrollo.** Hoy apuntan al MISMO commit, que integra TODO lo construido: cimientos 1A, web pública completa, 1B fases 1 y 2, y el hito Contenido (fases 0 y 2 parcial). Se integró uniendo directamente las ramas `chore/project-foundation`, `feat/web-conversion-pages` (que incluye home e interiores) y `feat/contenido-fase2` (que incluye 1B fases 1-2 y contenido fase 0). Único conflicto: `apps/web/next.config.ts` (resuelto: redirecciones de WordPress + `@spanglish/content`).
-- Verificado en el árbol integrado: `pnpm lint`, `pnpm typecheck`, `pnpm test` (web 80, app 185, content 13, ui 4) y `pnpm build` de ambas apps. NO se ejecutó la suite e2e completa ni el CI de GitHub tras la integración.
-- **Aviso:** `develop`/`main` contienen 12 pruebas e2e nuevas que FALLAN (`apps/app/e2e/admin-resources.spec.ts` y `admin-lessons.spec.ts`, ver §5.2). Si el CI ejecuta la e2e de la app, saldrá en rojo hasta corregirlas. Convención desde ahora: trabajar en ramas `feat/*` desde `develop`, PR a `develop`, y `main` se actualiza desde `develop` cuando esté verde.
-- La rama por defecto del repositorio en GitHub sigue siendo `chore/project-foundation`; cambiarla a `main` desde Settings → Branches. Los PRs #2, #3, #5, #6, #7, #8 y #9 quedan obsoletos (su contenido ya está en `develop`/`main`): cerrarlos.
-- La sección 1 describe el historial de ramas apiladas, ahora solo informativo.
+## 0. Estado de ramas (actualizado 2026-11-09, integración directa sin PRs)
+- **Política:** solo dos ramas importantes. **`develop` = trabajo** y **`main` = producción** (última versión estable). Se integra directo (sin PRs) tras verificar; `main` se actualiza desde `develop` cuando todo está verde. Carpeta de trabajo local: `spanghish-int` (rama `develop`). La carpeta `spanghish` es la original (contiene el `.git`); no se usa.
+- `develop` y `main` contienen: cimientos 1A, web pública completa, 1B fases 1-2, Contenido fases 0-2 (gestión de recursos y lecciones, e2e en verde), menú lateral agrupado/minimizable + menú de perfil + `/account`, páginas de docentes (índice y perfiles de Maribel y Pamela) leídas de la plataforma con respaldo estático, `/api/revalidate`, y la migración 0012 (`teacher_profiles`).
+- Verificado en el árbol integrado: lint, typecheck, tests (web 94, app 186, content 13, ui 4), pgTAP 311, build, e2e app 89 y e2e web 244 (2 pruebas de la web son intermitentes bajo carga y pasan solas: `conversion.spec.ts:182`, `home.spec.ts:173`). El CI de GitHub no se ha comprobado.
+- **Trabajo a medias:** rama `feat/docentes-admin` (admin de perfiles públicos de docentes, escrito por Codex y revisado): faltan ajustar 5 e2e de `apps/app/e2e/admin-teacher-profiles.spec.ts` (etiquetas que no coinciden con el formulario) y 1 violación axe; después integrar a `develop`.
+- Convención: ramas `feat/*` desde `develop`; al terminar y verificar, merge directo a `develop` y luego `main`; borrar la rama.
 
 ## 1. Cadena de ramas y PRs (fusionar EN ESTE ORDEN)
 
@@ -58,20 +58,7 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 7. Hito 2 (alumno completo) y hito 3 (Stripe de matrículas, CMS, lanzamiento): sin plan escrito aún.
 
 ## 5.2 Punto exacto donde se quedó el trabajo (2026-11-09)
-Rama de trabajo: `feat/contenido-fase2` (apilada sobre `feat/contenido-fase0` / PR #9). Codex escribió las tareas 5 a 9 del hito Contenido (gestión de recursos y lecciones en el panel) y se corrigió en 4 pasadas.
-- **Verde:** `pnpm lint`, `pnpm typecheck`, `pnpm test` (app 185), build. Migraciones y pgTAP sin cambios (285).
-- **Pendiente: 12 de 26 pruebas e2e nuevas fallan** (14 pasan): `apps/app/e2e/admin-resources.spec.ts` y `admin-lessons.spec.ts`. Ejecutar solo esas con
-  `cd apps/app && pnpm exec playwright test e2e/admin-resources.spec.ts e2e/admin-lessons.spec.ts --workers=2 --timeout=12000 --reporter=line`.
-  Fallos conocidos (las causas suelen ser selectores que no coinciden o fallos reales de UI):
-  - lessons: "publishing a lesson without blocks shows content_incomplete" (el locator `main [role=alert]` dio `text.replace is not a function`).
-  - resources: "pasting a YouTube URL stores the id..." (el campo "URL de YouTube" queda vacío tras guardar).
-  - resources: "moving a resource down changes the visible order after reload" y lessons: "moving a lesson up within adults A1" (el orden no cambia como espera la prueba: comprobar `move_resource`/`move_lesson` y que la prueba compare las filas creadas por ella).
-  - axe: "lessons pages have no axe violations" y "resources pages have no axe violations (desktop and 375px)" (hay violaciones reales de accesibilidad en las páginas nuevas).
-  - resources: "uploading a .zip shows the type message...", "a successful signed-upload response without an object is rejected..." (subidas: ver `FileUpload.tsx`, `upload-actions.ts`).
-  - lessons: "admin adds text, video and quiz blocks, reorders them and publishes", "a quiz with the correct option out of range shows the field error", "deleting the only block of a published lesson shows content_incomplete", "admin adds an image block with alt texts and it renders in the preview".
-- Resumen de lo que hace cada prueba: `apps/app/e2e/README-new-specs.md`.
-- Corregir de preferencia con Codex (ver sección 6), alimentándolo con el mensaje de error de cada prueba; revisar siempre a mano las políticas de Storage y las acciones de subida.
-- Cuando las 26 pasen: correr TODA la suite e2e una vez (`pnpm --filter @spanglish/app e2e`), subir y abrir el PR "Contenido-2" con base `feat/contenido-fase0`, y cambiar a `ready` el módulo `content` en `nav.ts` si no lo está.
+Ver §0. Siguiente: (1) terminar `feat/docentes-admin` (e2e + axe) e integrar; (2) Contenido fase 3 (recursos y Aprende del alumno), fase 4 (la web lee recursos y lecciones: el cliente `apps/web/src/lib/platform.ts` y `/api/revalidate` ya existen), fases 5-6; (3) 1B fases 3-6. Pendiente de configuración: `WEB_REVALIDATE_URL`/`WEB_REVALIDATE_SECRET` en la app y `WEB_REVALIDATE_SECRET` + `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` en la web para que lea de la base.
 
 ## 6. Cómo delegar sin gastar tokens de Claude
 - **Codex** (cuenta ChatGPT ya iniciada): `codex exec -C <worktree> -s workspace-write "<prompt autocontenido que cite el archivo del plan y la tarea>"`. Su sandbox NO puede ejecutar `pnpm` (EPERM): que solo escriba archivos y ejecutar las comprobaciones fuera. Nunca `danger-full-access`, nunca pasar secretos. Un solo escritor por archivo.

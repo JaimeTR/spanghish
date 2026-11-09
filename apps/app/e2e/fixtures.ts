@@ -100,3 +100,14 @@ export function adminClient() {
   if (!url || !key) throw new Error("Faltan NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY.");
   return createClient<Database>(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 }
+
+/** Cierra sesión desde el menú de la cuenta (escritorio) o el menú móvil. */
+export async function signOut(page: Page) {
+  const button = page.getByRole("button", { name: "Cerrar sesión" });
+  if (!(await button.first().isVisible())) {
+    const account = page.getByTestId("user-menu-trigger");
+    if (await account.isVisible()) await account.click();
+    else await page.getByRole("button", { name: "Menú" }).click();
+  }
+  await button.first().click();
+}
