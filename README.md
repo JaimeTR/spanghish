@@ -31,6 +31,8 @@ no se repiten aquí.
 
 - Unitarias: `pnpm test` (también `pnpm lint`, `pnpm typecheck`, `pnpm build`).
 - Base de datos (pgTAP): `pnpm supabase test db`.
+- Tipos de BD: tras cada migración, `pnpm supabase db reset` y `pnpm db:types`, y versionar
+  `packages/db/src/database.types.ts` (CI falla si no coincide con las migraciones).
 - e2e (Playwright, requiere Supabase local con seed): `pnpm --filter @spanglish/app e2e`.
   La primera vez: `pnpm --filter @spanglish/app exec playwright install chromium`.
 
@@ -46,6 +48,7 @@ no se repiten aquí.
 - `apps/app`: plataforma educativa (Next.js).
 - `apps/web`: web pública (Next.js).
 - `packages/ui`: componentes compartidos.
+- `packages/db`: tipos generados de la base de datos (`@spanglish/db`).
 - `supabase/`: configuración, migraciones, seed local y pruebas pgTAP.
 - `docs/`: plan y decisiones. `.github/workflows/ci.yml`: CI (check, db, e2e).
 

@@ -1,3 +1,4 @@
+import type { Database } from "@spanglish/db";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import createMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
@@ -36,7 +37,7 @@ export default async function proxy(request: NextRequest) {
 
   const pending: PendingCookie[] = [];
   const { url, anonKey } = supabaseEnv();
-  const supabase = createServerClient(url, anonKey, {
+  const supabase = createServerClient<Database>(url, anonKey, {
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll: (list) => {

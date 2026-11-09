@@ -51,6 +51,14 @@ jobs:
         run: pnpm supabase db reset
       - name: Pruebas pgTAP
         run: pnpm supabase test db
+      # Los tipos versionados en packages/db deben coincidir con el esquema migrado.
+      - name: Deriva de tipos de BD
+        run: |
+          pnpm db:types
+          git diff --exit-code packages/db/src/database.types.ts || {
+            echo "::error::packages/db/src/database.types.ts no coincide con las migraciones: ejecuta 'pnpm db:types' y versiona el resultado."
+            exit 1
+          }
       - name: Detener Supabase
         if: always()
         run: pnpm supabase stop --no-backup

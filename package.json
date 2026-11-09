@@ -8,7 +8,8 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
-    "supabase": "supabase"
+    "supabase": "supabase",
+    "db:types": "supabase gen types typescript --local --schema public > packages/db/src/database.types.ts"
   },
   "devDependencies": {
     "eslint": "10.14.0",

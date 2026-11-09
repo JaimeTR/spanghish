@@ -1,3 +1,4 @@
+import type { Database } from "@spanglish/db";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { toSessionUser, type SessionUser } from "./access";
 
@@ -11,7 +12,9 @@ import { toSessionUser, type SessionUser } from "./access";
  * - Ante errores de la base de datos devuelve null (sin acceso), sin marcar
  *   ningún estado, para no cerrar sesiones por fallos transitorios.
  */
-export async function loadSessionUser(supabase: SupabaseClient): Promise<SessionUser | null> {
+export async function loadSessionUser(
+  supabase: SupabaseClient<Database>,
+): Promise<SessionUser | null> {
   const { data, error } = await supabase.auth.getUser();
   if (error || !data.user) return null;
   const id = data.user.id;
