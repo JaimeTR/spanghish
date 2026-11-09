@@ -103,5 +103,43 @@
       "summaryTitle": "Resumen",
       "summaryEmpty": "Todavía no hay alumnos vinculados a tu cuenta."
     }
+  },
+  "forms": {
+    "saved": "Cambios guardados.",
+    "invalid": "Revisa los campos marcados.",
+    "errors": {
+      "required": "Este campo es obligatorio.",
+      "tooLong": "El texto es demasiado largo.",
+      "invalid": "El valor no es válido.",
+      "email": "Escribe un correo electrónico válido.",
+      "url": "Escribe una dirección web válida (https://…).",
+      "number": "Escribe un número.",
+      "date": "Escribe una fecha válida.",
+      "range": "El valor está fuera del rango permitido."
+    }
+  },
+  "errors": {
+    "domain": {
+      "forbidden": "No tienes permiso para hacer esto.",
+      "not_found": "No encontramos lo que buscas.",
+      "conflict": "Ya existe un registro con esos datos.",
+      "already_enrolled": "Este alumno ya está matriculado en el grupo.",
+      "slot_taken": "Ese grupo ya tiene una clase a esa hora.",
+      "group_full": "El grupo está completo.",
+      "group_closed": "El grupo está cerrado o cancelado.",
+      "student_inactive": "El alumno está inactivo.",
+      "guardian_required": "Un menor necesita al menos un tutor.",
+      "consent_required": "Falta el consentimiento vigente del tutor.",
+      "teacher_required": "La persona elegida no es docente.",
+      "session_not_editable": "Esta clase ya no se puede modificar.",
+      "session_has_attendance": "La clase tiene asistencia registrada: bórrala antes de cancelarla o moverla.",
+      "outside_attendance_window": "La asistencia de esta clase ya no se puede cambiar.",
+      "not_in_roster": "Este alumno no está en la lista de la clase.",
+      "last_admin": "No puedes quitar a la última administradora activa.",
+      "invalid_range": "Las fechas no son válidas: el final es anterior al inicio.",
+      "horizon_too_far": "Solo se pueden generar clases hasta un año vista.",
+      "lead_already_converted": "Esta solicitud ya se convirtió en alumno.",
+      "unknown": "Algo salió mal. Inténtalo de nuevo."
+    }
   }
 }

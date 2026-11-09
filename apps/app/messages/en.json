@@ -103,5 +103,43 @@
       "summaryTitle": "Overview",
       "summaryEmpty": "No students are linked to your account yet."
     }
+  },
+  "forms": {
+    "saved": "Changes saved.",
+    "invalid": "Please check the highlighted fields.",
+    "errors": {
+      "required": "This field is required.",
+      "tooLong": "The text is too long.",
+      "invalid": "The value is not valid.",
+      "email": "Please enter a valid email address.",
+      "url": "Please enter a valid web address (https://…).",
+      "number": "Please enter a number.",
+      "date": "Please enter a valid date.",
+      "range": "The value is outside the allowed range."
+    }
+  },
+  "errors": {
+    "domain": {
+      "forbidden": "You don't have permission to do this.",
+      "not_found": "We couldn't find what you were looking for.",
+      "conflict": "A record with those details already exists.",
+      "already_enrolled": "This student is already enrolled in the group.",
+      "slot_taken": "That group already has a class at that time.",
+      "group_full": "The group is full.",
+      "group_closed": "The group is closed or cancelled.",
+      "student_inactive": "The student is inactive.",
+      "guardian_required": "A minor needs at least one guardian.",
+      "consent_required": "The guardian's current consent is missing.",
+      "teacher_required": "The selected person is not a teacher.",
+      "session_not_editable": "This class can no longer be changed.",
+      "session_has_attendance": "This class has attendance recorded: remove it before cancelling or moving the class.",
+      "outside_attendance_window": "Attendance for this class can no longer be changed.",
+      "not_in_roster": "This student is not on the class list.",
+      "last_admin": "You can't remove the last active administrator.",
+      "invalid_range": "The dates are not valid: the end is before the start.",
+      "horizon_too_far": "Classes can only be generated up to one year ahead.",
+      "lead_already_converted": "This enquiry has already been turned into a student.",
+      "unknown": "Something went wrong. Please try again."
+    }
   }
 }
