@@ -448,6 +448,9 @@ isOneToOne: false
             "account_status":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
+"can_read_resource_object":
+{ Args: { "p_name": string }; Returns: boolean
+                           },
 "can_view_student":
 { Args: { "p_student_id": string }; Returns: boolean
                            },
