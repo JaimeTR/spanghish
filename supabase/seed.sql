@@ -12,6 +12,8 @@
 --   teacher@spanglish.test    -> teacher + student (prueba de prioridad de roles)
 --   student@spanglish.test    -> student
 --   suspended@spanglish.test  -> student, profiles.status = 'suspended'
+--   teacher2@spanglish.test   -> teacher (initial_role en app_metadata)
+--   guardian@spanglish.test   -> guardian (initial_role en app_metadata)
 --
 -- El trigger on_auth_user_created crea el perfil y el rol 'student'; aquí solo
 -- se ajustan roles y estado. GoTrue necesita contraseña bcrypt, columnas de
@@ -38,12 +40,17 @@ begin
 end
 $guard$;
 
-with seed_users (id, email, full_name) as (
+with seed_users (id, email, full_name, app_meta) as (
   values
-    ('a0000000-0000-4000-8000-000000000001'::uuid, 'admin@spanglish.test', 'Admin Local'),
-    ('a0000000-0000-4000-8000-000000000002'::uuid, 'teacher@spanglish.test', 'Teacher Local'),
-    ('a0000000-0000-4000-8000-000000000003'::uuid, 'student@spanglish.test', 'Student Local'),
-    ('a0000000-0000-4000-8000-000000000004'::uuid, 'suspended@spanglish.test', 'Suspended Local')
+    ('a0000000-0000-4000-8000-000000000001'::uuid, 'admin@spanglish.test', 'Admin Local', '{}'::jsonb),
+    ('a0000000-0000-4000-8000-000000000002'::uuid, 'teacher@spanglish.test', 'Teacher Local', '{}'::jsonb),
+    ('a0000000-0000-4000-8000-000000000003'::uuid, 'student@spanglish.test', 'Student Local', '{}'::jsonb),
+    ('a0000000-0000-4000-8000-000000000004'::uuid, 'suspended@spanglish.test', 'Suspended Local', '{}'::jsonb),
+    -- Rol inicial por app_metadata (0007), como el alta de la administradora.
+    ('a0000000-0000-4000-8000-000000000005'::uuid, 'teacher2@spanglish.test', 'Teacher Two',
+     '{"initial_role":"teacher"}'::jsonb),
+    ('a0000000-0000-4000-8000-000000000006'::uuid, 'guardian@spanglish.test', 'Guardian Local',
+     '{"initial_role":"guardian"}'::jsonb)
 )
 insert into auth.users (
   instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
@@ -53,7 +60,7 @@ insert into auth.users (
 select
   '00000000-0000-0000-0000-000000000000', id, 'authenticated', 'authenticated', email,
   extensions.crypt('Spanglish-dev-2026', extensions.gen_salt('bf')), now(),
-  '{"provider":"email","providers":["email"]}'::jsonb,
+  '{"provider":"email","providers":["email"]}'::jsonb || app_meta,
   jsonb_build_object('full_name', full_name), now(), now(),
   '', '', '', ''
 from seed_users;
@@ -103,3 +110,45 @@ insert into public.program_prices (id, program_id, edition_id, location_id, kind
   ('b0000000-0000-4000-8000-000000000301', 'b0000000-0000-4000-8000-000000000101', null, null, 'per_lesson', 3500, null),
   ('b0000000-0000-4000-8000-000000000302', 'b0000000-0000-4000-8000-000000000101',
    'b0000000-0000-4000-8000-000000000201', null, 'upfront', 31000, null);
+
+-- ---------------------------------------------------------------------------
+-- Personas de desarrollo (0009). Texto de consentimiento SOLO de desarrollo
+-- (los reales los crea la administradora desde la app).
+--   Student Local -> adulto enlazado a student@spanglish.test
+--   Student Two   -> adulto sin cuenta
+--   Kid Local     -> menor, tutor Guardian Local (guardian@spanglish.test),
+--                    alta con create_student() como la haría la administradora
+-- ---------------------------------------------------------------------------
+insert into public.consent_texts (id, kind, body_es, body_en, effective_from) values
+  ('minor_data-v1', 'minor_data',
+   'TEXTO DE DESARROLLO: autorizo el tratamiento de los datos del menor para gestionar sus clases.',
+   'DEVELOPMENT TEXT: I authorise the processing of the minor''s data to manage their lessons.',
+   '2026-01-01');
+
+insert into public.students (id, profile_id, full_name, audience, level_id) values
+  ('b0000000-0000-4000-8000-000000000401', 'a0000000-0000-4000-8000-000000000003', 'Student Local', 'adults',
+   (select id from public.levels where language_code = 'es' and code = 'A1')),
+  ('b0000000-0000-4000-8000-000000000402', null, 'Student Two', 'adults', null);
+insert into public.student_private (student_id, email, phone) values
+  ('b0000000-0000-4000-8000-000000000401', 'student@spanglish.test', '0400 000 001'),
+  ('b0000000-0000-4000-8000-000000000402', 'student.two@example.com', null);
+
+insert into public.guardians (id, profile_id, full_name, email, phone) values
+  ('b0000000-0000-4000-8000-000000000501', 'a0000000-0000-4000-8000-000000000006', 'Guardian Local',
+   'guardian@spanglish.test', '0400 000 002');
+
+do $kid$
+begin
+  -- create_student exige una admin activa en el JWT de la petición.
+  perform set_config('request.jwt.claims',
+    '{"sub":"a0000000-0000-4000-8000-000000000001","role":"authenticated"}', true);
+  perform public.create_student(jsonb_build_object(
+    'full_name', 'Kid Local',
+    'audience', 'kids',
+    'birth_year', 2018,
+    'guardian', jsonb_build_object('id', 'b0000000-0000-4000-8000-000000000501', 'relationship', 'parent'),
+    'consent', jsonb_build_object('text_id', 'minor_data-v1', 'method', 'paper')
+  ));
+  perform set_config('request.jwt.claims', '', true);
+end
+$kid$;

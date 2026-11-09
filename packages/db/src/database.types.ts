@@ -19,6 +19,78 @@ export type Database = {
                   Relationships: [
                     
                   ]
+                },"consent_texts": {
+                  Row: {
+                    "body_en": string,"body_es": string,"created_at": string,"effective_from": string,"id": string,"kind": Database["public"]['Enums']["consent_kind"]
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body_en": string,"body_es": string,"created_at"?: string,"effective_from": string,"id": string,"kind": Database["public"]['Enums']["consent_kind"]
+                  }
+                  Update: {
+                    "body_en"?: string,"body_es"?: string,"created_at"?: string,"effective_from"?: string,"id"?: string,"kind"?: Database["public"]['Enums']["consent_kind"]
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"consents": {
+                  Row: {
+                    "created_at": string,"granted": boolean,"guardian_id": string | null,"id": string,"kind": Database["public"]['Enums']["consent_kind"],"method": Database["public"]['Enums']["consent_method"],"recorded_at": string,"recorded_by": string | null,"student_id": string,"text_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"granted": boolean,"guardian_id"?: string | null,"id"?: string,"kind": Database["public"]['Enums']["consent_kind"],"method": Database["public"]['Enums']["consent_method"],"recorded_at"?: string,"recorded_by"?: string | null,"student_id": string,"text_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"granted"?: boolean,"guardian_id"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["consent_kind"],"method"?: Database["public"]['Enums']["consent_method"],"recorded_at"?: string,"recorded_by"?: string | null,"student_id"?: string,"text_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "consents_guardian_id_fkey"
+      columns: ["guardian_id"]
+isOneToOne: false
+      referencedRelation: "guardians"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "consents_recorded_by_fkey"
+      columns: ["recorded_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "consents_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "consents_text_kind_fk"
+      columns: ["text_id","kind"]
+isOneToOne: false
+      referencedRelation: "consent_texts"
+      referencedColumns: ["id","kind"]
+    }
+                  ]
+                },"guardians": {
+                  Row: {
+                    "created_at": string,"email": string,"full_name": string,"id": string,"phone": string | null,"preferred_locale": string,"profile_id": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"email": string,"full_name": string,"id"?: string,"phone"?: string | null,"preferred_locale"?: string,"profile_id"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"email"?: string,"full_name"?: string,"id"?: string,"phone"?: string | null,"preferred_locale"?: string,"profile_id"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "guardians_profile_id_fkey"
+      columns: ["profile_id"]
+isOneToOne: true
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"languages": {
                   Row: {
                     "active": boolean,"code": string,"name_en": string,"name_es": string
@@ -159,6 +231,84 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"student_guardians": {
+                  Row: {
+                    "created_at": string,"guardian_id": string,"id": string,"is_primary": boolean,"relationship": string,"student_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"guardian_id": string,"id"?: string,"is_primary"?: boolean,"relationship": string,"student_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"guardian_id"?: string,"id"?: string,"is_primary"?: boolean,"relationship"?: string,"student_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "student_guardians_guardian_id_fkey"
+      columns: ["guardian_id"]
+isOneToOne: false
+      referencedRelation: "guardians"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "student_guardians_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"student_private": {
+                  Row: {
+                    "admin_notes": string | null,"birth_year": number | null,"created_at": string,"email": string | null,"id": string,"phone": string | null,"student_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "admin_notes"?: string | null,"birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"id"?: string,"phone"?: string | null,"student_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "admin_notes"?: string | null,"birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"id"?: string,"phone"?: string | null,"student_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "student_private_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: true
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"students": {
+                  Row: {
+                    "audience": Database["public"]['Enums']["audience_segment"],"created_at": string,"created_by": string | null,"full_name": string,"id": string,"is_minor": boolean | null,"level_id": string | null,"preferred_locale": string,"profile_id": string | null,"status": Database["public"]['Enums']["student_status"],"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "audience": Database["public"]['Enums']["audience_segment"],"created_at"?: string,"created_by"?: string | null,"full_name": string,"id"?: string,"is_minor"?: never,"level_id"?: string | null,"preferred_locale"?: string,"profile_id"?: string | null,"status"?: Database["public"]['Enums']["student_status"],"updated_at"?: string
+                  }
+                  Update: {
+                    "audience"?: Database["public"]['Enums']["audience_segment"],"created_at"?: string,"created_by"?: string | null,"full_name"?: string,"id"?: string,"is_minor"?: never,"level_id"?: string | null,"preferred_locale"?: string,"profile_id"?: string | null,"status"?: Database["public"]['Enums']["student_status"],"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "students_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "students_level_id_fkey"
+      columns: ["level_id"]
+isOneToOne: false
+      referencedRelation: "levels"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "students_profile_id_fkey"
+      columns: ["profile_id"]
+isOneToOne: true
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"user_roles": {
                   Row: {
                     "role": Database["public"]['Enums']["app_role"],"user_id": string
@@ -188,8 +338,26 @@ isOneToOne: false
             "account_status":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
+"can_view_student":
+{ Args: { "p_student_id": string }; Returns: boolean
+                           },
+"create_student":
+{ Args: { "p_payload": Json }; Returns: string
+                           },
+"current_guardian_ids":
+{ Args: Record<PropertyKey, never>; Returns: string[]
+                           },
+"current_student_ids":
+{ Args: Record<PropertyKey, never>; Returns: string[]
+                           },
 "enable_audit":
 { Args: { "p_table": unknown }; Returns: undefined
+                           },
+"guarded_student_ids":
+{ Args: Record<PropertyKey, never>; Returns: string[]
+                           },
+"has_current_consent":
+{ Args: { "p_kind": Database["public"]['Enums']["consent_kind"],"p_student_id": string }; Returns: boolean
                            },
 "has_role":
 { Args: { "r": Database["public"]['Enums']["app_role"] }; Returns: boolean
@@ -202,7 +370,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_role": "admin"|"teacher"|"student"|"guardian","audience_segment": "kids"|"adults"|"mature","edition_status": "draft"|"open"|"closed"|"cancelled","lesson_format": "individual"|"own_group"|"local_group","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack"
+            "app_role": "admin"|"teacher"|"student"|"guardian","audience_segment": "kids"|"adults"|"mature","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","edition_status": "draft"|"open"|"closed"|"cancelled","lesson_format": "individual"|"own_group"|"local_group","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack","student_status": "active"|"inactive"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -318,7 +486,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["admin", "teacher", "student", "guardian"],"audience_segment": ["kids", "adults", "mature"],"edition_status": ["draft", "open", "closed", "cancelled"],"lesson_format": ["individual", "own_group", "local_group"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"]
+            "app_role": ["admin", "teacher", "student", "guardian"],"audience_segment": ["kids", "adults", "mature"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"edition_status": ["draft", "open", "closed", "cancelled"],"lesson_format": ["individual", "own_group", "local_group"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"],"student_status": ["active", "inactive"]
           }
         }
 } as const
