@@ -20,7 +20,14 @@ async function signedIn(email: string) {
 
 test("a teacher reads no students, private data, guardians or consents through the API", async () => {
   const teacher = await signedIn(USERS.teacher2);
-  for (const table of ["students", "student_private", "guardians", "student_guardians", "consents"] as const) {
+  for (const table of [
+    "students",
+    "student_private",
+    "student_admin_notes",
+    "guardians",
+    "student_guardians",
+    "consents",
+  ] as const) {
     const { data, error } = await teacher.from(table).select("id");
     expect(error, table).toBeNull();
     expect(data, table).toEqual([]);
@@ -40,6 +47,10 @@ test("a guardian reads only their minor, and a student only themself", async () 
   expect(guardians?.map((g) => g.id)).toEqual([SEED_IDS.guardian]);
   const { data: consents } = await guardian.from("consents").select("text_id");
   expect(consents?.map((c) => c.text_id)).toEqual([SEED_IDS.consentText]);
+  // Las notas internas de su menor no le llegan (solo administración).
+  const { data: guardianNotes, error: guardianNotesError } = await guardian.from("student_admin_notes").select("notes");
+  expect(guardianNotesError).toBeNull();
+  expect(guardianNotes).toEqual([]);
   // Ni la ficha de otro alumno por id.
   const { data: other } = await guardian.from("student_private").select("id").eq("student_id", SEED_IDS.students.two);
   expect(other).toEqual([]);
@@ -49,6 +60,8 @@ test("a guardian reads only their minor, and a student only themself", async () 
   expect(own?.map((s) => s.id)).toEqual([SEED_IDS.students.local]);
   const { data: privateRows } = await student.from("student_private").select("student_id");
   expect(privateRows?.map((p) => p.student_id)).toEqual([SEED_IDS.students.local]);
+  const { data: ownNotes } = await student.from("student_admin_notes").select("notes");
+  expect(ownNotes).toEqual([]);
   // Escribir está reservado a la administración.
   const { data: updated } = await student
     .from("students")
@@ -56,4 +69,11 @@ test("a guardian reads only their minor, and a student only themself", async () 
     .eq("id", SEED_IDS.students.local)
     .select("id");
   expect(updated).toEqual([]);
+});
+
+test("the admin reads the seeded internal notes through the API", async () => {
+  const admin = await signedIn(USERS.admin);
+  const { data } = await admin.from("student_admin_notes").select("student_id");
+  expect(data?.map((n) => n.student_id)).toContain(SEED_IDS.students.local);
+  expect(data?.length).toBeGreaterThanOrEqual(2);
 });

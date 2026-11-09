@@ -396,6 +396,7 @@
       "phone": "Phone",
       "birthYear": "Year of birth",
       "adminNotes": "Internal notes",
+      "adminNotesHint": "Only the administration sees them (not the student or their guardian).",
       "guardian": "Guardian",
       "guardianHint": "Choose a registered guardian or enter a new one.",
       "existingGuardian": "Registered guardian",

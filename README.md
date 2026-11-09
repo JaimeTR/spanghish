@@ -23,8 +23,9 @@ Requisitos: Node 22+, pnpm 9.7 (`corepack enable`) y Docker Desktop en ejecució
 
 ### Usuarios de prueba (solo desarrollo)
 
-El seed crea cuatro usuarios locales (admin, teacher, student, suspended; correos
-`*@spanglish.test`). Los correos y la contraseña de desarrollo están en `supabase/seed.sql`;
+El seed crea seis usuarios locales (admin, teacher, teacher2, student, guardian, suspended;
+correos `*@spanglish.test`), además de un catálogo y alumnos de ejemplo (uno menor con su
+tutor y un texto de consentimiento SOLO de desarrollo). Los correos y la contraseña de desarrollo están en `supabase/seed.sql`;
 no se repiten aquí.
 
 ### Pruebas
@@ -35,6 +36,10 @@ no se repiten aquí.
   `packages/db/src/database.types.ts` (CI falla si no coincide con las migraciones).
 - e2e (Playwright, requiere Supabase local con seed): `pnpm --filter @spanglish/app e2e`.
   La primera vez: `pnpm --filter @spanglish/app exec playwright install chromium`.
+  Algunas pruebas dejan datos en la base local a propósito: los consentimientos y sus
+  textos son append-only/inmutables, así que los menores creados por el e2e se marcan
+  inactivos (no se pueden borrar) y cada ejecución publica una versión nueva de un texto
+  de consentimiento. `pnpm supabase db reset` deja la base limpia otra vez.
 
 ### Reglas
 

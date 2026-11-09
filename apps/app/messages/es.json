@@ -396,6 +396,7 @@
       "phone": "Teléfono",
       "birthYear": "Año de nacimiento",
       "adminNotes": "Notas internas",
+      "adminNotesHint": "Solo las ve la administración (ni el alumno ni su tutor).",
       "guardian": "Tutor",
       "guardianHint": "Elige un tutor ya registrado o escribe los datos de uno nuevo.",
       "existingGuardian": "Tutor registrado",

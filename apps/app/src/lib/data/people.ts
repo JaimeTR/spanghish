@@ -50,6 +50,8 @@ export type GuardianRow = Tables<"guardians">;
 
 export type StudentDetail = StudentRow & {
   student_private: Tables<"student_private"> | null;
+  /** Solo admin (RLS): para cualquier otra persona llega null. */
+  student_admin_notes: Pick<Tables<"student_admin_notes">, "notes" | "updated_at"> | null;
   student_guardians: (Tables<"student_guardians"> & { guardians: GuardianRow | null })[];
   consents: Tables<"consents">[];
 };
@@ -80,7 +82,7 @@ export async function getStudentDetail(supabase: Client, id: string): Promise<St
   if (!UUID.test(id)) return null;
   const { data, error } = await supabase
     .from("students")
-    .select("*, student_private(*), student_guardians(*, guardians(*)), consents(*)")
+    .select("*, student_private(*), student_admin_notes(notes, updated_at), student_guardians(*, guardians(*)), consents(*)")
     .eq("id", id)
     .order("recorded_at", { referencedTable: "consents", ascending: false })
     .maybeSingle();

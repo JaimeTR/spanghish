@@ -231,6 +231,32 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"student_admin_notes": {
+                  Row: {
+                    "created_at": string,"id": string,"notes": string,"student_id": string,"updated_at": string,"updated_by": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"id"?: string,"notes": string,"student_id": string,"updated_at"?: string,"updated_by"?: string | null
+                  }
+                  Update: {
+                    "created_at"?: string,"id"?: string,"notes"?: string,"student_id"?: string,"updated_at"?: string,"updated_by"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "student_admin_notes_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: true
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "student_admin_notes_updated_by_fkey"
+      columns: ["updated_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"student_guardians": {
                   Row: {
                     "created_at": string,"guardian_id": string,"id": string,"is_primary": boolean,"relationship": string,"student_id": string,"updated_at": string
@@ -259,14 +285,14 @@ isOneToOne: false
                   ]
                 },"student_private": {
                   Row: {
-                    "admin_notes": string | null,"birth_year": number | null,"created_at": string,"email": string | null,"id": string,"phone": string | null,"student_id": string,"updated_at": string
+                    "birth_year": number | null,"created_at": string,"email": string | null,"id": string,"phone": string | null,"student_id": string,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "admin_notes"?: string | null,"birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"id"?: string,"phone"?: string | null,"student_id": string,"updated_at"?: string
+                    "birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"id"?: string,"phone"?: string | null,"student_id": string,"updated_at"?: string
                   }
                   Update: {
-                    "admin_notes"?: string | null,"birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"id"?: string,"phone"?: string | null,"student_id"?: string,"updated_at"?: string
+                    "birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"id"?: string,"phone"?: string | null,"student_id"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {

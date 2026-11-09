@@ -132,6 +132,8 @@ insert into public.students (id, profile_id, full_name, audience, level_id) valu
 insert into public.student_private (student_id, email, phone) values
   ('b0000000-0000-4000-8000-000000000401', 'student@spanglish.test', '0400 000 001'),
   ('b0000000-0000-4000-8000-000000000402', 'student.two@example.com', null);
+insert into public.student_admin_notes (student_id, notes) values
+  ('b0000000-0000-4000-8000-000000000401', 'Nota interna de desarrollo (solo administración).');
 
 insert into public.guardians (id, profile_id, full_name, email, phone) values
   ('b0000000-0000-4000-8000-000000000501', 'a0000000-0000-4000-8000-000000000006', 'Guardian Local',
@@ -146,6 +148,7 @@ begin
     'full_name', 'Kid Local',
     'audience', 'kids',
     'birth_year', 2018,
+    'admin_notes', 'Nota interna de desarrollo (solo administración).',
     'guardian', jsonb_build_object('id', 'b0000000-0000-4000-8000-000000000501', 'relationship', 'parent'),
     'consent', jsonb_build_object('text_id', 'minor_data-v1', 'method', 'paper')
   ));

@@ -4,8 +4,10 @@
 -- Reglas:
 --   * Alumno ≠ cuenta: students.profile_id es opcional. Un menor (segmento
 --     'kids') nunca tiene cuenta; su ficha cuelga de uno o más tutores.
---   * Contacto, año de nacimiento y notas viven en student_private, que las
---     docentes nunca ven (respuesta aprobada 6). Lo mismo los datos de guardians.
+--   * Contacto y año de nacimiento viven en student_private, que las docentes
+--     nunca ven (respuesta aprobada 6). Lo mismo los datos de guardians.
+--   * Las notas internas viven aparte, en student_admin_notes: solo admin (ni
+--     el alumno ni su tutor las leen; decisión del controlador tras la fase 2).
 --   * Lectura: admin todo; alumno su fila; tutor sus menores. La lectura de
 --     docente sobre students llega con las matrículas (0011).
 --   * Escritura: solo admin (create_student() para el alta completa).
@@ -53,13 +55,27 @@ create table public.student_private (
   email text check (char_length(email) <= 254),
   phone text check (char_length(phone) <= 30),
   birth_year smallint check (birth_year between 1900 and 2100),
-  admin_notes text check (char_length(admin_notes) <= 2000),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
 comment on table public.student_private is
-  'Contacto y notas de un alumno: solo admin, el propio alumno y sus tutores (nunca docentes).';
+  'Contacto de un alumno: solo admin, el propio alumno y sus tutores (nunca docentes).';
+
+-- Notas internas de la administración: SOLO admin (lectura y escritura).
+create table public.student_admin_notes (
+  id uuid primary key default gen_random_uuid(),
+  student_id uuid not null unique references public.students (id) on delete cascade,
+  notes text not null check (char_length(notes) between 1 and 2000),
+  updated_by uuid references public.profiles (id) on delete set null default auth.uid(),
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+comment on table public.student_admin_notes is
+  'Notas internas sobre un alumno: solo administración (ni alumno, ni tutor, ni docente).';
+
+create index student_admin_notes_updated_by_idx on public.student_admin_notes (updated_by);
 
 create table public.guardians (
   id uuid primary key default gen_random_uuid(),
@@ -135,6 +151,25 @@ create trigger students_touch_updated_at
 create trigger student_private_touch_updated_at
   before update on public.student_private
   for each row execute function public.touch_updated_at();
+
+-- Quién y cuándo tocó las notas lo pone la base de datos (con JWT de usuario).
+create function public.stamp_admin_notes()
+returns trigger
+language plpgsql
+set search_path = ''
+as $$
+begin
+  new.updated_at := now();
+  new.updated_by := coalesce((select auth.uid()), new.updated_by);
+  return new;
+end;
+$$;
+
+revoke execute on function public.stamp_admin_notes() from public, anon, authenticated, service_role;
+
+create trigger student_admin_notes_stamp
+  before insert or update on public.student_admin_notes
+  for each row execute function public.stamp_admin_notes();
 create trigger guardians_touch_updated_at
   before update on public.guardians
   for each row execute function public.touch_updated_at();
@@ -320,13 +355,14 @@ grant execute on function public.can_view_student(uuid) to authenticated;
 -- ---------------------------------------------------------------------------
 alter table public.students enable row level security;
 alter table public.student_private enable row level security;
+alter table public.student_admin_notes enable row level security;
 alter table public.guardians enable row level security;
 alter table public.student_guardians enable row level security;
 alter table public.consent_texts enable row level security;
 alter table public.consents enable row level security;
 
 grant select, insert, update, delete on table
-  public.students, public.student_private, public.guardians, public.student_guardians
+  public.students, public.student_private, public.student_admin_notes, public.guardians, public.student_guardians
   to authenticated;
 grant select, insert on table public.consent_texts, public.consents to authenticated;
 
@@ -356,6 +392,16 @@ create policy student_private_insert_admin on public.student_private for insert 
 create policy student_private_update_admin on public.student_private for update to authenticated
   using ((select public.has_role('admin'))) with check ((select public.has_role('admin')));
 create policy student_private_delete_admin on public.student_private for delete to authenticated
+  using ((select public.has_role('admin')));
+
+-- student_admin_notes: solo admin, para todo.
+create policy student_admin_notes_select_admin on public.student_admin_notes for select to authenticated
+  using ((select public.has_role('admin')));
+create policy student_admin_notes_insert_admin on public.student_admin_notes for insert to authenticated
+  with check ((select public.has_role('admin')));
+create policy student_admin_notes_update_admin on public.student_admin_notes for update to authenticated
+  using ((select public.has_role('admin'))) with check ((select public.has_role('admin')));
+create policy student_admin_notes_delete_admin on public.student_admin_notes for delete to authenticated
   using ((select public.has_role('admin')));
 
 -- guardians: admin RW; tutor su fila.
@@ -439,14 +485,18 @@ begin
   )
   returning id into v_student_id;
 
-  insert into public.student_private (student_id, email, phone, birth_year, admin_notes)
+  insert into public.student_private (student_id, email, phone, birth_year)
   values (
     v_student_id,
     nullif(btrim(p_payload ->> 'email'), ''),
     nullif(btrim(p_payload ->> 'phone'), ''),
-    nullif(p_payload ->> 'birth_year', '')::smallint,
-    nullif(btrim(p_payload ->> 'admin_notes'), '')
+    nullif(p_payload ->> 'birth_year', '')::smallint
   );
+
+  if nullif(btrim(p_payload ->> 'admin_notes'), '') is not null then
+    insert into public.student_admin_notes (student_id, notes)
+    values (v_student_id, btrim(p_payload ->> 'admin_notes'));
+  end if;
 
   if v_audience <> 'kids' then
     return v_student_id;
@@ -502,6 +552,7 @@ grant execute on function public.create_student(jsonb) to authenticated;
 -- ---------------------------------------------------------------------------
 select public.enable_audit('public.students');
 select public.enable_audit('public.student_private');
+select public.enable_audit('public.student_admin_notes');
 select public.enable_audit('public.guardians');
 select public.enable_audit('public.student_guardians');
 select public.enable_audit('public.consent_texts');

@@ -6,7 +6,7 @@ begin;
 
 create extension if not exists pgtap with schema extensions;
 
-select plan(39);
+select plan(47);
 
 insert into auth.users (id, instance_id, aud, role, email, raw_user_meta_data, raw_app_meta_data, created_at, updated_at)
 values
@@ -45,6 +45,9 @@ insert into public.student_private (student_id, email, phone, birth_year) values
   ('c9100000-0000-4000-8000-0000000000c2', 'c9-s2@private.local', '0400 000 002', 1950),
   ('c9100000-0000-4000-8000-0000000000f1', null, null, 2018),
   ('c9100000-0000-4000-8000-0000000000f2', null, null, 2017);
+insert into public.student_admin_notes (student_id, notes) values
+  ('c9100000-0000-4000-8000-0000000000c1', 'C9 note about S1'),
+  ('c9100000-0000-4000-8000-0000000000f1', 'C9 note about K1');
 insert into public.guardians (id, profile_id, full_name, email, phone) values
   ('c9200000-0000-4000-8000-0000000000d1', 'c9000000-0000-4000-8000-0000000000d1', 'C9 Guardian One', 'c9-g1@private.local', '0400 000 011'),
   ('c9200000-0000-4000-8000-0000000000d2', 'c9000000-0000-4000-8000-0000000000d2', 'C9 Guardian Two', 'c9-g2@private.local', '0400 000 012');
@@ -77,6 +80,11 @@ set local request.jwt.claims = '{"sub":"c9000000-0000-4000-8000-0000000000a1","r
 select results_eq('select * from pg_temp.c9_visible()',
   $$ values (4::bigint, 4::bigint, 2::bigint, 2::bigint, 2::bigint) $$,
   'admin reads every student, private row, guardian, link and consent');
+select results_eq(
+  $$ select count(*) from public.student_admin_notes where student_id::text like 'c91%' $$,
+  $$ values (2::bigint) $$,
+  'admin reads admin notes'
+);
 
 set local request.jwt.claims = '{"sub":"c9000000-0000-4000-8000-0000000000c1","role":"authenticated"}';
 select results_eq(
@@ -93,7 +101,11 @@ select results_eq('select guardians, links, consents from pg_temp.c9_visible()',
   $$ values (0::bigint, 0::bigint, 0::bigint) $$,
   'an adult student reads no guardians, links or consents of others');
 update public.students set full_name = 'Hacked', status = 'inactive' where id = 'c9100000-0000-4000-8000-0000000000c1';
-update public.student_private set admin_notes = 'Hacked' where student_id = 'c9100000-0000-4000-8000-0000000000c1';
+update public.student_private set phone = 'Hacked' where student_id = 'c9100000-0000-4000-8000-0000000000c1';
+select is_empty(
+  $$ select 1 from public.student_admin_notes $$,
+  'student cannot read admin notes, not even their own'
+);
 select throws_ok(
   $$ insert into public.students (full_name, audience) values ('Fake', 'adults') $$,
   '42501', null, 'student cannot insert a student'
@@ -115,6 +127,10 @@ select is_empty(
      union all select 1 from public.student_guardians where student_id = 'c9100000-0000-4000-8000-0000000000f2' $$,
   'guardian cannot read another guardian''s minor'
 );
+select is_empty(
+  $$ select 1 from public.student_admin_notes $$,
+  'guardian cannot read the admin notes of their minor'
+);
 select throws_ok(
   $$ insert into public.consents (student_id, guardian_id, text_id, kind, granted, method)
      values ('c9100000-0000-4000-8000-0000000000f1', 'c9200000-0000-4000-8000-0000000000d1',
@@ -126,6 +142,15 @@ set local request.jwt.claims = '{"sub":"c9000000-0000-4000-8000-0000000000b1","r
 select results_eq('select * from pg_temp.c9_visible()',
   $$ values (0::bigint, 0::bigint, 0::bigint, 0::bigint, 0::bigint) $$,
   'teacher cannot read student_private, guardians or consents (nor students without enrolments)');
+select is_empty(
+  $$ select 1 from public.student_admin_notes $$,
+  'teacher cannot read admin notes'
+);
+select throws_ok(
+  $$ insert into public.student_admin_notes (student_id, notes)
+     values ('c9100000-0000-4000-8000-0000000000c2', 'teacher note') $$,
+  '42501', null, 'teacher cannot write admin notes'
+);
 select results_eq(
   $$ select count(*) from public.consent_texts where id like 'ctest_%' $$,
   $$ values (2::bigint) $$,
@@ -140,6 +165,7 @@ set local request.jwt.claims = '{"sub":"c9000000-0000-4000-8000-0000000000e1","r
 select results_eq('select * from pg_temp.c9_visible()',
   $$ values (0::bigint, 0::bigint, 0::bigint, 0::bigint, 0::bigint) $$,
   'suspended admin reads nothing');
+select is_empty($$ select 1 from public.student_admin_notes $$, 'suspended admin cannot read admin notes');
 select throws_ok(
   $$ select public.create_student('{"full_name":"T","audience":"adults"}'::jsonb) $$,
   '42501', null, 'suspended admin cannot execute create_student'
@@ -147,10 +173,10 @@ select throws_ok(
 
 reset role;
 select results_eq(
-  $$ select s.full_name, s.status::text, p.admin_notes
+  $$ select s.full_name, s.status::text, p.phone
      from public.students s join public.student_private p on p.student_id = s.id
      where s.id = 'c9100000-0000-4000-8000-0000000000c1' $$,
-  $$ values ('C9 Student One'::text, 'active'::text, null::text) $$,
+  $$ values ('C9 Student One'::text, 'active'::text, '0400 000 001'::text) $$,
   'student updates of own rows change nothing'
 );
 
@@ -278,7 +304,7 @@ select throws_ok(
 create temporary table c9_new (id uuid) on commit drop;
 grant insert, select on c9_new to authenticated;
 insert into c9_new
-select public.create_student('{"full_name":"C9 Kid New","audience":"kids","birth_year":2019,
+select public.create_student('{"full_name":"C9 Kid New","audience":"kids","birth_year":2019,"admin_notes":"Alergia: ninguna conocida",
   "guardian":{"full_name":"C9 New Guardian","email":"c9-new@private.local","phone":"0400 000 099","relationship":"legal_guardian"},
   "consent":{"text_id":"ctest_minor_data-v1","method":"paper"}}'::jsonb);
 insert into c9_new
@@ -303,6 +329,17 @@ select results_eq(
        ('C9 Kid Sibling'::text, true, null::smallint, 'c9-g1@private.local'::text, 'parent'::text, 'minor_data'::text, true,
         'c9000000-0000-4000-8000-0000000000a1'::text, 1::bigint) $$,
   'create_student for a minor writes student, guardian link and consent atomically (new or existing guardian)'
+);
+select results_eq(
+  $$ select n.notes, n.updated_by::text from public.student_admin_notes n
+     join public.students s on s.id = n.student_id where s.full_name like 'C9 Kid%' and s.id::text not like 'c91%' $$,
+  $$ values ('Alergia: ninguna conocida'::text, 'c9000000-0000-4000-8000-0000000000a1'::text) $$,
+  'create_student stores admin notes only in student_admin_notes, stamped with the admin'
+);
+select ok(
+  not exists (select 1 from information_schema.columns
+              where table_schema = 'public' and table_name = 'student_private' and column_name = 'admin_notes'),
+  'student_private has no admin_notes column (notes live in student_admin_notes)'
 );
 select is(
   (select count(*) from public.students where full_name in ('C9 Kid NG', 'C9 Kid NC', 'C9 Kid WT')),

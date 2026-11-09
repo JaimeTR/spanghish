@@ -100,7 +100,7 @@ export function StudentEditForm({
             <Field name="birthYear" label={t("birthYear")} error={errors.birthYear}>
               <input type="number" inputMode="numeric" min={1900} max={2100} defaultValue={form.value("birthYear", student.birth_year)} className={inputClass} />
             </Field>
-            <Field name="adminNotes" label={t("adminNotes")} error={errors.adminNotes}>
+            <Field name="adminNotes" label={t("adminNotes")} error={errors.adminNotes} hint={t("adminNotesHint")}>
               <textarea rows={3} maxLength={2000} defaultValue={form.value("adminNotes", student.admin_notes)} className={inputClass} />
             </Field>
           </div>

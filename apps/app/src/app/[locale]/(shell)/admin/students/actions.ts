@@ -116,11 +116,18 @@ export async function updateStudent(
       email: d.email ?? null,
       phone: d.phone ?? null,
       birth_year: d.birthYear ?? null,
-      admin_notes: d.adminNotes ?? null,
     },
     { onConflict: "student_id" },
   );
   if (contact.error) return { status: "error", error: toDomainError(contact.error) };
+
+  // Notas internas: tabla aparte que solo ve la administración (RLS).
+  const notes = d.adminNotes
+    ? await supabase
+        .from("student_admin_notes")
+        .upsert({ student_id: d.studentId, notes: d.adminNotes }, { onConflict: "student_id" })
+    : await supabase.from("student_admin_notes").delete().eq("student_id", d.studentId);
+  if (notes.error) return { status: "error", error: toDomainError(notes.error) };
 
   revalidatePath(`/${locale}/admin/students`, "layout");
   return { status: "ok" };
