@@ -13,6 +13,8 @@ export const USERS = {
   suspended: "suspended@spanglish.test",
   teacher2: "teacher2@spanglish.test",
   guardian: "guardian@spanglish.test",
+  /** Rol student sin ficha de alumno: nivel de contenido "account". */
+  visitor: "visitor@spanglish.test",
 } as const;
 
 /** IDs fijos de supabase/seed.sql (catálogo y personas). */
@@ -33,6 +35,22 @@ export const SEED_IDS = {
   },
   guardian: "b0000000-0000-4000-8000-000000000501",
   consentText: "minor_data-v1",
+} as const;
+
+/** Contenido de desarrollo de supabase/seed.sql (0010). */
+export const SEED_CONTENT = {
+  resources: {
+    publicLink: "c0000000-0000-4000-8000-000000000001",
+    accountLink: "c0000000-0000-4000-8000-000000000002",
+    enrolledVideo: "c0000000-0000-4000-8000-000000000003",
+    draftWorksheet: "c0000000-0000-4000-8000-000000000004",
+  },
+  lessons: {
+    public: { id: "c0000000-0000-4000-8000-000000000021", slug: "colores-local" },
+    account: { id: "c0000000-0000-4000-8000-000000000022", slug: "saludos-local" },
+    enrolled: { id: "c0000000-0000-4000-8000-000000000023", slug: "preterito-local" },
+    draft: { id: "c0000000-0000-4000-8000-000000000024", slug: "borrador-local" },
+  },
 } as const;
 
 /** WCAG 2.2 AA con axe (mismas reglas que shell.spec.ts). */

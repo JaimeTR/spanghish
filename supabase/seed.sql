@@ -14,6 +14,7 @@
 --   suspended@spanglish.test  -> student, profiles.status = 'suspended'
 --   teacher2@spanglish.test   -> teacher (initial_role en app_metadata)
 --   guardian@spanglish.test   -> guardian (initial_role en app_metadata)
+--   visitor@spanglish.test    -> student sin ficha de alumno (nivel de contenido "account")
 --
 -- El trigger on_auth_user_created crea el perfil y el rol 'student'; aquí solo
 -- se ajustan roles y estado. GoTrue necesita contraseña bcrypt, columnas de
@@ -50,7 +51,9 @@ with seed_users (id, email, full_name, app_meta) as (
     ('a0000000-0000-4000-8000-000000000005'::uuid, 'teacher2@spanglish.test', 'Teacher Two',
      '{"initial_role":"teacher"}'::jsonb),
     ('a0000000-0000-4000-8000-000000000006'::uuid, 'guardian@spanglish.test', 'Guardian Local',
-     '{"initial_role":"guardian"}'::jsonb)
+     '{"initial_role":"guardian"}'::jsonb),
+    -- Cuenta con rol student pero SIN ficha de alumno: ve el contenido "con cuenta".
+    ('a0000000-0000-4000-8000-000000000007'::uuid, 'visitor@spanglish.test', 'Visitor Local', '{}'::jsonb)
 )
 insert into auth.users (
   instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
@@ -155,3 +158,71 @@ begin
   perform set_config('request.jwt.claims', '', true);
 end
 $kid$;
+
+-- ---------------------------------------------------------------------------
+-- Contenido de desarrollo (0010). IDs fijos (c0…) para las e2e (SEED_CONTENT en
+-- apps/app/e2e/fixtures.ts). Además de lo que trae la migración (2 lecciones
+-- interactivas y 3 videos de Maribel):
+--   recursos: 01 enlace public, 02 enlace account, 03 video enrolled (publicados),
+--             04 ficha public en borrador sin archivo (las e2e le suben el archivo)
+--   lecciones artículo publicadas: colores-local (public), saludos-local (account),
+--             preterito-local (enrolled), cada una con un bloque de texto y una
+--             pregunta; y una en borrador.
+-- ---------------------------------------------------------------------------
+insert into public.resources (id, kind, access_level, status, title_es, title_en, description_es, description_en,
+                              external_url, youtube_id) values
+  ('c0000000-0000-4000-8000-000000000001', 'link', 'public', 'published',
+   'Diccionario de la RAE', 'RAE dictionary',
+   'Diccionario oficial de la lengua española.', 'The official Spanish dictionary.',
+   'https://dle.rae.es/', null),
+  ('c0000000-0000-4000-8000-000000000002', 'link', 'account', 'published',
+   'Conjugador de verbos (local)', 'Verb conjugator (local)',
+   'Recurso de prueba para cuentas registradas.', 'Test resource for registered accounts.',
+   'https://www.wordreference.com/conj/esverbs.aspx', null),
+  ('c0000000-0000-4000-8000-000000000003', 'video', 'enrolled', 'published',
+   'Video para alumnos (local)', 'Student video (local)',
+   'Recurso de prueba solo para alumnos.', 'Test resource for students only.',
+   null, 'GilfeIjZm_g'),
+  ('c0000000-0000-4000-8000-000000000004', 'worksheet', 'public', 'draft',
+   'Ficha de práctica (local)', 'Practice worksheet (local)',
+   'Borrador sin archivo: las e2e le suben uno y la publican.', 'Draft without a file: e2e uploads one and publishes it.',
+   null, null);
+
+insert into public.lessons (id, slug, category, level_id, title_es, title_en, summary_es, summary_en, access_level)
+select v.id::uuid, v.slug, v.category::public.learn_category, lv.id, v.title_es, v.title_en, v.summary_es, v.summary_en,
+       v.access::public.access_level
+from (values
+  ('c0000000-0000-4000-8000-000000000021', 'colores-local', 'kids', 'A1', 'Los colores', 'Colours',
+   'Aprende los colores básicos.', 'Learn the basic colours.', 'public'),
+  ('c0000000-0000-4000-8000-000000000022', 'saludos-local', 'adults', 'A1', 'Saludos', 'Greetings',
+   'Cómo saludar y despedirse.', 'How to say hello and goodbye.', 'account'),
+  ('c0000000-0000-4000-8000-000000000023', 'preterito-local', 'adults', 'B1', 'El pretérito', 'The preterite',
+   'Hablar del pasado.', 'Talking about the past.', 'enrolled'),
+  ('c0000000-0000-4000-8000-000000000024', 'borrador-local', 'adults', 'A2', 'Lección en borrador', 'Draft lesson',
+   null, null, 'public')
+) as v (id, slug, category, level_code, title_es, title_en, summary_es, summary_en, access)
+join public.levels lv on lv.language_code = 'es' and lv.code = v.level_code;
+
+insert into public.lesson_blocks (id, lesson_id, position, kind, body_es, body_en) values
+  ('c0000000-0000-4000-8000-000000000031', 'c0000000-0000-4000-8000-000000000021', 10, 'text',
+   E'Los colores básicos son:\n- **rojo**\n- **azul**\n- **amarillo**', E'The basic colours are:\n- **red**\n- **blue**\n- **yellow**'),
+  ('c0000000-0000-4000-8000-000000000033', 'c0000000-0000-4000-8000-000000000022', 10, 'text',
+   'Decimos **hola** al llegar y **adiós** al irnos.', 'We say **hola** when arriving and **adiós** when leaving.'),
+  ('c0000000-0000-4000-8000-000000000035', 'c0000000-0000-4000-8000-000000000023', 10, 'text',
+   'El pretérito indefinido habla de acciones terminadas.', 'The preterite talks about finished actions.'),
+  ('c0000000-0000-4000-8000-000000000037', 'c0000000-0000-4000-8000-000000000024', 10, 'text',
+   'Borrador.', 'Draft.');
+insert into public.lesson_blocks (id, lesson_id, position, kind, body_es, body_en, options_es, options_en,
+                                  correct_option, explanation_es, explanation_en) values
+  ('c0000000-0000-4000-8000-000000000032', 'c0000000-0000-4000-8000-000000000021', 20, 'quiz',
+   '¿Cómo se dice "red"?', 'How do you say "red"?', array['rojo', 'azul'], array['rojo', 'azul'], 0,
+   '"Rojo" es "red".', '"Rojo" means "red".'),
+  ('c0000000-0000-4000-8000-000000000034', 'c0000000-0000-4000-8000-000000000022', 20, 'quiz',
+   '¿Qué dices al llegar?', 'What do you say when arriving?', array['hola', 'adiós'], array['hola', 'adiós'], 0,
+   null, null),
+  ('c0000000-0000-4000-8000-000000000036', 'c0000000-0000-4000-8000-000000000023', 20, 'quiz',
+   '¿"Comí" es pretérito?', 'Is "comí" preterite?', array['sí', 'no'], array['yes', 'no'], 0, null, null);
+
+update public.lessons set status = 'published'
+where id in ('c0000000-0000-4000-8000-000000000021', 'c0000000-0000-4000-8000-000000000022',
+             'c0000000-0000-4000-8000-000000000023');

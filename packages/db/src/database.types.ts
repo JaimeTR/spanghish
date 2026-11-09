@@ -105,6 +105,58 @@ isOneToOne: true
                   Relationships: [
                     
                   ]
+                },"lesson_blocks": {
+                  Row: {
+                    "alt_en": string | null,"alt_es": string | null,"body_en": string | null,"body_es": string | null,"correct_option": number | null,"created_at": string,"explanation_en": string | null,"explanation_es": string | null,"id": string,"image_height": number | null,"image_path": string | null,"image_width": number | null,"kind": Database["public"]['Enums']["lesson_block_kind"],"lesson_id": string,"options_en": (string)[] | null,"options_es": (string)[] | null,"position": number,"updated_at": string,"youtube_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "alt_en"?: string | null,"alt_es"?: string | null,"body_en"?: string | null,"body_es"?: string | null,"correct_option"?: number | null,"created_at"?: string,"explanation_en"?: string | null,"explanation_es"?: string | null,"id"?: string,"image_height"?: number | null,"image_path"?: string | null,"image_width"?: number | null,"kind": Database["public"]['Enums']["lesson_block_kind"],"lesson_id": string,"options_en"?: (string)[] | null,"options_es"?: (string)[] | null,"position": number,"updated_at"?: string,"youtube_id"?: string | null
+                  }
+                  Update: {
+                    "alt_en"?: string | null,"alt_es"?: string | null,"body_en"?: string | null,"body_es"?: string | null,"correct_option"?: number | null,"created_at"?: string,"explanation_en"?: string | null,"explanation_es"?: string | null,"id"?: string,"image_height"?: number | null,"image_path"?: string | null,"image_width"?: number | null,"kind"?: Database["public"]['Enums']["lesson_block_kind"],"lesson_id"?: string,"options_en"?: (string)[] | null,"options_es"?: (string)[] | null,"position"?: number,"updated_at"?: string,"youtube_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "lesson_blocks_lesson_id_fkey"
+      columns: ["lesson_id"]
+isOneToOne: false
+      referencedRelation: "lessons"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"lessons": {
+                  Row: {
+                    "access_level": Database["public"]['Enums']["access_level"],"category": Database["public"]['Enums']["learn_category"],"component_key": string | null,"created_at": string,"created_by": string | null,"id": string,"kind": Database["public"]['Enums']["lesson_kind"],"language_code": string,"level_id": string | null,"published_at": string | null,"slug": string,"sort_order": number,"status": Database["public"]['Enums']["content_status"],"summary_en": string | null,"summary_es": string | null,"teaser_public": boolean,"title_en": string,"title_es": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "access_level"?: Database["public"]['Enums']["access_level"],"category": Database["public"]['Enums']["learn_category"],"component_key"?: string | null,"created_at"?: string,"created_by"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["lesson_kind"],"language_code"?: string,"level_id"?: string | null,"published_at"?: string | null,"slug": string,"sort_order": number,"status"?: Database["public"]['Enums']["content_status"],"summary_en"?: string | null,"summary_es"?: string | null,"teaser_public"?: boolean,"title_en": string,"title_es": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "access_level"?: Database["public"]['Enums']["access_level"],"category"?: Database["public"]['Enums']["learn_category"],"component_key"?: string | null,"created_at"?: string,"created_by"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["lesson_kind"],"language_code"?: string,"level_id"?: string | null,"published_at"?: string | null,"slug"?: string,"sort_order"?: number,"status"?: Database["public"]['Enums']["content_status"],"summary_en"?: string | null,"summary_es"?: string | null,"teaser_public"?: boolean,"title_en"?: string,"title_es"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "lessons_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lessons_language_code_fkey"
+      columns: ["language_code"]
+isOneToOne: false
+      referencedRelation: "languages"
+      referencedColumns: ["code"]
+    },{
+      foreignKeyName: "lessons_level_id_fkey"
+      columns: ["level_id"]
+isOneToOne: false
+      referencedRelation: "levels"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"levels": {
                   Row: {
                     "code": string,"id": string,"language_code": string,"name_en": string,"name_es": string,"sort": number
@@ -225,6 +277,38 @@ isOneToOne: false
       referencedColumns: ["code"]
     },{
       foreignKeyName: "programs_level_id_fkey"
+      columns: ["level_id"]
+isOneToOne: false
+      referencedRelation: "levels"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"resources": {
+                  Row: {
+                    "access_level": Database["public"]['Enums']["access_level"],"audience": Database["public"]['Enums']["audience_segment"] | null,"created_at": string,"created_by": string | null,"description_en": string | null,"description_es": string | null,"external_url": string | null,"file_mime": string | null,"file_path": string | null,"file_size_bytes": number | null,"id": string,"kind": Database["public"]['Enums']["resource_kind"],"language_code": string,"level_id": string | null,"published_at": string | null,"sort_order": number,"status": Database["public"]['Enums']["content_status"],"teaser_public": boolean,"thumbnail_path": string | null,"title_en": string,"title_es": string,"title_lang": string | null,"updated_at": string,"youtube_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "access_level"?: Database["public"]['Enums']["access_level"],"audience"?: Database["public"]['Enums']["audience_segment"] | null,"created_at"?: string,"created_by"?: string | null,"description_en"?: string | null,"description_es"?: string | null,"external_url"?: string | null,"file_mime"?: string | null,"file_path"?: string | null,"file_size_bytes"?: number | null,"id"?: string,"kind": Database["public"]['Enums']["resource_kind"],"language_code"?: string,"level_id"?: string | null,"published_at"?: string | null,"sort_order": number,"status"?: Database["public"]['Enums']["content_status"],"teaser_public"?: boolean,"thumbnail_path"?: string | null,"title_en": string,"title_es": string,"title_lang"?: string | null,"updated_at"?: string,"youtube_id"?: string | null
+                  }
+                  Update: {
+                    "access_level"?: Database["public"]['Enums']["access_level"],"audience"?: Database["public"]['Enums']["audience_segment"] | null,"created_at"?: string,"created_by"?: string | null,"description_en"?: string | null,"description_es"?: string | null,"external_url"?: string | null,"file_mime"?: string | null,"file_path"?: string | null,"file_size_bytes"?: number | null,"id"?: string,"kind"?: Database["public"]['Enums']["resource_kind"],"language_code"?: string,"level_id"?: string | null,"published_at"?: string | null,"sort_order"?: number,"status"?: Database["public"]['Enums']["content_status"],"teaser_public"?: boolean,"thumbnail_path"?: string | null,"title_en"?: string,"title_es"?: string,"title_lang"?: string | null,"updated_at"?: string,"youtube_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "resources_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "resources_language_code_fkey"
+      columns: ["language_code"]
+isOneToOne: false
+      referencedRelation: "languages"
+      referencedColumns: ["code"]
+    },{
+      foreignKeyName: "resources_level_id_fkey"
       columns: ["level_id"]
 isOneToOne: false
       referencedRelation: "levels"
@@ -367,6 +451,9 @@ isOneToOne: false
 "can_view_student":
 { Args: { "p_student_id": string }; Returns: boolean
                            },
+"content_tier":
+{ Args: Record<PropertyKey, never>; Returns: Database["public"]['Enums']["access_level"]
+                           },
 "create_student":
 { Args: { "p_payload": Json }; Returns: string
                            },
@@ -385,18 +472,24 @@ isOneToOne: false
 "has_current_consent":
 { Args: { "p_kind": Database["public"]['Enums']["consent_kind"],"p_student_id": string }; Returns: boolean
                            },
+"has_enrolled_access":
+{ Args: Record<PropertyKey, never>; Returns: boolean
+                           },
 "has_role":
 { Args: { "r": Database["public"]['Enums']["app_role"] }; Returns: boolean
                            },
 "is_active":
 { Args: Record<PropertyKey, never>; Returns: boolean
                            },
+"text_items_within":
+{ Args: { "p_items": (string)[],"p_max": number,"p_min": number }; Returns: boolean
+                           },
 "user_has_role":
 { Args: { "p_role": Database["public"]['Enums']["app_role"],"p_user_id": string }; Returns: boolean
                            }
           }
           Enums: {
-            "app_role": "admin"|"teacher"|"student"|"guardian","audience_segment": "kids"|"adults"|"mature","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","edition_status": "draft"|"open"|"closed"|"cancelled","lesson_format": "individual"|"own_group"|"local_group","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack","student_status": "active"|"inactive"
+            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian","audience_segment": "kids"|"adults"|"mature","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","student_status": "active"|"inactive"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -512,7 +605,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_role": ["admin", "teacher", "student", "guardian"],"audience_segment": ["kids", "adults", "mature"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"edition_status": ["draft", "open", "closed", "cancelled"],"lesson_format": ["individual", "own_group", "local_group"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"],"student_status": ["active", "inactive"]
+            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian"],"audience_segment": ["kids", "adults", "mature"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"student_status": ["active", "inactive"]
           }
         }
 } as const
