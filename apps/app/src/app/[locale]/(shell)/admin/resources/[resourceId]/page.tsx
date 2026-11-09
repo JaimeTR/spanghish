@@ -10,6 +10,7 @@ import { FileUpload } from "@/components/content/FileUpload";
 import { ResourceDeleteButton } from "../ResourceDeleteButton";
 export default async function EditResourcePage({ params }: { params: Promise<{ locale: string; resourceId: string }> }) {
   const { locale, resourceId } = await params; if (!isLocale(locale)) notFound(); setRequestLocale(locale); await requireArea(locale, "admin");
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(resourceId)) notFound();
   const db = await createClient(); const [resource, levels, t] = await Promise.all([getAdminResource(db, resourceId), listLevels(db), getTranslations({ locale, namespace: "content.resources" })]);
   if (!resource) notFound();
   return <><PageHeader title={locale === "es" ? resource.title_es : resource.title_en} back={{ href: `/${locale}/admin/resources`, label: t("back") }} />
