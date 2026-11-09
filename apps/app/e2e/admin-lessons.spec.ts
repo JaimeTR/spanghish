@@ -39,7 +39,7 @@ test("a duplicate slug shows the slug_taken message on the slug field", async ({
   await expect(page.getByLabel("Identificador URL")).toHaveAttribute("aria-invalid", "true"); await expect(page.getByLabel("Identificador URL")).toHaveAccessibleDescription("Este identificador ya está en uso.");
 });
 test("publishing a lesson without blocks shows content_incomplete", async ({ page }) => {
-  await loginAdmin(page); await page.goto("/es/admin/lessons/new"); await page.getByLabel("Identificador URL").fill(`empty-${Date.now()}`); await page.getByLabel("Español").nth(0).fill("Vacía"); await page.getByLabel("English").nth(0).fill("Empty"); await page.getByRole("button", { name: "Crear lección" }).click(); await page.getByRole("button", { name: "Publicar" }).click(); await expect(page.getByRole("alert")).toContainText("Completa el contenido obligatorio");
+  await loginAdmin(page); await page.goto("/es/admin/lessons/new"); await page.getByLabel("Identificador URL").fill(`empty-${Date.now()}`); await page.getByLabel("Español").nth(0).fill("Vacía"); await page.getByLabel("English").nth(0).fill("Empty"); await page.getByRole("button", { name: "Crear lección" }).click(); await page.getByRole("button", { name: "Publicar" }).click(); await expect(page.locator("main [role=alert]")).toContainText("Completa el contenido obligatorio");
 });
 test("the interactive alphabet lesson shows its slug as text and has no delete button", async ({ page }) => {
   await loginAdmin(page); await page.goto("/es/admin/lessons"); await page.getByRole("link", { name: "El alfabeto" }).click(); await expect(page.getByText("alphabet", { exact: true })).toBeVisible(); await expect(page.getByRole("button", { name: "Eliminar lección" })).toHaveCount(0);
@@ -51,7 +51,8 @@ test("a lesson id that does not exist or is malformed returns 404", async ({ pag
 });
 test("moving a lesson up within adults A1 changes the order", async ({ page }) => {
   const suffix = Date.now(); await loginAdmin(page); await createArticle(page, `adult-${suffix}-a`, "adults", "A1"); await createArticle(page, `adult-${suffix}-b`, "adults", "A1");
-  await page.goto("/es/admin/lessons"); const section = page.getByRole("region", { name: "Adultos" }); const secondRow = section.getByRole("listitem").filter({ hasText: `Lección adult-${suffix}-b` }); await expect(secondRow).toBeVisible(); await secondRow.getByRole("button", { name: /^Subir / }).click(); await page.reload(); await expect(section.getByRole("listitem").first()).toContainText(`Lección adult-${suffix}-b`);
+  await page.goto("/es/admin/lessons"); const section = page.getByRole("region", { name: "Adultos" }); const secondRow = section.getByRole("listitem").filter({ hasText: `Lección adult-${suffix}-b` }); await expect(secondRow).toBeVisible(); await secondRow.getByRole("button", { name: /^Subir / }).click(); await page.reload();
+  const ordered = await section.getByRole("listitem").allTextContents(); const aIndex = ordered.findIndex((row) => row.includes(`Lección adult-${suffix}-a`)); const bIndex = ordered.findIndex((row) => row.includes(`Lección adult-${suffix}-b`)); expect(bIndex).toBeLessThan(aIndex);
 });
 test("/en/admin/lessons shows English category names", async ({ page }) => { await login(page, USERS.admin, { locale: "en" }); await expectPath(page, "/en/admin"); await page.goto("/en/admin/lessons"); await expect(page.getByRole("heading", { name: "Kids" })).toBeVisible(); });
 test("lessons pages have no axe violations", async ({ page }) => { await loginAdmin(page); await page.goto("/es/admin/lessons"); await expectNoAxeViolations(page); });
@@ -71,7 +72,7 @@ test("deleting a block asks for confirmation", async ({ page }) => {
   await loginAdmin(page); const id = await createArticle(page, `delete-${Date.now()}`); await addTextBlock(page, id, "Texto", "Text"); await page.getByRole("button", { name: "Eliminar bloque" }).click(); await expect(page.getByRole("button", { name: "¿Seguro?" })).toBeVisible();
 });
 test("deleting the only block of a published lesson shows content_incomplete", async ({ page }) => {
-  await loginAdmin(page); const id = await createArticle(page, `delete-published-${Date.now()}`); await addTextBlock(page, id, "Texto", "Text"); await page.getByRole("button", { name: "Publicar" }).click(); await page.getByRole("button", { name: "Eliminar bloque" }).click(); await page.getByRole("button", { name: "¿Seguro?" }).click(); await expect(page.getByRole("alert")).toContainText("Completa el contenido obligatorio");
+  await loginAdmin(page); const id = await createArticle(page, `delete-published-${Date.now()}`); await addTextBlock(page, id, "Texto", "Text"); await page.getByRole("button", { name: "Publicar" }).click(); await page.getByRole("button", { name: "Eliminar bloque" }).click(); await page.getByRole("button", { name: "¿Seguro?" }).click(); await expect(page.locator("main [role=alert]")).toContainText("Completa el contenido obligatorio");
 });
 test("admin adds an image block with alt texts and it renders in the preview", async ({ page }) => {
   await loginAdmin(page); const id = await createArticle(page, `image-${Date.now()}`); await page.goto(`/es/admin/lessons/${id}?add=image`);

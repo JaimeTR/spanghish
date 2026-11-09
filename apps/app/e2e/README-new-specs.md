@@ -36,4 +36,4 @@ Estas 26 pruebas usan el usuario admin de desarrollo de `fixtures.ts`, esperan l
 
 ## Cambio de UI
 
-Los detalles de recurso y lección devuelven 404 tanto para UUID inexistentes como para IDs mal formados, validando el formato antes de consultar la base. No se modificó el texto ni la estructura de los formularios; sus labels accesibles provienen de los mensajes y de `Field`/`BilingualField`.
+Se añadieron las traducciones ausentes para acceso de recursos y bloques de texto en ambos idiomas. Los selectores de archivo y miniatura tienen nombres accesibles distintos, y el editor conserva lo escrito tras guardar. Las pruebas de movimiento crean pares E2E y comparan su orden relativo; los avisos de validación se buscan dentro de `main`. También se añadió una prueba unitaria que contrasta las claves de traducción de estas páginas con `es.json` y `en.json`. Los detalles de recurso y lección devuelven 404 tanto para UUID inexistentes como para IDs mal formados, validando el formato antes de consultar la base.

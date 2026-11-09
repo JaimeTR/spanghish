@@ -8,7 +8,7 @@ import { useFormAction } from "@/components/forms/useFormAction";
 import { FormStatus } from "@/components/forms/FormStatus";
 import { removeResourceFile } from "@/app/[locale]/(shell)/admin/resources/upload-actions";
 
-export function FileUpload({ ownerId, target, accept, maxBytes, currentLabel, locale = "es", onUploaded, allowRemove = false }: { ownerId: string; target: UploadTarget; accept: string; maxBytes: number; currentLabel?: string; locale?: string; onUploaded?: (path: string, width?: number, height?: number) => void; allowRemove?: boolean }) {
+export function FileUpload({ ownerId, target, accept, maxBytes, currentLabel, locale = "es", onUploaded, allowRemove = false, accessibleLabel }: { ownerId: string; target: UploadTarget; accept: string; maxBytes: number; currentLabel?: string; locale?: string; onUploaded?: (path: string, width?: number, height?: number) => void; allowRemove?: boolean; accessibleLabel?: string }) {
   const t = useTranslations("content.upload"); const [message, setMessage] = useState(""); const [busy, setBusy] = useState(false);
   const remove = useFormAction(removeResourceFile);
   async function upload(file?: File) {
@@ -28,5 +28,5 @@ export function FileUpload({ ownerId, target, accept, maxBytes, currentLabel, lo
       setMessage(attached.status === "ok" ? t("uploaded") : attached.status === "error" ? t(attached.error === "not_found" ? "missing" : "unavailable") : t("unavailable"));
     } catch { setMessage(t("unavailable")); } finally { setBusy(false); }
   }
-  return <div className="grid gap-2"><label className="font-semibold">{t("current")}</label>{currentLabel ? <p>{currentLabel}</p> : <p>{t("none")}</p>}{allowRemove && currentLabel ? <form action={remove.formAction}><input type="hidden" name="id" value={ownerId} /><input type="hidden" name="locale" value={locale} /><button type="submit" className="min-h-11 justify-self-start underline">{t("remove")}</button><FormStatus state={remove.state} /></form> : null}<input aria-label={t("choose")} type="file" accept={accept} disabled={busy} onChange={(event) => void upload(event.currentTarget.files?.[0])} /><p className="text-sm text-text-muted">{t("requiresJs")}</p><p aria-live="polite" role="status">{message}</p></div>;
+  return <div className="grid gap-2"><p className="font-semibold">{t("current")}</p>{currentLabel ? <p>{currentLabel}</p> : <p>{t("none")}</p>}{allowRemove && currentLabel ? <form action={remove.formAction}><input type="hidden" name="id" value={ownerId} /><input type="hidden" name="locale" value={locale} /><button type="submit" className="min-h-11 justify-self-start underline">{t("remove")}</button><FormStatus state={remove.state} /></form> : null}<input aria-label={accessibleLabel ?? t("choose")} type="file" accept={accept} disabled={busy} onChange={(event) => void upload(event.currentTarget.files?.[0])} /><p className="text-sm text-text-muted">{t("requiresJs")}</p><p aria-live="polite" role="status">{message}</p></div>;
 }

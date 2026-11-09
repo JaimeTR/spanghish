@@ -42,13 +42,29 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 - `docs/superpowers/plans/2026-11-08-pendientes-tras-hito1a.md` (deudas de 1A; cubiertas por 1B fase 1).
 
 ## 5.1 Siguiente trabajo, en orden
-1. **Contenido fase 2 (T5–T9):** gestión en el portal de recursos y lecciones (CRUD, publicar, ordenar, subida de archivos con URL firmada, editor de lecciones por bloques con vista previa). Al terminar, cambiar `status` de `content` a `ready` en `apps/app/src/lib/nav.ts`.
+1. **Contenido fase 2 (T5–T9) — código escrito, faltan 12 e2e (ver 5.2):** gestión en el portal de recursos y lecciones (CRUD, publicar, ordenar, subida de archivos con URL firmada, editor de lecciones por bloques con vista previa). Al terminar, cambiar `status` de `content` a `ready` en `apps/app/src/lib/nav.ts`.
 2. **Contenido fase 3 (T10–T11):** vista de Recursos y "Aprende" del alumno por nivel de acceso.
 3. **Contenido fase 4 (T12–T15):** la web lee recursos y lecciones publicados (RPC con clave anónima, caché 300 s, respaldo estático, `/api/revalidate`).
 4. **Contenido fase 5 (T16–T20):** configuración de despliegue, validación de variables, noindex por entorno, `/api/health`, semilla de datos de ejemplo, `docs/despliegue.md`. **T20 debe renumerar** las migraciones de 1B fases 3–6 (reservadas 0010–0015 → pasan a 0012+) en el plan 1B.
 5. Contenido fase 6 (tienda gestionable): opcional.
 6. **1B fases 3–6:** grupos/calendario/matrículas, asistencia/packs/"Hoy" del docente, solicitudes web → panel, panel de la administradora. Sustituir `has_enrolled_access()` (marcador temporal) en la tarea 13 de 1B.
 7. Hito 2 (alumno completo) y hito 3 (Stripe de matrículas, CMS, lanzamiento): sin plan escrito aún.
+
+## 5.2 Punto exacto donde se quedó el trabajo (2026-11-09)
+Rama de trabajo: `feat/contenido-fase2` (apilada sobre `feat/contenido-fase0` / PR #9). Codex escribió las tareas 5 a 9 del hito Contenido (gestión de recursos y lecciones en el panel) y se corrigió en 4 pasadas.
+- **Verde:** `pnpm lint`, `pnpm typecheck`, `pnpm test` (app 185), build. Migraciones y pgTAP sin cambios (285).
+- **Pendiente: 12 de 26 pruebas e2e nuevas fallan** (14 pasan): `apps/app/e2e/admin-resources.spec.ts` y `admin-lessons.spec.ts`. Ejecutar solo esas con
+  `cd apps/app && pnpm exec playwright test e2e/admin-resources.spec.ts e2e/admin-lessons.spec.ts --workers=2 --timeout=12000 --reporter=line`.
+  Fallos conocidos (las causas suelen ser selectores que no coinciden o fallos reales de UI):
+  - lessons: "publishing a lesson without blocks shows content_incomplete" (el locator `main [role=alert]` dio `text.replace is not a function`).
+  - resources: "pasting a YouTube URL stores the id..." (el campo "URL de YouTube" queda vacío tras guardar).
+  - resources: "moving a resource down changes the visible order after reload" y lessons: "moving a lesson up within adults A1" (el orden no cambia como espera la prueba: comprobar `move_resource`/`move_lesson` y que la prueba compare las filas creadas por ella).
+  - axe: "lessons pages have no axe violations" y "resources pages have no axe violations (desktop and 375px)" (hay violaciones reales de accesibilidad en las páginas nuevas).
+  - resources: "uploading a .zip shows the type message...", "a successful signed-upload response without an object is rejected..." (subidas: ver `FileUpload.tsx`, `upload-actions.ts`).
+  - lessons: "admin adds text, video and quiz blocks, reorders them and publishes", "a quiz with the correct option out of range shows the field error", "deleting the only block of a published lesson shows content_incomplete", "admin adds an image block with alt texts and it renders in the preview".
+- Resumen de lo que hace cada prueba: `apps/app/e2e/README-new-specs.md`.
+- Corregir de preferencia con Codex (ver sección 6), alimentándolo con el mensaje de error de cada prueba; revisar siempre a mano las políticas de Storage y las acciones de subida.
+- Cuando las 26 pasen: correr TODA la suite e2e una vez (`pnpm --filter @spanglish/app e2e`), subir y abrir el PR "Contenido-2" con base `feat/contenido-fase0`, y cambiar a `ready` el módulo `content` en `nav.ts` si no lo está.
 
 ## 6. Cómo delegar sin gastar tokens de Claude
 - **Codex** (cuenta ChatGPT ya iniciada): `codex exec -C <worktree> -s workspace-write "<prompt autocontenido que cite el archivo del plan y la tarea>"`. Su sandbox NO puede ejecutar `pnpm` (EPERM): que solo escriba archivos y ejecutar las comprobaciones fuera. Nunca `danger-full-access`, nunca pasar secretos. Un solo escritor por archivo.

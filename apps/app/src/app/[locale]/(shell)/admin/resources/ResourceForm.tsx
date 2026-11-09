@@ -12,7 +12,7 @@ import { saveResource } from "./actions";
 
 export function ResourceForm({ locale, resource, levels }: { locale: string; resource?: Tables<"resources">; levels: { id: string; code: string }[] }) {
   const t = useTranslations("content.resources");
-  const form = useFormAction<ResourceField>(saveResource);
+  const form = useFormAction<ResourceField>(saveResource, undefined, true);
   return <form action={form.formAction} className="mt-8 grid max-w-3xl gap-5">
     <input type="hidden" name="locale" value={locale} />{resource ? <input type="hidden" name="id" value={resource.id} /> : null}
     <div key={form.formKey} className="grid gap-5">

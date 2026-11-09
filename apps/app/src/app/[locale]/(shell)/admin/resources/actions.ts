@@ -52,7 +52,8 @@ export async function moveResource(formData: FormData): Promise<void> {
   const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin");
   const parsed = parseForm(moveSchema, formData); if (!parsed.ok) return;
   const supabase = await createClient(); const { data: row } = await supabase.from("resources").select("status").eq("id", parsed.data.id).maybeSingle();
-  await supabase.rpc("move_resource", { p_resource_id: parsed.data.id, p_direction: parsed.data.direction });
+  const { error } = await supabase.rpc("move_resource", { p_resource_id: parsed.data.id, p_direction: parsed.data.direction });
+  if (error) throw error;
   revalidatePath(`/${locale}/admin/resources`);
   if (row?.status === "published") await pingWebRevalidate();
 }

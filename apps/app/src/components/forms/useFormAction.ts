@@ -19,6 +19,7 @@ type Snapshot = { version: number; values: Record<string, string> | null };
 export function useFormAction<F extends string>(
   action: (prev: ActionState<F>, formData: FormData) => Promise<ActionState<F>>,
   initial: ActionState<F> = { status: "idle" },
+  preserveOnSuccess = false,
 ) {
   const [snapshot, setSnapshot] = useState<Snapshot>({ version: 0, values: null });
   const [state, formAction, pending] = useActionState<ActionState<F>, FormData>(async (prev, formData) => {
@@ -27,7 +28,7 @@ export function useFormAction<F extends string>(
       if (typeof value === "string") values[key] = value;
     });
     const next = await action(prev, formData);
-    setSnapshot((s) => ({ version: s.version + 1, values: next.status === "ok" ? null : values }));
+    setSnapshot((s) => ({ version: s.version + 1, values: next.status === "ok" && !preserveOnSuccess ? null : values }));
     return next;
   }, initial);
 
