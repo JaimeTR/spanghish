@@ -1,4 +1,4 @@
-# Hito Demo: Recursos y Aprende ahora gestionados, web conectada y entorno de demostración Implementation Plan
+# Hito Contenido: Recursos y Aprende ahora gestionados, web conectada y entorno de demostración Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -108,7 +108,44 @@ El hito parte de `develop` con 1B Fase 2 fusionada. Si los PR apilados aún no e
 
 ---
 
-## Fase 1. Contenido en la base (PR "Demo-1")
+## Fase 0. Menú completo con etiqueta "En desarrollo" (PR "Contenido-0")
+
+Objetivo: que cualquiera que abra el portal (la dueña, en la presentación) vea **todo el sistema que habrá**, no solo lo ya construido: el menú lateral de cada rol con todos sus módulos, y los que aún no existen marcados "En desarrollo" con una página que explica qué harán y cómo se verán. Es la forma visible de enseñar el avance sin esperar a terminar todo. Aprobado por la dueña/desarrollador (2026-11-09).
+
+### Task 0.1: Registro de módulos por rol y menú lateral con estado
+
+**Files:**
+- Modify: `apps/app/src/lib/nav.ts` (+ `nav.test.ts`), `apps/app/src/components/Sidebar.tsx`, `apps/app/src/components/MobileMenu.tsx`, `apps/app/messages/{es,en}.json` (`nav.*`, `nav.status.dev`)
+
+**Interfaces:**
+- Produces: `type ModuleStatus = "ready" | "dev"`; `type NavItem = { key: string; area: Role; status: ModuleStatus; href: string; icon: IconName }`; `NAV: Record<Role, NavItem[]>`; `devModules(area): string[]` (claves con `status: "dev"`).
+- Todos los menús completos, en este orden. `ready` = ya existe en esta rama; los demás `dev`:
+  - **admin:** `dashboard` ready · `calendar` dev · `groups` dev · `enrollments` dev · `attendance` dev · `payments` dev · `leads` dev · `catalog` ready · `students` ready · `teachers` ready · `content` dev · `settings` ready.
+  - **teacher:** `today` dev · `groups` dev · `calendar` dev · `attendance` dev · `resources` dev · `requests` dev.
+  - **student:** `home` ready · `schedule` dev · `courses` dev · `resources` dev · `assignments` dev · `progress` dev · `payments` dev · `requests` dev.
+  - **guardian:** `children` dev · `schedule` dev · `payments` dev · `consents` dev · `resources` dev.
+- Regla: cada tarea posterior que construya un módulo cambia su `status` a `"ready"` en `nav.ts` (el test lo exige: un módulo `ready` debe tener su ruta real).
+
+- [ ] **Step 1: Tests (fallan primero)** en `nav.test.ts`: `NAV.admin` contiene exactamente las claves de arriba y en ese orden; ningún ítem `ready` apunta a una ruta de placeholder; todo ítem `dev` tiene `nav.status.dev`, `devModules.<key>.title` y `devModules.<key>.bullets` (3 a 5) en es y en en; las claves no se repiten entre roles de forma ambigua.
+- [ ] **Step 2: Implementar** `NAV` y `devModules()`; `Sidebar` pinta los ítems `dev` como enlaces normales (teclado, foco) con una insignia visible "En desarrollo" (texto, no solo color; también en `aria-label`: "Calendario, en desarrollo"); `MobileMenu` igual. Las insignias usan el amarillo de la marca con texto oscuro; sin colores de estado nuevos.
+- [ ] **Step 3: Verificar** `pnpm --filter @spanglish/app test` y typecheck. **Commit.**
+
+### Task 0.2: Página "En desarrollo" por módulo y resumen de ejemplo
+
+**Files:**
+- Create: `apps/app/src/components/InDevelopment.tsx`, `apps/app/src/components/MockPreview.tsx` (esqueleto visual estático, `aria-hidden`), rutas `apps/app/src/app/[locale]/(shell)/{admin,teacher,student,guardian}/[module]/page.tsx` (cada una llama a `requireArea` como las demás y hace `notFound()` si `module` no está en `devModules(area)`)
+- Modify: las portadas por rol (`admin/page.tsx`, `teacher/page.tsx`, `student/page.tsx`, `guardian/page.tsx`) para mostrar tarjetas de los módulos con su estado; `messages/{es,en}.json` (`devModules.<key>.{title,summary,bullets,previewLabel}`)
+- Test: `apps/app/e2e/in-development.spec.ts`
+
+**Interfaces:**
+- Produces: `<InDevelopment area module />`: insignia "En desarrollo", título del módulo, resumen de una línea, 3 a 5 viñetas "Qué podrás hacer aquí", `<MockPreview kind="table|calendar|cards|chart" />` etiquetada "Vista de ejemplo (no son datos reales)", y un enlace de vuelta a la portada. **Sin acceso a datos** (no consulta la base).
+
+- [ ] **Step 1: Textos** es/en de los 29 módulos `dev` (delegar la traducción y el relleno a OpenCode; revisar). Cada viñeta describe solo lo que el spec y los planes prometen para ese módulo, sin inventar funciones.
+- [ ] **Step 2: Test e2e (falla primero):** para cada rol sembrado, el menú muestra todos los módulos con su insignia; abrir un módulo `dev` muestra "En desarrollo", las viñetas y "Vista de ejemplo"; un módulo `dev` de otro rol da redirección/403 igual que cualquier ruta de otro rol; una clave desconocida da 404; axe sin violaciones en es/en a 375 y 1280; no hay peticiones a la API de datos al abrir la página.
+- [ ] **Step 3: Implementar** las rutas y componentes. La portada del admin añade un bloque "Resumen" con tarjetas de ejemplo claramente marcadas "Datos de ejemplo" (alumnos activos, matrículas pendientes, solicitudes nuevas, clases de hoy) que desaparece módulo a módulo cuando haya datos reales.
+- [ ] **Step 4: Verificar** lint, typecheck, vitest, e2e completo (una sola ejecución), build. **Commit.**
+
+## Fase 1. Contenido en la base (PR "Contenido-1")
 
 ### Task 1: Paquete `@spanglish/content`
 
@@ -196,11 +233,11 @@ El hito parte de `develop` con 1B Fase 2 fusionada. Si los PR apilados aún no e
 - [ ] **Step 2:** Run `pnpm supabase test db` · Expected: FAIL.
 - [ ] **Step 3:** Escribir `0011_content_storage.sql`. Las pruebas insertan filas en `storage.objects` (`bucket_id`, `name`, `owner_id`) con el rol y los claims de cada persona; no hace falta el servicio de Storage.
 - [ ] **Step 4:** Run `pnpm supabase db reset && pnpm supabase test db && pnpm db:types` · Expected: PASS.
-- [ ] **Step 5:** Commit `feat(db): buckets de contenido y lectura por nivel de acceso`. Abrir PR "Demo-1" a `develop`.
+- [ ] **Step 5:** Commit `feat(db): buckets de contenido y lectura por nivel de acceso`. Abrir PR "Contenido-1" a `develop`.
 
 ---
 
-## Fase 2. Gestión en el portal (PR "Demo-2")
+## Fase 2. Gestión en el portal (PR "Contenido-2")
 
 ### Task 5: Base de la gestión: datos, esquemas, errores, navegación y aviso a la web
 
@@ -300,11 +337,11 @@ El hito parte de `develop` con 1B Fase 2 fusionada. Si los PR apilados aún no e
 - [ ] **Step 2:** Run tests · Expected: FAIL.
 - [ ] **Step 3:** Implementar.
 - [ ] **Step 4:** Run `pnpm --filter @spanglish/app test && pnpm --filter @spanglish/app e2e admin-lessons` · Expected: PASS.
-- [ ] **Step 5:** Commit `feat(app): editor de bloques y vista previa de lecciones`. Abrir PR "Demo-2".
+- [ ] **Step 5:** Commit `feat(app): editor de bloques y vista previa de lecciones`. Abrir PR "Contenido-2".
 
 ---
 
-## Fase 3. Portal del alumno (PR "Demo-3")
+## Fase 3. Portal del alumno (PR "Contenido-3")
 
 ### Task 10: Recursos del alumno con niveles y apertura firmada
 
@@ -340,11 +377,11 @@ El hito parte de `develop` con 1B Fase 2 fusionada. Si los PR apilados aún no e
 - [ ] **Step 2:** Run · Expected: FAIL.
 - [ ] **Step 3:** Implementar.
 - [ ] **Step 4:** Run · Expected: PASS.
-- [ ] **Step 5:** Commit `feat(app): Aprende ahora en el portal del alumno`. Abrir PR "Demo-3".
+- [ ] **Step 5:** Commit `feat(app): Aprende ahora en el portal del alumno`. Abrir PR "Contenido-3".
 
 ---
 
-## Fase 4. Web pública conectada (PR "Demo-4")
+## Fase 4. Web pública conectada (PR "Contenido-4")
 
 ### Task 12: Cliente de plataforma con respaldo estático
 
@@ -420,11 +457,11 @@ El hito parte de `develop` con 1B Fase 2 fusionada. Si los PR apilados aún no e
 - [ ] **Step 2:** Run `pnpm --filter @spanglish/web test` · Expected: FAIL.
 - [ ] **Step 3:** Implementar.
 - [ ] **Step 4:** Run · Expected: PASS. (La prueba de punta a punta "publicar en el portal → visible en la web" está en Task 19.)
-- [ ] **Step 5:** Commit `feat(web): revalidación del contenido a demanda`. Abrir PR "Demo-4".
+- [ ] **Step 5:** Commit `feat(web): revalidación del contenido a demanda`. Abrir PR "Contenido-4".
 
 ---
 
-## Fase 5. Entorno demo (PR "Demo-5")
+## Fase 5. Entorno demo (PR "Contenido-5")
 
 ### Task 16: Validación de variables, configuración de Vercel y caché de Turbo
 
@@ -531,7 +568,7 @@ Deja todo listo para configurar y desplegar en cuanto existan las cuentas. Nada 
 - [ ] **Step 2:** Run el test · Expected: FAIL (el documento no existe).
 - [ ] **Step 3:** Escribir `docs/despliegue.md`, los scripts y las notas en el plan 1B. Añadir `WEB_ENV_NAMES`/`APP_ENV_NAMES` a los módulos de Task 16 si no estaban.
 - [ ] **Step 4:** Run el test, `pnpm typecheck && pnpm lint && pnpm test && pnpm build` · Expected: verde. Run `pnpm db:push:dry` sin proyecto enlazado · Expected: error de la CLI "no linked project" (el script existe y no hace nada peligroso).
-- [ ] **Step 5:** Commit `docs: guía de despliegue, referencia de variables y checklists`. Abrir PR "Demo-5".
+- [ ] **Step 5:** Commit `docs: guía de despliegue, referencia de variables y checklists`. Abrir PR "Contenido-5".
 
 #### Guion de la demo (con Maribel)
 1. **Web pública (3 min)** en `https://<web>/es`: Inicio → Lecciones → Precios → Recursos (videos, tres niveles de acceso con candados) → Aprende ahora (Fundamentos con El alfabeto, Sustantivos y "DEMO · Los colores"; niveles de Niños y Adultos con "Próximamente" y una lección con candado) → abrir El alfabeto y hacer un ejercicio → cambiar a English.
@@ -544,7 +581,7 @@ Deja todo listo para configurar y desplegar en cuanto existan las cuentas. Nada 
 
 ---
 
-## Fase 6 (opcional, diferible). Productos de la tienda (PR "Demo-6")
+## Fase 6 (opcional, diferible). Productos de la tienda (PR "Contenido-6")
 
 Se puede ejecutar después de la demo o dejar para el hito 3. Mantiene Stripe Checkout con las líneas construidas EN EL SERVIDOR, ahora desde la base; la entrega de archivos sigue siendo manual.
 
@@ -585,13 +622,13 @@ Se puede ejecutar después de la demo o dejar para el hito 3. Mantiene Stripe Ch
 
 - [ ] **Step 1: Test** `checkout builds Stripe line items from checkout_lines prices`, `an unknown or draft slug is dropped`, `checkout returns unavailable when the platform is configured but fails`, `without platform env checkout keeps using PRODUCTS`, `the shop page falls back to PRODUCTS when the DB fails`.
 - [ ] **Step 2–4:** FAIL → implementar → `pnpm --filter @spanglish/web test && pnpm --filter @spanglish/web e2e` PASS.
-- [ ] **Step 5:** Commit `feat(web): tienda desde la plataforma con pago construido en el servidor`. Abrir PR "Demo-6".
+- [ ] **Step 5:** Commit `feat(web): tienda desde la plataforma con pago construido en el servidor`. Abrir PR "Contenido-6".
 
 ---
 
 ## Decisiones del planificador
 
-1. **Hito Demo entre 1B Fase 2 y Fase 3, con migraciones 0010–0011** (0012 si hay tienda). Por qué: lo pide el controlador y Supabase aplica en orden de número. Coste si es erróneo: renumerar es fácil SOLO antes de `db push` al remoto; después, hay que crear migraciones nuevas, nunca renombrar.
+1. **Hito Contenido entre 1B Fase 2 y Fase 3, con migraciones 0010–0011** (0012 si hay tienda). Por qué: lo pide el controlador y Supabase aplica en orden de número. Coste si es erróneo: renumerar es fácil SOLO antes de `db push` al remoto; después, hay que crear migraciones nuevas, nunca renombrar.
 2. **La web no recibe ningún privilegio de tabla: lee por cuatro RPC `security definer`** (`list_published_resources`, `list_published_lessons`, `get_published_lesson`, `resource_file_path`) que fijan columnas y filas. Por qué: mantiene la regla de 0006 ("anon no tiene nada"), controla exactamente qué se filtra de lo bloqueado y es el mismo patrón que `submit_lead` (1B). Las tablas tienen RLS para `authenticated` (portal y escritura). Coste: cada campo nuevo que deba ver la web se añade a la RPC.
 3. **Orden de acceso como enum ordenado** (`public < account < enrolled`) y `content_tier()` central. Por qué: una sola comparación en políticas, RPC y Storage. Coste: un cuarto nivel exige reordenar con cuidado (los enum se pueden ampliar, no reordenar).
 4. **"Alumno" = ficha `students` activa (o tutor de una)** como sustituto hasta las matrículas de 1B Fase 3, en `has_enrolled_access()` con comentario. Por qué: tras 1B Fase 2 existen fichas pero no matrículas; `has_role('student')` no sirve porque todas las cuentas nuevas reciben `student`. Coste: hasta 1B Task 13, una ficha activa sin grupo ve lo de alumnos.
