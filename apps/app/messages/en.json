@@ -511,6 +511,32 @@
       "saving": "Saving…"
     }
   },
+  "studentContent": {
+    "resources": {
+      "eyebrow": "Your learning library",
+      "title": "Resources for you",
+      "yourAccess": "Your access: {tier}",
+      "accessTiers": { "public": "Free", "account": "Account holder", "enrolled": "Student" },
+      "tiers": { "public": "Free", "account": "Account holders", "enrolled": "Students" },
+      "empty": "New materials will appear here soon.",
+      "locked": "Available to enrolled students",
+      "booking": "Explore classes and book a free lesson",
+      "playVideo": "Play video",
+      "openLink": "Open resource",
+      "newWindow": "opens in a new window",
+      "openFile": "Open file"
+    },
+    "learn": {
+      "eyebrow": "One step at a time",
+      "title": "Learn now",
+      "intro": "Explore lessons and practise at your own pace.",
+      "foundations": "No level",
+      "categories": { "foundations": "Foundations", "kids": "Kids", "adults": "Adults", "stories": "Stories", "games": "Games" },
+      "empty": "There are no lessons for this level yet.",
+      "locked": "Available at the matching access level",
+      "newWindow": "opens in a new window"
+    }
+  },
   "inDevelopment": {
     "badge": "In development",
     "whatYouCanDo": "What you will be able to do here",

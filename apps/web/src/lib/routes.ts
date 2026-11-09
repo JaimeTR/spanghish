@@ -143,6 +143,17 @@ const NAV_PARENT: Partial<Record<RouteKey, RouteKey>> = {
   shopSuccess: "shop",
 };
 
+/**
+ * Páginas cuya cabecera enlaza al portal de alumnos: la home y las que tienen
+ * contenido que se desbloquea con cuenta (Recursos y Aprende ahora, con sus
+ * lecciones). En el resto la cabecera no muestra "Entrar".
+ */
+const LOGIN_ROUTES: readonly RouteKey[] = ["home", "resources", "learn"];
+
+export function showsPortalLogin(route: RouteKey | undefined): boolean {
+  return route !== undefined && LOGIN_ROUTES.includes(navRoute(route));
+}
+
 /** Ruta que representa a `route` en la navegación (ella misma o su padre). */
 export function navRoute(route: RouteKey): RouteKey {
   return NAV_PARENT[route] ?? route;

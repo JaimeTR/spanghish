@@ -61,6 +61,16 @@ export function CheckIcon({ className = "mt-1 size-5 shrink-0 text-brand-yellow"
   );
 }
 
+/** Persona: acceso al portal de alumnos. */
+export function UserIcon({ className = "size-5" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" className={className} fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="6.5" r="3.5" />
+      <path d="M3.5 17.5a6.5 6.5 0 0 1 13 0" />
+    </svg>
+  );
+}
+
 export function LockIcon({ className = "size-4" }: { className?: string }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 20 20" className={className} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">

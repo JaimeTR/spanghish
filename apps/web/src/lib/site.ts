@@ -4,6 +4,12 @@
  */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://spanglish.com.au").replace(/\/$/, "");
 
+/**
+ * Entorno de demostración: con SITE_NOINDEX=1 la web entera queda fuera de los
+ * buscadores (robots.txt y cabecera X-Robots-Tag). Nunca definirla en producción real.
+ */
+export const SITE_NOINDEX = process.env.SITE_NOINDEX === "1";
+
 export const CONTACT = {
   phoneDisplay: "0413 178 583",
   phoneE164: "+61413178583",

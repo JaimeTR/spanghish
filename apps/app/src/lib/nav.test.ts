@@ -78,6 +78,8 @@ describe("NAV", () => {
       "admin.catalog",
       "admin.settings",
       "student.home",
+      "student.resources",
+      "student.learn",
     ]);
   });
 
@@ -127,7 +129,7 @@ describe("NAV", () => {
       "payments",
     ]);
     expect(devModules("teacher")).toHaveLength(6);
-    expect(devModules("student")).toHaveLength(8);
+    expect(devModules("student")).toHaveLength(6);
     expect(devModules("guardian")).toHaveLength(5);
   });
 

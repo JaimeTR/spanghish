@@ -7,7 +7,7 @@ const MAIN_NAV = "Navegación principal";
 const AREAS = [
   { who: "admin", home: "/es/admin", dev: 6, total: 13 },
   { who: "teacher", home: "/es/teacher", dev: 6, total: 6 },
-  { who: "student", home: "/es/student", dev: 8, total: 9 },
+  { who: "student", home: "/es/student", dev: 6, total: 9 },
   { who: "guardian", home: "/es/guardian", dev: 5, total: 5 },
 ] as const;
 

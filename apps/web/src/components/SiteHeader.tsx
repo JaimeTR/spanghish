@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
-import { bookingPath, HEADER_NAV, localePath, type HeaderNavKey, type RouteKey } from "@/lib/routes";
+import { bookingPath, HEADER_NAV, localePath, showsPortalLogin, type HeaderNavKey, type RouteKey } from "@/lib/routes";
 import { appLoginUrl } from "@/lib/site";
-import { LockIcon } from "./icons";
+import { UserIcon } from "./icons";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { MobileMenu } from "./MobileMenu";
 import { MobileNavGroup, NavDisclosure, type NavSubItem, type NavTone } from "./NavDisclosure";
@@ -41,6 +41,7 @@ export function SiteHeader({
 }) {
   const t = useTranslations("nav");
   const tc = useTranslations("common.audiences");
+  const withLogin = showsPortalLogin(route);
   const items = HEADER_NAV.map((item) => {
     const isCurrent = item.key === current;
     const children: NavSubItem[] | undefined =
@@ -105,21 +106,25 @@ export function SiteHeader({
         <div className="ml-auto flex items-center gap-2 sm:gap-3 lg:gap-1.5 xl:gap-3">
           <LocaleSwitch locale={locale} />
           <CartButton locale={locale} />
-          {/* Portal de alumnos (otra web, misma pestaña). Solo icono hasta 1180px
-              para que la navegación quepa en una línea. */}
-          <a
-            href={appLoginUrl(locale)}
-            className="hidden min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-full px-2 font-semibold whitespace-nowrap text-ink no-underline decoration-brand-fuchsia decoration-[3px] transition-colors duration-200 hover:bg-ink/8 hover:underline lg:inline-flex min-[1180px]:px-3"
-          >
-            <LockIcon className="size-[1.125rem]" />
-            <span className="sr-only min-[1180px]:not-sr-only">{t("login")}</span>
-            <span className="sr-only"> {t("loginSuffix")}</span>
-          </a>
           <span className="hidden sm:block">
             <Link href={bookingPath(locale)} className={`${btnPrimary} !min-h-11 !px-5 !text-base whitespace-nowrap lg:!px-4 xl:!px-5`}>
               {t("cta")}
             </Link>
           </span>
+          {/* Portal de alumnos (otra web, misma pestaña): solo icono, a la derecha de
+              "Clase gratis", y solo en las páginas de showsPortalLogin. */}
+          {withLogin && (
+            <a
+              href={appLoginUrl(locale)}
+              title={`${t("login")} ${t("loginSuffix")}`}
+              className="hidden size-11 shrink-0 items-center justify-center rounded-full border-2 border-ink/15 text-ink no-underline transition-colors duration-200 hover:border-ink/40 hover:bg-ink/8 lg:inline-flex"
+            >
+              <UserIcon />
+              <span className="sr-only">
+                {t("login")} {t("loginSuffix")}
+              </span>
+            </a>
+          )}
           <MobileMenu label={t("menu")}>
             <nav aria-label={t("label")}>
               <ul className="flex flex-col">
@@ -143,11 +148,13 @@ export function SiteHeader({
             <Link href={bookingPath(locale)} className={`${btnOnDark} mt-4 w-full`}>
               {t("cta")}
             </Link>
-            <a href={appLoginUrl(locale)} className={`${btnOnDarkOutline} mt-3 w-full`}>
-              <LockIcon className="size-[1.125rem]" />
-              {t("login")}
-              <span className="sr-only"> {t("loginSuffix")}</span>
-            </a>
+            {withLogin && (
+              <a href={appLoginUrl(locale)} className={`${btnOnDarkOutline} mt-3 w-full`}>
+                <UserIcon className="size-[1.125rem]" />
+                {t("login")}
+                <span className="sr-only"> {t("loginSuffix")}</span>
+              </a>
+            )}
           </MobileMenu>
         </div>
       </div>
