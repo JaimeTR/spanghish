@@ -3,17 +3,32 @@ import { navItemsFor, switchableAreas } from "./nav";
 import { swapLocale } from "./locale-path";
 
 describe("navItemsFor", () => {
-  it("admin lists dashboard, students, teachers and languages; only the dashboard is a route", () => {
-    const items = navItemsFor("admin");
-    expect(items.map((i) => i.key)).toEqual(["dashboard", "students", "teachers", "languages"]);
-    expect(items[0]!.href?.("es")).toBe("/es/admin");
-    expect(items.slice(1).every((i) => i.href === null)).toBe(true);
+  it("admin lists the operational sections in order", () => {
+    expect(navItemsFor("admin").map((i) => i.key)).toEqual([
+      "dashboard",
+      "calendar",
+      "groups",
+      "students",
+      "teachers",
+      "leads",
+      "requests",
+      "catalog",
+      "languages",
+    ]);
+    expect(navItemsFor("teacher").map((i) => i.key)).toEqual(["today", "groups", "requests"]);
   });
 
-  it("every available item points at its role home (the only routes that exist yet)", () => {
+  it("teachers item has a route", () => {
+    const teachers = navItemsFor("admin").find((i) => i.key === "teachers");
+    expect(teachers?.href?.("es")).toBe("/es/admin/teachers");
+    expect(teachers?.href?.("en")).toBe("/en/admin/teachers");
+  });
+
+  it("every linked item stays inside its own area", () => {
     for (const role of ["admin", "teacher", "student", "guardian"] as const) {
       const linked = navItemsFor(role).filter((i) => i.href !== null);
-      expect(linked.map((i) => i.href!("en"))).toEqual([`/en/${role}`]);
+      expect(linked[0]!.href!("en")).toBe(`/en/${role}`);
+      for (const i of linked) expect(i.href!("en")).toMatch(new RegExp(`^/en/${role}(/|$)`));
     }
   });
 

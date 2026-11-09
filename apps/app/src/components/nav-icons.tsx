@@ -2,12 +2,16 @@ import {
   BookOpen,
   CalendarClock,
   CalendarDays,
+  CalendarRange,
+  ClipboardList,
   GraduationCap,
   House,
   Languages,
   LayoutDashboard,
   Library,
+  Inbox,
   Presentation,
+  Repeat,
   UsersRound,
   type LucideIcon,
 } from "lucide-react";
@@ -15,6 +19,10 @@ import type { NavIcon } from "@/lib/nav";
 
 export const NAV_ICONS: Record<NavIcon, LucideIcon> = {
   dashboard: LayoutDashboard,
+  calendar: CalendarRange,
+  leads: Inbox,
+  requests: Repeat,
+  catalog: ClipboardList,
   students: GraduationCap,
   teachers: Presentation,
   languages: Languages,

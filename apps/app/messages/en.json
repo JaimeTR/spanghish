@@ -66,11 +66,15 @@
       "teachers": "Teachers",
       "languages": "Languages and levels",
       "today": "Today",
-      "groups": "My groups",
+      "groups": "Groups",
       "learning": "My learning",
       "schedule": "Schedule",
       "library": "Library",
-      "overview": "Overview"
+      "overview": "Overview",
+      "calendar": "Calendar",
+      "leads": "Enquiries",
+      "requests": "Class changes",
+      "catalog": "Catalogue"
     }
   },
   "areas": {
@@ -140,6 +144,43 @@
       "horizon_too_far": "Classes can only be generated up to one year ahead.",
       "lead_already_converted": "This enquiry has already been turned into a student.",
       "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "teachers": {
+    "title": "Teachers",
+    "intro": "Team accounts: teachers and administration.",
+    "invite": "Invite a teacher",
+    "empty": "There are no teachers yet.",
+    "noName": "No name",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "roles": "Roles",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "suspended": "Suspended"
+    },
+    "suspend": "Suspend",
+    "reactivate": "Reactivate",
+    "who": "{name}",
+    "saving": "Saving…",
+    "invited": {
+      "sent": "Invitation sent: they will get an email to create their password.",
+      "nomail": "Account created, but we could not send the email. Ask them to use “Forgot your password?” to create their password."
+    },
+    "new": {
+      "title": "Invite a teacher",
+      "intro": "We will create their account and email them a link to choose a password.",
+      "fullName": "Full name",
+      "email": "Email",
+      "emailHint": "The link will be sent to this address.",
+      "locale": "Email language",
+      "submit": "Send invitation",
+      "submitting": "Sending…",
+      "back": "Back to teachers"
     }
   }
 }

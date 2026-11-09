@@ -61,14 +61,22 @@ describe("Sidebar", () => {
     expect(within(navEl).getByRole("list")).toBeInTheDocument();
   });
 
-  it("no nav item renders a link to a route that does not exist yet (disabled items are not anchors)", () => {
+  it("items without route render as aria-disabled span", () => {
     const { container } = wrap(<Sidebar role="admin" locale="es" />);
     const hrefs = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href"));
-    expect(hrefs).toEqual(["/es/admin"]);
-    const soon = screen.getByText("Alumnos").closest("[aria-disabled]");
+    expect(hrefs).toEqual(["/es/admin", "/es/admin/teachers"]);
+    const soon = screen.getByText("Idiomas y niveles").closest("[aria-disabled]");
     expect(soon).toHaveAttribute("aria-disabled", "true");
-    expect(soon?.tagName).not.toBe("A");
+    expect(soon?.tagName).toBe("SPAN");
+    expect(soon).not.toHaveAttribute("role");
     expect(within(soon as HTMLElement).getByText("Pronto")).toBeInTheDocument();
+  });
+
+  it("a nested admin page marks its section as current", () => {
+    nav.pathname = "/es/admin/teachers/new";
+    wrap(<Sidebar role="admin" locale="es" />);
+    expect(screen.getByRole("link", { name: "Docentes" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Panel" })).not.toHaveAttribute("aria-current");
   });
 
   it("current item has aria-current=page", () => {

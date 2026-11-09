@@ -44,7 +44,6 @@ export function Sidebar({
             return (
               <li key={key}>
                 <span
-                  role="link"
                   aria-disabled="true"
                   className={`${itemBase} cursor-default text-on-structure/80`}
                 >

@@ -6,6 +6,7 @@ import { isLocale, routing, type Locale } from "../i18n/routing";
 import { roleHomePath } from "./access";
 import { loadSessionUser } from "./load-session-user";
 import { safeNextTarget } from "./route-guard";
+import { resetPasswordUrl } from "./site-url";
 import { resetSchema } from "./schemas/auth";
 import { createClient } from "./supabase/server";
 
@@ -73,18 +74,6 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
   redirect(safeNextTarget(parsed.data.next, user.roles) ?? roleHomePath(user.roles, locale));
 }
 
-function resetRedirectUrl(locale: Locale): string | null {
-  // Nunca a partir de la cabecera Host: solo de la URL configurada.
-  const site = process.env.NEXT_PUBLIC_SITE_URL;
-  if (!site) return null;
-  try {
-    const url = new URL(`/${locale}/reset-password`, site);
-    return url.protocol === "https:" || url.protocol === "http:" ? url.toString() : null;
-  } catch {
-    return null;
-  }
-}
-
 export async function requestPasswordReset(
   _prev: ForgotState,
   formData: FormData,
@@ -95,7 +84,7 @@ export async function requestPasswordReset(
 
   // La respuesta es idéntica exista o no el correo, y también si Auth falla;
   // los fallos solo se registran en el servidor (sin el correo: es dato personal).
-  const redirectTo = resetRedirectUrl(locale);
+  const redirectTo = resetPasswordUrl(locale);
   if (!redirectTo) {
     console.error("[forgot-password] NEXT_PUBLIC_SITE_URL no está configurada o no es válida");
     return { status: "sent" };

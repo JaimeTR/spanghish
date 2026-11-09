@@ -66,11 +66,15 @@
       "teachers": "Docentes",
       "languages": "Idiomas y niveles",
       "today": "Hoy",
-      "groups": "Mis grupos",
+      "groups": "Grupos",
       "learning": "Mi aprendizaje",
       "schedule": "Horario",
       "library": "Biblioteca",
-      "overview": "Resumen"
+      "overview": "Resumen",
+      "calendar": "Calendario",
+      "leads": "Solicitudes",
+      "requests": "Cambios de clase",
+      "catalog": "Catálogo"
     }
   },
   "areas": {
@@ -140,6 +144,43 @@
       "horizon_too_far": "Solo se pueden generar clases hasta un año vista.",
       "lead_already_converted": "Esta solicitud ya se convirtió en alumno.",
       "unknown": "Algo salió mal. Inténtalo de nuevo."
+    }
+  },
+  "teachers": {
+    "title": "Docentes",
+    "intro": "Cuentas del equipo: docentes y administración.",
+    "invite": "Invitar docente",
+    "empty": "Todavía no hay docentes.",
+    "noName": "Sin nombre",
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo",
+      "roles": "Roles",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "status": {
+      "active": "Activa",
+      "suspended": "Suspendida"
+    },
+    "suspend": "Suspender",
+    "reactivate": "Reactivar",
+    "who": "a {name}",
+    "saving": "Guardando…",
+    "invited": {
+      "sent": "Invitación enviada: recibirá un correo para crear su contraseña.",
+      "nomail": "Cuenta creada, pero no pudimos enviar el correo. Pídele que entre con «¿Olvidaste tu contraseña?» para crear su contraseña."
+    },
+    "new": {
+      "title": "Invitar docente",
+      "intro": "Crearemos su cuenta y le enviaremos un enlace para elegir su contraseña.",
+      "fullName": "Nombre completo",
+      "email": "Correo electrónico",
+      "emailHint": "Le llegará el enlace a este correo.",
+      "locale": "Idioma del correo",
+      "submit": "Enviar invitación",
+      "submitting": "Enviando…",
+      "back": "Volver a docentes"
     }
   }
 }

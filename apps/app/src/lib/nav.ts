@@ -3,11 +3,15 @@ import { canAccess, type AppRole } from "./access";
 
 export type NavIcon =
   | "dashboard"
+  | "calendar"
+  | "groups"
   | "students"
   | "teachers"
+  | "leads"
+  | "requests"
+  | "catalog"
   | "languages"
   | "today"
-  | "groups"
   | "learning"
   | "schedule"
   | "library"
@@ -31,9 +35,25 @@ const home =
 
 const item = (key: NavIcon, href: NavItem["href"] = null): NavItem => ({ key, icon: key, href });
 
+const adminPath =
+  (path: string) =>
+  (locale: Locale): string =>
+    `/${locale}/admin/${path}`;
+
+// Cada tarea de UI activa el href de su elemento cuando su ruta existe.
 const NAV: Record<AppRole, readonly NavItem[]> = {
-  admin: [item("dashboard", home("admin")), item("students"), item("teachers"), item("languages")],
-  teacher: [item("today", home("teacher")), item("groups")],
+  admin: [
+    item("dashboard", home("admin")),
+    item("calendar"),
+    item("groups"),
+    item("students"),
+    item("teachers", adminPath("teachers")),
+    item("leads"),
+    item("requests"),
+    item("catalog"),
+    item("languages"),
+  ],
+  teacher: [item("today", home("teacher")), item("groups"), item("requests")],
   student: [item("learning", home("student")), item("schedule"), item("library")],
   guardian: [item("overview", home("guardian"))],
 };
