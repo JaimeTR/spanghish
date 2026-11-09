@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseForm } from "../forms";
-import { blockSchema, lessonSchema, resourceSchema } from "./content";
+import { blockSchema, lessonSchema, resourceSchema, teacherProfileSchema } from "./content";
 
 function form(values: Record<string, string>): FormData {
   const data = new FormData();
@@ -22,4 +22,8 @@ describe("content schemas", () => {
   const block = { lessonId: "b0000000-0000-4000-8000-000000000101", kind: "quiz", bodyEs: "Pregunta", bodyEn: "Question", optionsEs: "Sí\nNo", optionsEn: "Yes\nNo", correctOption: "2" };
   it("quiz block rejects a correctOption beyond the options", () => expect(parseForm(blockSchema, form(block))).toMatchObject({ ok: false }));
   it("quiz block rejects 5 options", () => expect(parseForm(blockSchema, form({ ...block, optionsEs: "1\n2\n3\n4\n5", optionsEn: "1\n2\n3\n4\n5", correctOption: "0" }))).toMatchObject({ ok: false }));
+  const teacher = { slug:"e2e-teacher", name:"Teacher", photoPosition:"50% 30%", photoAltEs:"Foto", photoAltEn:"Photo", roleEs:"Docente", roleEn:"Teacher", taglineEs:"Frase", taglineEn:"Tagline", metaDescriptionEs:"Meta", metaDescriptionEn:"Meta", introEs:"Intro", introEn:"Intro", bodyEs:"Bio", bodyEn:"Bio", factsEs:"Uno\nDos", factsEn:"One\nTwo" };
+  it("teacher profile parses bilingual facts", () => expect(parseForm(teacherProfileSchema, form(teacher))).toMatchObject({ ok:true, data:{ factsEs:["Uno","Dos"], factsEn:["One","Two"] } }));
+  it("teacher profile requires equal facts and paired enrolment fields", () => expect(parseForm(teacherProfileSchema, form({...teacher,factsEn:"One",enrolTitleEs:"Cursos"}))).toMatchObject({ok:false}));
+  it("teacher profile limits facts to six lines", () => expect(parseForm(teacherProfileSchema, form({...teacher,factsEs:"1\n2\n3\n4\n5\n6\n7",factsEn:"1\n2\n3\n4\n5\n6\n7"}))).toMatchObject({ok:false}));
 });

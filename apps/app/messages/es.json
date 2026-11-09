@@ -206,6 +206,7 @@
       "back": "Volver a docentes"
     }
   },
+  "teacherProfiles": {"title":"Perfiles públicos de docentes","intro":"Gestiona los perfiles que aparecen en la web.","new":"Añadir docente","edit":"Editar","back":"Volver a perfiles","empty":"Todavía no hay perfiles.","draft":"Borrador","published":"Publicado","publish":"Publicar","unpublish":"Despublicar","save":"Guardar perfil","create":"Crear perfil","saving":"Guardando…","delete":"Eliminar perfil","choosePhoto":"Seleccionar foto del perfil","moveUp":"Subir {name}","moveDown":"Bajar {name}","fields":{"slug":"Identificador URL","name":"Nombre","photoPosition":"Posición de la foto","photoAlt":"Texto alternativo de la foto","role":"Rol","tagline":"Frase destacada","metaDescription":"Descripción SEO","intro":"Introducción","body":"Biografía","specialty":"Especialidad (opcional)","enrolTitle":"Título de inscripción (opcional)","enrol":"Información de inscripción (opcional)","facts":"Datos clave (uno por línea, máximo 6)","showApproach":"Mostrar sección de método","profileId":"Cuenta de docente (opcional)"}},
   "enums": {
     "audience": {
       "kids": "Niños (6–13)",

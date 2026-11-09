@@ -206,6 +206,7 @@
       "back": "Back to teachers"
     }
   },
+  "teacherProfiles": {"title":"Public teacher profiles","intro":"Manage the profiles shown on the website.","new":"Add teacher","edit":"Edit","back":"Back to profiles","empty":"There are no profiles yet.","draft":"Draft","published":"Published","publish":"Publish","unpublish":"Unpublish","save":"Save profile","create":"Create profile","saving":"Saving…","delete":"Delete profile","choosePhoto":"Select profile photo","moveUp":"Move {name} up","moveDown":"Move {name} down","fields":{"slug":"URL slug","name":"Name","photoPosition":"Photo position","photoAlt":"Photo alt text","role":"Role","tagline":"Tagline","metaDescription":"SEO description","intro":"Introduction","body":"Biography","specialty":"Specialty (optional)","enrolTitle":"Enrolment title (optional)","enrol":"Enrolment information (optional)","facts":"Key facts (one per line, maximum 6)","showApproach":"Show approach section","profileId":"Teacher account (optional)"}},
   "enums": {
     "audience": {
       "kids": "Kids (6–13)",

@@ -51,3 +51,24 @@ export type BlockInput = z.infer<typeof blockSchema>;
 export type BlockField = string;
 export const moveSchema = z.object({ id: z.uuid(), direction: z.enum(["up", "down"]) });
 export const publishSchema = z.object({ id: z.uuid(), publish: z.enum(["true", "false"]) });
+
+const teacherOptional = (max: number) => z.string().trim().max(max).optional();
+const facts = (max = 160) => z.string().transform((value) => value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean));
+export const teacherProfileSchema = z.object({
+  id: z.uuid().optional(), slug: z.string().trim().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).max(80), name: z.string().trim().min(1).max(80),
+  photoPosition: z.string().trim().regex(/^[0-9]{1,3}% [0-9]{1,3}%$/), profileId: z.uuid().optional(),
+  photoAltEs: z.string().trim().min(1).max(160), photoAltEn: z.string().trim().min(1).max(160), roleEs: z.string().trim().min(1).max(120), roleEn: z.string().trim().min(1).max(120),
+  taglineEs: z.string().trim().min(1).max(200), taglineEn: z.string().trim().min(1).max(200), metaDescriptionEs: z.string().trim().min(1).max(300), metaDescriptionEn: z.string().trim().min(1).max(300),
+  introEs: z.string().trim().min(1).max(300), introEn: z.string().trim().min(1).max(300), bodyEs: z.string().trim().min(1).max(3000), bodyEn: z.string().trim().min(1).max(3000),
+  specialtyEs: teacherOptional(1500), specialtyEn: teacherOptional(1500), enrolTitleEs: teacherOptional(80), enrolTitleEn: teacherOptional(80), enrolEs: teacherOptional(1500), enrolEn: teacherOptional(1500),
+  factsEs: facts(), factsEn: facts(), showApproach: checkbox,
+}).superRefine((value, ctx) => {
+  if (Boolean(value.specialtyEs) !== Boolean(value.specialtyEn)) ctx.addIssue({ code: "custom", path: [value.specialtyEs ? "specialtyEn" : "specialtyEs"], message: "required" });
+  const enrol = [value.enrolTitleEs, value.enrolTitleEn, value.enrolEs, value.enrolEn];
+  if (enrol.some(Boolean) && !enrol.every(Boolean)) enrol.forEach((v, i) => { if (!v) ctx.addIssue({ code: "custom", path: [(["enrolTitleEs", "enrolTitleEn", "enrolEs", "enrolEn"] as const)[i]!], message: "required" }); });
+  if (value.factsEs.length > 6) ctx.addIssue({ code: "custom", path: ["factsEs"], message: "tooLong" });
+  if (value.factsEn.length > 6) ctx.addIssue({ code: "custom", path: ["factsEn"], message: "tooLong" });
+  if (value.factsEs.length !== value.factsEn.length) ctx.addIssue({ code: "custom", path: ["factsEn"], message: "invalid" });
+  [...value.factsEs, ...value.factsEn].forEach((item) => { if (item.length > 160) ctx.addIssue({ code: "custom", path: [value.factsEs.includes(item) ? "factsEs" : "factsEn"], message: "tooLong" }); });
+});
+export type TeacherProfileField = keyof z.input<typeof teacherProfileSchema> & string;

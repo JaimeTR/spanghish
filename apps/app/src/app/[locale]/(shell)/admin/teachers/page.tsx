@@ -36,11 +36,7 @@ export default async function TeachersPage({
       <PageHeader
         title={t("title")}
         intro={t("intro")}
-        action={
-          <Link href={`/${locale}/admin/teachers/new`} className={buttonLinkClass}>
-            {t("invite")}
-          </Link>
-        }
+        action={<div className="flex flex-wrap gap-2"><Link href={`/${locale}/admin/teachers/new`} className={buttonLinkClass}>{t("invite")}</Link><Link href={`/${locale}/admin/teachers/profiles`} className={buttonLinkClass}>{locale === "es" ? "Perfiles públicos" : "Public profiles"}</Link></div>}
       />
 
       {invited === "sent" ? <Notice>{t("invited.sent")}</Notice> : null}
