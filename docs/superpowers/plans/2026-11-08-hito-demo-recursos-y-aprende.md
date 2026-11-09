@@ -621,6 +621,15 @@ Se puede ejecutar después de la demo o dejar para el hito 3. Mantiene Stripe Ch
 6. **"Sustantivos y artículos" en Fundamentos y también en Adultos › A1** (como la web anterior), o solo en Fundamentos.
 7. **¿Se enseña la tienda gestionada en la demo** (Fase 6) o basta con la tienda actual y pago de prueba?
 
+### Respuestas aprobadas (2026-11-08): se usan los valores por defecto del plan
+1. Lo bloqueado se muestra en la web pública con título, resumen, nivel y tipo, con un interruptor por elemento (`teaser_public`) para ocultarlo.
+2. Las docentes leen todo lo publicado; todavía no crean borradores.
+3. Contenido "alumnos": por ahora lo ve cualquier alumno activo; cuando existan las matrículas (1B Fase 3) se limitará al nivel de cada alumno.
+4. Dirección de la demo: `*.vercel.app` al principio; dominio propio más adelante.
+5. El proyecto de Supabase de la demo es desechable; producción tendrá uno nuevo.
+6. "Sustantivos" aparece en una sola categoría.
+7. La tienda gestionable (Fase 6) no entra en la primera demo.
+
 ## Fuera de este plan
 - **Hito 2:** editor de docentes, ejercicios ricos (arrastrar, escribir, emparejar, audio), progreso y puntuación del alumno, grabaciones de clase con consentimiento, tareas de alumnos (bucket propio), migración de las ~60 lecciones, portal del tutor (los tutores ya cuentan como "alumnos" en `content_tier()` pero no tienen página).
 - **1B Fases 3–6** sin cambios de alcance (solo numeración de migraciones y el reemplazo de `has_enrolled_access()` en Task 13).
