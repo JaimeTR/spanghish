@@ -35,8 +35,8 @@ const PAGES = [
   },
   {
     slug: "teachers",
-    es: { h1: "Conócenos", title: /^Conócenos: Maribel Mayhua/ },
-    en: { h1: "Meet us", title: /^Meet us: Maribel Mayhua/ },
+    es: { h1: "Conócenos", title: /^Conócenos: Maribel Mayhua y Pamela Rojas/ },
+    en: { h1: "Meet us", title: /^Meet us: Maribel Mayhua and Pamela Rojas/ },
   },
   {
     slug: "contact-us",

@@ -523,22 +523,17 @@
       "ratesFrom": "Tarifas vigentes desde abril de 2026."
     },
     "teachers": {
-      "metaTitle": "Conócenos: Maribel Mayhua, profesora de español · Spanglish",
-      "metaDescription": "Maribel Mayhua es profesora de español nativa, de Lima (Perú), certificada para los niveles A1 a B2. Vive en Australia.",
+      "metaTitle": "Conócenos: Maribel Mayhua y Pamela Rojas, profesoras de español · Spanglish",
+      "metaDescription": "Conoce a las profesoras de Spanglish: Maribel Mayhua, nativa de Lima (Perú) y certificada para los niveles A1 a B2, y Pamela Rojas, especialista en español para viajeros.",
       "title": "Conócenos",
-      "lead": "Nuestro objetivo es que hables español con confianza. Te presentamos a quien te dará clase.",
+      "lead": "Nuestro objetivo es que hables español con confianza. Te presentamos a quienes te darán clase.",
       "ask": "¿Quién me va a dar clase?",
-      "answer": "¡Hola! Soy Maribel.",
-      "name": "Maribel Mayhua",
-      "role": "Profesora de español",
-      "intro": "Soy Maribel, de Lima (Perú), y me apasiona enseñar español.",
-      "mission": "Mi misión es ayudarte a seguir aprendiendo y avanzando en español, hasta que lo hables con confianza.",
-      "factsLabel": "Maribel en pocas palabras",
-      "facts": {
-        "native": "Nativa, de Lima (Perú)",
-        "certified": "Certificada para enseñar los niveles A1, A2, B1 y B2",
-        "based": "Vive en Australia"
-      },
+      "answer": "¡Hola! Somos Maribel y Pamela.",
+      "viewProfile": "Ver perfil",
+      "viewProfileOf": "Ver perfil de {name}",
+      "allTeachers": "Todas las profesoras",
+      "profileMetaTitle": "{name}, profesora de español · Spanglish",
+      "specialtyLabel": "Especialidad",
       "approachQuestion": "¿Cómo son sus clases?",
       "approachIntro": "70 minutos para hablar, preguntar y practicar, con lo necesario para seguir después.",
       "approach": {
@@ -559,8 +554,46 @@
           "body": "Después de cada clase recibes un resumen y deberes."
         }
       },
-      "classesQuestion": "¿A quién da clase?"
+      "classesQuestion": "¿A quién da clase?",
+      "people": {
+        "maribel": {
+          "role": "Profesora de español",
+          "tagline": "Nativa de Lima (Perú), certificada para los niveles A1 a B2.",
+          "metaDescription": "Maribel Mayhua es profesora de español nativa, de Lima (Perú), certificada para los niveles A1 a B2. Vive en Australia.",
+          "ask": "¿Quién me va a dar clase?",
+          "answer": "¡Hola! Soy Maribel.",
+          "intro": "Soy Maribel, de Lima (Perú), y me apasiona enseñar español.",
+          "body": "Mi misión es ayudarte a seguir aprendiendo y avanzando en español, hasta que lo hables con confianza.",
+          "factsLabel": "Maribel en pocas palabras",
+          "facts": [
+            "Nativa, de Lima (Perú)",
+            "Certificada para enseñar los niveles A1, A2, B1 y B2",
+            "Vive en Australia"
+          ],
+          "photoAlt": "Retrato de Maribel Mayhua, profesora de español"
+        },
+        "pamela": {
+          "role": "Profesora de español",
+          "tagline": "Psicóloga y viajera: español para viajeros.",
+          "metaDescription": "Pamela Rojas es profesora de español, psicóloga y viajera incansable, especialista en enseñar español a viajeros.",
+          "ask": "¿Quién me va a dar clase?",
+          "answer": "¡Hola! Soy Pamela.",
+          "intro": "¡Hola! Soy profesora de español, psicóloga y viajera incansable.",
+          "body": "Mi experiencia internacional me ha regalado un sinfín de historias, culturas fascinantes y una perspectiva única que quiero compartir contigo. Aprender un nuevo idioma puede ser toda una aventura, y te prometo que mis clases no serán la excepción. ¡Vamos a divertirnos mientras progresas con confianza! Únete y exploramos juntos el mundo, una palabra a la vez.",
+          "specialty": "Especialista en enseñar español a viajeros, combinando un profundo conocimiento del idioma y las costumbres de Latinoamérica con una dosis de humor y sabiduría. Mis clases te preparan para vivir experiencias auténticas, comunicarte con confianza y disfrutar del viaje al máximo.",
+          "enrolTitle": "Reserva conmigo",
+          "enrol": "Te guiaré en un aprendizaje efectivo y lleno de diversión. Cada palabra te llevará más cerca de nuevas culturas y aventuras. ¡Únete a mis clases y comienza esta emocionante travesía lingüística hoy!",
+          "factsLabel": "Pamela en pocas palabras",
+          "facts": [
+            "Profesora de español, psicóloga y viajera",
+            "Especialista en español para viajeros",
+            "Para estudiantes de habla portuguesa"
+          ],
+          "photoAlt": "Retrato de Pamela Rojas, profesora de español"
+        }
+      }
     },
+
     "contact": {
       "metaTitle": "Contacto y clase gratis · Spanglish",
       "metaDescription": "Llama al 0413 178 583 o escribe a hello@spanglish.com.au, de lunes a sábado de 8:00 a 17:00. Sunshine Coast, Brisbane y online. Tu primera clase es gratis.",

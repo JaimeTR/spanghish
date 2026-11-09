@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
       { source: "/learn-spanish/spanish-adults-lessons/level-a1/the-nouns-in-spanish", destination: "/learn/nouns-and-articles", permanent: true },
       { source: "/learn-spanish/:path*", destination: "/learn", permanent: true },
       { source: "/product/:slug*", destination: "/shop", permanent: true },
+      { source: "/mediplus-doctor/maribel-mayhua", destination: "/teachers/maribel-mayhua", permanent: true },
+      { source: "/mediplus-doctor/pamela", destination: "/teachers/pamela-rojas", permanent: true },
+      { source: "/mediplus-doctor/:path*", destination: "/teachers", permanent: true },
     ];
   },
 };

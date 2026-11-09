@@ -9,11 +9,17 @@ import { Bubble } from "./Bubble";
  */
 export function MaribelPhoto({
   alt,
+  src = "/maribel.webp",
+  position = "50% 18%",
   className = "",
   sizes = "(min-width: 1024px) 20rem, 70vw",
   priority = false,
 }: {
   alt: string;
+  /** Foto de otra docente (por defecto, la de Maribel). */
+  src?: string;
+  /** `object-position` del recorte dentro del marco. */
+  position?: string;
   className?: string;
   sizes?: string;
   priority?: boolean;
@@ -32,12 +38,13 @@ export function MaribelPhoto({
         boxClassName="relative aspect-[4/5] overflow-hidden !rounded-[2.25rem] bg-brand-yellow"
       >
         <Image
-          src="/maribel.webp"
+          src={src}
           alt={alt}
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover object-[50%_18%] transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          style={{ objectPosition: position }}
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         />
       </Bubble>
     </div>
