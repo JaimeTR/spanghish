@@ -6,41 +6,46 @@ import { isLocale, routing } from "@/i18n/routing";
 import { localePath } from "@/lib/routes";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbJsonLd, teacherJsonLd } from "@/lib/structured-data";
-import { TEACHERS, teacherBySlug, teacherPath } from "@/lib/teachers";
+import { teacherPath } from "@/lib/teachers";
+import { loadTeacher, loadTeacherSlugs } from "@/lib/teachers-source";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
-export const dynamicParams = false;
+/** Una docente nueva publicada en la administración aparece sin volver a desplegar. */
+export const dynamicParams = true;
+// Literal: Next lo lee en tiempo de compilación (igual a PLATFORM_REVALIDATE_SECONDS).
+export const revalidate = 300;
 
-export function generateStaticParams() {
-  return routing.locales.flatMap((locale) => TEACHERS.map((teacher) => ({ locale, slug: teacher.slug })));
+export async function generateStaticParams() {
+  const slugs = await loadTeacherSlugs();
+  return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({ params }: Props) {
   const { locale, slug } = await params;
-  const teacher = teacherBySlug(slug);
-  if (!isLocale(locale) || !teacher) return {};
+  if (!isLocale(locale)) return {};
+  const teacher = await loadTeacher(locale, slug);
+  if (!teacher) return {};
   const t = await getTranslations({ locale, namespace: "page.teachers" });
-  const p = await getTranslations({ locale, namespace: `page.teachers.people.${teacher.key}` });
   const tm = await getTranslations({ locale, namespace: "meta" });
   return pageMetadata({
     locale,
     route: "teachers",
     subpath: teacher.slug,
     title: t("profileMetaTitle", { name: teacher.name }),
-    description: p("metaDescription"),
+    description: teacher.metaDescription,
     ogAlt: tm("ogAlt"),
   });
 }
 
 export default async function TeacherPage({ params }: Props) {
   const { locale, slug } = await params;
-  const teacher = teacherBySlug(slug);
-  if (!isLocale(locale) || !teacher) notFound();
+  if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
+  const teacher = await loadTeacher(locale, slug);
+  if (!teacher) notFound();
 
   const t = await getTranslations({ locale, namespace: "page.teachers" });
-  const p = await getTranslations({ locale, namespace: `page.teachers.people.${teacher.key}` });
   const tn = await getTranslations({ locale, namespace: "nav" });
   const path = teacherPath(locale, teacher.slug);
 
@@ -49,7 +54,7 @@ export default async function TeacherPage({ params }: Props) {
       locale={locale}
       route="teachers"
       jsonLd={[
-        teacherJsonLd(path, p("metaDescription"), p("role"), teacher.name),
+        teacherJsonLd(path, teacher.metaDescription, teacher.role, teacher.name),
         breadcrumbJsonLd([
           { name: tn("homeCrumb"), path: localePath(locale, "home") },
           { name: t("title"), path: localePath(locale, "teachers") },

@@ -19,7 +19,7 @@ describe("teachers", () => {
     for (const teacher of TEACHERS) {
       const a = (es.page.teachers.people as Record<string, Record<string, unknown>>)[teacher.key]!;
       const b = (en.page.teachers.people as Record<string, Record<string, unknown>>)[teacher.key]!;
-      for (const key of ["role", "tagline", "metaDescription", "ask", "answer", "intro", "body", "factsLabel", "photoAlt"]) {
+      for (const key of ["role", "tagline", "metaDescription", "intro", "body", "photoAlt"]) {
         expect(typeof a[key], `es ${teacher.key}.${key}`).toBe("string");
         expect(typeof b[key], `en ${teacher.key}.${key}`).toBe("string");
       }

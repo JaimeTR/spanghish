@@ -80,16 +80,21 @@ const PRIORITY: Partial<Record<RouteKey, number>> = {
 export const SITEMAP_ROUTES = ROUTE_KEYS.filter(isIndexable);
 
 /** Una entrada por ruta indexable e idioma, cada una con sus alternativas hreflang. */
-export function sitemapEntries(baseUrl: string = SITE_URL, lastModified?: Date): MetadataRoute.Sitemap {
+export function sitemapEntries(
+  baseUrl: string = SITE_URL,
+  lastModified?: Date,
+  /** Docentes publicadas (de la plataforma); por defecto, las del respaldo estático. */
+  teacherSlugs: readonly string[] = TEACHERS.map((t) => t.slug),
+): MetadataRoute.Sitemap {
   const abs = (path: string) => `${baseUrl}${path}`;
-  const profiles = TEACHERS.flatMap((teacher) =>
+  const profiles = teacherSlugs.flatMap((slug) =>
     routing.locales.map((locale) => ({
-      url: abs(teacherPath(locale, teacher.slug)),
+      url: abs(teacherPath(locale, slug)),
       ...(lastModified ? { lastModified } : {}),
       changeFrequency: "monthly" as const,
       priority: 0.6,
       alternates: {
-        languages: Object.fromEntries(routing.locales.map((l) => [l, abs(teacherPath(l, teacher.slug))])),
+        languages: Object.fromEntries(routing.locales.map((l) => [l, abs(teacherPath(l, slug))])),
       },
     })),
   );
