@@ -1,4 +1,7 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@spanglish/db";
+import type { SupabaseClient as BaseClient } from "@supabase/supabase-js";
+
+type SupabaseClient = BaseClient<Database>;
 import { describe, expect, it } from "vitest";
 import { loadSessionUser } from "./load-session-user";
 

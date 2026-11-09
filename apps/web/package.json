@@ -12,6 +12,7 @@
     "e2e": "playwright test"
   },
   "dependencies": {
+    "@spanglish/content": "workspace:*",
     "@spanglish/ui": "workspace:*",
     "next": "16.4.5",
     "next-intl": "4.14.9",

@@ -1,5 +1,7 @@
 // SOLO DESARROLLO LOCAL: usuarios creados por supabase/seed.sql.
+import type { Database } from "@spanglish/db";
 import { createClient } from "@supabase/supabase-js";
+import AxeBuilder from "@axe-core/playwright";
 import { expect, type Page } from "@playwright/test";
 
 export const DEV_PASSWORD = "Spanglish-dev-2026";
@@ -9,7 +11,57 @@ export const USERS = {
   teacher: "teacher@spanglish.test",
   student: "student@spanglish.test",
   suspended: "suspended@spanglish.test",
+  teacher2: "teacher2@spanglish.test",
+  guardian: "guardian@spanglish.test",
+  /** Rol student sin ficha de alumno: nivel de contenido "account". */
+  visitor: "visitor@spanglish.test",
 } as const;
+
+/** IDs fijos de supabase/seed.sql (catálogo y personas). */
+export const SEED_IDS = {
+  locations: {
+    library: "b0000000-0000-4000-8000-000000000001",
+    online: "b0000000-0000-4000-8000-000000000002",
+  },
+  program: "b0000000-0000-4000-8000-000000000101",
+  edition: "b0000000-0000-4000-8000-000000000201",
+  prices: {
+    perLesson: "b0000000-0000-4000-8000-000000000301",
+    editionUpfront: "b0000000-0000-4000-8000-000000000302",
+  },
+  students: {
+    local: "b0000000-0000-4000-8000-000000000401",
+    two: "b0000000-0000-4000-8000-000000000402",
+  },
+  guardian: "b0000000-0000-4000-8000-000000000501",
+  consentText: "minor_data-v1",
+} as const;
+
+/** Contenido de desarrollo de supabase/seed.sql (0010). */
+export const SEED_CONTENT = {
+  resources: {
+    publicLink: "c0000000-0000-4000-8000-000000000001",
+    accountLink: "c0000000-0000-4000-8000-000000000002",
+    enrolledVideo: "c0000000-0000-4000-8000-000000000003",
+    draftWorksheet: "c0000000-0000-4000-8000-000000000004",
+  },
+  lessons: {
+    public: { id: "c0000000-0000-4000-8000-000000000021", slug: "colores-local" },
+    account: { id: "c0000000-0000-4000-8000-000000000022", slug: "saludos-local" },
+    enrolled: { id: "c0000000-0000-4000-8000-000000000023", slug: "preterito-local" },
+    draft: { id: "c0000000-0000-4000-8000-000000000024", slug: "borrador-local" },
+  },
+} as const;
+
+/** WCAG 2.2 AA con axe (mismas reglas que shell.spec.ts). */
+export async function expectNoAxeViolations(page: Page) {
+  const { violations } = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
+  expect(
+    violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`),
+  ).toEqual([]);
+}
 
 export async function login(
   page: Page,
@@ -46,5 +98,5 @@ export function adminClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) throw new Error("Faltan NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY.");
-  return createClient(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
+  return createClient<Database>(url, key, { auth: { persistSession: false, autoRefreshToken: false } });
 }

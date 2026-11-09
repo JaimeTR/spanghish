@@ -3,44 +3,120 @@ import { canAccess, type AppRole } from "./access";
 
 export type NavIcon =
   | "dashboard"
+  | "calendar"
+  | "groups"
+  | "enrollments"
+  | "attendance"
+  | "payments"
+  | "leads"
+  | "catalog"
   | "students"
   | "teachers"
-  | "languages"
+  | "content"
+  | "settings"
   | "today"
-  | "groups"
-  | "learning"
+  | "resources"
+  | "lessons"
+  | "learn"
+  | "requests"
+  | "home"
   | "schedule"
-  | "library"
-  | "overview";
+  | "courses"
+  | "assignments"
+  | "progress"
+  | "children"
+  | "consents";
+
+/** `ready`: el módulo existe. `dev`: se muestra con la etiqueta "En desarrollo". */
+export type ModuleStatus = "ready" | "dev";
 
 /**
- * Elemento de navegación. `href` es null mientras la ruta no exista: se muestra
- * como "Pronto" y nunca como enlace (no puede llevar a un 404).
- * `key` es la clave de traducción en `nav.items`.
+ * Módulo del menú lateral. `key` es la clave de traducción en `nav.items` (y,
+ * si está en desarrollo, en `devModules.<area>.<key>`). `href` es la ruta sin
+ * locale: la real si está `ready`, `/<area>/<key>` (página "En desarrollo") si no.
  */
 export type NavItem = {
   key: NavIcon;
+  area: AppRole;
+  status: ModuleStatus;
+  href: string;
   icon: NavIcon;
-  href: ((locale: Locale) => string) | null;
 };
 
-const home =
+/** Ruta real de un módulo ya construido (relativa al área; "" = portada). */
+const ready =
   (area: AppRole) =>
-  (locale: Locale): string =>
-    `/${locale}/${area}`;
+  (key: NavIcon, path: string): NavItem => ({
+    key,
+    area,
+    status: "ready",
+    href: path ? `/${area}/${path}` : `/${area}`,
+    icon: key,
+  });
 
-const item = (key: NavIcon, href: NavItem["href"] = null): NavItem => ({ key, icon: key, href });
+const dev =
+  (area: AppRole) =>
+  (key: NavIcon): NavItem => ({ key, area, status: "dev", href: `/${area}/${key}`, icon: key });
 
-const NAV: Record<AppRole, readonly NavItem[]> = {
-  admin: [item("dashboard", home("admin")), item("students"), item("teachers"), item("languages")],
-  teacher: [item("today", home("teacher")), item("groups")],
-  student: [item("learning", home("student")), item("schedule"), item("library")],
-  guardian: [item("overview", home("guardian"))],
+const a = { r: ready("admin"), d: dev("admin") };
+const t = { r: ready("teacher"), d: dev("teacher") };
+const s = { r: ready("student"), d: dev("student") };
+const g = { r: ready("guardian"), d: dev("guardian") };
+
+/**
+ * Menú completo de cada rol, con todo lo que tendrá el portal. Cada tarea que
+ * construya un módulo cambia su entrada a `ready` con su ruta real (nav.test.ts
+ * comprueba que la ruta exista).
+ */
+export const NAV: Record<AppRole, readonly NavItem[]> = {
+  admin: [
+    a.r("dashboard", ""),
+    a.d("calendar"),
+    a.d("groups"),
+    a.d("enrollments"),
+    a.d("attendance"),
+    a.d("payments"),
+    a.d("leads"),
+    a.r("catalog", "catalog"),
+    a.r("students", "students"),
+    a.r("teachers", "teachers"),
+    a.r("content", "resources"),
+    a.r("lessons", "lessons"),
+    a.r("settings", "settings/consent-texts"),
+  ],
+  teacher: [t.d("today"), t.d("groups"), t.d("calendar"), t.d("attendance"), t.d("resources"), t.d("requests")],
+  student: [
+    s.r("home", ""),
+    s.d("schedule"),
+    s.d("courses"),
+    s.d("resources"),
+    s.d("learn"),
+    s.d("assignments"),
+    s.d("progress"),
+    s.d("payments"),
+    s.d("requests"),
+  ],
+  guardian: [g.d("children"), g.d("schedule"), g.d("payments"), g.d("consents"), g.d("resources")],
 };
 
 export function navItemsFor(role: AppRole): NavItem[] {
   return [...NAV[role]];
 }
+
+/** Claves de los módulos en desarrollo de un área (las que admite `/<area>/[module]`). */
+export function devModules(area: AppRole): string[] {
+  return NAV[area].filter((i) => i.status === "dev").map((i) => i.key);
+}
+
+/** Ruta con locale de un elemento del menú. */
+export function navUrl(item: NavItem, locale: Locale): string {
+  return `/${locale}${item.href}`;
+}
+
+const home =
+  (area: AppRole) =>
+  (locale: Locale): string =>
+    `/${locale}/${area}`;
 
 /** Orden en el selector de área (mismo que la prioridad de roles). */
 export const AREA_ORDER: readonly AppRole[] = ["admin", "teacher", "student", "guardian"];

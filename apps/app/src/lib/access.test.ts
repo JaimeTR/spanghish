@@ -97,6 +97,10 @@ describe("isSafeRedirect", () => {
 });
 
 describe("toSessionUser", () => {
+  it("an unknown profile status fails closed as suspended", () => {
+    const u = toSessionUser({ id: "u9", status: "pending", preferred_locale: "fr" }, [{ role: "admin" }]);
+    expect(u).toEqual({ id: "u9", roles: [], status: "suspended", locale: "es" });
+  });
   it("suspended user is treated as no access", () => {
     const u = toSessionUser(
       { id: "u1", status: "suspended", preferred_locale: "en" },

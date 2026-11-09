@@ -64,6 +64,8 @@ export default defineConfig({
       NEXT_PUBLIC_SUPABASE_URL: supabaseUrl,
       NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "",
       NEXT_PUBLIC_SITE_URL: BASE_URL,
+      // Solo servidor (lib/supabase/admin.ts): alta de cuentas por la administradora.
+      SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY ?? "",
     },
   },
 });

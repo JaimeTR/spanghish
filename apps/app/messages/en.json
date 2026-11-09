@@ -27,6 +27,23 @@
     "invalid": "Please enter a valid email address.",
     "back": "Back to sign in"
   },
+  "reset": {
+    "title": "Create a new password",
+    "intro": "Choose the password you will use to sign in from now on.",
+    "password": "New password",
+    "passwordHint": "Between 10 and 72 characters.",
+    "confirm": "Repeat the password",
+    "submit": "Save password",
+    "submitting": "Saving…",
+    "requestNew": "Request a new link",
+    "back": "Back to sign in",
+    "errors": {
+      "invalid": "The password must be between 10 and 72 characters.",
+      "mismatch": "The two passwords do not match.",
+      "expired": "This link has expired or has already been used. Please request a new one.",
+      "unavailable": "We couldn't change your password. Please request a new link and try again."
+    }
+  },
   "shell": {
     "logout": "Sign out",
     "skipToContent": "Skip to content",
@@ -42,18 +59,34 @@
   },
   "nav": {
     "label": "Main navigation",
-    "soon": "Soon",
+    "status": {
+      "dev": "In development"
+    },
     "items": {
       "dashboard": "Dashboard",
+      "calendar": "Calendar",
+      "groups": "Groups",
+      "enrollments": "Enrolments",
+      "attendance": "Attendance",
+      "payments": "Payments",
+      "leads": "Enquiries",
+      "catalog": "Catalogue",
       "students": "Students",
       "teachers": "Teachers",
-      "languages": "Languages and levels",
+      "content": "Content",
+      "lessons": "Lessons",
+      "learn": "Learn",
+      "settings": "Settings",
       "today": "Today",
-      "groups": "My groups",
-      "learning": "My learning",
+      "resources": "Resources",
+      "requests": "Class changes",
+      "home": "Home",
       "schedule": "Schedule",
-      "library": "Library",
-      "overview": "Overview"
+      "courses": "My courses",
+      "assignments": "Assignments",
+      "progress": "Progress",
+      "children": "My children",
+      "consents": "Consents"
     }
   },
   "areas": {
@@ -69,7 +102,14 @@
     "admin": {
       "intro": "The school's management dashboard.",
       "summaryTitle": "Overview",
-      "summaryEmpty": "Student, teacher and class figures will appear here once you start adding them."
+      "sample": {
+        "badge": "Sample data",
+        "note": "Sample figures to show how the summary will look; they will be replaced by real data from each module.",
+        "activeStudents": "Active students",
+        "pendingEnrollments": "Pending enrolments",
+        "newLeads": "New enquiries",
+        "classesToday": "Classes today"
+      }
     },
     "teacher": {
       "intro": "Your teaching day.",
@@ -85,6 +125,638 @@
       "intro": "Your children's progress will show up here.",
       "summaryTitle": "Overview",
       "summaryEmpty": "No students are linked to your account yet."
+    },
+    "modulesTitle": "Modules"
+  },
+  "forms": {
+    "saved": "Changes saved.",
+    "invalid": "Please check the highlighted fields.",
+    "errors": {
+      "required": "This field is required.",
+      "tooLong": "The text is too long.",
+      "invalid": "The value is not valid.",
+      "email": "Please enter a valid email address.",
+      "url": "Please enter a valid web address (https://…).",
+      "number": "Please enter a number.",
+      "date": "Please enter a valid date.",
+      "range": "The value is outside the allowed range.",
+      "slugTaken": "This identifier is already in use."
+    }
+  },
+  "errors": {
+    "domain": {
+      "forbidden": "You don't have permission to do this.",
+      "not_found": "We couldn't find what you were looking for.",
+      "conflict": "A record with those details already exists.",
+      "already_enrolled": "This student is already enrolled in the group.",
+      "slot_taken": "That group already has a class at that time.",
+      "group_full": "The group is full.",
+      "group_closed": "The group is closed or cancelled.",
+      "student_inactive": "The student is inactive.",
+      "guardian_required": "A minor needs at least one guardian.",
+      "consent_required": "The guardian's current consent is missing.",
+      "teacher_required": "The selected person is not a teacher.",
+      "session_not_editable": "This class can no longer be changed.",
+      "session_has_attendance": "This class has attendance recorded: remove it before cancelling or moving the class.",
+      "outside_attendance_window": "Attendance for this class can no longer be changed.",
+      "not_in_roster": "This student is not on the class list.",
+      "last_admin": "You can't remove the last active administrator.",
+      "invalid_range": "The dates are not valid: the end is before the start.",
+      "horizon_too_far": "Classes can only be generated up to one year ahead.",
+      "lead_already_converted": "This enquiry has already been turned into a student.",
+      "content_incomplete": "Complete the required content before publishing.",
+      "slug_taken": "This identifier is already in use.",
+      "unknown": "Something went wrong. Please try again."
+    }
+  },
+  "teachers": {
+    "title": "Teachers",
+    "intro": "Team accounts: teachers and administration.",
+    "invite": "Invite a teacher",
+    "empty": "There are no teachers yet.",
+    "noName": "No name",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "roles": "Roles",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Active",
+      "suspended": "Suspended"
+    },
+    "suspend": "Suspend",
+    "reactivate": "Reactivate",
+    "who": "{name}",
+    "saving": "Saving…",
+    "invited": {
+      "sent": "Invitation sent: they will get an email to create their password.",
+      "nomail": "Account created, but we could not send the email. Ask them to use “Forgot your password?” to create their password."
+    },
+    "new": {
+      "title": "Invite a teacher",
+      "intro": "We will create their account and email them a link to choose a password.",
+      "fullName": "Full name",
+      "email": "Email",
+      "emailHint": "The link will be sent to this address.",
+      "locale": "Email language",
+      "submit": "Send invitation",
+      "submitting": "Sending…",
+      "back": "Back to teachers"
+    }
+  },
+  "enums": {
+    "audience": {
+      "kids": "Kids (6–13)",
+      "adults": "Adults (14+)",
+      "mature": "Seniors (65+)"
+    },
+    "format": {
+      "individual": "One-to-one",
+      "own_group": "Own group (max. 2)",
+      "local_group": "Local group"
+    },
+    "locationKind": {
+      "library": "Library",
+      "office": "Office",
+      "home": "Home",
+      "online": "Online"
+    },
+    "region": {
+      "sunshine_coast": "Sunshine Coast",
+      "brisbane": "Brisbane",
+      "online": "Online"
+    },
+    "editionStatus": {
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed",
+      "cancelled": "Cancelled"
+    },
+    "priceKind": {
+      "per_lesson": "Per lesson",
+      "upfront": "Upfront",
+      "pack": "Lesson pack"
+    },
+    "studentStatus": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "relationship": {
+      "parent": "Parent",
+      "legal_guardian": "Legal guardian",
+      "other": "Other"
+    },
+    "consentMethod": {
+      "paper": "On paper",
+      "email": "By email",
+      "portal": "In the portal",
+      "web_form": "Web form"
+    },
+    "consentKind": {
+      "enrolment_terms": "Enrolment terms",
+      "privacy": "Privacy",
+      "minor_data": "Minor's data",
+      "recordings": "Recordings",
+      "photos": "Photos"
+    },
+    "accessLevel": { "public": "Free", "account": "With an account", "enrolled": "Students" },
+    "resourceKind": { "video": "Video", "document": "Document", "link": "Link", "worksheet": "Worksheet", "vocabulary": "Vocabulary", "recording": "Recording", "coursework": "Coursework" },
+    "learnCategory": { "foundations": "Foundations", "kids": "Kids", "adults": "Adults", "stories": "Stories", "games": "Games" },
+    "blockKind": { "text": "Text", "image": "Image", "video": "Video", "quiz": "Question" },
+    "contentStatus": { "draft": "Draft", "published": "Published" }
+  },
+  "content": {
+    "resources": { "title": "Resources", "intro": "Manage materials for the portal and website.", "new": "Add resource", "save": "Save resource", "create": "Create resource", "saving": "Saving…", "saved": "Resource saved.", "publish": "Publish", "unpublish": "Unpublish", "delete": "Delete resource", "confirmDelete": "Are you sure you want to delete this resource?", "empty": "There are no resources yet.", "titleLabel": "Title", "kind": "Type", "access": "Access", "chooseResourceFile": "Select resource file", "chooseThumbnail": "Select thumbnail", "kindNames": { "video": "Video", "document": "Document", "link": "Link", "worksheet": "Worksheet", "vocabulary": "Vocabulary", "recording": "Recording", "coursework": "Coursework" }, "levelNames": { "public": "Free", "account": "With an account", "enrolled": "Students" }, "statusNames": { "draft": "Draft", "published": "Published" }, "moveUp": "Move {title} up", "moveDown": "Move {title} down", "description": "Description", "externalUrl": "External URL", "video": "YouTube URL", "titleLang": "Title language", "langEs": "Spanish", "langEn": "English", "level": "Level", "audience": "Audience", "audiences": { "kids": "Kids", "adults": "Adults", "mature": "Mature" }, "teaser": "Show summary when locked", "preview": "Locked card preview", "file": "File", "thumbnail": "Thumbnail", "size": "File size", "back": "Back to resources", "edit": "Edit", "locked": "Available according to access level", "noFile": "No file attached", "section": "Access: {level}", "filterStatus": "Status", "filterKind": "Type", "filter": "Filter", "all": "All" },
+    "lessons": { "previewDraft": "Preview · Draft", "title": "Lessons", "intro": "Organise lessons by category and level.", "new": "Add lesson", "create": "Create lesson", "save": "Save lesson", "saving": "Saving…", "empty": "No lessons", "back": "Back to lessons", "slug": "URL identifier", "category": "Category", "categoryNames": { "foundations": "Foundations", "kids": "Kids", "adults": "Adults", "stories": "Stories", "games": "Games" }, "level": "Level", "access": "Access", "levelAccess": { "public": "Free", "account": "With an account", "enrolled": "Students" }, "kind": "Type", "kindNames": { "article": "Article", "interactive": "Interactive" }, "title": "Title", "summary": "Summary", "teaser": "Show summary when locked", "article": "Article", "interactive": "Interactive", "published": "Published", "draft": "Draft", "statusNames": { "draft": "Draft", "published": "Published" }, "publish": "Publish", "unpublish": "Unpublish", "delete": "Delete lesson", "confirmDelete": "Are you sure you want to delete this lesson?", "blocks": "Blocks", "preview": "Preview", "noBlocks": "Add at least one block before publishing.", "addAtLevel": "Add in {level}", "moveUp": "Move {title} up", "moveDown": "Move {title} down" },
+    "blocks": { "heading": "Blocks", "empty": "There are no blocks yet.", "add": "Add block", "edit": "Edit", "save": "Save block", "saving": "Saving…", "cancel": "Cancel", "delete": "Delete block", "confirm": "Are you sure?", "up": "Move {title} up", "down": "Move {title} down", "textHelp": "Leave a blank line between paragraphs. Start a line with “- ” for a list. **like this** for bold.", "body": "Text", "text": "Text", "videoTitle": "Lesson video", "playVideo": "Play video", "languageEs": "Spanish", "languageEn": "English", "image": "Image", "alt": "Alternative text", "video": "YouTube URL", "quiz": "Question", "options": "Options (one per line)", "correct": "Correct option number (starting at 0)", "explanation": "Explanation" },
+    "upload": { "choose": "Choose file", "uploading": "Uploading file…", "uploaded": "File attached.", "type": "This file type is not allowed.", "size": "The file exceeds the maximum size.", "missing": "The uploaded file was not found. Please try again.", "unavailable": "The file could not be uploaded. Please try again.", "requiresJs": "File uploads require JavaScript.", "current": "Current file", "none": "No file attached", "remove": "Remove file", "forbidden": "You are not allowed to upload this file." },
+    "quiz": { "check": "Check", "correct": "Correct!", "incorrect": "Try again.", "choose": "Choose an answer." }
+  },
+  "catalog": {
+    "title": "Catalogue",
+    "intro": "The school's programmes, editions, prices and locations.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "edit": "Edit",
+    "summary": {
+      "programs": "{count, plural, =0 {No active programmes} one {# active programme} other {# active programmes}}",
+      "locations": "{count, plural, =0 {No active locations} one {# active location} other {# active locations}}"
+    },
+    "locations": {
+      "title": "Locations",
+      "intro": "Libraries, offices, home and online. Home and online locations have no address.",
+      "new": "New location",
+      "list": "Locations",
+      "empty": "There are no locations yet.",
+      "name": "Name",
+      "kind": "Type",
+      "region": "Area",
+      "address": "Address",
+      "addressHint": "Only for libraries and offices (never private addresses).",
+      "mapUrl": "Map link",
+      "mapUrlHint": "Optional; must start with https://",
+      "active": "Active location",
+      "create": "Create location",
+      "save": "Save location",
+      "saving": "Saving…"
+    },
+    "programs": {
+      "title": "Programmes",
+      "intro": "Each programme has dated editions and prices.",
+      "new": "New programme",
+      "newIntro": "Details in Spanish and English. You can add editions and prices next.",
+      "empty": "There are no programmes yet.",
+      "data": "Programme details",
+      "name": "Name",
+      "state": "Status",
+      "public": "Public",
+      "code": "Code",
+      "codeHint": "Lowercase letters, numbers and hyphens (e.g. adults-a1).",
+      "language": "Language taught",
+      "nameEs": "Name (Spanish)",
+      "nameEn": "Name (English)",
+      "descriptionEs": "Description (Spanish)",
+      "descriptionEn": "Description (English)",
+      "audience": "Segment",
+      "format": "Format",
+      "level": "Level",
+      "noLevel": "No level",
+      "durationWeeks": "Length (weeks)",
+      "durationHint": "Optional (1–52).",
+      "lessonMinutes": "Minutes per lesson",
+      "active": "Active programme",
+      "isPublic": "Shown on the website",
+      "isPublicHint": "Used for the public timetable (milestone 3).",
+      "create": "Create programme",
+      "save": "Save programme",
+      "saving": "Saving…"
+    },
+    "editions": {
+      "title": "Editions",
+      "empty": "This programme has no editions yet.",
+      "new": "New edition",
+      "untitled": "Untitled edition",
+      "labelEs": "Name (Spanish)",
+      "labelEn": "Name (English)",
+      "startsOn": "Starts",
+      "endsOn": "Ends",
+      "status": "Status",
+      "create": "Add edition",
+      "save": "Save edition",
+      "saving": "Saving…"
+    },
+    "prices": {
+      "title": "Prices",
+      "effective": "Current price per edition",
+      "effectiveHint": "Without a specific location: a location price only applies at that location.",
+      "none": "no price",
+      "active": "Active prices",
+      "empty": "There are no prices yet.",
+      "new": "New price",
+      "wholeProgram": "Whole programme",
+      "packOf": "Pack of {lessons} lessons",
+      "lessonsCount": "{lessons} lessons",
+      "previous": "{count, plural, one {# previous price} other {# previous prices}}",
+      "kind": "Price type",
+      "amount": "Amount (AUD)",
+      "amountHint": "In dollars, e.g. 245 or 245.50.",
+      "lessons": "Lessons included",
+      "lessonsHint": "Required for packs; empty for per-lesson prices.",
+      "edition": "Edition",
+      "anyEdition": "Any edition",
+      "location": "Location",
+      "anyLocation": "Any location",
+      "labelEs": "Label (Spanish)",
+      "labelEn": "Label (English)",
+      "create": "Add price",
+      "deactivate": "Deactivate",
+      "saving": "Saving…"
+    }
+  },
+  "students": {
+    "title": "Students",
+    "intro": "Adults, seniors and minors (with their guardian and consent).",
+    "consentTexts": "Consent texts",
+    "count": "{count, plural, =0 {No students match these filters} one {# student} other {# students}}",
+    "minor": "Minor",
+    "noGuardians": "This minor has no linked guardians.",
+    "guardianAccount": "Portal account",
+    "filters": {
+      "label": "Search students",
+      "search": "Name",
+      "audience": "Segment",
+      "status": "Status",
+      "all": "All",
+      "apply": "Filter"
+    },
+    "columns": {
+      "name": "Name",
+      "audience": "Segment",
+      "status": "Status",
+      "portal": "Account"
+    },
+    "sections": {
+      "data": "Details",
+      "guardians": "Guardians",
+      "consents": "Consents",
+      "portal": "Portal access"
+    },
+    "portal": {
+      "yes": "Yes",
+      "no": "No",
+      "minor": "Minor (no account)",
+      "linked": "This student already has a portal account.",
+      "explain": "We will create their account with {email} and email them a link to choose a password.",
+      "needsEmail": "Add an email to the contact details to give portal access.",
+      "grant": "Give portal access",
+      "granting": "Creating the account…"
+    },
+    "new": {
+      "title": "New student",
+      "intro": "Minors (6–13) need a guardian and their consent."
+    },
+    "form": {
+      "student": "Student details",
+      "fullName": "Full name",
+      "audience": "Segment",
+      "level": "Level",
+      "noLevel": "No level",
+      "preferredLocale": "Contact language",
+      "status": "Status",
+      "contact": "Contact (administration only)",
+      "contactHint": "Teachers do not see these details.",
+      "email": "Email",
+      "phone": "Phone",
+      "birthYear": "Year of birth",
+      "adminNotes": "Internal notes",
+      "adminNotesHint": "Only the administration sees them (not the student or their guardian).",
+      "guardian": "Guardian",
+      "guardianHint": "Choose a registered guardian or enter a new one.",
+      "existingGuardian": "Registered guardian",
+      "newGuardian": "New guardian",
+      "relationship": "Relationship",
+      "guardianFullName": "Guardian's name",
+      "guardianEmail": "Guardian's email",
+      "guardianPhone": "Guardian's phone",
+      "consent": "Guardian's consent",
+      "consentVersion": "Version {id}, in force since {date}.",
+      "consentMethod": "How it was given",
+      "consentGranted": "The guardian has consented to this text",
+      "consentGrantedRequired": "Tick the box to record the consent.",
+      "noConsentText": "There is no current minor data consent text. Create one under “Consent texts” before registering a minor.",
+      "create": "Register",
+      "save": "Save details",
+      "saving": "Saving…"
+    }
+  },
+  "consents": {
+    "empty": "No consents recorded.",
+    "granted": "Granted",
+    "revoked": "Revoked",
+    "entry": "Text {version} · {date} · {method}",
+    "by": "Guardian: {name}",
+    "new": "Record a consent",
+    "cannotRecord": "Recording a consent needs a text and, for a minor, a linked guardian.",
+    "text": "Text (version)",
+    "decision": "Decision",
+    "method": "How it was given",
+    "guardian": "Guardian",
+    "record": "Record",
+    "saving": "Saving…",
+    "texts": {
+      "title": "Consent texts",
+      "intro": "Every change creates a new version; earlier versions are kept with their consents.",
+      "list": "Versions",
+      "empty": "There are no texts yet.",
+      "current": "Current",
+      "effective": "In force since {date}",
+      "show": "Show text",
+      "new": "New version",
+      "newHint": "The identifier (kind-vN) is assigned automatically. A published text cannot be edited.",
+      "kind": "Type",
+      "effectiveFrom": "In force from",
+      "bodyEs": "Text (Spanish)",
+      "bodyEn": "Text (English)",
+      "create": "Publish version",
+      "saving": "Saving…"
+    }
+  },
+  "inDevelopment": {
+    "badge": "In development",
+    "whatYouCanDo": "What you will be able to do here",
+    "previewCaption": "Sample view (not real data)",
+    "back": "Back to home"
+  },
+  "devModules": {
+    "admin": {
+      "calendar": {
+        "title": "Calendar",
+        "summary": "View school classes by week or month and filter the calendar.",
+        "bullets": [
+          "View classes by week or month.",
+          "Filter by venue, teacher or group.",
+          "Open the Zoom or Meet link for an online class."
+        ],
+        "previewLabel": "Sample school calendar"
+      },
+      "groups": {
+        "title": "Groups",
+        "summary": "Set up groups from a programme edition and view their students.",
+        "bullets": [
+          "Create groups from a programme edition.",
+          "Assign a teacher, venue, schedule and capacity.",
+          "View the students in each group."
+        ],
+        "previewLabel": "Sample group details"
+      },
+      "enrollments": {
+        "title": "Enrolments",
+        "summary": "Enrol students in groups and view their status and chosen payment plan.",
+        "bullets": [
+          "Enrol students in groups.",
+          "View pending, active, paused or finished status.",
+          "View the chosen pack, pay-as-you-go or upfront plan."
+        ],
+        "previewLabel": "Sample student enrolment"
+      },
+      "attendance": {
+        "title": "Attendance",
+        "summary": "Review attendance for every class, absences and classes to make up.",
+        "bullets": [
+          "Review attendance for each class.",
+          "Check absences.",
+          "Identify classes to make up."
+        ],
+        "previewLabel": "Sample attendance record"
+      },
+      "payments": {
+        "title": "Payments",
+        "summary": "Record and reconcile payments in AUD with GST, with a clear record of entries.",
+        "bullets": [
+          "Record card payments through Stripe.",
+          "Manually record bank transfers and Eventbrite payments.",
+          "Reconcile payments and view amounts in AUD with GST.",
+          "View recorded payments, which cannot be changed."
+        ],
+        "previewLabel": "Sample payment records"
+      },
+      "leads": {
+        "title": "Enquiries",
+        "summary": "Follow up website enquiries and bookings for the free 45-minute class.",
+        "bullets": [
+          "View enquiries received through the website.",
+          "Review bookings for the free 45-minute class.",
+          "Update follow-up status.",
+          "Turn an enquiry into a student."
+        ],
+        "previewLabel": "Sample enquiry follow-up"
+      },
+      "content": {
+        "title": "Content",
+        "summary": "Manage Resources and Learn Now lessons for the public website.",
+        "bullets": [
+          "Manage videos, documents, links, worksheets and Learn Now lessons.",
+          "Set access to public, account holders or students only.",
+          "Save content as a draft or publish it.",
+          "Set the order and update the public website."
+        ],
+        "previewLabel": "Sample resource management"
+      }
+    },
+    "teacher": {
+      "today": {
+        "title": "Today",
+        "summary": "View today's classes and quickly access attendance taking.",
+        "bullets": [
+          "View the time and group for each class.",
+          "Check the venue or video-call link.",
+          "Quickly access attendance taking."
+        ],
+        "previewLabel": "Sample classes for today"
+      },
+      "groups": {
+        "title": "Groups",
+        "summary": "View your assigned groups, their students and their levels.",
+        "bullets": [
+          "View only the groups assigned to you.",
+          "Review the students in each group.",
+          "View each group's level."
+        ],
+        "previewLabel": "Sample assigned groups"
+      },
+      "calendar": {
+        "title": "Calendar",
+        "summary": "View your classes by week or month.",
+        "bullets": [
+          "View your classes for the week.",
+          "View your classes for the month.",
+          "Check the time and group of each class."
+        ],
+        "previewLabel": "Sample teacher calendar"
+      },
+      "attendance": {
+        "title": "Attendance",
+        "summary": "Take the roll for your classes and mark each student's attendance.",
+        "bullets": [
+          "Take the roll for your classes.",
+          "Mark each student present.",
+          "Mark each student absent or excused."
+        ],
+        "previewLabel": "Sample class roll"
+      },
+      "resources": {
+        "title": "Resources",
+        "summary": "Access all published teaching materials to use in class.",
+        "bullets": [
+          "View published teaching materials.",
+          "Access resources for any level.",
+          "Use resources in class."
+        ],
+        "previewLabel": "Sample teaching materials"
+      },
+      "requests": {
+        "title": "Class changes",
+        "summary": "Review and respond to class change or make-up requests.",
+        "bullets": [
+          "View requests from your groups.",
+          "Review requests to change a class.",
+          "Review requests to make up a class.",
+          "Respond to requests."
+        ],
+        "previewLabel": "Sample class requests"
+      }
+    },
+    "student": {
+      "schedule": {
+        "title": "Schedule",
+        "summary": "View your upcoming classes with Brisbane time and attendance details.",
+        "bullets": [
+          "View your upcoming classes.",
+          "Check the time in Brisbane.",
+          "View the venue or video-call link."
+        ],
+        "previewLabel": "Sample upcoming classes"
+      },
+      "courses": {
+        "title": "My courses",
+        "summary": "View your enrolled programmes and groups, including level and teacher.",
+        "bullets": [
+          "View your programmes and groups.",
+          "Check the level of each course.",
+          "See who your teacher is."
+        ],
+        "previewLabel": "Sample enrolled courses"
+      },
+      "resources": {
+        "title": "Resources",
+        "summary": "Access videos, documents and worksheets available at your access level.",
+        "bullets": [
+          "View videos available to you.",
+          "Access documents at your access level.",
+          "View unlocked worksheets."
+        ],
+        "previewLabel": "Sample study resources"
+      },
+      "learn": {
+        "title": "Learn",
+        "summary": "Read lessons and practise with questions at your access level.",
+        "bullets": ["Browse lessons by category and level.", "Open articles available to you.", "Review interactive lessons."],
+        "previewLabel": "Sample lessons"
+      },
+      "assignments": {
+        "title": "Assignments",
+        "summary": "View class homework and due dates, and hand in your files.",
+        "bullets": [
+          "View class homework.",
+          "Check due dates.",
+          "Hand in your files."
+        ],
+        "previewLabel": "Sample assignment and due date"
+      },
+      "progress": {
+        "title": "Progress",
+        "summary": "Review your attendance, completed lessons and level.",
+        "bullets": [
+          "Review your attendance.",
+          "View completed lessons.",
+          "Check your level."
+        ],
+        "previewLabel": "Sample learning progress"
+      },
+      "payments": {
+        "title": "Payments",
+        "summary": "View payments, receipts and amounts due, and pay by card.",
+        "bullets": [
+          "View completed and pending payments.",
+          "Review your receipts.",
+          "Pay by card."
+        ],
+        "previewLabel": "Sample payments and receipts"
+      },
+      "requests": {
+        "title": "Class changes",
+        "summary": "Request a class change or make-up and check your request status.",
+        "bullets": [
+          "Request a class change.",
+          "Request a class make-up.",
+          "Check the status of your requests."
+        ],
+        "previewLabel": "Sample request status"
+      }
+    },
+    "guardian": {
+      "children": {
+        "title": "My children",
+        "summary": "View the minors linked to your account, including their group, level and teacher.",
+        "bullets": [
+          "View the minors linked to your account.",
+          "Check each child's group and level.",
+          "See who their teacher is."
+        ],
+        "previewLabel": "Sample linked children"
+      },
+      "schedule": {
+        "title": "Schedule",
+        "summary": "View your children's upcoming classes.",
+        "bullets": [
+          "View your children's upcoming classes.",
+          "Check the time of each class.",
+          "View the venue or video-call link."
+        ],
+        "previewLabel": "Sample family schedule"
+      },
+      "payments": {
+        "title": "Payments",
+        "summary": "View payments for your children's enrolments and their receipts.",
+        "bullets": [
+          "View payments for your children's enrolments.",
+          "Review the receipts.",
+          "View pending payments."
+        ],
+        "previewLabel": "Sample enrolment payments"
+      },
+      "consents": {
+        "title": "Consents",
+        "summary": "Review, give or withdraw consents relating to your children.",
+        "bullets": [
+          "Review consents about minors' data.",
+          "Give or withdraw consent for class recordings.",
+          "Give or withdraw consent for photos."
+        ],
+        "previewLabel": "Sample consent settings"
+      },
+      "resources": {
+        "title": "Resources",
+        "summary": "View your children's study materials.",
+        "bullets": [
+          "View your children's study materials.",
+          "Check the resources available to them.",
+          "Access unlocked videos, documents and worksheets."
+        ],
+        "previewLabel": "Sample study materials"
+      }
     }
   }
 }

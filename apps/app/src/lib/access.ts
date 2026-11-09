@@ -56,24 +56,29 @@ export function isSafeRedirect(next: string | null): boolean {
   return !/[\\\u0000-\u001f\u007f]/.test(next);
 }
 
+// Columnas text de profiles (tipos generados): se validan aquí.
 type ProfileRow = {
   id: string;
-  status: UserStatus;
-  preferred_locale: Locale;
+  status: string;
+  preferred_locale: string;
   full_name?: string | null;
 };
 type RoleRow = { role: AppRole };
 
-/** Un usuario suspendido no tiene acceso: se descartan sus roles. */
+/**
+ * Un usuario suspendido no tiene acceso: se descartan sus roles. Falla cerrado:
+ * cualquier estado distinto de "active" cuenta como suspendido.
+ */
 export function toSessionUser(profile: ProfileRow, roleRows: RoleRow[]): SessionUser {
-  const suspended = profile.status === "suspended";
+  const status: UserStatus = profile.status === "active" ? "active" : "suspended";
+  const suspended = status === "suspended";
   const name = profile.full_name?.trim();
   return {
     id: profile.id,
     roles: suspended
       ? []
       : roleRows.map((r) => r.role).filter((r): r is AppRole => ROLE_PRIORITY.includes(r)),
-    status: profile.status,
+    status,
     locale: isLocale(profile.preferred_locale) ? profile.preferred_locale : "es",
     ...(name && !suspended ? { name } : {}),
   };

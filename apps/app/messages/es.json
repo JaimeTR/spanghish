@@ -27,6 +27,23 @@
     "invalid": "Escribe un correo electrónico válido.",
     "back": "Volver a iniciar sesión"
   },
+  "reset": {
+    "title": "Crear una contraseña nueva",
+    "intro": "Elige la contraseña con la que entrarás a partir de ahora.",
+    "password": "Contraseña nueva",
+    "passwordHint": "Entre 10 y 72 caracteres.",
+    "confirm": "Repite la contraseña",
+    "submit": "Guardar contraseña",
+    "submitting": "Guardando…",
+    "requestNew": "Pedir un enlace nuevo",
+    "back": "Volver a iniciar sesión",
+    "errors": {
+      "invalid": "La contraseña debe tener entre 10 y 72 caracteres.",
+      "mismatch": "Las dos contraseñas no coinciden.",
+      "expired": "Este enlace ha caducado o ya se usó. Pide uno nuevo.",
+      "unavailable": "No pudimos cambiar la contraseña. Pide un enlace nuevo e inténtalo otra vez."
+    }
+  },
   "shell": {
     "logout": "Cerrar sesión",
     "skipToContent": "Saltar al contenido",
@@ -42,18 +59,34 @@
   },
   "nav": {
     "label": "Navegación principal",
-    "soon": "Pronto",
+    "status": {
+      "dev": "En desarrollo"
+    },
     "items": {
       "dashboard": "Panel",
+      "calendar": "Calendario",
+      "groups": "Grupos",
+      "enrollments": "Matrículas",
+      "attendance": "Asistencia",
+      "payments": "Pagos",
+      "leads": "Solicitudes",
+      "catalog": "Catálogo",
       "students": "Alumnos",
       "teachers": "Docentes",
-      "languages": "Idiomas y niveles",
+      "content": "Contenido",
+      "lessons": "Lecciones",
+      "learn": "Aprende",
+      "settings": "Ajustes",
       "today": "Hoy",
-      "groups": "Mis grupos",
-      "learning": "Mi aprendizaje",
+      "resources": "Recursos",
+      "requests": "Cambios de clase",
+      "home": "Inicio",
       "schedule": "Horario",
-      "library": "Biblioteca",
-      "overview": "Resumen"
+      "courses": "Mis cursos",
+      "assignments": "Tareas",
+      "progress": "Progreso",
+      "children": "Mis hijos",
+      "consents": "Consentimientos"
     }
   },
   "areas": {
@@ -69,7 +102,14 @@
     "admin": {
       "intro": "Panel de gestión de la escuela.",
       "summaryTitle": "Resumen",
-      "summaryEmpty": "Los indicadores de alumnos, docentes y clases aparecerán aquí cuando empieces a registrarlos."
+      "sample": {
+        "badge": "Datos de ejemplo",
+        "note": "Cifras de ejemplo para mostrar cómo se verá el resumen; se sustituirán por los datos reales de cada módulo.",
+        "activeStudents": "Alumnos activos",
+        "pendingEnrollments": "Matrículas pendientes",
+        "newLeads": "Solicitudes nuevas",
+        "classesToday": "Clases de hoy"
+      }
     },
     "teacher": {
       "intro": "Tu jornada de clases.",
@@ -85,6 +125,638 @@
       "intro": "Aquí verás el progreso de tus hijos o hijas.",
       "summaryTitle": "Resumen",
       "summaryEmpty": "Todavía no hay alumnos vinculados a tu cuenta."
+    },
+    "modulesTitle": "Módulos"
+  },
+  "forms": {
+    "saved": "Cambios guardados.",
+    "invalid": "Revisa los campos marcados.",
+    "errors": {
+      "required": "Este campo es obligatorio.",
+      "tooLong": "El texto es demasiado largo.",
+      "invalid": "El valor no es válido.",
+      "email": "Escribe un correo electrónico válido.",
+      "url": "Escribe una dirección web válida (https://…).",
+      "number": "Escribe un número.",
+      "date": "Escribe una fecha válida.",
+      "range": "El valor está fuera del rango permitido.",
+      "slugTaken": "Este identificador ya está en uso."
+    }
+  },
+  "errors": {
+    "domain": {
+      "forbidden": "No tienes permiso para hacer esto.",
+      "not_found": "No encontramos lo que buscas.",
+      "conflict": "Ya existe un registro con esos datos.",
+      "already_enrolled": "Este alumno ya está matriculado en el grupo.",
+      "slot_taken": "Ese grupo ya tiene una clase a esa hora.",
+      "group_full": "El grupo está completo.",
+      "group_closed": "El grupo está cerrado o cancelado.",
+      "student_inactive": "El alumno está inactivo.",
+      "guardian_required": "Un menor necesita al menos un tutor.",
+      "consent_required": "Falta el consentimiento vigente del tutor.",
+      "teacher_required": "La persona elegida no es docente.",
+      "session_not_editable": "Esta clase ya no se puede modificar.",
+      "session_has_attendance": "La clase tiene asistencia registrada: bórrala antes de cancelarla o moverla.",
+      "outside_attendance_window": "La asistencia de esta clase ya no se puede cambiar.",
+      "not_in_roster": "Este alumno no está en la lista de la clase.",
+      "last_admin": "No puedes quitar a la última administradora activa.",
+      "invalid_range": "Las fechas no son válidas: el final es anterior al inicio.",
+      "horizon_too_far": "Solo se pueden generar clases hasta un año vista.",
+      "lead_already_converted": "Esta solicitud ya se convirtió en alumno.",
+      "content_incomplete": "Completa el contenido obligatorio antes de publicar.",
+      "slug_taken": "Este identificador ya está en uso.",
+      "unknown": "Algo salió mal. Inténtalo de nuevo."
+    }
+  },
+  "teachers": {
+    "title": "Docentes",
+    "intro": "Cuentas del equipo: docentes y administración.",
+    "invite": "Invitar docente",
+    "empty": "Todavía no hay docentes.",
+    "noName": "Sin nombre",
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo",
+      "roles": "Roles",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "status": {
+      "active": "Activa",
+      "suspended": "Suspendida"
+    },
+    "suspend": "Suspender",
+    "reactivate": "Reactivar",
+    "who": "a {name}",
+    "saving": "Guardando…",
+    "invited": {
+      "sent": "Invitación enviada: recibirá un correo para crear su contraseña.",
+      "nomail": "Cuenta creada, pero no pudimos enviar el correo. Pídele que entre con «¿Olvidaste tu contraseña?» para crear su contraseña."
+    },
+    "new": {
+      "title": "Invitar docente",
+      "intro": "Crearemos su cuenta y le enviaremos un enlace para elegir su contraseña.",
+      "fullName": "Nombre completo",
+      "email": "Correo electrónico",
+      "emailHint": "Le llegará el enlace a este correo.",
+      "locale": "Idioma del correo",
+      "submit": "Enviar invitación",
+      "submitting": "Enviando…",
+      "back": "Volver a docentes"
+    }
+  },
+  "enums": {
+    "audience": {
+      "kids": "Niños (6–13)",
+      "adults": "Adultos (14+)",
+      "mature": "Mayores (65+)"
+    },
+    "format": {
+      "individual": "Individual",
+      "own_group": "Grupo propio (máx. 2)",
+      "local_group": "Grupo local"
+    },
+    "locationKind": {
+      "library": "Biblioteca",
+      "office": "Oficina",
+      "home": "Domicilio",
+      "online": "Online"
+    },
+    "region": {
+      "sunshine_coast": "Sunshine Coast",
+      "brisbane": "Brisbane",
+      "online": "Online"
+    },
+    "editionStatus": {
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada",
+      "cancelled": "Cancelada"
+    },
+    "priceKind": {
+      "per_lesson": "Por clase",
+      "upfront": "Pago único",
+      "pack": "Pack de clases"
+    },
+    "studentStatus": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "relationship": {
+      "parent": "Madre o padre",
+      "legal_guardian": "Tutor legal",
+      "other": "Otro"
+    },
+    "consentMethod": {
+      "paper": "En papel",
+      "email": "Por correo",
+      "portal": "En el portal",
+      "web_form": "Formulario web"
+    },
+    "consentKind": {
+      "enrolment_terms": "Condiciones de inscripción",
+      "privacy": "Privacidad",
+      "minor_data": "Datos del menor",
+      "recordings": "Grabaciones",
+      "photos": "Fotos"
+    },
+    "accessLevel": { "public": "Libre", "account": "Con cuenta", "enrolled": "Alumnos" },
+    "resourceKind": { "video": "Vídeo", "document": "Documento", "link": "Enlace", "worksheet": "Ficha", "vocabulary": "Vocabulario", "recording": "Grabación", "coursework": "Trabajo de clase" },
+    "learnCategory": { "foundations": "Fundamentos", "kids": "Niños", "adults": "Adultos", "stories": "Historias", "games": "Juegos" },
+    "blockKind": { "text": "Texto", "image": "Imagen", "video": "Vídeo", "quiz": "Pregunta" },
+    "contentStatus": { "draft": "Borrador", "published": "Publicado" }
+  },
+  "content": {
+    "resources": { "title": "Recursos", "intro": "Gestiona los materiales del portal y de la web.", "new": "Añadir recurso", "save": "Guardar recurso", "create": "Crear recurso", "saving": "Guardando…", "saved": "Recurso guardado.", "publish": "Publicar", "unpublish": "Despublicar", "delete": "Eliminar recurso", "confirmDelete": "¿Seguro que quieres eliminar este recurso?", "empty": "Todavía no hay recursos.", "titleLabel": "Título", "kind": "Tipo", "access": "Acceso", "chooseResourceFile": "Seleccionar archivo del recurso", "chooseThumbnail": "Seleccionar miniatura", "kindNames": { "video": "Vídeo", "document": "Documento", "link": "Enlace", "worksheet": "Ficha", "vocabulary": "Vocabulario", "recording": "Grabación", "coursework": "Trabajo de clase" }, "levelNames": { "public": "Libre", "account": "Con cuenta", "enrolled": "Alumnos" }, "statusNames": { "draft": "Borrador", "published": "Publicado" }, "moveUp": "Subir {title}", "moveDown": "Bajar {title}", "description": "Descripción", "externalUrl": "URL externa", "video": "URL de YouTube", "titleLang": "Idioma del título", "langEs": "Español", "langEn": "Inglés", "level": "Nivel", "audience": "Público", "audiences": { "kids": "Niños", "adults": "Adultos", "mature": "Mayores" }, "teaser": "Mostrar resumen cuando esté bloqueado", "preview": "Vista previa de tarjeta bloqueada", "file": "Archivo", "thumbnail": "Miniatura", "size": "Tamaño del archivo", "back": "Volver a recursos", "edit": "Editar", "locked": "Disponible según el nivel de acceso", "noFile": "Sin archivo adjunto", "section": "Acceso: {level}", "filterStatus": "Estado", "filterKind": "Tipo", "filter": "Filtrar", "all": "Todos" },
+    "lessons": { "previewDraft": "Vista previa · Borrador", "title": "Lecciones", "intro": "Organiza las lecciones por categoría y nivel.", "new": "Añadir lección", "create": "Crear lección", "save": "Guardar lección", "saving": "Guardando…", "empty": "Sin lecciones", "back": "Volver a lecciones", "slug": "Identificador URL", "category": "Categoría", "categoryNames": { "foundations": "Fundamentos", "kids": "Niños", "adults": "Adultos", "stories": "Historias", "games": "Juegos" }, "level": "Nivel", "access": "Acceso", "levelAccess": { "public": "Libre", "account": "Con cuenta", "enrolled": "Alumnos" }, "kind": "Tipo", "kindNames": { "article": "Artículo", "interactive": "Interactiva" }, "title": "Título", "summary": "Resumen", "teaser": "Mostrar resumen cuando esté bloqueada", "article": "Artículo", "interactive": "Interactiva", "published": "Publicada", "draft": "Borrador", "statusNames": { "draft": "Borrador", "published": "Publicada" }, "publish": "Publicar", "unpublish": "Despublicar", "delete": "Eliminar lección", "confirmDelete": "¿Seguro que quieres eliminar esta lección?", "blocks": "Bloques", "preview": "Vista previa", "noBlocks": "Añade al menos un bloque para publicar.", "addAtLevel": "Añadir en {level}", "moveUp": "Subir {title}", "moveDown": "Bajar {title}" },
+    "blocks": { "heading": "Bloques", "empty": "Todavía no hay bloques.", "add": "Añadir bloque", "edit": "Editar", "save": "Guardar bloque", "saving": "Guardando…", "cancel": "Cancelar", "delete": "Eliminar bloque", "confirm": "¿Seguro?", "up": "Subir {title}", "down": "Bajar {title}", "textHelp": "Deja una línea en blanco entre párrafos. Empieza una línea con «- » para una lista. **así** para negrita.", "body": "Texto", "text": "Texto", "videoTitle": "Vídeo de la lección", "playVideo": "Reproducir vídeo", "languageEs": "Español", "languageEn": "Inglés", "image": "Imagen", "alt": "Texto alternativo", "video": "URL de YouTube", "quiz": "Pregunta", "options": "Opciones (una por línea)", "correct": "Número de opción correcta (desde 0)", "explanation": "Explicación" },
+    "upload": { "choose": "Seleccionar archivo", "uploading": "Subiendo archivo…", "uploaded": "Archivo adjuntado.", "type": "Este tipo de archivo no está permitido.", "size": "El archivo supera el tamaño máximo.", "missing": "No se encontró el archivo subido. Vuelve a intentarlo.", "unavailable": "No se pudo subir el archivo. Inténtalo de nuevo.", "requiresJs": "La subida de archivos requiere JavaScript.", "current": "Archivo actual", "none": "Sin archivo adjunto", "remove": "Quitar archivo", "forbidden": "No tienes permiso para subir este archivo." },
+    "quiz": { "check": "Comprobar", "correct": "¡Correcto!", "incorrect": "Prueba otra vez.", "choose": "Elige una respuesta." }
+  },
+  "catalog": {
+    "title": "Catálogo",
+    "intro": "Programas, ediciones, precios y sedes de la escuela.",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "edit": "Editar",
+    "summary": {
+      "programs": "{count, plural, =0 {Ningún programa activo} one {# programa activo} other {# programas activos}}",
+      "locations": "{count, plural, =0 {Ninguna sede activa} one {# sede activa} other {# sedes activas}}"
+    },
+    "locations": {
+      "title": "Sedes",
+      "intro": "Bibliotecas, oficinas, domicilio y online. Las sedes de domicilio u online no llevan dirección.",
+      "new": "Nueva sede",
+      "list": "Sedes registradas",
+      "empty": "Todavía no hay sedes.",
+      "name": "Nombre",
+      "kind": "Tipo",
+      "region": "Zona",
+      "address": "Dirección",
+      "addressHint": "Solo para bibliotecas y oficinas (nunca direcciones particulares).",
+      "mapUrl": "Enlace al mapa",
+      "mapUrlHint": "Opcional; debe empezar por https://",
+      "active": "Sede activa",
+      "create": "Crear sede",
+      "save": "Guardar sede",
+      "saving": "Guardando…"
+    },
+    "programs": {
+      "title": "Programas",
+      "intro": "Cada programa tiene ediciones con fecha y precios.",
+      "new": "Nuevo programa",
+      "newIntro": "Datos en español e inglés. Después podrás añadir ediciones y precios.",
+      "empty": "Todavía no hay programas.",
+      "data": "Datos del programa",
+      "name": "Nombre",
+      "state": "Estado",
+      "public": "Público",
+      "code": "Código",
+      "codeHint": "Minúsculas, números y guiones (p. ej. adultos-a1).",
+      "language": "Idioma que se enseña",
+      "nameEs": "Nombre (español)",
+      "nameEn": "Nombre (inglés)",
+      "descriptionEs": "Descripción (español)",
+      "descriptionEn": "Descripción (inglés)",
+      "audience": "Segmento",
+      "format": "Formato",
+      "level": "Nivel",
+      "noLevel": "Sin nivel",
+      "durationWeeks": "Duración (semanas)",
+      "durationHint": "Opcional (1–52).",
+      "lessonMinutes": "Minutos por clase",
+      "active": "Programa activo",
+      "isPublic": "Visible en la web",
+      "isPublicHint": "Se usará para el horario público (hito 3).",
+      "create": "Crear programa",
+      "save": "Guardar programa",
+      "saving": "Guardando…"
+    },
+    "editions": {
+      "title": "Ediciones",
+      "empty": "Este programa todavía no tiene ediciones.",
+      "new": "Nueva edición",
+      "untitled": "Edición sin nombre",
+      "labelEs": "Nombre (español)",
+      "labelEn": "Nombre (inglés)",
+      "startsOn": "Empieza",
+      "endsOn": "Termina",
+      "status": "Estado",
+      "create": "Añadir edición",
+      "save": "Guardar edición",
+      "saving": "Guardando…"
+    },
+    "prices": {
+      "title": "Precios",
+      "effective": "Precio vigente por edición",
+      "effectiveHint": "Sin sede concreta: un precio de sede solo se aplica en esa sede.",
+      "none": "sin precio",
+      "active": "Precios activos",
+      "empty": "Todavía no hay precios.",
+      "new": "Nuevo precio",
+      "wholeProgram": "Todo el programa",
+      "packOf": "Pack de {lessons} clases",
+      "lessonsCount": "{lessons} clases",
+      "previous": "{count, plural, one {# precio anterior} other {# precios anteriores}}",
+      "kind": "Tipo de precio",
+      "amount": "Importe (AUD)",
+      "amountHint": "En dólares, p. ej. 245 o 245.50.",
+      "lessons": "Clases incluidas",
+      "lessonsHint": "Obligatorio en packs; vacío en precios por clase.",
+      "edition": "Edición",
+      "anyEdition": "Cualquier edición",
+      "location": "Sede",
+      "anyLocation": "Cualquier sede",
+      "labelEs": "Etiqueta (español)",
+      "labelEn": "Etiqueta (inglés)",
+      "create": "Añadir precio",
+      "deactivate": "Desactivar",
+      "saving": "Guardando…"
+    }
+  },
+  "students": {
+    "title": "Alumnos",
+    "intro": "Adultos, mayores y menores (con su tutor y consentimiento).",
+    "consentTexts": "Textos de consentimiento",
+    "count": "{count, plural, =0 {Ningún alumno con estos filtros} one {# alumno} other {# alumnos}}",
+    "minor": "Menor",
+    "noGuardians": "Este menor no tiene tutores vinculados.",
+    "guardianAccount": "Cuenta de portal",
+    "filters": {
+      "label": "Buscar alumnos",
+      "search": "Nombre",
+      "audience": "Segmento",
+      "status": "Estado",
+      "all": "Todos",
+      "apply": "Filtrar"
+    },
+    "columns": {
+      "name": "Nombre",
+      "audience": "Segmento",
+      "status": "Estado",
+      "portal": "Cuenta"
+    },
+    "sections": {
+      "data": "Datos",
+      "guardians": "Tutores",
+      "consents": "Consentimientos",
+      "portal": "Acceso al portal"
+    },
+    "portal": {
+      "yes": "Sí",
+      "no": "No",
+      "minor": "Menor (sin cuenta)",
+      "linked": "Este alumno ya tiene cuenta en el portal.",
+      "explain": "Crearemos su cuenta con el correo {email} y le enviaremos un enlace para elegir contraseña.",
+      "needsEmail": "Añade un correo en el contacto para darle acceso al portal.",
+      "grant": "Dar acceso al portal",
+      "granting": "Creando la cuenta…"
+    },
+    "new": {
+      "title": "Nuevo alumno",
+      "intro": "Los menores (6–13) necesitan un tutor y su consentimiento."
+    },
+    "form": {
+      "student": "Datos del alumno",
+      "fullName": "Nombre completo",
+      "audience": "Segmento",
+      "level": "Nivel",
+      "noLevel": "Sin nivel",
+      "preferredLocale": "Idioma de contacto",
+      "status": "Estado",
+      "contact": "Contacto (solo administración)",
+      "contactHint": "Las docentes no ven estos datos.",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "birthYear": "Año de nacimiento",
+      "adminNotes": "Notas internas",
+      "adminNotesHint": "Solo las ve la administración (ni el alumno ni su tutor).",
+      "guardian": "Tutor",
+      "guardianHint": "Elige un tutor ya registrado o escribe los datos de uno nuevo.",
+      "existingGuardian": "Tutor registrado",
+      "newGuardian": "Tutor nuevo",
+      "relationship": "Relación",
+      "guardianFullName": "Nombre del tutor",
+      "guardianEmail": "Correo del tutor",
+      "guardianPhone": "Teléfono del tutor",
+      "consent": "Consentimiento del tutor",
+      "consentVersion": "Versión {id}, vigente desde {date}.",
+      "consentMethod": "Cómo lo dio",
+      "consentGranted": "El tutor ha dado su consentimiento a este texto",
+      "consentGrantedRequired": "Marca la casilla para registrar el consentimiento.",
+      "noConsentText": "No hay un texto de consentimiento de datos del menor vigente. Créalo en «Textos de consentimiento» antes de dar de alta a un menor.",
+      "create": "Dar de alta",
+      "save": "Guardar ficha",
+      "saving": "Guardando…"
+    }
+  },
+  "consents": {
+    "empty": "No hay consentimientos registrados.",
+    "granted": "Concedido",
+    "revoked": "Revocado",
+    "entry": "Texto {version} · {date} · {method}",
+    "by": "Tutor: {name}",
+    "new": "Registrar consentimiento",
+    "cannotRecord": "Para registrar un consentimiento hace falta un texto y, si es menor, un tutor vinculado.",
+    "text": "Texto (versión)",
+    "decision": "Decisión",
+    "method": "Cómo lo dio",
+    "guardian": "Tutor",
+    "record": "Registrar",
+    "saving": "Guardando…",
+    "texts": {
+      "title": "Textos de consentimiento",
+      "intro": "Cada cambio crea una versión nueva; las anteriores se conservan con sus consentimientos.",
+      "list": "Versiones",
+      "empty": "Todavía no hay textos.",
+      "current": "Vigente",
+      "effective": "Vigente desde {date}",
+      "show": "Ver texto",
+      "new": "Nueva versión",
+      "newHint": "El identificador (tipo-vN) se asigna solo. Un texto publicado no se puede editar.",
+      "kind": "Tipo",
+      "effectiveFrom": "Vigente desde",
+      "bodyEs": "Texto (español)",
+      "bodyEn": "Texto (inglés)",
+      "create": "Publicar versión",
+      "saving": "Guardando…"
+    }
+  },
+  "inDevelopment": {
+    "badge": "En desarrollo",
+    "whatYouCanDo": "Qué podrás hacer aquí",
+    "previewCaption": "Vista de ejemplo (no son datos reales)",
+    "back": "Volver al inicio"
+  },
+  "devModules": {
+    "admin": {
+      "calendar": {
+        "title": "Calendario",
+        "summary": "Consulta las clases de la escuela por semana o mes y filtra la vista.",
+        "bullets": [
+          "Consulta las clases por semana o mes.",
+          "Filtra por sede, docente o grupo.",
+          "Abre el enlace de Zoom o Meet de una clase en línea."
+        ],
+        "previewLabel": "Ejemplo de calendario escolar"
+      },
+      "groups": {
+        "title": "Grupos",
+        "summary": "Organiza grupos a partir de una edición de programa y consulta a sus alumnos.",
+        "bullets": [
+          "Crea grupos a partir de una edición de programa.",
+          "Asigna docente, sede, horario y capacidad.",
+          "Consulta a los alumnos de cada grupo."
+        ],
+        "previewLabel": "Ejemplo de ficha de grupo"
+      },
+      "enrollments": {
+        "title": "Matrículas",
+        "summary": "Matricula alumnos en grupos y consulta el estado y plan de pago elegido.",
+        "bullets": [
+          "Matricula alumnos en grupos.",
+          "Consulta estados: pendiente, activa, pausada o finalizada.",
+          "Consulta el plan elegido: paquete, pago por clase o pago completo."
+        ],
+        "previewLabel": "Ejemplo de matrícula de alumno"
+      },
+      "attendance": {
+        "title": "Asistencia",
+        "summary": "Consulta la asistencia de cada clase, las ausencias y las clases por recuperar.",
+        "bullets": [
+          "Consulta la asistencia de cada clase.",
+          "Revisa las ausencias.",
+          "Identifica las clases por recuperar."
+        ],
+        "previewLabel": "Ejemplo de registro de asistencia"
+      },
+      "payments": {
+        "title": "Pagos",
+        "summary": "Registra y concilia pagos en AUD con GST, con trazabilidad de los pagos anotados.",
+        "bullets": [
+          "Registra pagos con tarjeta mediante Stripe.",
+          "Anota transferencias bancarias y pagos de Eventbrite.",
+          "Concilia pagos y consulta importes en AUD con GST.",
+          "Consulta pagos registrados sin posibilidad de modificarlos."
+        ],
+        "previewLabel": "Ejemplo de registro de pagos"
+      },
+      "leads": {
+        "title": "Solicitudes",
+        "summary": "Da seguimiento a consultas web y reservas de la clase gratuita de 45 minutos.",
+        "bullets": [
+          "Consulta las preguntas recibidas desde la web.",
+          "Revisa las reservas de la clase gratuita de 45 minutos.",
+          "Actualiza el estado de seguimiento.",
+          "Convierte una consulta en alumno."
+        ],
+        "previewLabel": "Ejemplo de seguimiento de consultas"
+      },
+      "content": {
+        "title": "Contenido",
+        "summary": "Gestiona recursos y lecciones de Aprende ahora para el sitio web público.",
+        "bullets": [
+          "Gestiona videos, documentos, enlaces, fichas y lecciones de Aprende ahora.",
+          "Define el acceso: público, con cuenta o solo alumnos.",
+          "Guarda contenido como borrador o publícalo.",
+          "Ordena el contenido y actualiza el sitio web público."
+        ],
+        "previewLabel": "Ejemplo de gestión de recursos"
+      }
+    },
+    "teacher": {
+      "today": {
+        "title": "Hoy",
+        "summary": "Consulta tus clases de hoy y accede rápidamente a la toma de asistencia.",
+        "bullets": [
+          "Consulta la hora y el grupo de cada clase.",
+          "Revisa la sede o el enlace de videollamada.",
+          "Accede rápidamente a tomar asistencia."
+        ],
+        "previewLabel": "Ejemplo de clases de hoy"
+      },
+      "groups": {
+        "title": "Grupos",
+        "summary": "Consulta tus grupos asignados, sus alumnos y sus niveles.",
+        "bullets": [
+          "Consulta solo los grupos que tienes asignados.",
+          "Revisa los alumnos de cada grupo.",
+          "Consulta el nivel de cada grupo."
+        ],
+        "previewLabel": "Ejemplo de grupos asignados"
+      },
+      "calendar": {
+        "title": "Calendario",
+        "summary": "Consulta tus clases organizadas por semana o mes.",
+        "bullets": [
+          "Consulta tus clases de la semana.",
+          "Consulta tus clases del mes.",
+          "Consulta la hora y el grupo de cada clase."
+        ],
+        "previewLabel": "Ejemplo de calendario docente"
+      },
+      "attendance": {
+        "title": "Asistencia",
+        "summary": "Pasa lista en tus clases y marca la asistencia de cada alumno.",
+        "bullets": [
+          "Pasa lista en tus clases.",
+          "Marca a cada alumno como presente.",
+          "Marca a cada alumno como ausente o justificado."
+        ],
+        "previewLabel": "Ejemplo de lista de clase"
+      },
+      "resources": {
+        "title": "Recursos",
+        "summary": "Consulta todo el material docente publicado para usarlo en clase.",
+        "bullets": [
+          "Consulta el material docente publicado.",
+          "Accede a recursos de cualquier nivel.",
+          "Usa los recursos en clase."
+        ],
+        "previewLabel": "Ejemplo de material docente"
+      },
+      "requests": {
+        "title": "Cambios de clase",
+        "summary": "Revisa y responde solicitudes de cambio o recuperación de clases.",
+        "bullets": [
+          "Consulta solicitudes de tus grupos.",
+          "Revisa solicitudes para cambiar una clase.",
+          "Revisa solicitudes para recuperar una clase.",
+          "Responde a las solicitudes."
+        ],
+        "previewLabel": "Ejemplo de solicitudes de clase"
+      }
+    },
+    "student": {
+      "schedule": {
+        "title": "Horario",
+        "summary": "Consulta tus próximas clases con la hora de Brisbane y los datos para asistir.",
+        "bullets": [
+          "Consulta tus próximas clases.",
+          "Revisa la hora de Brisbane.",
+          "Consulta la sede o el enlace de videollamada."
+        ],
+        "previewLabel": "Ejemplo de próximas clases"
+      },
+      "courses": {
+        "title": "Mis cursos",
+        "summary": "Consulta los programas y grupos en los que estás matriculado, con nivel y docente.",
+        "bullets": [
+          "Consulta tus programas y grupos.",
+          "Revisa el nivel de cada curso.",
+          "Consulta quién es tu docente."
+        ],
+        "previewLabel": "Ejemplo de cursos matriculados"
+      },
+      "resources": {
+        "title": "Recursos",
+        "summary": "Accede a videos, documentos y fichas disponibles según tu nivel de acceso.",
+        "bullets": [
+          "Consulta los videos disponibles para ti.",
+          "Accede a documentos según tu nivel de acceso.",
+          "Consulta las fichas desbloqueadas."
+        ],
+        "previewLabel": "Ejemplo de recursos de estudio"
+      },
+      "learn": {
+        "title": "Aprende",
+        "summary": "Lee lecciones y practica con preguntas según tu nivel de acceso.",
+        "bullets": ["Consulta lecciones por categoría y nivel.", "Abre artículos disponibles para ti.", "Revisa las lecciones interactivas."],
+        "previewLabel": "Ejemplo de lecciones"
+      },
+      "assignments": {
+        "title": "Tareas",
+        "summary": "Consulta las tareas de clase, sus fechas de entrega y entrega tus archivos.",
+        "bullets": [
+          "Consulta las tareas de clase.",
+          "Revisa la fecha de entrega.",
+          "Entrega tus archivos."
+        ],
+        "previewLabel": "Ejemplo de tarea con fecha de entrega"
+      },
+      "progress": {
+        "title": "Progreso",
+        "summary": "Consulta tu asistencia, las lecciones completadas y tu nivel.",
+        "bullets": [
+          "Revisa tu asistencia.",
+          "Consulta las lecciones completadas.",
+          "Consulta tu nivel."
+        ],
+        "previewLabel": "Ejemplo de progreso de aprendizaje"
+      },
+      "payments": {
+        "title": "Pagos",
+        "summary": "Consulta tus pagos, recibos y saldos pendientes, y paga con tarjeta.",
+        "bullets": [
+          "Consulta los pagos realizados y pendientes.",
+          "Revisa tus recibos.",
+          "Paga con tarjeta."
+        ],
+        "previewLabel": "Ejemplo de pagos y recibos"
+      },
+      "requests": {
+        "title": "Cambios de clase",
+        "summary": "Solicita cambiar o recuperar una clase y consulta el estado de tu solicitud.",
+        "bullets": [
+          "Solicita cambiar una clase.",
+          "Solicita recuperar una clase.",
+          "Consulta el estado de tus solicitudes."
+        ],
+        "previewLabel": "Ejemplo de estado de solicitud"
+      }
+    },
+    "guardian": {
+      "children": {
+        "title": "Mis hijos",
+        "summary": "Consulta los menores vinculados a tu cuenta, con su grupo, nivel y docente.",
+        "bullets": [
+          "Consulta los menores vinculados a tu cuenta.",
+          "Revisa el grupo y nivel de cada menor.",
+          "Consulta quién es su docente."
+        ],
+        "previewLabel": "Ejemplo de menores vinculados"
+      },
+      "schedule": {
+        "title": "Horario",
+        "summary": "Consulta las próximas clases de tus hijos.",
+        "bullets": [
+          "Consulta las próximas clases de tus hijos.",
+          "Revisa el horario de cada clase.",
+          "Consulta la sede o el enlace de videollamada."
+        ],
+        "previewLabel": "Ejemplo de horario familiar"
+      },
+      "payments": {
+        "title": "Pagos",
+        "summary": "Consulta los pagos de las matrículas de tus hijos y sus recibos.",
+        "bullets": [
+          "Consulta los pagos de las matrículas de tus hijos.",
+          "Revisa los recibos.",
+          "Consulta los pagos pendientes."
+        ],
+        "previewLabel": "Ejemplo de pagos de matrículas"
+      },
+      "consents": {
+        "title": "Consentimientos",
+        "summary": "Revisa, otorga o retira consentimientos relacionados con tus hijos.",
+        "bullets": [
+          "Revisa consentimientos sobre los datos de menores.",
+          "Otorga o retira el consentimiento para grabaciones de clase.",
+          "Otorga o retira el consentimiento para fotos."
+        ],
+        "previewLabel": "Ejemplo de consentimientos"
+      },
+      "resources": {
+        "title": "Recursos",
+        "summary": "Consulta el material de estudio de tus hijos.",
+        "bullets": [
+          "Consulta el material de estudio de tus hijos.",
+          "Revisa los recursos disponibles para ellos.",
+          "Accede a los videos, documentos y fichas desbloqueados."
+        ],
+        "previewLabel": "Ejemplo de material de estudio"
+      }
     }
   }
 }
