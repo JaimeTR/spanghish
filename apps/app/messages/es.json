@@ -27,6 +27,23 @@
     "invalid": "Escribe un correo electrónico válido.",
     "back": "Volver a iniciar sesión"
   },
+  "reset": {
+    "title": "Crear una contraseña nueva",
+    "intro": "Elige la contraseña con la que entrarás a partir de ahora.",
+    "password": "Contraseña nueva",
+    "passwordHint": "Entre 10 y 72 caracteres.",
+    "confirm": "Repite la contraseña",
+    "submit": "Guardar contraseña",
+    "submitting": "Guardando…",
+    "requestNew": "Pedir un enlace nuevo",
+    "back": "Volver a iniciar sesión",
+    "errors": {
+      "invalid": "La contraseña debe tener entre 10 y 72 caracteres.",
+      "mismatch": "Las dos contraseñas no coinciden.",
+      "expired": "Este enlace ha caducado o ya se usó. Pide uno nuevo.",
+      "unavailable": "No pudimos cambiar la contraseña. Pide un enlace nuevo e inténtalo otra vez."
+    }
+  },
   "shell": {
     "logout": "Cerrar sesión",
     "skipToContent": "Saltar al contenido",

@@ -157,7 +157,8 @@ max_indexes = 5
 enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
 # in emails.
-# El portal (apps/app) corre en 3001. La pagina /reset-password esta pendiente (inicio del plan 1B).
+# El portal (apps/app) corre en 3001. El correo de recuperacion enlaza a /<locale>/reset-password
+# (plantilla supabase/templates/recovery.html, mas abajo).
 site_url = "http://127.0.0.1:3001"
 # The public URL that Auth serves on. Defaults to the API external URL with `/auth/v1` appended.
 # external_url = ""
@@ -251,6 +252,12 @@ otp_expiry = 3600
 # pass = "env(SENDGRID_API_KEY)"
 # admin_email = "admin@email.com"
 # sender_name = "Admin"
+
+# Recuperacion de contrasena: enlace con token_hash a /<locale>/reset-password (el formulario lo
+# verifica al enviarse; abrir el enlace no lo gasta). Subir tambien esta plantilla al proyecto remoto.
+[auth.email.template.recovery]
+subject = "Spanglish: crea tu contraseña / create your password"
+content_path = "./supabase/templates/recovery.html"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]

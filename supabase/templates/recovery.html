@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+  <body style="font-family: Arial, Helvetica, sans-serif; color: #1f1f1f; line-height: 1.5">
+    <h2 style="color: #592f85">Spanglish</h2>
+
+    <p>Hola:</p>
+    <p>
+      Hemos recibido una petición para crear una contraseña nueva para tu cuenta.
+      Pulsa el botón y elige tu contraseña. El enlace caduca en una hora.
+    </p>
+    <p>
+      <a
+        href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&amp;type=recovery"
+        style="display: inline-block; padding: 12px 20px; background: #592f85; color: #ffffff; text-decoration: none; border-radius: 6px"
+        >Crear contraseña / Create password</a
+      >
+    </p>
+    <p>Si no lo has pedido tú, ignora este correo: tu contraseña no cambia.</p>
+
+    <hr style="border: none; border-top: 1px solid #dddddd; margin: 24px 0" />
+
+    <p lang="en">Hi,</p>
+    <p lang="en">
+      We received a request to create a new password for your account. Use the button
+      above to choose your password. The link expires in one hour.
+    </p>
+    <p lang="en">If you didn't ask for this, ignore this email: your password stays the same.</p>
+  </body>
+</html>

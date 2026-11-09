@@ -27,6 +27,23 @@
     "invalid": "Please enter a valid email address.",
     "back": "Back to sign in"
   },
+  "reset": {
+    "title": "Create a new password",
+    "intro": "Choose the password you will use to sign in from now on.",
+    "password": "New password",
+    "passwordHint": "Between 10 and 72 characters.",
+    "confirm": "Repeat the password",
+    "submit": "Save password",
+    "submitting": "Saving…",
+    "requestNew": "Request a new link",
+    "back": "Back to sign in",
+    "errors": {
+      "invalid": "The password must be between 10 and 72 characters.",
+      "mismatch": "The two passwords do not match.",
+      "expired": "This link has expired or has already been used. Please request a new one.",
+      "unavailable": "We couldn't change your password. Please request a new link and try again."
+    }
+  },
   "shell": {
     "logout": "Sign out",
     "skipToContent": "Skip to content",
