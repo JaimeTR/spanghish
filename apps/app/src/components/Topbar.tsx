@@ -1,5 +1,5 @@
 import { Button } from "@spanglish/ui";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings, UserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -8,14 +8,11 @@ import type { AppRole } from "@/lib/access";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { MobileMenu } from "./MobileMenu";
 import { RoleSwitcher } from "./RoleSwitcher";
+import { UserMenu } from "./UserMenu";
 import { Sidebar } from "./Sidebar";
 import { onLightFocus, onStructureFocus } from "./shell-styles";
 
 type LogoutAction = (formData: FormData) => void | Promise<void>;
-
-function initialOf(name: string | undefined): string {
-  return name?.trim().charAt(0).toLocaleUpperCase() ?? "";
-}
 
 function LogoutForm({
   action,
@@ -62,7 +59,6 @@ export function Topbar({
   logout: LogoutAction;
 }) {
   const t = useTranslations("shell");
-  const initial = initialOf(name);
 
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-surface">
@@ -70,7 +66,21 @@ export function Topbar({
         <MobileMenu label={t("menu")}>
           <Sidebar role={area} locale={locale} />
           <RoleSwitcher roles={roles} current={area} locale={locale} tone="structure" className="mt-5 flex" />
-          <div className="mt-5 flex items-center justify-between gap-3 border-t border-on-structure/25 pt-5">
+          <ul className="mt-5 flex flex-col gap-1 border-t border-on-structure/25 pt-4">
+            <li>
+              <Link href={`/${locale}/account`} className={`flex min-h-11 items-center gap-3 rounded-md px-3 hover:bg-on-structure/10 ${onStructureFocus}`}>
+                <UserRound aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.75} />
+                {t("myAccount")}
+              </Link>
+            </li>
+            <li>
+              <Link href={`/${locale}/account/settings`} className={`flex min-h-11 items-center gap-3 rounded-md px-3 hover:bg-on-structure/10 ${onStructureFocus}`}>
+                <Settings aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.75} />
+                {t("settings")}
+              </Link>
+            </li>
+          </ul>
+          <div className="mt-3 flex items-center justify-between gap-3 border-t border-on-structure/25 pt-4">
             {name ? <span className="min-w-0 truncate font-semibold">{name}</span> : <span />}
             <LogoutForm action={logout} locale={locale} label={t("logout")} variant="highlight" />
           </div>
@@ -87,19 +97,8 @@ export function Topbar({
 
         <div className="ml-auto flex items-center gap-4">
           <LocaleSwitch locale={locale} />
-          {name && (
-            <span className="hidden items-center gap-2.5 lg:flex">
-              <span
-                aria-hidden="true"
-                className="inline-flex size-9 items-center justify-center rounded-full bg-highlight text-sm font-bold text-on-highlight"
-              >
-                {initial}
-              </span>
-              <span className="max-w-48 truncate text-sm font-semibold">{name}</span>
-            </span>
-          )}
           <div className="hidden lg:block">
-            <LogoutForm action={logout} locale={locale} label={t("logout")} variant="secondary" />
+            <UserMenu name={name} locale={locale} logout={logout} />
           </div>
         </div>
       </div>

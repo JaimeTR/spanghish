@@ -51,7 +51,12 @@
     "home": "Spanglish, home",
     "areaSwitcher": "Switch area",
     "signedInAs": "Signed in as {name}",
-    "localeLabel": "Language"
+    "localeLabel": "Language",
+    "collapseMenu": "Collapse menu",
+    "expandMenu": "Expand menu",
+    "userMenu": "Account menu",
+    "myAccount": "My account",
+    "settings": "Settings"
   },
   "locales": {
     "es": "Español",
@@ -61,6 +66,16 @@
     "label": "Main navigation",
     "status": {
       "dev": "In development"
+    },
+    "groups": {
+      "operation": "Operations",
+      "people": "People",
+      "content": "Content",
+      "management": "Management",
+      "classes": "Classes",
+      "learn": "Learn",
+      "family": "Family",
+      "account": "Account"
     },
     "items": {
       "dashboard": "Dashboard",
@@ -88,6 +103,18 @@
       "children": "My children",
       "consents": "Consents"
     }
+  },
+  "account": {
+    "title": "My account",
+    "intro": "Your sign-in details.",
+    "name": "Name",
+    "email": "Email",
+    "roles": "Roles",
+    "changePassword": "Change my password",
+    "settingsTitle": "Settings",
+    "settingsIntro": "Your account preferences.",
+    "language": "Language",
+    "languageHelp": "Choose the interface language."
   },
   "areas": {
     "admin": "Administration",

@@ -1,0 +1,69 @@
+import { expect, test } from "@playwright/test";
+import { expectNoAxeViolations, expectPath, login, USERS } from "./fixtures";
+
+test.describe("shell: menú lateral y menú de cuenta", () => {
+  test("the admin sidebar groups modules under titled sections", async ({ page }) => {
+    await login(page, USERS.admin);
+    await expectPath(page, "/es/admin");
+    const nav = page.getByRole("navigation", { name: "Navegación principal" });
+    for (const group of ["Operación", "Personas", "Contenido", "Gestión"]) {
+      await expect(nav.getByRole("listitem").filter({ hasText: group }).first()).toBeVisible();
+    }
+  });
+
+  test("the sidebar collapses to icons, keeps accessible names and remembers the choice", async ({ page }) => {
+    await login(page, USERS.admin);
+    await expectPath(page, "/es/admin");
+    const aside = page.locator("aside[data-collapsed]");
+    await expect(aside).toHaveAttribute("data-collapsed", "false");
+    await page.getByRole("button", { name: "Minimizar menú" }).click();
+    await expect(aside).toHaveAttribute("data-collapsed", "true");
+    await expect(page.getByRole("navigation", { name: "Navegación principal" }).getByRole("link", { name: "Alumnos" })).toBeVisible();
+    await expectNoAxeViolations(page);
+    await page.reload();
+    await expect(aside).toHaveAttribute("data-collapsed", "true");
+    await page.getByRole("button", { name: "Expandir menú" }).click();
+    await expect(aside).toHaveAttribute("data-collapsed", "false");
+  });
+
+  test("the account menu opens My account and Settings and closes with Escape", async ({ page }) => {
+    await login(page, USERS.admin);
+    await expectPath(page, "/es/admin");
+    const trigger = page.getByRole("button", { name: /Admin Local/ });
+    await trigger.click();
+    await expect(page.getByRole("link", { name: "Configuración" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Cerrar sesión" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await trigger.click();
+    await page.getByRole("link", { name: "Mi cuenta" }).click();
+    await expectPath(page, "/es/account");
+    await expect(page.getByRole("heading", { name: "Mi cuenta" })).toBeVisible();
+    await expect(page.getByText("admin@spanglish.test")).toBeVisible();
+    await expectNoAxeViolations(page);
+  });
+
+  test("settings page offers the language switch and has no axe violations", async ({ page }) => {
+    await login(page, USERS.student);
+    await expectPath(page, "/es/student");
+    await page.goto("/es/account/settings");
+    await expect(page.getByRole("heading", { name: "Configuración" })).toBeVisible();
+    await expectNoAxeViolations(page);
+  });
+
+  test("the account pages need a session", async ({ page }) => {
+    await page.goto("/es/account");
+    await expectPath(page, "/es/login");
+  });
+
+  test("the mobile menu lists the groups, account links and sign out", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await login(page, USERS.admin);
+    await expectPath(page, "/es/admin");
+    await page.getByRole("button", { name: "Menú" }).click();
+    const nav = page.getByRole("navigation", { name: "Navegación principal" });
+    await expect(nav.getByText("Personas")).toBeVisible();
+    await expect(page.getByRole("link", { name: "Mi cuenta" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Cerrar sesión" })).toBeVisible();
+  });
+});

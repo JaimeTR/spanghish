@@ -58,7 +58,7 @@ describe("Sidebar", () => {
     wrap(<Sidebar role="teacher" locale="es" />);
     const navEl = screen.getByRole("navigation", { name: "Navegación principal" });
     expect(navEl.tagName).toBe("NAV");
-    expect(within(navEl).getByRole("list")).toBeInTheDocument();
+    expect(within(navEl).getAllByRole("list").length).toBeGreaterThan(0);
   });
 
   it("modules in development are links with a visible badge and an accessible name", () => {
@@ -70,13 +70,13 @@ describe("Sidebar", () => {
       "/es/admin/groups",
       "/es/admin/enrollments",
       "/es/admin/attendance",
-      "/es/admin/payments",
       "/es/admin/leads",
-      "/es/admin/catalog",
       "/es/admin/students",
       "/es/admin/teachers",
       "/es/admin/resources",
       "/es/admin/lessons",
+      "/es/admin/catalog",
+      "/es/admin/payments",
       "/es/admin/settings/consent-texts",
     ]);
     const calendar = screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ });
@@ -144,12 +144,21 @@ describe("Topbar", () => {
     expect(links[1]).not.toHaveAttribute("aria-current");
   });
 
-  it("a single-role user gets no role switcher, but sees name and logout", () => {
+  it("a single-role user gets no role switcher, and the account menu offers account, settings and logout", async () => {
+    const user = userEvent.setup();
     nav.pathname = "/es/student";
     wrap(<Topbar name="Student Local" roles={["student"]} area="student" locale="es" logout={logout} />);
     expect(screen.queryByRole("group", { name: "Cambiar de área" })).not.toBeInTheDocument();
-    expect(screen.getByText("Student Local")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Cerrar sesión" })).toBeInTheDocument();
+    const trigger = screen.getByRole("button", { name: /Student Local/ });
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    await user.click(trigger);
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+    expect(screen.getAllByRole("link", { name: "Mi cuenta" })[0]).toHaveAttribute("href", "/es/account");
+    expect(screen.getAllByRole("link", { name: "Configuración" })[0]).toHaveAttribute("href", "/es/account/settings");
+    expect(screen.getAllByRole("button", { name: "Cerrar sesión" }).length).toBeGreaterThan(0);
+    await user.keyboard("{Escape}");
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+    expect(trigger).toHaveFocus();
   });
 
   it("mobile menu opens with the button, closes with Escape and returns focus", async () => {

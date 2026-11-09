@@ -59,7 +59,7 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 
 ## 5.2 Punto exacto donde se quedó el trabajo (2026-11-09)
 Rama: `feat/contenido-fase2-e2e` (desde `develop`). Las 26 e2e de gestión de recursos y lecciones PASAN y la suite e2e completa de la app queda en verde (86; 3 omitidas). Lint, typecheck y tests unitarios en verde. Las causas eran carreras en las pruebas (clic y navegación sin esperar la acción), selectores ambiguos, un PNG de prueba inválido y conteos de menú desactualizados; en la app: menú lateral sin scroll, recarga del ID de YouTube y errores de `move_*` ocultos.
-Siguiente: PR a `develop`; luego (1) menú lateral por grupos, minimizable y menú de perfil (Mi cuenta, Configuración, Cerrar sesión); (2) páginas de docentes con Pamela Rojas (lista `/teachers` + perfil por docente, es/en, gestionable desde el admin); (3) Contenido fases 3 a 6.
+Hecho en `feat/shell-navegacion` (apilada sobre la anterior): menú lateral por grupos y minimizable, menú de perfil, `/account` y `/account/settings` (básicas), helper e2e `signOut`. Siguiente: (1) páginas de docentes con Pamela Rojas (lista `/teachers` + perfil por docente, es/en, gestionable desde el admin); (3) Contenido fases 3 a 6.
 
 ## 6. Cómo delegar sin gastar tokens de Claude
 - **Codex** (cuenta ChatGPT ya iniciada): `codex exec -C <worktree> -s workspace-write "<prompt autocontenido que cite el archivo del plan y la tarea>"`. Su sandbox NO puede ejecutar `pnpm` (EPERM): que solo escriba archivos y ejecutar las comprobaciones fuera. Nunca `danger-full-access`, nunca pasar secretos. Un solo escritor por archivo.
