@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   addDays,
+  formatDay,
   formatSessionTime,
   SCHOOL_TIME_ZONE,
   schoolDayRange,
@@ -67,5 +68,11 @@ describe("school time (Australia/Brisbane)", () => {
     expect(en).toMatch(/0?6:00/);
     expect(en).toMatch(/0?7:10/);
     expect(en.toLowerCase()).toContain("pm");
+  });
+
+  it("formatDay shows the calendar day without shifting it", () => {
+    expect(formatDay("2027-02-01", "en")).toMatch(/^1 Feb\.? 2027$/);
+    expect(formatDay("2027-02-01", "es")).toMatch(/^1 feb\.? 2027$/);
+    expect(formatDay("2026-12-31", "en")).toMatch(/31 Dec/);
   });
 });

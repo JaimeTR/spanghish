@@ -182,5 +182,108 @@
       "submitting": "Sending…",
       "back": "Back to teachers"
     }
+  },
+  "enums": {
+    "audience": {
+      "kids": "Kids (6–13)",
+      "adults": "Adults (14+)",
+      "mature": "Seniors (65+)"
+    },
+    "format": {
+      "individual": "One-to-one",
+      "own_group": "Own group (max. 2)",
+      "local_group": "Local group"
+    },
+    "locationKind": {
+      "library": "Library",
+      "office": "Office",
+      "home": "Home",
+      "online": "Online"
+    },
+    "region": {
+      "sunshine_coast": "Sunshine Coast",
+      "brisbane": "Brisbane",
+      "online": "Online"
+    },
+    "editionStatus": {
+      "draft": "Draft",
+      "open": "Open",
+      "closed": "Closed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "catalog": {
+    "title": "Catalogue",
+    "intro": "The school's programmes, editions, prices and locations.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "edit": "Edit",
+    "summary": {
+      "programs": "{count, plural, =0 {No active programmes} one {# active programme} other {# active programmes}}",
+      "locations": "{count, plural, =0 {No active locations} one {# active location} other {# active locations}}"
+    },
+    "locations": {
+      "title": "Locations",
+      "intro": "Libraries, offices, home and online. Home and online locations have no address.",
+      "new": "New location",
+      "list": "Locations",
+      "empty": "There are no locations yet.",
+      "name": "Name",
+      "kind": "Type",
+      "region": "Area",
+      "address": "Address",
+      "addressHint": "Only for libraries and offices (never private addresses).",
+      "mapUrl": "Map link",
+      "mapUrlHint": "Optional; must start with https://",
+      "active": "Active location",
+      "create": "Create location",
+      "save": "Save location",
+      "saving": "Saving…"
+    },
+    "programs": {
+      "title": "Programmes",
+      "intro": "Each programme has dated editions and prices.",
+      "new": "New programme",
+      "newIntro": "Details in Spanish and English. You can add editions and prices next.",
+      "empty": "There are no programmes yet.",
+      "data": "Programme details",
+      "name": "Name",
+      "state": "Status",
+      "public": "Public",
+      "code": "Code",
+      "codeHint": "Lowercase letters, numbers and hyphens (e.g. adults-a1).",
+      "language": "Language taught",
+      "nameEs": "Name (Spanish)",
+      "nameEn": "Name (English)",
+      "descriptionEs": "Description (Spanish)",
+      "descriptionEn": "Description (English)",
+      "audience": "Segment",
+      "format": "Format",
+      "level": "Level",
+      "noLevel": "No level",
+      "durationWeeks": "Length (weeks)",
+      "durationHint": "Optional (1–52).",
+      "lessonMinutes": "Minutes per lesson",
+      "active": "Active programme",
+      "isPublic": "Shown on the website",
+      "isPublicHint": "Used for the public timetable (milestone 3).",
+      "create": "Create programme",
+      "save": "Save programme",
+      "saving": "Saving…"
+    },
+    "editions": {
+      "title": "Editions",
+      "empty": "This programme has no editions yet.",
+      "new": "New edition",
+      "untitled": "Untitled edition",
+      "labelEs": "Name (Spanish)",
+      "labelEn": "Name (English)",
+      "startsOn": "Starts",
+      "endsOn": "Ends",
+      "status": "Status",
+      "create": "Add edition",
+      "save": "Save edition",
+      "saving": "Saving…"
+    }
   }
 }

@@ -20,16 +20,19 @@ export function Field({
   label,
   error,
   hint,
+  idPrefix = "field-",
   children,
 }: {
   name: string;
   label: string;
   error?: FormErrorKey;
   hint?: string;
+  /** Prefijo del id cuando hay varios formularios iguales en la página. */
+  idPrefix?: string;
   children: ReactElement<ControlProps>;
 }) {
   const t = useTranslations("forms.errors");
-  const id = `field-${name}`;
+  const id = `${idPrefix}${name}`;
   const hintId = hint ? `${id}-hint` : undefined;
   const errorId = error ? `${id}-error` : undefined;
   const describedBy = [hintId, errorId].filter(Boolean).join(" ") || undefined;

@@ -74,3 +74,17 @@ export function formatSessionTime(startsAt: string, endsAt: string, locale: Loca
   }
   return fmt.formatRange(new Date(startsAt), new Date(endsAt));
 }
+
+/**
+ * Fecha de calendario (`YYYY-MM-DD`, columnas `date`) para mostrar: "1 feb 2027"
+ * / "1 Feb 2027". Se formatea en UTC porque el día no es un instante: así nunca
+ * se corre un día según la zona del servidor o del navegador.
+ */
+export function formatDay(day: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-AU", {
+    timeZone: "UTC",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(parseDay(day));
+}

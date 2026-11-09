@@ -182,5 +182,108 @@
       "submitting": "Enviando…",
       "back": "Volver a docentes"
     }
+  },
+  "enums": {
+    "audience": {
+      "kids": "Niños (6–13)",
+      "adults": "Adultos (14+)",
+      "mature": "Mayores (65+)"
+    },
+    "format": {
+      "individual": "Individual",
+      "own_group": "Grupo propio (máx. 2)",
+      "local_group": "Grupo local"
+    },
+    "locationKind": {
+      "library": "Biblioteca",
+      "office": "Oficina",
+      "home": "Domicilio",
+      "online": "Online"
+    },
+    "region": {
+      "sunshine_coast": "Sunshine Coast",
+      "brisbane": "Brisbane",
+      "online": "Online"
+    },
+    "editionStatus": {
+      "draft": "Borrador",
+      "open": "Abierta",
+      "closed": "Cerrada",
+      "cancelled": "Cancelada"
+    }
+  },
+  "catalog": {
+    "title": "Catálogo",
+    "intro": "Programas, ediciones, precios y sedes de la escuela.",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "edit": "Editar",
+    "summary": {
+      "programs": "{count, plural, =0 {Ningún programa activo} one {# programa activo} other {# programas activos}}",
+      "locations": "{count, plural, =0 {Ninguna sede activa} one {# sede activa} other {# sedes activas}}"
+    },
+    "locations": {
+      "title": "Sedes",
+      "intro": "Bibliotecas, oficinas, domicilio y online. Las sedes de domicilio u online no llevan dirección.",
+      "new": "Nueva sede",
+      "list": "Sedes registradas",
+      "empty": "Todavía no hay sedes.",
+      "name": "Nombre",
+      "kind": "Tipo",
+      "region": "Zona",
+      "address": "Dirección",
+      "addressHint": "Solo para bibliotecas y oficinas (nunca direcciones particulares).",
+      "mapUrl": "Enlace al mapa",
+      "mapUrlHint": "Opcional; debe empezar por https://",
+      "active": "Sede activa",
+      "create": "Crear sede",
+      "save": "Guardar sede",
+      "saving": "Guardando…"
+    },
+    "programs": {
+      "title": "Programas",
+      "intro": "Cada programa tiene ediciones con fecha y precios.",
+      "new": "Nuevo programa",
+      "newIntro": "Datos en español e inglés. Después podrás añadir ediciones y precios.",
+      "empty": "Todavía no hay programas.",
+      "data": "Datos del programa",
+      "name": "Nombre",
+      "state": "Estado",
+      "public": "Público",
+      "code": "Código",
+      "codeHint": "Minúsculas, números y guiones (p. ej. adultos-a1).",
+      "language": "Idioma que se enseña",
+      "nameEs": "Nombre (español)",
+      "nameEn": "Nombre (inglés)",
+      "descriptionEs": "Descripción (español)",
+      "descriptionEn": "Descripción (inglés)",
+      "audience": "Segmento",
+      "format": "Formato",
+      "level": "Nivel",
+      "noLevel": "Sin nivel",
+      "durationWeeks": "Duración (semanas)",
+      "durationHint": "Opcional (1–52).",
+      "lessonMinutes": "Minutos por clase",
+      "active": "Programa activo",
+      "isPublic": "Visible en la web",
+      "isPublicHint": "Se usará para el horario público (hito 3).",
+      "create": "Crear programa",
+      "save": "Guardar programa",
+      "saving": "Guardando…"
+    },
+    "editions": {
+      "title": "Ediciones",
+      "empty": "Este programa todavía no tiene ediciones.",
+      "new": "Nueva edición",
+      "untitled": "Edición sin nombre",
+      "labelEs": "Nombre (español)",
+      "labelEn": "Nombre (inglés)",
+      "startsOn": "Empieza",
+      "endsOn": "Termina",
+      "status": "Estado",
+      "create": "Añadir edición",
+      "save": "Guardar edición",
+      "saving": "Guardando…"
+    }
   }
 }

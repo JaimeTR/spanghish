@@ -50,7 +50,7 @@ const NAV: Record<AppRole, readonly NavItem[]> = {
     item("teachers", adminPath("teachers")),
     item("leads"),
     item("requests"),
-    item("catalog"),
+    item("catalog", adminPath("catalog")),
     item("languages"),
   ],
   teacher: [item("today", home("teacher")), item("groups"), item("requests")],

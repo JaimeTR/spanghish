@@ -24,6 +24,10 @@ describe("navItemsFor", () => {
     expect(teachers?.href?.("en")).toBe("/en/admin/teachers");
   });
 
+  it("catalog item has a route", () => {
+    expect(navItemsFor("admin").find((i) => i.key === "catalog")?.href?.("en")).toBe("/en/admin/catalog");
+  });
+
   it("every linked item stays inside its own area", () => {
     for (const role of ["admin", "teacher", "student", "guardian"] as const) {
       const linked = navItemsFor(role).filter((i) => i.href !== null);
