@@ -22,7 +22,7 @@ test("teacher+student switches area from the topbar", async ({ page }) => {
 
   await switcher.getByRole("link", { name: "Alumno" }).click();
   await expectPath(page, "/es/student");
-  await expect(page.getByRole("navigation", { name: MAIN_NAV }).getByRole("link", { name: "Mi aprendizaje" }))
+  await expect(page.getByRole("navigation", { name: MAIN_NAV }).getByRole("link", { name: "Inicio" }))
     .toHaveAttribute("aria-current", "page");
   await expect(
     page.getByRole("group", { name: "Cambiar de área" }).getByRole("link", { name: "Alumno" }),
@@ -60,7 +60,7 @@ test.describe("mobile", () => {
     await expect(button).toHaveAttribute("aria-expanded", "true");
     const nav = page.getByRole("navigation", { name: MAIN_NAV });
     await expect(nav).toBeVisible();
-    await expect(nav.getByRole("link", { name: "Mi aprendizaje" })).toBeFocused();
+    await expect(nav.getByRole("link", { name: "Inicio" })).toBeFocused();
 
     await page.keyboard.press("Escape");
     await expect(button).toHaveAttribute("aria-expanded", "false");

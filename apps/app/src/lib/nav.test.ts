@@ -1,50 +1,141 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { navItemsFor, switchableAreas } from "./nav";
+import en from "../../messages/en.json";
+import es from "../../messages/es.json";
+import { devModules, NAV, navItemsFor, navUrl, switchableAreas } from "./nav";
 import { swapLocale } from "./locale-path";
 
-describe("navItemsFor", () => {
-  it("admin lists the operational sections in order", () => {
-    expect(navItemsFor("admin").map((i) => i.key)).toEqual([
+const ROLES = ["admin", "teacher", "student", "guardian"] as const;
+const SHELL = path.resolve(__dirname, "../app/[locale]/(shell)");
+
+function lookup(messages: unknown, dotted: string): unknown {
+  return dotted.split(".").reduce<unknown>((acc, k) => {
+    if (acc && typeof acc === "object" && k in acc) return (acc as Record<string, unknown>)[k];
+    return undefined;
+  }, messages);
+}
+
+describe("NAV", () => {
+  it("lists every module of each role, in order", () => {
+    expect(NAV.admin.map((i) => i.key)).toEqual([
       "dashboard",
       "calendar",
       "groups",
+      "enrollments",
+      "attendance",
+      "payments",
+      "leads",
+      "catalog",
       "students",
       "teachers",
-      "leads",
-      "requests",
-      "catalog",
-      "languages",
+      "content",
+      "settings",
     ]);
-    expect(navItemsFor("teacher").map((i) => i.key)).toEqual(["today", "groups", "requests"]);
+    expect(NAV.teacher.map((i) => i.key)).toEqual([
+      "today",
+      "groups",
+      "calendar",
+      "attendance",
+      "resources",
+      "requests",
+    ]);
+    expect(NAV.student.map((i) => i.key)).toEqual([
+      "home",
+      "schedule",
+      "courses",
+      "resources",
+      "assignments",
+      "progress",
+      "payments",
+      "requests",
+    ]);
+    expect(NAV.guardian.map((i) => i.key)).toEqual(["children", "schedule", "payments", "consents", "resources"]);
   });
 
-  it("teachers item has a route", () => {
-    const teachers = navItemsFor("admin").find((i) => i.key === "teachers");
-    expect(teachers?.href?.("es")).toBe("/es/admin/teachers");
-    expect(teachers?.href?.("en")).toBe("/en/admin/teachers");
+  it("marks as ready only the modules that exist", () => {
+    const readyKeys = ROLES.flatMap((r) =>
+      NAV[r].filter((i) => i.status === "ready").map((i) => `${r}.${i.key}`),
+    );
+    expect(readyKeys).toEqual([
+      "admin.dashboard",
+      "admin.catalog",
+      "admin.students",
+      "admin.teachers",
+      "admin.settings",
+      "student.home",
+    ]);
   });
 
-  it("students item has a route", () => {
-    expect(navItemsFor("admin").find((i) => i.key === "students")?.href?.("es")).toBe("/es/admin/students");
+  it("a ready module points to a real page", () => {
+    for (const role of ROLES) {
+      for (const item of NAV[role].filter((i) => i.status === "ready")) {
+        expect(existsSync(path.join(SHELL, item.href, "page.tsx")), `${item.href}/page.tsx`).toBe(true);
+      }
+    }
   });
 
-  it("catalog item has a route", () => {
-    expect(navItemsFor("admin").find((i) => i.key === "catalog")?.href?.("en")).toBe("/en/admin/catalog");
+  it("a dev module uses /<area>/<key> and no real page shadows it", () => {
+    for (const role of ROLES) {
+      for (const item of NAV[role].filter((i) => i.status === "dev")) {
+        expect(item.href).toBe(`/${role}/${item.key}`);
+        expect(existsSync(path.join(SHELL, role, item.key)), `${role}/${item.key} exists`).toBe(false);
+      }
+    }
   });
 
-  it("every linked item stays inside its own area", () => {
-    for (const role of ["admin", "teacher", "student", "guardian"] as const) {
-      const linked = navItemsFor(role).filter((i) => i.href !== null);
-      expect(linked[0]!.href!("en")).toBe(`/en/${role}`);
-      for (const i of linked) expect(i.href!("en")).toMatch(new RegExp(`^/en/${role}(/|$)`));
+  it("every item stays inside its own area and keys are unique within it", () => {
+    for (const role of ROLES) {
+      const keys = NAV[role].map((i) => i.key);
+      expect(new Set(keys).size).toBe(keys.length);
+      for (const i of NAV[role]) {
+        expect(i.area).toBe(role);
+        expect(navUrl(i, "en")).toMatch(new RegExp(`^/en/${role}(/|$)`));
+      }
+    }
+  });
+
+  it("devModules returns the dev keys of an area", () => {
+    expect(devModules("admin")).toEqual([
+      "calendar",
+      "groups",
+      "enrollments",
+      "attendance",
+      "payments",
+      "leads",
+      "content",
+    ]);
+    expect(devModules("teacher")).toHaveLength(6);
+    expect(devModules("student")).toHaveLength(7);
+    expect(devModules("guardian")).toHaveLength(5);
+  });
+
+  it("every item has a label and every dev module its texts in es and en", () => {
+    for (const messages of [es, en]) {
+      expect(typeof lookup(messages, "nav.status.dev")).toBe("string");
+      for (const role of ROLES) {
+        for (const item of NAV[role]) {
+          expect(typeof lookup(messages, `nav.items.${item.key}`), `nav.items.${item.key}`).toBe("string");
+          if (item.status !== "dev") continue;
+          // Texto por área: el mismo módulo (p. ej. "groups") es distinto para admin y docente.
+          const base = `devModules.${role}.${item.key}`;
+          for (const field of ["title", "summary", "previewLabel"]) {
+            const value = lookup(messages, `${base}.${field}`);
+            expect(typeof value === "string" && value.length > 0, `${base}.${field}`).toBe(true);
+          }
+          const bullets = lookup(messages, `${base}.bullets`);
+          expect(Array.isArray(bullets), `${base}.bullets`).toBe(true);
+          expect((bullets as unknown[]).length).toBeGreaterThanOrEqual(3);
+          expect((bullets as unknown[]).length).toBeLessThanOrEqual(5);
+        }
+      }
     }
   });
 
   it("student and guardian never get admin items", () => {
-    const keys = [...navItemsFor("student"), ...navItemsFor("guardian")].map((i) => i.key);
-    expect(keys).not.toContain("students");
-    expect(keys).not.toContain("teachers");
-    expect(keys).not.toContain("dashboard");
+    for (const i of [...navItemsFor("student"), ...navItemsFor("guardian")]) {
+      expect(i.href).not.toMatch(/^\/admin/);
+    }
   });
 });
 

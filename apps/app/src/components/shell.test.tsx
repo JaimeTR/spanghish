@@ -36,14 +36,14 @@ describe("Sidebar", () => {
     expect(within(navEl).getByRole("link", { name: "Panel" })).toHaveAttribute("href", "/es/admin");
     expect(within(navEl).getByText("Alumnos")).toBeInTheDocument();
     expect(within(navEl).getByText("Docentes")).toBeInTheDocument();
-    expect(within(navEl).getByText("Idiomas y niveles")).toBeInTheDocument();
+    expect(within(navEl).getByText("Ajustes")).toBeInTheDocument();
   });
 
   it("student sidebar does not list admin links", () => {
     nav.pathname = "/es/student";
     wrap(<Sidebar role="student" locale="es" />);
     const navEl = screen.getByRole("navigation", { name: "Navegación principal" });
-    expect(within(navEl).getByRole("link", { name: "Mi aprendizaje" })).toHaveAttribute(
+    expect(within(navEl).getByRole("link", { name: "Inicio" })).toHaveAttribute(
       "href",
       "/es/student",
     );
@@ -61,15 +61,35 @@ describe("Sidebar", () => {
     expect(within(navEl).getByRole("list")).toBeInTheDocument();
   });
 
-  it("items without route render as aria-disabled span", () => {
+  it("modules in development are links with a visible badge and an accessible name", () => {
     const { container } = wrap(<Sidebar role="admin" locale="es" />);
     const hrefs = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href"));
-    expect(hrefs).toEqual(["/es/admin", "/es/admin/students", "/es/admin/teachers", "/es/admin/catalog"]);
-    const soon = screen.getByText("Idiomas y niveles").closest("[aria-disabled]");
-    expect(soon).toHaveAttribute("aria-disabled", "true");
-    expect(soon?.tagName).toBe("SPAN");
-    expect(soon).not.toHaveAttribute("role");
-    expect(within(soon as HTMLElement).getByText("Pronto")).toBeInTheDocument();
+    expect(hrefs).toEqual([
+      "/es/admin",
+      "/es/admin/calendar",
+      "/es/admin/groups",
+      "/es/admin/enrollments",
+      "/es/admin/attendance",
+      "/es/admin/payments",
+      "/es/admin/leads",
+      "/es/admin/catalog",
+      "/es/admin/students",
+      "/es/admin/teachers",
+      "/es/admin/content",
+      "/es/admin/settings/consent-texts",
+    ]);
+    const calendar = screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ });
+    expect(calendar).toHaveAttribute("href", "/es/admin/calendar");
+    expect(within(calendar).getByText("En desarrollo")).toBeVisible();
+    expect(container.querySelector("[aria-disabled]")).toBeNull();
+    // Un módulo listo no lleva insignia.
+    expect(within(screen.getByRole("link", { name: "Catálogo" })).queryByText("En desarrollo")).toBeNull();
+  });
+
+  it("a module in development marks itself as current", () => {
+    nav.pathname = "/es/admin/leads";
+    wrap(<Sidebar role="admin" locale="es" />);
+    expect(screen.getByRole("link", { name: /^Solicitudes,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
   });
 
   it("a nested admin page marks its section as current", () => {
@@ -80,9 +100,9 @@ describe("Sidebar", () => {
   });
 
   it("current item has aria-current=page", () => {
-    nav.pathname = "/es/teacher";
+    nav.pathname = "/es/teacher/today";
     wrap(<Sidebar role="teacher" locale="es" />);
-    expect(screen.getByRole("link", { name: "Hoy" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: /^Hoy,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
     nav.pathname = "/es/admin";
   });
 });

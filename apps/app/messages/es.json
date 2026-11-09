@@ -59,22 +59,32 @@
   },
   "nav": {
     "label": "Navegación principal",
-    "soon": "Pronto",
+    "status": {
+      "dev": "En desarrollo"
+    },
     "items": {
       "dashboard": "Panel",
+      "calendar": "Calendario",
+      "groups": "Grupos",
+      "enrollments": "Matrículas",
+      "attendance": "Asistencia",
+      "payments": "Pagos",
+      "leads": "Solicitudes",
+      "catalog": "Catálogo",
       "students": "Alumnos",
       "teachers": "Docentes",
-      "languages": "Idiomas y niveles",
+      "content": "Contenido",
+      "settings": "Ajustes",
       "today": "Hoy",
-      "groups": "Grupos",
-      "learning": "Mi aprendizaje",
-      "schedule": "Horario",
-      "library": "Biblioteca",
-      "overview": "Resumen",
-      "calendar": "Calendario",
-      "leads": "Solicitudes",
+      "resources": "Recursos",
       "requests": "Cambios de clase",
-      "catalog": "Catálogo"
+      "home": "Inicio",
+      "schedule": "Horario",
+      "courses": "Mis cursos",
+      "assignments": "Tareas",
+      "progress": "Progreso",
+      "children": "Mis hijos",
+      "consents": "Consentimientos"
     }
   },
   "areas": {
@@ -90,7 +100,14 @@
     "admin": {
       "intro": "Panel de gestión de la escuela.",
       "summaryTitle": "Resumen",
-      "summaryEmpty": "Los indicadores de alumnos, docentes y clases aparecerán aquí cuando empieces a registrarlos."
+      "sample": {
+        "badge": "Datos de ejemplo",
+        "note": "Cifras de ejemplo para mostrar cómo se verá el resumen; se sustituirán por los datos reales de cada módulo.",
+        "activeStudents": "Alumnos activos",
+        "pendingEnrollments": "Matrículas pendientes",
+        "newLeads": "Solicitudes nuevas",
+        "classesToday": "Clases de hoy"
+      }
     },
     "teacher": {
       "intro": "Tu jornada de clases.",
@@ -106,7 +123,8 @@
       "intro": "Aquí verás el progreso de tus hijos o hijas.",
       "summaryTitle": "Resumen",
       "summaryEmpty": "Todavía no hay alumnos vinculados a tu cuenta."
-    }
+    },
+    "modulesTitle": "Módulos"
   },
   "forms": {
     "saved": "Cambios guardados.",
@@ -446,6 +464,276 @@
       "bodyEn": "Texto (inglés)",
       "create": "Publicar versión",
       "saving": "Guardando…"
+    }
+  },
+  "inDevelopment": {
+    "badge": "En desarrollo",
+    "whatYouCanDo": "Qué podrás hacer aquí",
+    "previewCaption": "Vista de ejemplo (no son datos reales)",
+    "back": "Volver al inicio"
+  },
+  "devModules": {
+    "admin": {
+      "calendar": {
+        "title": "Calendario",
+        "summary": "Consulta las clases de la escuela por semana o mes y filtra la vista.",
+        "bullets": [
+          "Consulta las clases por semana o mes.",
+          "Filtra por sede, docente o grupo.",
+          "Abre el enlace de Zoom o Meet de una clase en línea."
+        ],
+        "previewLabel": "Ejemplo de calendario escolar"
+      },
+      "groups": {
+        "title": "Grupos",
+        "summary": "Organiza grupos a partir de una edición de programa y consulta a sus alumnos.",
+        "bullets": [
+          "Crea grupos a partir de una edición de programa.",
+          "Asigna docente, sede, horario y capacidad.",
+          "Consulta a los alumnos de cada grupo."
+        ],
+        "previewLabel": "Ejemplo de ficha de grupo"
+      },
+      "enrollments": {
+        "title": "Matrículas",
+        "summary": "Matricula alumnos en grupos y consulta el estado y plan de pago elegido.",
+        "bullets": [
+          "Matricula alumnos en grupos.",
+          "Consulta estados: pendiente, activa, pausada o finalizada.",
+          "Consulta el plan elegido: paquete, pago por clase o pago completo."
+        ],
+        "previewLabel": "Ejemplo de matrícula de alumno"
+      },
+      "attendance": {
+        "title": "Asistencia",
+        "summary": "Consulta la asistencia de cada clase, las ausencias y las clases por recuperar.",
+        "bullets": [
+          "Consulta la asistencia de cada clase.",
+          "Revisa las ausencias.",
+          "Identifica las clases por recuperar."
+        ],
+        "previewLabel": "Ejemplo de registro de asistencia"
+      },
+      "payments": {
+        "title": "Pagos",
+        "summary": "Registra y concilia pagos en AUD con GST, con trazabilidad de los pagos anotados.",
+        "bullets": [
+          "Registra pagos con tarjeta mediante Stripe.",
+          "Anota transferencias bancarias y pagos de Eventbrite.",
+          "Concilia pagos y consulta importes en AUD con GST.",
+          "Consulta pagos registrados sin posibilidad de modificarlos."
+        ],
+        "previewLabel": "Ejemplo de registro de pagos"
+      },
+      "leads": {
+        "title": "Solicitudes",
+        "summary": "Da seguimiento a consultas web y reservas de la clase gratuita de 45 minutos.",
+        "bullets": [
+          "Consulta las preguntas recibidas desde la web.",
+          "Revisa las reservas de la clase gratuita de 45 minutos.",
+          "Actualiza el estado de seguimiento.",
+          "Convierte una consulta en alumno."
+        ],
+        "previewLabel": "Ejemplo de seguimiento de consultas"
+      },
+      "content": {
+        "title": "Contenido",
+        "summary": "Gestiona recursos y lecciones de Aprende ahora para el sitio web público.",
+        "bullets": [
+          "Gestiona videos, documentos, enlaces, fichas y lecciones de Aprende ahora.",
+          "Define el acceso: público, con cuenta o solo alumnos.",
+          "Guarda contenido como borrador o publícalo.",
+          "Ordena el contenido y actualiza el sitio web público."
+        ],
+        "previewLabel": "Ejemplo de gestión de recursos"
+      }
+    },
+    "teacher": {
+      "today": {
+        "title": "Hoy",
+        "summary": "Consulta tus clases de hoy y accede rápidamente a la toma de asistencia.",
+        "bullets": [
+          "Consulta la hora y el grupo de cada clase.",
+          "Revisa la sede o el enlace de videollamada.",
+          "Accede rápidamente a tomar asistencia."
+        ],
+        "previewLabel": "Ejemplo de clases de hoy"
+      },
+      "groups": {
+        "title": "Grupos",
+        "summary": "Consulta tus grupos asignados, sus alumnos y sus niveles.",
+        "bullets": [
+          "Consulta solo los grupos que tienes asignados.",
+          "Revisa los alumnos de cada grupo.",
+          "Consulta el nivel de cada grupo."
+        ],
+        "previewLabel": "Ejemplo de grupos asignados"
+      },
+      "calendar": {
+        "title": "Calendario",
+        "summary": "Consulta tus clases organizadas por semana o mes.",
+        "bullets": [
+          "Consulta tus clases de la semana.",
+          "Consulta tus clases del mes.",
+          "Consulta la hora y el grupo de cada clase."
+        ],
+        "previewLabel": "Ejemplo de calendario docente"
+      },
+      "attendance": {
+        "title": "Asistencia",
+        "summary": "Pasa lista en tus clases y marca la asistencia de cada alumno.",
+        "bullets": [
+          "Pasa lista en tus clases.",
+          "Marca a cada alumno como presente.",
+          "Marca a cada alumno como ausente o justificado."
+        ],
+        "previewLabel": "Ejemplo de lista de clase"
+      },
+      "resources": {
+        "title": "Recursos",
+        "summary": "Consulta todo el material docente publicado para usarlo en clase.",
+        "bullets": [
+          "Consulta el material docente publicado.",
+          "Accede a recursos de cualquier nivel.",
+          "Usa los recursos en clase."
+        ],
+        "previewLabel": "Ejemplo de material docente"
+      },
+      "requests": {
+        "title": "Cambios de clase",
+        "summary": "Revisa y responde solicitudes de cambio o recuperación de clases.",
+        "bullets": [
+          "Consulta solicitudes de tus grupos.",
+          "Revisa solicitudes para cambiar una clase.",
+          "Revisa solicitudes para recuperar una clase.",
+          "Responde a las solicitudes."
+        ],
+        "previewLabel": "Ejemplo de solicitudes de clase"
+      }
+    },
+    "student": {
+      "schedule": {
+        "title": "Horario",
+        "summary": "Consulta tus próximas clases con la hora de Brisbane y los datos para asistir.",
+        "bullets": [
+          "Consulta tus próximas clases.",
+          "Revisa la hora de Brisbane.",
+          "Consulta la sede o el enlace de videollamada."
+        ],
+        "previewLabel": "Ejemplo de próximas clases"
+      },
+      "courses": {
+        "title": "Mis cursos",
+        "summary": "Consulta los programas y grupos en los que estás matriculado, con nivel y docente.",
+        "bullets": [
+          "Consulta tus programas y grupos.",
+          "Revisa el nivel de cada curso.",
+          "Consulta quién es tu docente."
+        ],
+        "previewLabel": "Ejemplo de cursos matriculados"
+      },
+      "resources": {
+        "title": "Recursos",
+        "summary": "Accede a videos, documentos y fichas disponibles según tu nivel de acceso.",
+        "bullets": [
+          "Consulta los videos disponibles para ti.",
+          "Accede a documentos según tu nivel de acceso.",
+          "Consulta las fichas desbloqueadas."
+        ],
+        "previewLabel": "Ejemplo de recursos de estudio"
+      },
+      "assignments": {
+        "title": "Tareas",
+        "summary": "Consulta las tareas de clase, sus fechas de entrega y entrega tus archivos.",
+        "bullets": [
+          "Consulta las tareas de clase.",
+          "Revisa la fecha de entrega.",
+          "Entrega tus archivos."
+        ],
+        "previewLabel": "Ejemplo de tarea con fecha de entrega"
+      },
+      "progress": {
+        "title": "Progreso",
+        "summary": "Consulta tu asistencia, las lecciones completadas y tu nivel.",
+        "bullets": [
+          "Revisa tu asistencia.",
+          "Consulta las lecciones completadas.",
+          "Consulta tu nivel."
+        ],
+        "previewLabel": "Ejemplo de progreso de aprendizaje"
+      },
+      "payments": {
+        "title": "Pagos",
+        "summary": "Consulta tus pagos, recibos y saldos pendientes, y paga con tarjeta.",
+        "bullets": [
+          "Consulta los pagos realizados y pendientes.",
+          "Revisa tus recibos.",
+          "Paga con tarjeta."
+        ],
+        "previewLabel": "Ejemplo de pagos y recibos"
+      },
+      "requests": {
+        "title": "Cambios de clase",
+        "summary": "Solicita cambiar o recuperar una clase y consulta el estado de tu solicitud.",
+        "bullets": [
+          "Solicita cambiar una clase.",
+          "Solicita recuperar una clase.",
+          "Consulta el estado de tus solicitudes."
+        ],
+        "previewLabel": "Ejemplo de estado de solicitud"
+      }
+    },
+    "guardian": {
+      "children": {
+        "title": "Mis hijos",
+        "summary": "Consulta los menores vinculados a tu cuenta, con su grupo, nivel y docente.",
+        "bullets": [
+          "Consulta los menores vinculados a tu cuenta.",
+          "Revisa el grupo y nivel de cada menor.",
+          "Consulta quién es su docente."
+        ],
+        "previewLabel": "Ejemplo de menores vinculados"
+      },
+      "schedule": {
+        "title": "Horario",
+        "summary": "Consulta las próximas clases de tus hijos.",
+        "bullets": [
+          "Consulta las próximas clases de tus hijos.",
+          "Revisa el horario de cada clase.",
+          "Consulta la sede o el enlace de videollamada."
+        ],
+        "previewLabel": "Ejemplo de horario familiar"
+      },
+      "payments": {
+        "title": "Pagos",
+        "summary": "Consulta los pagos de las matrículas de tus hijos y sus recibos.",
+        "bullets": [
+          "Consulta los pagos de las matrículas de tus hijos.",
+          "Revisa los recibos.",
+          "Consulta los pagos pendientes."
+        ],
+        "previewLabel": "Ejemplo de pagos de matrículas"
+      },
+      "consents": {
+        "title": "Consentimientos",
+        "summary": "Revisa, otorga o retira consentimientos relacionados con tus hijos.",
+        "bullets": [
+          "Revisa consentimientos sobre los datos de menores.",
+          "Otorga o retira el consentimiento para grabaciones de clase.",
+          "Otorga o retira el consentimiento para fotos."
+        ],
+        "previewLabel": "Ejemplo de consentimientos"
+      },
+      "resources": {
+        "title": "Recursos",
+        "summary": "Consulta el material de estudio de tus hijos.",
+        "bullets": [
+          "Consulta el material de estudio de tus hijos.",
+          "Revisa los recursos disponibles para ellos.",
+          "Accede a los videos, documentos y fichas desbloqueados."
+        ],
+        "previewLabel": "Ejemplo de material de estudio"
+      }
     }
   }
 }
