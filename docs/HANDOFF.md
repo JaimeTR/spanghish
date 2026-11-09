@@ -6,7 +6,7 @@
 - **Política:** solo dos ramas importantes. **`develop` = trabajo** y **`main` = producción** (última versión estable). Se integra directo (sin PRs) tras verificar; `main` se actualiza desde `develop` cuando todo está verde. Carpeta de trabajo local: `spanghish-int` (rama `develop`). La carpeta `spanghish` es la original (contiene el `.git`); no se usa.
 - `develop` y `main` contienen: cimientos 1A, web pública completa, 1B fases 1-2, Contenido fases 0-2 (gestión de recursos y lecciones, e2e en verde), menú lateral agrupado/minimizable + menú de perfil + `/account`, páginas de docentes (índice y perfiles de Maribel y Pamela) leídas de la plataforma con respaldo estático, `/api/revalidate`, y la migración 0012 (`teacher_profiles`).
 - Verificado en el árbol integrado: lint, typecheck, tests (web 94, app 186, content 13, ui 4), pgTAP 311, build, e2e app 89 y e2e web 244 (2 pruebas de la web son intermitentes bajo carga y pasan solas: `conversion.spec.ts:182`, `home.spec.ts:173`). El CI de GitHub no se ha comprobado.
-- **Trabajo a medias:** rama `feat/docentes-admin` (admin de perfiles públicos de docentes, escrito por Codex y revisado): faltan ajustar 5 e2e de `apps/app/e2e/admin-teacher-profiles.spec.ts` (etiquetas que no coinciden con el formulario) y 1 violación axe; después integrar a `develop`.
+- **Admin de perfiles públicos de docentes: hecho** (`/admin/teachers/profiles`: crear/editar es/en, foto, publicar, orden; la web lo lee con respaldo estático). e2e app 97 en verde.
 - Convención: ramas `feat/*` desde `develop`; al terminar y verificar, merge directo a `develop` y luego `main`; borrar la rama.
 
 ## 1. Cadena de ramas y PRs (fusionar EN ESTE ORDEN)
@@ -58,7 +58,7 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 7. Hito 2 (alumno completo) y hito 3 (Stripe de matrículas, CMS, lanzamiento): sin plan escrito aún.
 
 ## 5.2 Punto exacto donde se quedó el trabajo (2026-11-09)
-Ver §0. Siguiente: (1) terminar `feat/docentes-admin` (e2e + axe) e integrar; (2) Contenido fase 3 (recursos y Aprende del alumno), fase 4 (la web lee recursos y lecciones: el cliente `apps/web/src/lib/platform.ts` y `/api/revalidate` ya existen), fases 5-6; (3) 1B fases 3-6. Pendiente de configuración: `WEB_REVALIDATE_URL`/`WEB_REVALIDATE_SECRET` en la app y `WEB_REVALIDATE_SECRET` + `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` en la web para que lea de la base.
+Ver §0. Siguiente: (1) Contenido fase 3 (recursos y Aprende del alumno), fase 4 (la web lee recursos y lecciones: el cliente `apps/web/src/lib/platform.ts` y `/api/revalidate` ya existen), fases 5-6; (3) 1B fases 3-6. Pendiente de configuración: `WEB_REVALIDATE_URL`/`WEB_REVALIDATE_SECRET` en la app y `WEB_REVALIDATE_SECRET` + `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` en la web para que lea de la base.
 
 ## 6. Cómo delegar sin gastar tokens de Claude
 - **Codex** (cuenta ChatGPT ya iniciada): `codex exec -C <worktree> -s workspace-write "<prompt autocontenido que cite el archivo del plan y la tarea>"`. Su sandbox NO puede ejecutar `pnpm` (EPERM): que solo escriba archivos y ejecutar las comprobaciones fuera. Nunca `danger-full-access`, nunca pasar secretos. Un solo escritor por archivo.

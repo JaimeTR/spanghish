@@ -53,7 +53,8 @@ export const moveSchema = z.object({ id: z.uuid(), direction: z.enum(["up", "dow
 export const publishSchema = z.object({ id: z.uuid(), publish: z.enum(["true", "false"]) });
 
 const teacherOptional = (max: number) => z.string().trim().max(max).optional();
-const facts = (max = 160) => z.string().transform((value) => value.split(/\r?\n/).map((item) => item.trim()).filter(Boolean));
+// Los campos vacíos llegan como undefined (parseForm): sin datos clave es válido y queda una lista vacía.
+const facts = () => z.string().optional().transform((value) => (value ?? "").split(/\r?\n/).map((item) => item.trim()).filter(Boolean));
 export const teacherProfileSchema = z.object({
   id: z.uuid().optional(), slug: z.string().trim().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).max(80), name: z.string().trim().min(1).max(80),
   photoPosition: z.string().trim().regex(/^[0-9]{1,3}% [0-9]{1,3}%$/), profileId: z.uuid().optional(),

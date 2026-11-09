@@ -25,5 +25,6 @@ describe("content schemas", () => {
   const teacher = { slug:"e2e-teacher", name:"Teacher", photoPosition:"50% 30%", photoAltEs:"Foto", photoAltEn:"Photo", roleEs:"Docente", roleEn:"Teacher", taglineEs:"Frase", taglineEn:"Tagline", metaDescriptionEs:"Meta", metaDescriptionEn:"Meta", introEs:"Intro", introEn:"Intro", bodyEs:"Bio", bodyEn:"Bio", factsEs:"Uno\nDos", factsEn:"One\nTwo" };
   it("teacher profile parses bilingual facts", () => expect(parseForm(teacherProfileSchema, form(teacher))).toMatchObject({ ok:true, data:{ factsEs:["Uno","Dos"], factsEn:["One","Two"] } }));
   it("teacher profile requires equal facts and paired enrolment fields", () => expect(parseForm(teacherProfileSchema, form({...teacher,factsEn:"One",enrolTitleEs:"Cursos"}))).toMatchObject({ok:false}));
+  it("teacher profile accepts empty facts as an empty list", () => { const { factsEs, factsEn, ...rest } = teacher; expect(parseForm(teacherProfileSchema, form(rest))).toMatchObject({ ok:true, data:{ factsEs:[], factsEn:[] } }); void factsEs; void factsEn; });
   it("teacher profile limits facts to six lines", () => expect(parseForm(teacherProfileSchema, form({...teacher,factsEs:"1\n2\n3\n4\n5\n6\n7",factsEn:"1\n2\n3\n4\n5\n6\n7"}))).toMatchObject({ok:false}));
 });
