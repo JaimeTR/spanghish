@@ -12,6 +12,7 @@
     "e2e": "playwright test"
   },
   "dependencies": {
+    "@spanglish/content": "workspace:*",
     "@spanglish/db": "workspace:*",
     "@spanglish/ui": "workspace:*",
     "@supabase/ssr": "0.12.7",
