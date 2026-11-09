@@ -63,7 +63,7 @@ export function Sidebar({
                 {inDev && (
                   <span
                     className={`shrink-0 rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-semibold tracking-wide whitespace-nowrap ${
-                      current ? "bg-structure text-on-structure" : "bg-highlight text-on-highlight"
+                      current ? "bg-structure text-on-structure" : "bg-brand-yellow text-text"
                     }`}
                   >
                     {t("status.dev")}

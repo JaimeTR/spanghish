@@ -5,9 +5,9 @@ const MAIN_NAV = "Navegación principal";
 
 // Módulos "en desarrollo" de cada área (lib/nav.ts).
 const AREAS = [
-  { who: "admin", home: "/es/admin", dev: 7, total: 12 },
+  { who: "admin", home: "/es/admin", dev: 6, total: 13 },
   { who: "teacher", home: "/es/teacher", dev: 6, total: 6 },
-  { who: "student", home: "/es/student", dev: 7, total: 8 },
+  { who: "student", home: "/es/student", dev: 8, total: 9 },
   { who: "guardian", home: "/es/guardian", dev: 5, total: 5 },
 ] as const;
 

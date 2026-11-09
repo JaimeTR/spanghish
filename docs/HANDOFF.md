@@ -58,20 +58,8 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 7. Hito 2 (alumno completo) y hito 3 (Stripe de matrículas, CMS, lanzamiento): sin plan escrito aún.
 
 ## 5.2 Punto exacto donde se quedó el trabajo (2026-11-09)
-Rama de trabajo: `feat/contenido-fase2` (apilada sobre `feat/contenido-fase0` / PR #9). Codex escribió las tareas 5 a 9 del hito Contenido (gestión de recursos y lecciones en el panel) y se corrigió en 4 pasadas.
-- **Verde:** `pnpm lint`, `pnpm typecheck`, `pnpm test` (app 185), build. Migraciones y pgTAP sin cambios (285).
-- **Pendiente: 12 de 26 pruebas e2e nuevas fallan** (14 pasan): `apps/app/e2e/admin-resources.spec.ts` y `admin-lessons.spec.ts`. Ejecutar solo esas con
-  `cd apps/app && pnpm exec playwright test e2e/admin-resources.spec.ts e2e/admin-lessons.spec.ts --workers=2 --timeout=12000 --reporter=line`.
-  Fallos conocidos (las causas suelen ser selectores que no coinciden o fallos reales de UI):
-  - lessons: "publishing a lesson without blocks shows content_incomplete" (el locator `main [role=alert]` dio `text.replace is not a function`).
-  - resources: "pasting a YouTube URL stores the id..." (el campo "URL de YouTube" queda vacío tras guardar).
-  - resources: "moving a resource down changes the visible order after reload" y lessons: "moving a lesson up within adults A1" (el orden no cambia como espera la prueba: comprobar `move_resource`/`move_lesson` y que la prueba compare las filas creadas por ella).
-  - axe: "lessons pages have no axe violations" y "resources pages have no axe violations (desktop and 375px)" (hay violaciones reales de accesibilidad en las páginas nuevas).
-  - resources: "uploading a .zip shows the type message...", "a successful signed-upload response without an object is rejected..." (subidas: ver `FileUpload.tsx`, `upload-actions.ts`).
-  - lessons: "admin adds text, video and quiz blocks, reorders them and publishes", "a quiz with the correct option out of range shows the field error", "deleting the only block of a published lesson shows content_incomplete", "admin adds an image block with alt texts and it renders in the preview".
-- Resumen de lo que hace cada prueba: `apps/app/e2e/README-new-specs.md`.
-- Corregir de preferencia con Codex (ver sección 6), alimentándolo con el mensaje de error de cada prueba; revisar siempre a mano las políticas de Storage y las acciones de subida.
-- Cuando las 26 pasen: correr TODA la suite e2e una vez (`pnpm --filter @spanglish/app e2e`), subir y abrir el PR "Contenido-2" con base `feat/contenido-fase0`, y cambiar a `ready` el módulo `content` en `nav.ts` si no lo está.
+Rama: `feat/contenido-fase2-e2e` (desde `develop`). Las 26 e2e de gestión de recursos y lecciones PASAN y la suite e2e completa de la app queda en verde (86; 3 omitidas). Lint, typecheck y tests unitarios en verde. Las causas eran carreras en las pruebas (clic y navegación sin esperar la acción), selectores ambiguos, un PNG de prueba inválido y conteos de menú desactualizados; en la app: menú lateral sin scroll, recarga del ID de YouTube y errores de `move_*` ocultos.
+Siguiente: PR a `develop`; luego (1) menú lateral por grupos, minimizable y menú de perfil (Mi cuenta, Configuración, Cerrar sesión); (2) páginas de docentes con Pamela Rojas (lista `/teachers` + perfil por docente, es/en, gestionable desde el admin); (3) Contenido fases 3 a 6.
 
 ## 6. Cómo delegar sin gastar tokens de Claude
 - **Codex** (cuenta ChatGPT ya iniciada): `codex exec -C <worktree> -s workspace-write "<prompt autocontenido que cite el archivo del plan y la tarea>"`. Su sandbox NO puede ejecutar `pnpm` (EPERM): que solo escriba archivos y ejecutar las comprobaciones fuera. Nunca `danger-full-access`, nunca pasar secretos. Un solo escritor por archivo.

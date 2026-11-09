@@ -37,7 +37,7 @@ export function PortalShell({
         {t("skipToContent")}
       </a>
 
-      <aside className="hidden bg-structure text-on-structure lg:sticky lg:top-0 lg:flex lg:h-dvh lg:w-72 lg:shrink-0 lg:flex-col lg:gap-8 lg:px-4 lg:py-6">
+      <aside className="hidden bg-structure text-on-structure lg:sticky lg:top-0 lg:flex lg:h-dvh lg:w-72 lg:shrink-0 lg:flex-col lg:gap-8 lg:overflow-y-auto lg:px-4 lg:py-6">
         <Link
           href={`/${locale}/${area}`}
           className={`self-start rounded-sm px-2 ${onStructureFocus}`}
