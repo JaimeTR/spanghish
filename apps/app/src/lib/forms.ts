@@ -15,6 +15,7 @@ export const FORM_ERROR_KEYS = [
   "number",
   "date",
   "range",
+  "slugTaken",
 ] as const;
 
 export type FormErrorKey = (typeof FORM_ERROR_KEYS)[number];
@@ -57,17 +58,16 @@ function errorKey(issue: Issue): FormErrorKey {
  * pasan a `undefined`) y los valida. Un campo ausente con error es "required";
  * si no, se usa el primer error de cada campo.
  */
-export function parseForm<S extends z.ZodObject>(
+export function parseForm<S extends z.ZodType>(
   schema: S,
   formData: FormData,
 ):
   | { ok: true; data: z.infer<S> }
   | { ok: false; fieldErrors: FieldErrors<keyof z.infer<S> & string> } {
   const raw: Record<string, string | undefined> = {};
-  for (const key of Object.keys(schema.shape)) {
-    const value = formData.get(key);
-    raw[key] = typeof value === "string" && value.trim() !== "" ? value : undefined;
-  }
+  formData.forEach((value, key) => {
+    if (typeof value === "string") raw[key] = value.trim() !== "" ? value : undefined;
+  });
 
   const parsed = schema.safeParse(raw);
   if (parsed.success) {

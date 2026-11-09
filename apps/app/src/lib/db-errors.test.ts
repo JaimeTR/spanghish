@@ -31,6 +31,14 @@ describe("toDomainError", () => {
     ).toBe("slot_taken");
   });
 
+  it("toDomainError maps 23505 on lessons_slug_key to slug_taken", () => {
+    expect(toDomainError({ code: "23505", message: 'duplicate key constraint "lessons_slug_key"' })).toBe("slug_taken");
+  });
+
+  it("maps P0001 content_incomplete", () => {
+    expect(toDomainError({ code: "P0001", message: "content_incomplete" })).toBe("content_incomplete");
+  });
+
   it("maps any other 23505 to conflict", () => {
     expect(toDomainError({ code: "23505", message: 'violates unique constraint "x_key"' })).toBe(
       "conflict",
@@ -56,6 +64,6 @@ describe("toDomainError", () => {
     expect(DOMAIN_ERRORS).toContain("lead_already_converted");
     expect(DOMAIN_ERRORS).toContain("unknown");
     expect(new Set(DOMAIN_ERRORS).size).toBe(DOMAIN_ERRORS.length);
-    expect(DOMAIN_ERRORS).toHaveLength(20);
+    expect(DOMAIN_ERRORS).toHaveLength(22);
   });
 });

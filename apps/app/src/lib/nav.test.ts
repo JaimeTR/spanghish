@@ -30,6 +30,7 @@ describe("NAV", () => {
       "students",
       "teachers",
       "content",
+      "lessons",
       "settings",
     ]);
     expect(NAV.teacher.map((i) => i.key)).toEqual([
@@ -45,6 +46,7 @@ describe("NAV", () => {
       "schedule",
       "courses",
       "resources",
+      "learn",
       "assignments",
       "progress",
       "payments",
@@ -62,6 +64,8 @@ describe("NAV", () => {
       "admin.catalog",
       "admin.students",
       "admin.teachers",
+      "admin.content",
+      "admin.lessons",
       "admin.settings",
       "student.home",
     ]);
@@ -73,6 +77,14 @@ describe("NAV", () => {
         expect(existsSync(path.join(SHELL, item.href, "page.tsx")), `${item.href}/page.tsx`).toBe(true);
       }
     }
+  });
+
+  it("admin has resources and lessons routes", () => {
+    expect(NAV.admin.find((item) => item.key === "content")?.href).toBe("/admin/resources");
+    expect(NAV.admin.find((item) => item.key === "lessons")?.href).toBe("/admin/lessons");
+  });
+  it("student library points to /student/resources", () => {
+    expect(NAV.student.find((item) => item.key === "resources")?.href).toBe("/student/resources");
   });
 
   it("a dev module uses /<area>/<key> and no real page shadows it", () => {
@@ -103,10 +115,9 @@ describe("NAV", () => {
       "attendance",
       "payments",
       "leads",
-      "content",
     ]);
     expect(devModules("teacher")).toHaveLength(6);
-    expect(devModules("student")).toHaveLength(7);
+    expect(devModules("student")).toHaveLength(8);
     expect(devModules("guardian")).toHaveLength(5);
   });
 

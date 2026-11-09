@@ -75,7 +75,8 @@ describe("Sidebar", () => {
       "/es/admin/catalog",
       "/es/admin/students",
       "/es/admin/teachers",
-      "/es/admin/content",
+      "/es/admin/resources",
+      "/es/admin/lessons",
       "/es/admin/settings/consent-texts",
     ]);
     const calendar = screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ });

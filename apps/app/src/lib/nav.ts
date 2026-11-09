@@ -16,6 +16,8 @@ export type NavIcon =
   | "settings"
   | "today"
   | "resources"
+  | "lessons"
+  | "learn"
   | "requests"
   | "home"
   | "schedule"
@@ -78,7 +80,8 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.r("catalog", "catalog"),
     a.r("students", "students"),
     a.r("teachers", "teachers"),
-    a.d("content"),
+    a.r("content", "resources"),
+    a.r("lessons", "lessons"),
     a.r("settings", "settings/consent-texts"),
   ],
   teacher: [t.d("today"), t.d("groups"), t.d("calendar"), t.d("attendance"), t.d("resources"), t.d("requests")],
@@ -87,6 +90,7 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     s.d("schedule"),
     s.d("courses"),
     s.d("resources"),
+    s.d("learn"),
     s.d("assignments"),
     s.d("progress"),
     s.d("payments"),
