@@ -210,6 +210,11 @@
       "open": "Open",
       "closed": "Closed",
       "cancelled": "Cancelled"
+    },
+    "priceKind": {
+      "per_lesson": "Per lesson",
+      "upfront": "Upfront",
+      "pack": "Lesson pack"
     }
   },
   "catalog": {
@@ -283,6 +288,33 @@
       "status": "Status",
       "create": "Add edition",
       "save": "Save edition",
+      "saving": "Saving…"
+    },
+    "prices": {
+      "title": "Prices",
+      "effective": "Current price per edition",
+      "effectiveHint": "Without a specific location: a location price only applies at that location.",
+      "none": "no price",
+      "active": "Active prices",
+      "empty": "There are no prices yet.",
+      "new": "New price",
+      "wholeProgram": "Whole programme",
+      "packOf": "Pack of {lessons} lessons",
+      "lessonsCount": "{lessons} lessons",
+      "previous": "{count, plural, one {# previous price} other {# previous prices}}",
+      "kind": "Price type",
+      "amount": "Amount (AUD)",
+      "amountHint": "In dollars, e.g. 245 or 245.50.",
+      "lessons": "Lessons included",
+      "lessonsHint": "Required for packs; empty for per-lesson prices.",
+      "edition": "Edition",
+      "anyEdition": "Any edition",
+      "location": "Location",
+      "anyLocation": "Any location",
+      "labelEs": "Label (Spanish)",
+      "labelEn": "Label (English)",
+      "create": "Add price",
+      "deactivate": "Deactivate",
       "saving": "Saving…"
     }
   }

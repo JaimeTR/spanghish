@@ -2,13 +2,14 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader, Section } from "@/components/admin/PageHeader";
 import { isLocale } from "@/i18n/routing";
-import { getProgram, listLanguages, listLevels } from "@/lib/data/catalog";
+import { getProgram, listLanguages, listLevels, listLocations } from "@/lib/data/catalog";
 import { requireArea } from "@/lib/require-area";
 import { createClient } from "@/lib/supabase/server";
 import { formatDay } from "@/lib/time";
 import { languageOptions, levelOptions } from "../options";
 import { ProgramForm } from "../ProgramForm";
 import { EditionForm } from "./EditionForm";
+import { PricesSection } from "./PricesSection";
 
 export default async function ProgramPage({
   params,
@@ -23,11 +24,12 @@ export default async function ProgramPage({
   const program = await getProgram(supabase, programId);
   if (!program) notFound();
 
-  const [t, te, languages, levels] = await Promise.all([
+  const [t, te, languages, levels, locations] = await Promise.all([
     getTranslations({ locale, namespace: "catalog" }),
     getTranslations({ locale, namespace: "enums" }),
     listLanguages(supabase),
     listLevels(supabase),
+    listLocations(supabase),
   ]);
   const name = locale === "en" ? program.name_en : program.name_es;
 
@@ -72,6 +74,8 @@ export default async function ProgramPage({
         <h3 className="mt-6 mb-3 font-semibold text-text">{t("editions.new")}</h3>
         <EditionForm locale={locale} programId={program.id} />
       </Section>
+
+      <PricesSection locale={locale} program={program} locations={locations} />
 
       <Section id="program-data" title={t("programs.data")}>
         <ProgramForm

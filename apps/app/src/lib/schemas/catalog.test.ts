@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { parseForm } from "../forms";
-import { editionSchema, locationSchema, programSchema } from "./catalog";
+import { editionSchema, locationSchema, priceSchema, programSchema } from "./catalog";
 
 function form(values: Record<string, string>): FormData {
   const fd = new FormData();
@@ -89,5 +89,44 @@ describe("editionSchema", () => {
     expect(parseForm(editionSchema, form({ ...base, startsOn: "2027-03-01", endsOn: "2027-03-01" })).ok).toBe(true);
     const r = parseForm(editionSchema, form({ ...base, startsOn: "2027-02-30", endsOn: "2027-03-01" }));
     expect(r).toEqual({ ok: false, fieldErrors: { startsOn: "date" } });
+  });
+});
+
+describe("priceSchema", () => {
+  const base = { programId: "b0000000-0000-4000-8000-000000000101" };
+
+  it("priceSchema rejects 'pack' without lessons", () => {
+    const r = parseForm(priceSchema, form({ ...base, kind: "pack", amount: "245" }));
+    expect(r).toEqual({ ok: false, fieldErrors: { lessonsIncluded: "required" } });
+  });
+
+  it("rejects lessons on a per-lesson price and malformed amounts", () => {
+    const r = parseForm(priceSchema, form({ ...base, kind: "per_lesson", amount: "1.234", lessonsIncluded: "1" }));
+    expect(r).toEqual({ ok: false, fieldErrors: { amount: "number" } });
+    const r2 = parseForm(priceSchema, form({ ...base, kind: "per_lesson", amount: "25", lessonsIncluded: "1" }));
+    expect(r2).toEqual({ ok: false, fieldErrors: { lessonsIncluded: "invalid" } });
+  });
+
+  it("parses the amount to cents (amount holds cents) and keeps optional scope ids", () => {
+    const r = parseForm(
+      priceSchema,
+      form({
+        ...base,
+        editionId: "b0000000-0000-4000-8000-000000000201",
+        kind: "pack",
+        amount: "245.50",
+        lessonsIncluded: "10",
+      }),
+    );
+    expect(r).toEqual({
+      ok: true,
+      data: {
+        ...base,
+        editionId: "b0000000-0000-4000-8000-000000000201",
+        kind: "pack",
+        amount: 24550,
+        lessonsIncluded: 10,
+      },
+    });
   });
 });

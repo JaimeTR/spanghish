@@ -210,6 +210,11 @@
       "open": "Abierta",
       "closed": "Cerrada",
       "cancelled": "Cancelada"
+    },
+    "priceKind": {
+      "per_lesson": "Por clase",
+      "upfront": "Pago único",
+      "pack": "Pack de clases"
     }
   },
   "catalog": {
@@ -283,6 +288,33 @@
       "status": "Estado",
       "create": "Añadir edición",
       "save": "Guardar edición",
+      "saving": "Guardando…"
+    },
+    "prices": {
+      "title": "Precios",
+      "effective": "Precio vigente por edición",
+      "effectiveHint": "Sin sede concreta: un precio de sede solo se aplica en esa sede.",
+      "none": "sin precio",
+      "active": "Precios activos",
+      "empty": "Todavía no hay precios.",
+      "new": "Nuevo precio",
+      "wholeProgram": "Todo el programa",
+      "packOf": "Pack de {lessons} clases",
+      "lessonsCount": "{lessons} clases",
+      "previous": "{count, plural, one {# precio anterior} other {# precios anteriores}}",
+      "kind": "Tipo de precio",
+      "amount": "Importe (AUD)",
+      "amountHint": "En dólares, p. ej. 245 o 245.50.",
+      "lessons": "Clases incluidas",
+      "lessonsHint": "Obligatorio en packs; vacío en precios por clase.",
+      "edition": "Edición",
+      "anyEdition": "Cualquier edición",
+      "location": "Sede",
+      "anyLocation": "Cualquier sede",
+      "labelEs": "Etiqueta (español)",
+      "labelEn": "Etiqueta (inglés)",
+      "create": "Añadir precio",
+      "deactivate": "Desactivar",
       "saving": "Guardando…"
     }
   }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { parseAudToCents } from "../money";
 
 /** Casilla de formulario: "on" si está marcada; ausente si no. */
 export const checkbox = z
@@ -65,3 +66,43 @@ export const editionSchema = z
     if (d.endsOn < d.startsOn) ctx.addIssue({ code: "custom", path: ["endsOn"], message: "range" });
   });
 export type EditionInput = z.infer<typeof editionSchema>;
+
+export const PRICE_KINDS = ["per_lesson", "upfront", "pack"] as const;
+
+/** Importe en dólares ("245", "245.50") → centavos; error "number" si no vale. */
+const audAmount = z.string().transform((value, ctx) => {
+  const cents = parseAudToCents(value);
+  if (cents === null) {
+    ctx.addIssue({ code: "custom", message: "number" });
+    return z.NEVER;
+  }
+  return cents;
+});
+
+/**
+ * Precio de un programa, opcionalmente de una edición y/o una sede.
+ * `amount` sale en centavos. per_lesson sin número de clases; pack con él;
+ * upfront opcional (misma regla que la BD).
+ */
+export const priceSchema = z
+  .object({
+    programId: z.uuid(),
+    editionId: z.uuid().optional(),
+    locationId: z.uuid().optional(),
+    kind: z.enum(PRICE_KINDS),
+    amount: audAmount,
+    lessonsIncluded: z.coerce.number().int().min(1).max(100).optional(),
+    labelEs: optionalText(120),
+    labelEn: optionalText(120),
+  })
+  .superRefine((d, ctx) => {
+    if (d.kind === "per_lesson" && d.lessonsIncluded !== undefined) {
+      ctx.addIssue({ code: "custom", path: ["lessonsIncluded"], message: "invalid" });
+    }
+    if (d.kind === "pack" && d.lessonsIncluded === undefined) {
+      ctx.addIssue({ code: "custom", path: ["lessonsIncluded"], message: "required" });
+    }
+  });
+export type PriceInput = z.infer<typeof priceSchema>;
+
+export const deactivatePriceSchema = z.object({ priceId: z.uuid(), programId: z.uuid() });

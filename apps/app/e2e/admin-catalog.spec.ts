@@ -68,6 +68,55 @@ test("admin creates a location and a program with an edition in both languages",
   }
 });
 
+test("admin adds a 10-lesson pack price and a location-specific per-lesson price", async ({ page }) => {
+  const admin = adminClient();
+  const label = `e2e-${Date.now()}`;
+  try {
+    await loginAdmin(page);
+    await page.goto(`/es/admin/catalog/programs/${SEED_IDS.program}`);
+    const prices = page.getByRole("region", { name: "Precios" });
+
+    // Pack sin número de clases: error en el campo.
+    await prices.getByLabel("Tipo de precio").selectOption("pack");
+    await prices.getByLabel("Importe (AUD)").fill("245");
+    await prices.getByRole("button", { name: "Añadir precio" }).click();
+    await expect(prices.getByLabel("Clases incluidas")).toHaveAttribute("aria-invalid", "true");
+
+    await prices.getByLabel("Clases incluidas").fill("10");
+    await prices.getByLabel("Etiqueta (español)").fill(label);
+    await prices.getByRole("button", { name: "Añadir precio" }).click();
+    await expect(prices.getByText(`$245 · Pack de 10 clases · ${label}`, { exact: true })).toBeVisible();
+
+    // Precio por clase solo en la biblioteca.
+    await prices.getByLabel("Tipo de precio").selectOption("per_lesson");
+    await prices.getByLabel("Importe (AUD)").fill("30.50");
+    await prices.getByLabel("Sede").selectOption({ label: "Biblioteca Local" });
+    await prices.getByLabel("Etiqueta (español)").fill(`${label}-lib`);
+    await prices.getByRole("button", { name: "Añadir precio" }).click();
+    const libraryPrice = prices.getByRole("listitem").filter({ hasText: `$30.50 · Por clase · ${label}-lib` });
+    await expect(libraryPrice).toContainText("Biblioteca Local");
+
+    // La edición sigue con su precio por clase general (la sede no se aplica sin sede).
+    await expect(prices.getByText(/Edición de prueba:.*\$35 · Por clase/)).toBeVisible();
+    await expect(prices.getByText(/Edición de prueba:.*\$245 · Pack de 10 clases/)).toBeVisible();
+
+    // Un precio activo duplicado se rechaza.
+    await prices.getByLabel("Tipo de precio").selectOption("pack");
+    await prices.getByLabel("Importe (AUD)").fill("250");
+    await prices.getByLabel("Clases incluidas").fill("10");
+    await prices.getByRole("button", { name: "Añadir precio" }).click();
+    await expect(prices.getByRole("alert").filter({ hasText: "Ya existe un registro con esos datos." })).toBeVisible();
+
+    // Desactivar deja el precio en el historial.
+    await libraryPrice.getByRole("button", { name: /Desactivar/ }).click();
+    await expect(libraryPrice).toHaveCount(0);
+    await prices.getByText(/precio(s)? anterior(es)?/).click();
+    await expect(prices.getByText(`$30.50 · Por clase · ${label}-lib · Biblioteca Local`, { exact: true })).toBeVisible();
+  } finally {
+    await admin.from("program_prices").delete().like("label_es", `${label}%`);
+  }
+});
+
 test("the /en catalog shows English enum labels", async ({ page }) => {
   await loginAdmin(page);
   await page.goto("/en/admin/catalog/programs");
