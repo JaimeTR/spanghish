@@ -15,3 +15,12 @@ body {
   caret-color: var(--brand-purple);
   accent-color: var(--brand-fuchsia);
 }
+
+/*
+ * Alta de alumno: los campos de tutor y consentimiento solo se muestran si el
+ * segmento elegido es "niños". CSS puro (:has), así funciona también sin JS;
+ * el servidor ignora esos campos para adultos.
+ */
+.student-form:not(:has(option[value="kids"]:checked)) .kid-only {
+  display: none;
+}

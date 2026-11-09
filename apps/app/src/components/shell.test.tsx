@@ -64,7 +64,7 @@ describe("Sidebar", () => {
   it("items without route render as aria-disabled span", () => {
     const { container } = wrap(<Sidebar role="admin" locale="es" />);
     const hrefs = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href"));
-    expect(hrefs).toEqual(["/es/admin", "/es/admin/teachers", "/es/admin/catalog"]);
+    expect(hrefs).toEqual(["/es/admin", "/es/admin/students", "/es/admin/teachers", "/es/admin/catalog"]);
     const soon = screen.getByText("Idiomas y niveles").closest("[aria-disabled]");
     expect(soon).toHaveAttribute("aria-disabled", "true");
     expect(soon?.tagName).toBe("SPAN");

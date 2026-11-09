@@ -24,6 +24,10 @@ describe("navItemsFor", () => {
     expect(teachers?.href?.("en")).toBe("/en/admin/teachers");
   });
 
+  it("students item has a route", () => {
+    expect(navItemsFor("admin").find((i) => i.key === "students")?.href?.("es")).toBe("/es/admin/students");
+  });
+
   it("catalog item has a route", () => {
     expect(navItemsFor("admin").find((i) => i.key === "catalog")?.href?.("en")).toBe("/en/admin/catalog");
   });

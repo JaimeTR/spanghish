@@ -215,6 +215,28 @@
       "per_lesson": "Por clase",
       "upfront": "Pago único",
       "pack": "Pack de clases"
+    },
+    "studentStatus": {
+      "active": "Activo",
+      "inactive": "Inactivo"
+    },
+    "relationship": {
+      "parent": "Madre o padre",
+      "legal_guardian": "Tutor legal",
+      "other": "Otro"
+    },
+    "consentMethod": {
+      "paper": "En papel",
+      "email": "Por correo",
+      "portal": "En el portal",
+      "web_form": "Formulario web"
+    },
+    "consentKind": {
+      "enrolment_terms": "Condiciones de inscripción",
+      "privacy": "Privacidad",
+      "minor_data": "Datos del menor",
+      "recordings": "Grabaciones",
+      "photos": "Fotos"
     }
   },
   "catalog": {
@@ -315,6 +337,113 @@
       "labelEn": "Etiqueta (inglés)",
       "create": "Añadir precio",
       "deactivate": "Desactivar",
+      "saving": "Guardando…"
+    }
+  },
+  "students": {
+    "title": "Alumnos",
+    "intro": "Adultos, mayores y menores (con su tutor y consentimiento).",
+    "consentTexts": "Textos de consentimiento",
+    "count": "{count, plural, =0 {Ningún alumno con estos filtros} one {# alumno} other {# alumnos}}",
+    "minor": "Menor",
+    "noGuardians": "Este menor no tiene tutores vinculados.",
+    "guardianAccount": "Cuenta de portal",
+    "filters": {
+      "label": "Buscar alumnos",
+      "search": "Nombre",
+      "audience": "Segmento",
+      "status": "Estado",
+      "all": "Todos",
+      "apply": "Filtrar"
+    },
+    "columns": {
+      "name": "Nombre",
+      "audience": "Segmento",
+      "status": "Estado",
+      "portal": "Cuenta"
+    },
+    "sections": {
+      "data": "Datos",
+      "guardians": "Tutores",
+      "consents": "Consentimientos",
+      "portal": "Acceso al portal"
+    },
+    "portal": {
+      "yes": "Sí",
+      "no": "No",
+      "minor": "Menor (sin cuenta)",
+      "linked": "Este alumno ya tiene cuenta en el portal.",
+      "explain": "Crearemos su cuenta con el correo {email} y le enviaremos un enlace para elegir contraseña.",
+      "needsEmail": "Añade un correo en el contacto para darle acceso al portal.",
+      "grant": "Dar acceso al portal",
+      "granting": "Creando la cuenta…"
+    },
+    "new": {
+      "title": "Nuevo alumno",
+      "intro": "Los menores (6–13) necesitan un tutor y su consentimiento."
+    },
+    "form": {
+      "student": "Datos del alumno",
+      "fullName": "Nombre completo",
+      "audience": "Segmento",
+      "level": "Nivel",
+      "noLevel": "Sin nivel",
+      "preferredLocale": "Idioma de contacto",
+      "status": "Estado",
+      "contact": "Contacto (solo administración)",
+      "contactHint": "Las docentes no ven estos datos.",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "birthYear": "Año de nacimiento",
+      "adminNotes": "Notas internas",
+      "guardian": "Tutor",
+      "guardianHint": "Elige un tutor ya registrado o escribe los datos de uno nuevo.",
+      "existingGuardian": "Tutor registrado",
+      "newGuardian": "Tutor nuevo",
+      "relationship": "Relación",
+      "guardianFullName": "Nombre del tutor",
+      "guardianEmail": "Correo del tutor",
+      "guardianPhone": "Teléfono del tutor",
+      "consent": "Consentimiento del tutor",
+      "consentVersion": "Versión {id}, vigente desde {date}.",
+      "consentMethod": "Cómo lo dio",
+      "consentGranted": "El tutor ha dado su consentimiento a este texto",
+      "consentGrantedRequired": "Marca la casilla para registrar el consentimiento.",
+      "noConsentText": "No hay un texto de consentimiento de datos del menor vigente. Créalo en «Textos de consentimiento» antes de dar de alta a un menor.",
+      "create": "Dar de alta",
+      "save": "Guardar ficha",
+      "saving": "Guardando…"
+    }
+  },
+  "consents": {
+    "empty": "No hay consentimientos registrados.",
+    "granted": "Concedido",
+    "revoked": "Revocado",
+    "entry": "Texto {version} · {date} · {method}",
+    "by": "Tutor: {name}",
+    "new": "Registrar consentimiento",
+    "cannotRecord": "Para registrar un consentimiento hace falta un texto y, si es menor, un tutor vinculado.",
+    "text": "Texto (versión)",
+    "decision": "Decisión",
+    "method": "Cómo lo dio",
+    "guardian": "Tutor",
+    "record": "Registrar",
+    "saving": "Guardando…",
+    "texts": {
+      "title": "Textos de consentimiento",
+      "intro": "Cada cambio crea una versión nueva; las anteriores se conservan con sus consentimientos.",
+      "list": "Versiones",
+      "empty": "Todavía no hay textos.",
+      "current": "Vigente",
+      "effective": "Vigente desde {date}",
+      "show": "Ver texto",
+      "new": "Nueva versión",
+      "newHint": "El identificador (tipo-vN) se asigna solo. Un texto publicado no se puede editar.",
+      "kind": "Tipo",
+      "effectiveFrom": "Vigente desde",
+      "bodyEs": "Texto (español)",
+      "bodyEn": "Texto (inglés)",
+      "create": "Publicar versión",
       "saving": "Guardando…"
     }
   }

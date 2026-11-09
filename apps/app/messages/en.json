@@ -215,6 +215,28 @@
       "per_lesson": "Per lesson",
       "upfront": "Upfront",
       "pack": "Lesson pack"
+    },
+    "studentStatus": {
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "relationship": {
+      "parent": "Parent",
+      "legal_guardian": "Legal guardian",
+      "other": "Other"
+    },
+    "consentMethod": {
+      "paper": "On paper",
+      "email": "By email",
+      "portal": "In the portal",
+      "web_form": "Web form"
+    },
+    "consentKind": {
+      "enrolment_terms": "Enrolment terms",
+      "privacy": "Privacy",
+      "minor_data": "Minor's data",
+      "recordings": "Recordings",
+      "photos": "Photos"
     }
   },
   "catalog": {
@@ -315,6 +337,113 @@
       "labelEn": "Label (English)",
       "create": "Add price",
       "deactivate": "Deactivate",
+      "saving": "Saving…"
+    }
+  },
+  "students": {
+    "title": "Students",
+    "intro": "Adults, seniors and minors (with their guardian and consent).",
+    "consentTexts": "Consent texts",
+    "count": "{count, plural, =0 {No students match these filters} one {# student} other {# students}}",
+    "minor": "Minor",
+    "noGuardians": "This minor has no linked guardians.",
+    "guardianAccount": "Portal account",
+    "filters": {
+      "label": "Search students",
+      "search": "Name",
+      "audience": "Segment",
+      "status": "Status",
+      "all": "All",
+      "apply": "Filter"
+    },
+    "columns": {
+      "name": "Name",
+      "audience": "Segment",
+      "status": "Status",
+      "portal": "Account"
+    },
+    "sections": {
+      "data": "Details",
+      "guardians": "Guardians",
+      "consents": "Consents",
+      "portal": "Portal access"
+    },
+    "portal": {
+      "yes": "Yes",
+      "no": "No",
+      "minor": "Minor (no account)",
+      "linked": "This student already has a portal account.",
+      "explain": "We will create their account with {email} and email them a link to choose a password.",
+      "needsEmail": "Add an email to the contact details to give portal access.",
+      "grant": "Give portal access",
+      "granting": "Creating the account…"
+    },
+    "new": {
+      "title": "New student",
+      "intro": "Minors (6–13) need a guardian and their consent."
+    },
+    "form": {
+      "student": "Student details",
+      "fullName": "Full name",
+      "audience": "Segment",
+      "level": "Level",
+      "noLevel": "No level",
+      "preferredLocale": "Contact language",
+      "status": "Status",
+      "contact": "Contact (administration only)",
+      "contactHint": "Teachers do not see these details.",
+      "email": "Email",
+      "phone": "Phone",
+      "birthYear": "Year of birth",
+      "adminNotes": "Internal notes",
+      "guardian": "Guardian",
+      "guardianHint": "Choose a registered guardian or enter a new one.",
+      "existingGuardian": "Registered guardian",
+      "newGuardian": "New guardian",
+      "relationship": "Relationship",
+      "guardianFullName": "Guardian's name",
+      "guardianEmail": "Guardian's email",
+      "guardianPhone": "Guardian's phone",
+      "consent": "Guardian's consent",
+      "consentVersion": "Version {id}, in force since {date}.",
+      "consentMethod": "How it was given",
+      "consentGranted": "The guardian has consented to this text",
+      "consentGrantedRequired": "Tick the box to record the consent.",
+      "noConsentText": "There is no current minor data consent text. Create one under “Consent texts” before registering a minor.",
+      "create": "Register",
+      "save": "Save details",
+      "saving": "Saving…"
+    }
+  },
+  "consents": {
+    "empty": "No consents recorded.",
+    "granted": "Granted",
+    "revoked": "Revoked",
+    "entry": "Text {version} · {date} · {method}",
+    "by": "Guardian: {name}",
+    "new": "Record a consent",
+    "cannotRecord": "Recording a consent needs a text and, for a minor, a linked guardian.",
+    "text": "Text (version)",
+    "decision": "Decision",
+    "method": "How it was given",
+    "guardian": "Guardian",
+    "record": "Record",
+    "saving": "Saving…",
+    "texts": {
+      "title": "Consent texts",
+      "intro": "Every change creates a new version; earlier versions are kept with their consents.",
+      "list": "Versions",
+      "empty": "There are no texts yet.",
+      "current": "Current",
+      "effective": "In force since {date}",
+      "show": "Show text",
+      "new": "New version",
+      "newHint": "The identifier (kind-vN) is assigned automatically. A published text cannot be edited.",
+      "kind": "Type",
+      "effectiveFrom": "In force from",
+      "bodyEs": "Text (Spanish)",
+      "bodyEn": "Text (English)",
+      "create": "Publish version",
       "saving": "Saving…"
     }
   }

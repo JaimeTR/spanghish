@@ -88,3 +88,15 @@ export function formatDay(day: string, locale: Locale): string {
     year: "numeric",
   }).format(parseDay(day));
 }
+
+/** Fecha y hora de un instante en hora de Brisbane: "9 nov 2026, 14:05". */
+export function formatInstant(iso: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-AU", {
+    timeZone: SCHOOL_TIME_ZONE,
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(iso));
+}

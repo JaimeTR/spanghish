@@ -46,7 +46,7 @@ const NAV: Record<AppRole, readonly NavItem[]> = {
     item("dashboard", home("admin")),
     item("calendar"),
     item("groups"),
-    item("students"),
+    item("students", adminPath("students")),
     item("teachers", adminPath("teachers")),
     item("leads"),
     item("requests"),
