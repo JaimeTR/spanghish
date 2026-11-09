@@ -4,8 +4,7 @@ import type { NextConfig } from "next";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
-<<<<<<< HEAD
-  transpilePackages: ["@spanglish/ui"],
+  transpilePackages: ["@spanglish/ui", "@spanglish/content"],
   /**
    * URLs de la web anterior (WordPress) que cambian de slug: van a la ruta sin
    * idioma y el proxy elige /es o /en según el navegador.
@@ -18,9 +17,6 @@ const nextConfig: NextConfig = {
       { source: "/product/:slug*", destination: "/shop", permanent: true },
     ];
   },
-=======
-  transpilePackages: ["@spanglish/ui", "@spanglish/content"],
->>>>>>> origin/feat/contenido-fase2
 };
 
 export default withNextIntl(nextConfig);
