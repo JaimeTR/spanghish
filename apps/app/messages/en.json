@@ -18,8 +18,8 @@
     },
     "eyebrow": "Spanglish portal",
     "emailPlaceholder": "name@email.com",
-    "show": "Show",
-    "hide": "Hide",
+    "show": "Show password",
+    "hide": "Hide password",
     "capsLock": "Caps Lock is on.",
     "remember": "Keep me signed in",
     "rememberHint": "Uncheck it if you're on a shared device.",
@@ -82,7 +82,10 @@
       "teacher": "Teacher",
       "student": "Student",
       "guardian": "Guardian"
-    }
+    },
+    "close": "Close",
+    "sure": "Are you sure?",
+    "cancel": "Cancel"
   },
   "locales": {
     "es": "Español",
@@ -499,7 +502,8 @@
       "noBlocks": "Add at least one block before publishing.",
       "addAtLevel": "Add in {level}",
       "moveUp": "Move {title} up",
-      "moveDown": "Move {title} down"
+      "moveDown": "Move {title} down",
+      "edit": "Edit"
     },
     "blocks": {
       "heading": "Blocks",
@@ -606,7 +610,9 @@
       "isPublicHint": "Used for the public timetable (milestone 3).",
       "create": "Create programme",
       "save": "Save programme",
-      "saving": "Saving…"
+      "saving": "Saving…",
+      "edit": "Edit",
+      "actions": "Actions"
     },
     "editions": {
       "title": "Editions",
@@ -670,7 +676,10 @@
       "name": "Name",
       "audience": "Segment",
       "status": "Status",
-      "portal": "Account"
+      "portal": "Account",
+      "level": "Level",
+      "contact": "Contact",
+      "actions": "Actions"
     },
     "sections": {
       "data": "Details",
@@ -724,6 +733,11 @@
       "create": "Register",
       "save": "Save details",
       "saving": "Saving…"
+    },
+    "actions": {
+      "edit": "Edit",
+      "deactivate": "Deactivate",
+      "activate": "Reactivate"
     }
   },
   "consents": {

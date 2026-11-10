@@ -145,16 +145,28 @@ const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
   },
 };
 
-/** Menú de un área partido en grupos consecutivos, en el orden de `NAV`. */
+/**
+ * Menú de un área partido en grupos. Lo ya construido va arriba y lo que sigue
+ * en desarrollo, abajo: dentro de cada grupo los módulos listos van primero, y
+ * los grupos que solo tienen módulos en desarrollo van al final. El resto del
+ * orden es el de `NAV`. Lo que no tiene grupo (la portada) va siempre arriba.
+ */
 export function navGroupsFor(role: AppRole): { group: NavGroup | null; items: NavItem[] }[] {
-  const groups: { group: NavGroup | null; items: NavItem[] }[] = [];
+  const byGroup = new Map<NavGroup | null, NavItem[]>();
   for (const item of NAV[role]) {
     const group = GROUP_OF[role][item.key] ?? null;
-    const last = groups[groups.length - 1];
-    if (last && last.group === group) last.items.push(item);
-    else groups.push({ group, items: [item] });
+    byGroup.set(group, [...(byGroup.get(group) ?? []), item]);
   }
-  return groups;
+  const groups = [...byGroup].map(([group, items]) => ({
+    group,
+    // Estable: dentro de cada estado se conserva el orden de NAV.
+    items: [...items.filter((i) => i.status === "ready"), ...items.filter((i) => i.status === "dev")],
+  }));
+  const rank = ({ group, items }: (typeof groups)[number]) => (group === null ? 0 : items.some((i) => i.status === "ready") ? 1 : 2);
+  return groups
+    .map((entry, index) => ({ entry, index }))
+    .sort((x, y) => rank(x.entry) - rank(y.entry) || x.index - y.index)
+    .map(({ entry }) => entry);
 }
 
 export function navItemsFor(role: AppRole): NavItem[] {

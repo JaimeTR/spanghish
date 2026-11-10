@@ -53,7 +53,9 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 0,
   reporter: "list",
-  use: { baseURL: BASE_URL, trace: "retain-on-failure" },
+  // Con "reducir movimiento" (que el sitio respeta) no hay animaciones de entrada: las
+  // comprobaciones de contraste y de foco no dependen del instante en que se miden.
+  use: { baseURL: BASE_URL, trace: "retain-on-failure", reducedMotion: "reduce" },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
     command: `pnpm build && pnpm exec next start --hostname 127.0.0.1 --port ${PORT}`,

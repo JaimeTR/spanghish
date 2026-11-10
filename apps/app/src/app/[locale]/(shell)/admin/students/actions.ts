@@ -134,6 +134,26 @@ export async function updateStudent(
 }
 
 /**
+ * Activa o desactiva una ficha de alumno (nunca se borra: tiene consentimientos
+ * y es un registro legal). Solo administración.
+ */
+export async function setStudentStatus(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const locale = actionLocale(formData);
+  await requireArea(locale, "admin");
+  const studentId = formData.get("studentId");
+  const status = formData.get("status");
+  if (typeof studentId !== "string" || !/^[0-9a-f-]{36}$/i.test(studentId)) return { status: "error", error: "not_found" };
+  if (status !== "active" && status !== "inactive") return { status: "error", error: "forbidden" };
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.from("students").update({ status }).eq("id", studentId).select("id").maybeSingle();
+  if (error) return { status: "error", error: toDomainError(error) };
+  if (!data) return { status: "error", error: "not_found" };
+  revalidatePath(`/${locale}/admin/students`, "layout");
+  return { status: "ok" };
+}
+
+/**
  * Cuenta de portal para un alumno adulto con correo: provisionAccount con rol
  * student y después students.profile_id. Si la cuenta ya existía (p. ej. un
  * intento anterior a medias) se enlaza; la BD exige que tenga rol student.

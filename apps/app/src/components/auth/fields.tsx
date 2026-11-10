@@ -1,6 +1,6 @@
 "use client";
 
-import { Lock } from "lucide-react";
+import { Eye, EyeOff, Lock } from "lucide-react";
 import { useId, useState, type KeyboardEvent, type ReactNode } from "react";
 import { authField, authLabel, authToggle } from "./styles";
 
@@ -17,10 +17,10 @@ export function IconField({ icon, children }: { icon: ReactNode; children: React
 }
 
 /**
- * Campo de contraseña con botón "Mostrar / Ocultar" y aviso de Bloq Mayús.
- * El botón no lleva la palabra "contraseña" en su nombre: la etiqueta del campo
- * sigue siendo la única que la nombra (los lectores y las pruebas la encuentran
- * por ella). `footer` va a la derecha, bajo el campo (p. ej. "¿Olvidaste…?").
+ * Campo de contraseña con un botón de solo icono (ojo) para mostrarla u ocultarla
+ * y aviso de Bloq Mayús. El texto del botón ("Mostrar contraseña" / "Ocultar
+ * contraseña") no se ve: es su nombre accesible y su tooltip. `footer` va a la
+ * derecha, bajo el campo (p. ej. "¿Olvidaste…?").
  */
 export function PasswordField({
   id = "password",
@@ -70,10 +70,17 @@ export function PasswordField({
           onKeyDown={syncCapsLock}
           onKeyUp={syncCapsLock}
           onBlur={() => setCapsLock(false)}
-          className={`${authField} pr-24 pl-11`}
+          className={`${authField} pr-14 pl-11`}
         />
-        <button type="button" onClick={() => setVisible((value) => !value)} aria-controls={id} className={authToggle}>
-          {visible ? hideLabel : showLabel}
+        <button
+          type="button"
+          onClick={() => setVisible((value) => !value)}
+          aria-controls={id}
+          aria-label={visible ? hideLabel : showLabel}
+          title={visible ? hideLabel : showLabel}
+          className={authToggle}
+        >
+          {visible ? <EyeOff aria-hidden="true" className="size-5" strokeWidth={1.75} /> : <Eye aria-hidden="true" className="size-5" strokeWidth={1.75} />}
         </button>
       </IconField>
       <div className="mt-1.5 flex min-h-6 items-start justify-between gap-3">

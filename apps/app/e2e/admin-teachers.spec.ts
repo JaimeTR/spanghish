@@ -13,8 +13,8 @@ test("admin invites a teacher who sets a password and lands on /es/teacher", asy
     await expectPath(page, "/es/admin");
     await page.getByRole("navigation", { name: "Navegación principal" }).getByRole("link", { name: "Docentes" }).click();
     await expectPath(page, "/es/admin/teachers");
-    await page.getByRole("link", { name: "Invitar docente" }).click();
-    await expectPath(page, "/es/admin/teachers/new");
+    await page.getByRole("button", { name: "Invitar docente" }).click();
+    await expect(page.getByRole("dialog", { name: "Invitar docente" })).toBeVisible();
 
     await page.getByLabel("Nombre completo").fill(name);
     await page.getByLabel("Correo electrónico").fill(email);
@@ -59,7 +59,7 @@ test("an invalid email keeps what was typed and marks the field", async ({ page 
   await expect(email).toHaveAttribute("aria-invalid", "true");
   await expect(email).toHaveAccessibleDescription(/Escribe un correo electrónico válido/);
   await expect(page.getByLabel("Nombre completo")).toHaveValue("Nombre conservado");
-  await expectPath(page, "/es/admin/teachers/new");
+  await expectPath(page, "/es/admin/teachers?new=1");
 });
 
 test("suspending the only admin shows the last-admin message", async ({ page }) => {
@@ -111,6 +111,6 @@ test("teachers pages have no axe violations", async ({ page }) => {
   await page.goto("/es/admin/teachers");
   await expectNoAxeViolations(page);
   await page.goto("/en/admin/teachers/new");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Invite a teacher");
+  await expect(page.getByRole("dialog", { name: "Invite a teacher" })).toBeVisible();
   await expectNoAxeViolations(page);
 });

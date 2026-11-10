@@ -16,12 +16,12 @@ test("admin registers a minor with a new guardian and the consent shows its text
   await loginAdmin(page);
   await page.getByRole("navigation", { name: "Navegación principal" }).getByRole("link", { name: "Alumnos" }).click();
   await expectPath(page, "/es/admin/students");
-  await page.getByRole("link", { name: "Nuevo alumno" }).click();
+  await page.getByRole("button", { name: "Nuevo alumno" }).click();
 
   // Sin segmento "niños", el bloque del tutor no se ve.
   await expect(page.getByLabel("Nombre del tutor")).toBeHidden();
   await page.getByLabel("Nombre completo").fill(`Niña ${suffix}`);
-  await page.getByLabel("Segmento").selectOption("kids");
+  await page.getByRole("dialog").getByLabel("Segmento").selectOption("kids");
   await expect(page.getByLabel("Nombre del tutor")).toBeVisible();
   // El texto del consentimiento vigente se muestra antes de la casilla.
   await expect(page.getByText(/Versión minor_data-v1, vigente desde/)).toBeVisible();
@@ -78,7 +78,7 @@ test("admin registers an adult and grants portal access", async ({ page }) => {
     await loginAdmin(page);
     await page.goto("/es/admin/students/new");
     await page.getByLabel("Nombre completo").fill(`Adulto ${suffix}`);
-    await page.getByLabel("Segmento").selectOption("mature");
+    await page.getByRole("dialog").getByLabel("Segmento").selectOption("mature");
     await page.getByLabel("Correo electrónico").fill(email);
     await page.getByLabel("Teléfono", { exact: true }).fill("0400 123 456");
     await page.getByRole("button", { name: "Dar de alta" }).click();

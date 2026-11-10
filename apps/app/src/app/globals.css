@@ -35,6 +35,23 @@ body {
   }
 }
 
+/* Los modales aparecen con un pequeño desplazamiento; sin animación con "reducir movimiento". */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog[open] {
+    animation: modal-in 0.18s ease-out;
+  }
+}
+
 /*
  * Alta de alumno: los campos de tutor y consentimiento solo se muestran si el
  * segmento elegido es "niños". CSS puro (:has), así funciona también sin JS;

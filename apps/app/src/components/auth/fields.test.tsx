@@ -6,8 +6,8 @@ import { PasswordField } from "./fields";
 
 const labels = {
   label: "Contraseña",
-  showLabel: "Mostrar",
-  hideLabel: "Ocultar",
+  showLabel: "Mostrar contraseña",
+  hideLabel: "Ocultar contraseña",
   capsLockLabel: "Bloq Mayús está activado.",
 };
 
@@ -26,21 +26,23 @@ describe("PasswordField", () => {
     const input = screen.getByLabelText("Contraseña");
     await user.type(input, "secreta-123");
 
-    const show = screen.getByRole("button", { name: "Mostrar" });
+    const show = screen.getByRole("button", { name: "Mostrar contraseña" });
+    expect(show.textContent).toBe("");
+    expect(show).toHaveAttribute("title", "Mostrar contraseña");
     expect(show).toHaveAttribute("type", "button");
     expect(show).toHaveAttribute("aria-controls", input.id);
     await user.click(show);
     expect(input).toHaveAttribute("type", "text");
     expect(input).toHaveValue("secreta-123");
 
-    await user.click(screen.getByRole("button", { name: "Ocultar" }));
+    await user.click(screen.getByRole("button", { name: "Ocultar contraseña" }));
     expect(input).toHaveAttribute("type", "password");
     expect(input).toHaveValue("secreta-123");
   });
 
-  it("the toggle's name does not contain the word 'contraseña', so the field stays the only match for it", () => {
+  it("the field is found by its exact label even though the icon button also names the password", () => {
     render(<PasswordField {...labels} />);
-    expect(screen.getAllByLabelText(/contraseña/i)).toHaveLength(1);
+    expect(screen.getByLabelText("Contraseña", { exact: true })).toHaveAttribute("type", "password");
   });
 
   it("warns politely while Caps Lock is on and clears the warning when it is off or on blur", () => {

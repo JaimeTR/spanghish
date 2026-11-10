@@ -15,7 +15,7 @@ test.afterEach(async () => {
 });
 
 async function createLinkResource(page: Page, title: string) {
-  await page.goto("/es/admin/resources/new"); await page.getByLabel("Tipo").selectOption("link");
+  await page.goto("/es/admin/resources/new"); await page.getByLabel("Tipo", { exact: true }).selectOption("link");
   await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(`English ${title}`);
   await page.getByLabel("URL externa").fill("https://example.com/material"); await page.getByRole("button", { name: "Crear recurso" }).click();
   await expect(page).toHaveURL(/\/es\/admin\/resources\/[0-9a-f-]+\?saved=1/);
@@ -25,7 +25,7 @@ async function createLinkResource(page: Page, title: string) {
 test("admin creates a link resource in both languages and sees it in the account section", async ({ page }) => {
   const title = `E2E ${Date.now()}`;
   await loginAdmin(page); await page.goto("/es/admin/resources/new");
-  await page.getByLabel("Tipo").selectOption("link"); await page.getByLabel("Acceso").selectOption("account");
+  await page.getByLabel("Tipo", { exact: true }).selectOption("link"); await page.getByLabel("Acceso", { exact: true }).selectOption("account");
   await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(`English ${title}`);
   await page.getByLabel("URL externa").fill("https://example.com/material"); await page.getByRole("button", { name: "Crear recurso" }).click();
   await expect(page).toHaveURL(/\/es\/admin\/resources\/[0-9a-f-]+\?saved=1/);
@@ -68,18 +68,18 @@ test("resources pages have no axe violations (desktop and 375px)", async ({ page
   await loginAdmin(page); await page.goto("/es/admin/resources"); await expectNoAxeViolations(page); await page.setViewportSize({ width: 375, height: 812 }); await expectNoAxeViolations(page);
 });
 test("admin uploads a PDF to a worksheet, publishes it and the list shows the file size", async ({ page }) => {
-  const title = `E2E Ficha PDF ${Date.now()}`; await loginAdmin(page); await page.goto("/es/admin/resources/new"); await page.getByLabel("Tipo").selectOption("worksheet"); await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(title); await page.getByRole("button", { name: "Crear recurso" }).click();
+  const title = `E2E Ficha PDF ${Date.now()}`; await loginAdmin(page); await page.goto("/es/admin/resources/new"); await page.getByLabel("Tipo", { exact: true }).selectOption("worksheet"); await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(title); await page.getByRole("button", { name: "Crear recurso" }).click();
   await page.getByLabel("Seleccionar archivo del recurso").setInputFiles({ name: "worksheet.pdf", mimeType: "application/pdf", buffer: tinyPdf }); await expect(page.locator('[role="status"]').filter({ hasText: /^Archivo adjuntado\.$/ })).toBeVisible();
   await page.goto("/es/admin/resources"); const row = page.getByRole("listitem").filter({ hasText: title }); await row.getByRole("button", { name: "Publicar" }).click(); await expect(row).toContainText("KB");
 });
 test("uploading a .zip shows the type message and nothing is attached", async ({ page }) => {
-  const title = `E2E Ficha ZIP ${Date.now()}`; await loginAdmin(page); await page.goto("/es/admin/resources/new"); await page.getByLabel("Tipo").selectOption("worksheet"); await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(title); await page.getByRole("button", { name: "Crear recurso" }).click();
+  const title = `E2E Ficha ZIP ${Date.now()}`; await loginAdmin(page); await page.goto("/es/admin/resources/new"); await page.getByLabel("Tipo", { exact: true }).selectOption("worksheet"); await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(title); await page.getByRole("button", { name: "Crear recurso" }).click();
   await page.getByLabel("Seleccionar archivo del recurso").setInputFiles({ name: "bad.zip", mimeType: "application/zip", buffer: Buffer.from("zip") }); await expect(page.getByLabel("Seleccionar archivo del recurso").locator("..").getByRole("status")).toContainText("Este tipo de archivo no está permitido."); await expect(page.getByText("Sin archivo adjunto").first()).toBeVisible();
 });
 test("a successful signed-upload response without an object is rejected and keeps the resource empty", async ({ page }) => {
   const title = `E2E Adjunto ausente ${Date.now()}`;
   await loginAdmin(page); await page.goto("/es/admin/resources/new");
-  await page.getByLabel("Tipo").selectOption("worksheet"); await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(title);
+  await page.getByLabel("Tipo", { exact: true }).selectOption("worksheet"); await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(title);
   await page.getByRole("button", { name: "Crear recurso" }).click();
   await page.route("**/storage/v1/object/upload/sign/**", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ Key: "mocked" }) }));
   await page.getByLabel("Seleccionar archivo del recurso").setInputFiles({ name: "missing.pdf", mimeType: "application/pdf", buffer: Buffer.from("%PDF-1.4\\n%%EOF") });
@@ -87,7 +87,7 @@ test("a successful signed-upload response without an object is rejected and keep
   await expect(page.getByText("Sin archivo adjunto").first()).toBeVisible();
 });
 test("replacing the file removes the previous object", async ({ page }) => {
-  const title = `E2E Reemplazo ${Date.now()}`; await loginAdmin(page); await page.goto("/es/admin/resources/new"); await page.getByLabel("Tipo").selectOption("worksheet"); await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(title); await page.getByRole("button", { name: "Crear recurso" }).click();
+  const title = `E2E Reemplazo ${Date.now()}`; await loginAdmin(page); await page.goto("/es/admin/resources/new"); await page.getByLabel("Tipo", { exact: true }).selectOption("worksheet"); await page.getByLabel("Español").nth(0).fill(title); await page.getByLabel("English").nth(0).fill(title); await page.getByRole("button", { name: "Crear recurso" }).click();
   const upload = (name: string) => page.getByLabel("Seleccionar archivo del recurso").setInputFiles({ name, mimeType: "application/pdf", buffer: tinyPdf });
   await upload("first.pdf"); await expect(page.locator('[role="status"]').filter({ hasText: /.+/ }).filter({ hasText: "Archivo adjuntado." })).toBeVisible(); await page.reload(); const first = await page.getByText(/\.pdf · [0-9]+ KB/).textContent();
   await upload("second.pdf"); await expect(page.locator('[role="status"]').filter({ hasText: /.+/ }).filter({ hasText: "Archivo adjuntado." })).toBeVisible(); await page.reload(); const second = await page.getByText(/\.pdf · [0-9]+ KB/).textContent(); expect(second).not.toEqual(first);
