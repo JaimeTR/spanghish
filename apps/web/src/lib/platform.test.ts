@@ -23,6 +23,14 @@ describe("platform client", () => {
     expect(init.next).toMatchObject({ revalidate: 300, tags: [WEB_CONTENT_TAG] });
   });
 
+  it("can skip the cache for per-request permission checks", async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(new Response("null", { status: 200 }));
+    await getRpc("resource_file_path", { p_resource_id: "x" }, ENV, fetchImpl as unknown as typeof fetch, { cache: "no-store" });
+    const [, init] = fetchImpl.mock.calls[0]!;
+    expect(init.cache).toBe("no-store");
+    expect(init.next).toBeUndefined();
+  });
+
   it("maps a 500 and a network error to failed", async () => {
     const down = vi.fn().mockResolvedValue(new Response("boom", { status: 500 }));
     expect(await getRpc("f", {}, ENV, down as unknown as typeof fetch)).toEqual({ ok: false, reason: "failed" });

@@ -21,6 +21,13 @@ describe("site data", () => {
     expect(appLoginUrl("en")).toMatch(/^https:\/\/[^/]+\/en\/login$/);
   });
 
+  it("the login only carries a return path inside the student portal of the same locale", () => {
+    expect(appLoginUrl("es", "/es/student/learn/los-colores")).toMatch(/\/es\/login\?next=%2Fes%2Fstudent%2Flearn%2Flos-colores$/);
+    for (const next of ["/en/student/resources", "https://evil.example", "//evil.example", "/es/admin", "/es/student//evil", "/es/student/\\evil"]) {
+      expect(appLoginUrl("es", next), next).toMatch(/\/es\/login$/);
+    }
+  });
+
   it("es and en messages have exactly the same keys", () => {
     expect(keys(en).sort()).toEqual(keys(es).sort());
   });

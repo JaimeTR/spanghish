@@ -26,9 +26,15 @@ export const CONTACT = {
 export const APP_URL = (process.env.NEXT_PUBLIC_APP_URL ?? "https://app.spanglish.com.au").replace(/\/$/, "");
 export const APP_LOGIN_URL = `${APP_URL}/login`;
 
-/** Login del portal en el idioma de la página. */
-export function appLoginUrl(locale: "es" | "en"): string {
-  return `${APP_URL}/${locale}/login`;
+/**
+ * Login del portal en el idioma de la página. `next` (a dónde volver tras entrar)
+ * solo se añade si apunta al área del alumno de ese idioma: nunca a otra web.
+ */
+export function appLoginUrl(locale: "es" | "en", next?: string): string {
+  const base = `${APP_URL}/${locale}/login`;
+  return next && next.startsWith(`/${locale}/student/`) && !next.includes("//") && !next.includes("\\")
+    ? `${base}?next=${encodeURIComponent(next)}`
+    : base;
 }
 
 export const SOCIAL = [

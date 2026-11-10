@@ -2,11 +2,12 @@
 
 Última actualización: 2026-11-09. Repositorio: `JaimeTR/spanghish` (público). Cliente: Maribel Mayhua (profesora de español, Australia). Producto: web pública bilingüe (es/en) + plataforma educativa privada. Stack: pnpm + Turborepo, Next.js 16, Tailwind v4, next-intl, Supabase (Postgres/Auth/Storage/RLS), Stripe.
 
-## 0. Estado de ramas (actualizado 2026-11-09, integración directa sin PRs)
+## 0. Estado de ramas (actualizado 2026-11-10, integración directa sin PRs)
 - **Política:** solo dos ramas importantes. **`develop` = trabajo** y **`main` = producción** (última versión estable). Se integra directo (sin PRs) tras verificar; `main` se actualiza desde `develop` cuando todo está verde. Carpeta de trabajo local: `spanghish-int` (rama `develop`). La carpeta `spanghish` es la original (contiene el `.git`); no se usa.
 - `develop` y `main` contienen: cimientos 1A, web pública completa, 1B fases 1-2, Contenido fases 0-2 (gestión de recursos y lecciones, e2e en verde), menú lateral agrupado/minimizable + menú de perfil + `/account`, páginas de docentes (índice y perfiles de Maribel y Pamela) leídas de la plataforma con respaldo estático, `/api/revalidate`, y la migración 0012 (`teacher_profiles`).
 - Verificado en el árbol integrado: lint, typecheck, tests (web 94, app 186, content 13, ui 4), pgTAP 311, build, e2e app 89 y e2e web 244 (2 pruebas de la web son intermitentes bajo carga y pasan solas: `conversion.spec.ts:182`, `home.spec.ts:173`). El CI de GitHub no se ha comprobado.
 - **Admin de perfiles públicos de docentes: hecho** (`/admin/teachers/profiles`: crear/editar es/en, foto, publicar, orden; la web lo lee con respaldo estático). e2e app 97 en verde.
+- **Contenido fase 4: hecha** (la web lee recursos y lecciones de la plataforma; ver §5.2). Verificado: web vitest 123, lint, typecheck, build, e2e web 250 (con respaldo estático) y comprobación manual contra Supabase local.
 - Convención: ramas `feat/*` desde `develop`; al terminar y verificar, merge directo a `develop` y luego `main`; borrar la rama.
 
 ## 1. Cadena de ramas y PRs (fusionar EN ESTE ORDEN)
@@ -51,14 +52,26 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 ## 5.1 Siguiente trabajo, en orden
 1. **Contenido fase 2 (T5–T9) — código escrito, faltan 12 e2e (ver 5.2):** gestión en el portal de recursos y lecciones (CRUD, publicar, ordenar, subida de archivos con URL firmada, editor de lecciones por bloques con vista previa). Al terminar, cambiar `status` de `content` a `ready` en `apps/app/src/lib/nav.ts`.
 2. **Contenido fase 3 (T10–T11) — HECHA:** `/student/resources` (con `/open` firmado) y `/student/learn` del alumno por nivel de acceso.
-3. **Contenido fase 4 (T12–T15):** la web lee recursos y lecciones publicados (RPC con clave anónima, caché 300 s, respaldo estático, `/api/revalidate`).
+3. **Contenido fase 4 (T12–T15) — HECHA:** la web lee recursos y lecciones publicados (RPC con clave anónima, caché 300 s, respaldo estático, `/api/revalidate`).
 4. **Contenido fase 5 (T16–T20):** configuración de despliegue, validación de variables, noindex por entorno, `/api/health`, semilla de datos de ejemplo, `docs/despliegue.md`. **T20 debe renumerar** las migraciones de 1B fases 3–6 (reservadas 0010–0015 → pasan a 0012+) en el plan 1B.
 5. Contenido fase 6 (tienda gestionable): opcional.
 6. **1B fases 3–6:** grupos/calendario/matrículas, asistencia/packs/"Hoy" del docente, solicitudes web → panel, panel de la administradora. Sustituir `has_enrolled_access()` (marcador temporal) en la tarea 13 de 1B.
 7. Hito 2 (alumno completo) y hito 3 (Stripe de matrículas, CMS, lanzamiento): sin plan escrito aún.
 
-## 5.2 Punto exacto donde se quedó el trabajo (2026-11-09)
-Ver §0. Hecho además: Contenido fase 3; en la web "Entrar" es un icono a la derecha de "Clase gratis" y solo en home, Recursos y Aprende (`showsPortalLogin`); `SITE_NOINDEX=1` saca la web de buscadores (demo en Vercel `spanglish-web`). Ojo: en el portal no existe `text-white` (el tema reinicia los colores): usar `text-on-structure`/`text-on-primary`. Siguiente: (1) Contenido fase 4 (la web lee recursos y lecciones: el cliente `apps/web/src/lib/platform.ts` y `/api/revalidate` ya existen), fases 5-6; (3) 1B fases 3-6. Pendiente de configuración: `WEB_REVALIDATE_URL`/`WEB_REVALIDATE_SECRET` en la app y `WEB_REVALIDATE_SECRET` + `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` en la web para que lea de la base.
+## 5.2 Punto exacto donde se quedó el trabajo (2026-11-10)
+Ver §0. **Siguiente: Contenido fase 5 (T16–T20)**, luego fase 6 (opcional) y 1B fases 3–6.
+
+Contenido fase 4, lo que hay que saber:
+- `apps/web/src/lib/content-source.ts` es la única puerta: `getPublicResourceCards`, `getLearnCategories`, `loadPublicLesson`/`getPublicLesson`, `getPublicArticleSlugs`. Lee con la clave anónima los RPC `list_published_resources`, `list_published_lessons` y `get_published_lesson` (caché 300 s, etiqueta `web-content`). Sin variables, con la base caída o sin nada publicado, `/resources`, `/learn` y el sitemap usan el respaldo estático (un nivel de acceso o una categoría sin nada publicado conserva su respaldo).
+- Lo restringido llega sin origen y enlaza al login del portal con `?next=` (solo rutas `/<locale>/student/…`). Lecciones artículo abiertas: `/[locale]/learn/[slug]` (bloques como texto, nunca HTML). Descarga de archivos públicos: `/api/resource-file/<id>` → RPC `resource_file_path` + URL firmada de 120 s (la web nunca usa la clave de servicio).
+- **Desviación del plan, a propósito:** si la plataforma está configurada pero no responde, la lección artículo lanza un error (500 sin caché) en vez de 404. Con 404, Next guardaba en caché "no existe" de una lección real (con `noindex`) y tardaba dos ciclos en recuperarse; ahora una lección ya servida se sigue viendo durante la caída. La web no tiene `error.tsx` propio: una lección nunca visitada pedida durante una caída muestra la página de error genérica de Next.
+- `/api/revalidate` exige ahora un `WEB_REVALIDATE_SECRET` de **32 caracteres o más** (uno más corto = no configurado, 503).
+- La e2e de la web (`pnpm --filter @spanglish/web e2e`) fuerza el respaldo (vacía las dos variables de Supabase en `playwright.config.ts`), haya o no `.env.local`. La e2e de la web contra la plataforma es la tarea 19 (fase 5): `playwright.platform.config.ts` + `e2e-platform/`.
+- Vitest de la web ya admite pruebas `.test.tsx` (`oxc.jsx` automático en `vitest.config.ts`; render con `react-dom/server`).
+
+Pendiente de configuración (Vercel; hoy la web desplegada usa el respaldo): en la web `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` y `WEB_REVALIDATE_SECRET`; en la app `WEB_REVALIDATE_URL` (`https://<web>/api/revalidate`) y el mismo `WEB_REVALIDATE_SECRET`. Documentado en `.env.example`.
+
+Otros avisos vigentes: en la web "Entrar" es un icono a la derecha de "Clase gratis" y solo en home, Recursos y Aprende (`showsPortalLogin`); `SITE_NOINDEX=1` saca la web de buscadores (no está puesto en Vercel `spanglish-web`, por decisión de Jaime). En el portal no existe `text-white` (el tema reinicia los colores): usar `text-on-structure`/`text-on-primary`.
 
 ## 6. Cómo delegar sin gastar tokens de Claude
 - **Codex** (cuenta ChatGPT ya iniciada): `codex exec -C <worktree> -s workspace-write "<prompt autocontenido que cite el archivo del plan y la tarea>"`. Su sandbox NO puede ejecutar `pnpm` (EPERM): que solo escriba archivos y ejecutar las comprobaciones fuera. Nunca `danger-full-access`, nunca pasar secretos. Un solo escritor por archivo.

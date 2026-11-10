@@ -15,11 +15,14 @@ export function VideoCard({
   title,
   playLabel,
   sizes,
+  thumbnail = true,
 }: {
   id: string;
   title: string;
   playLabel: string;
   sizes: string;
+  /** false: video sin copia local de la miniatura (fondo liso, sin contactar con YouTube). */
+  thumbnail?: boolean;
 }) {
   const [playing, setPlaying] = useState(false);
 
@@ -48,13 +51,15 @@ export function VideoCard({
           }}
           className="group absolute inset-0 block no-underline"
         >
-          <Image
-            src={`/img/videos/${id}.jpg`}
-            alt=""
-            fill
-            sizes={sizes}
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-          />
+          {thumbnail && (
+            <Image
+              src={`/img/videos/${id}.jpg`}
+              alt=""
+              fill
+              sizes={sizes}
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            />
+          )}
           <span aria-hidden="true" className="absolute inset-0 bg-ink/15 transition-colors duration-300 group-hover:bg-ink/0" />
           <span
             aria-hidden="true"

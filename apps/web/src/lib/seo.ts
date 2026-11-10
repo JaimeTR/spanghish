@@ -1,6 +1,6 @@
 import type { Metadata, MetadataRoute } from "next";
 import { routing, type Locale } from "../i18n/routing";
-import { isIndexable, languageAlternates, localePath, ROUTE_KEYS, type RouteKey } from "./routes";
+import { isIndexable, languageAlternates, learnLessonPath, localePath, ROUTE_KEYS, type RouteKey } from "./routes";
 import { SITE_URL } from "./site";
 import { TEACHERS, teacherPath } from "./teachers";
 
@@ -85,8 +85,21 @@ export function sitemapEntries(
   lastModified?: Date,
   /** Docentes publicadas (de la plataforma); por defecto, las del respaldo estático. */
   teacherSlugs: readonly string[] = TEACHERS.map((t) => t.slug),
+  /** Lecciones artículo abiertas (de la plataforma); sin plataforma, ninguna. */
+  lessonSlugs: readonly string[] = [],
 ): MetadataRoute.Sitemap {
   const abs = (path: string) => `${baseUrl}${path}`;
+  const lessons = lessonSlugs.flatMap((slug) =>
+    routing.locales.map((locale) => ({
+      url: abs(learnLessonPath(locale, slug)),
+      ...(lastModified ? { lastModified } : {}),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+      alternates: {
+        languages: Object.fromEntries(routing.locales.map((l) => [l, abs(learnLessonPath(l, slug))])),
+      },
+    })),
+  );
   const profiles = teacherSlugs.flatMap((slug) =>
     routing.locales.map((locale) => ({
       url: abs(teacherPath(locale, slug)),
@@ -109,5 +122,5 @@ export function sitemapEntries(
       },
     })),
   );
-  return [...routes, ...profiles];
+  return [...routes, ...profiles, ...lessons];
 }

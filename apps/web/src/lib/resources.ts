@@ -26,18 +26,28 @@ export type ResourceCard = {
   videoId?: string;
   /** Destino de las tarjetas "open": la sección de videos o Aprende ahora (/learn). */
   target?: "videos" | "learn";
+  /** Solo en las tarjetas de la plataforma: textos propios (no están en messages). */
+  title?: Record<"es" | "en", string>;
+  meta?: Record<"es" | "en", string>;
+  /** Idioma del título cuando no es el de la interfaz (p. ej. un video en inglés). */
+  titleLang?: "es" | "en";
+  /** Tipo en la plataforma: da el texto secundario cuando no hay descripción. */
+  dbKind?: "video" | "document" | "link" | "worksheet" | "vocabulary" | "recording" | "coursework";
+  /** Enlace directo (video o web externa, o la descarga firmada /api/resource-file/<id>). */
+  href?: string;
+  /** El enlace sale de la web: se abre en una pestaña nueva. */
+  external?: boolean;
 };
 
 export const ACCESS_LEVELS: readonly AccessLevel[] = ["public", "account", "enrolled"];
 
 /**
- * PLACEHOLDER ESTÁTICO: estas tarjetas son provisionales y solo muestran cómo
- * se organizan los recursos. Cuando la plataforma (apps/app) tenga su tabla de
- * recursos con `access_level` (public | account | enrolled), esta lista se
- * sustituirá por los datos de esa tabla. No se inventan contenidos: lo que aún
- * no existe va como "soon" y sin enlace.
+ * RESPALDO ESTÁTICO: lo que se muestra si la plataforma no está configurada,
+ * falla o un nivel de acceso aún no tiene recursos publicados (ver
+ * content-source.ts). No se inventan contenidos: lo que aún no existe va como
+ * "soon" y sin enlace.
  */
-export const RESOURCE_CARDS: readonly ResourceCard[] = [
+export const FALLBACK_RESOURCE_CARDS: readonly ResourceCard[] = [
   ...VIDEOS.map(
     (v): ResourceCard => ({ key: `video-${v.id}`, access: "public", state: "open", kind: "video", videoId: v.id, target: "videos" }),
   ),
@@ -49,6 +59,9 @@ export const RESOURCE_CARDS: readonly ResourceCard[] = [
   { key: "coursework", access: "enrolled", state: "locked", kind: "coursework" },
 ];
 
-export function cardsFor(access: AccessLevel): ResourceCard[] {
-  return RESOURCE_CARDS.filter((c) => c.access === access);
+/** Alias histórico del respaldo. */
+export const RESOURCE_CARDS = FALLBACK_RESOURCE_CARDS;
+
+export function cardsFor(access: AccessLevel, cards: readonly ResourceCard[] = FALLBACK_RESOURCE_CARDS): ResourceCard[] {
+  return cards.filter((c) => c.access === access);
 }

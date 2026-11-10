@@ -591,7 +591,6 @@
         }
       }
     },
-
     "contact": {
       "metaTitle": "Contact us and book a free lesson · Spanglish",
       "metaDescription": "Call 0413 178 583 or email hello@spanglish.com.au, Monday to Saturday, 8am to 5pm. Sunshine Coast, Brisbane and online. Your first lesson is free.",
@@ -1338,7 +1337,17 @@
         "accountNote": "Accounts can’t be created from the website yet. You’ll see it here once they open.",
         "studentsNote": "If you’re already a student, sign in with your account; if not yet, book your free lesson.",
         "studentsCta": "Book your free lesson",
-        "discount": "Enrolled students get 30% off digital resources."
+        "discount": "Enrolled students get 30% off digital resources.",
+        "external": "opens in a new tab",
+        "kinds": {
+          "video": "Video",
+          "document": "Document to download",
+          "link": "Link",
+          "worksheet": "Worksheet to download",
+          "vocabulary": "Vocabulary",
+          "recording": "Class recording",
+          "coursework": "Course material"
+        }
       },
       "materials": {
         "question": "Downloadable materials",
@@ -1465,6 +1474,16 @@
           "body": "Your first lesson is free: 45 minutes, online.",
           "cta": "Book your free lesson"
         }
+      },
+      "article": "Reading lesson",
+      "locked": "Sign in to view it",
+      "articleMetaTitle": "{title} · Learn now · Spanglish",
+      "articleVideo": "Lesson video: {title}",
+      "quiz": {
+        "check": "Check",
+        "choose": "Choose an answer.",
+        "correct": "Correct!",
+        "incorrect": "Not quite. Try again."
       }
     },
     "learnAlphabet": {
