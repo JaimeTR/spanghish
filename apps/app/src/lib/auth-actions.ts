@@ -1,5 +1,6 @@
 "use server";
 
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { isLocale, routing, type Locale } from "../i18n/routing";
@@ -9,6 +10,7 @@ import { safeNextTarget } from "./route-guard";
 import { resetPasswordUrl } from "./site-url";
 import { resetSchema } from "./schemas/auth";
 import { createClient } from "./supabase/server";
+import { SESSION_ONLY_COOKIE } from "./supabase/session-preference";
 
 export type LoginError = "credentials" | "suspended" | "no_access" | "unavailable";
 export type LoginState = { error?: LoginError };
@@ -33,6 +35,22 @@ function localeOf(formData: FormData): Locale {
   return value && isLocale(value) ? value : routing.defaultLocale;
 }
 
+/** Guarda (o borra) la preferencia "no mantener la sesión" para las renovaciones posteriores. */
+async function rememberSessionPreference(remember: boolean): Promise<void> {
+  const store = await cookies();
+  if (remember) {
+    store.delete(SESSION_ONLY_COOKIE);
+    return;
+  }
+  // Sin maxAge: es ella misma una cookie de sesión.
+  store.set(SESSION_ONLY_COOKIE, "1", {
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
+}
+
 export async function login(_prev: LoginState, formData: FormData): Promise<LoginState> {
   const locale = localeOf(formData);
   const parsed = loginSchema.safeParse({
@@ -43,13 +61,17 @@ export async function login(_prev: LoginState, formData: FormData): Promise<Logi
   // Mismo mensaje genérico para formato inválido y credenciales erróneas.
   if (!parsed.success) return { error: "credentials" };
 
-  const supabase = await createClient();
+  // "Mantener la sesión iniciada": solo con el valor explícito "1" (el formulario lo
+  // envía marcado por defecto); sin él, la sesión dura lo que el navegador.
+  const remember = field(formData, "remember") === "1";
+  const supabase = await createClient({ sessionOnly: !remember });
   const { error } = await supabase.auth.signInWithPassword({
     email: parsed.data.email,
     password: parsed.data.password,
   });
   // No se distingue "no existe" de "contraseña incorrecta".
   if (error) return { error: error.status === 429 ? "unavailable" : "credentials" };
+  await rememberSessionPreference(remember);
 
   const user = await loadSessionUser(supabase);
   if (!user) {
