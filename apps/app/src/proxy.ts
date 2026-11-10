@@ -6,6 +6,7 @@ import { isLocale, routing } from "./i18n/routing";
 import { loadSessionUser } from "./lib/load-session-user";
 import { guardRequest, type GuardUser } from "./lib/route-guard";
 import { supabaseEnv } from "./lib/supabase/env";
+import { SESSION_ONLY_COOKIE, withSessionPreference } from "./lib/supabase/session-preference";
 
 const intl = createMiddleware(routing);
 
@@ -36,6 +37,8 @@ export default async function proxy(request: NextRequest) {
   }
 
   const pending: PendingCookie[] = [];
+  // "Mantener la sesión" desmarcado: las renovaciones también son cookies de sesión.
+  const sessionOnly = request.cookies.get(SESSION_ONLY_COOKIE)?.value === "1";
   const { url, anonKey } = supabaseEnv();
   const supabase = createServerClient<Database>(url, anonKey, {
     cookies: {
@@ -43,7 +46,7 @@ export default async function proxy(request: NextRequest) {
       setAll: (list) => {
         for (const { name, value, options } of list) {
           request.cookies.set(name, value);
-          pending.push({ name, value, options });
+          pending.push({ name, value, options: withSessionPreference(value, options, sessionOnly) });
         }
       },
     },

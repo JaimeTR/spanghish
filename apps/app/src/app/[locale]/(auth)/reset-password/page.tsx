@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { AuthHeader } from "@/components/auth/AuthHeader";
 import { linkClass } from "@/components/form-styles";
 import { isLocale } from "@/i18n/routing";
 import { ResetForm } from "./reset-form";
@@ -23,6 +24,7 @@ export default async function ResetPasswordPage({
   if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "reset" });
+  const tl = await getTranslations({ locale, namespace: "login" });
 
   const query = await searchParams;
   const tokenHash = typeof query.token_hash === "string" ? query.token_hash : "";
@@ -31,12 +33,9 @@ export default async function ResetPasswordPage({
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-structure">{t("title")}</h1>
+      <AuthHeader eyebrow={tl("eyebrow")} title={t("title")} intro={usable ? t("intro") : undefined} />
       {usable ? (
-        <>
-          <p className="mt-2 text-text-muted">{t("intro")}</p>
-          <ResetForm locale={locale} tokenHash={tokenHash} />
-        </>
+        <ResetForm locale={locale} tokenHash={tokenHash} />
       ) : (
         <>
           <p className="mt-2 font-semibold text-danger">{t("errors.expired")}</p>

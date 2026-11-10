@@ -15,6 +15,26 @@
       "suspended": "Tu cuenta está suspendida. Contacta con la administradora.",
       "no_access": "Tu cuenta todavía no tiene acceso. Contacta con la administradora.",
       "unavailable": "No pudimos iniciar sesión. Inténtalo de nuevo en unos minutos."
+    },
+    "eyebrow": "Portal Spanglish",
+    "emailPlaceholder": "nombre@correo.com",
+    "show": "Mostrar",
+    "hide": "Ocultar",
+    "capsLock": "Bloq Mayús está activado.",
+    "remember": "Mantener la sesión iniciada",
+    "rememberHint": "Desmárcalo si usas un dispositivo compartido.",
+    "backToSite": "Volver a la web",
+    "noAccount": "¿Aún no tienes cuenta? La crea la escuela.",
+    "requestAccess": "Pide tu acceso",
+    "logoAlt": "Spanglish",
+    "panel": {
+      "headline": "Tu espacio para aprender español",
+      "lead": "Lecciones, materiales y recursos de Spanglish, siempre a mano.",
+      "points": {
+        "levels": "Lecciones y materiales para tu nivel",
+        "practice": "Recursos para practicar entre clases",
+        "languages": "Disponible en español y en inglés"
+      }
     }
   },
   "forgot": {

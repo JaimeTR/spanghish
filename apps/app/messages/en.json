@@ -15,6 +15,26 @@
       "suspended": "Your account is suspended. Please contact the administrator.",
       "no_access": "Your account does not have access yet. Please contact the administrator.",
       "unavailable": "We couldn't sign you in. Please try again in a few minutes."
+    },
+    "eyebrow": "Spanglish portal",
+    "emailPlaceholder": "name@email.com",
+    "show": "Show",
+    "hide": "Hide",
+    "capsLock": "Caps Lock is on.",
+    "remember": "Keep me signed in",
+    "rememberHint": "Uncheck it if you're on a shared device.",
+    "backToSite": "Back to the website",
+    "noAccount": "Don't have an account yet? The school creates it for you.",
+    "requestAccess": "Request access",
+    "logoAlt": "Spanglish",
+    "panel": {
+      "headline": "Your space to learn Spanish",
+      "lead": "Spanglish lessons, materials and resources, always at hand.",
+      "points": {
+        "levels": "Lessons and materials for your level",
+        "practice": "Resources to practise between classes",
+        "languages": "Available in Spanish and English"
+      }
     }
   },
   "forgot": {

@@ -16,6 +16,25 @@ body {
   accent-color: var(--brand-fuchsia);
 }
 
+/* Movimiento suave de las formas del acceso; quieto con "reducir movimiento". */
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--tilt, 0deg));
+  }
+  50% {
+    transform: translateY(-10px) rotate(var(--tilt, 0deg));
+  }
+}
+.float-soft {
+  transform: rotate(var(--tilt, 0deg));
+}
+@media (prefers-reduced-motion: no-preference) {
+  .float-soft {
+    animation: float-soft 7s ease-in-out infinite;
+  }
+}
+
 /*
  * Alta de alumno: los campos de tutor y consentimiento solo se muestran si el
  * segmento elegido es "niños". CSS puro (:has), así funciona también sin JS;

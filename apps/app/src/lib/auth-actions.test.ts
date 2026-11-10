@@ -1,8 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { resetSchema } from "./schemas/auth";
 
+const cookieStore = { set: vi.fn(), delete: vi.fn() };
+const createClientSpy = vi.fn();
 const supabase = {
   auth: {
+    signInWithPassword: vi.fn(),
     verifyOtp: vi.fn(),
     updateUser: vi.fn(),
     signOut: vi.fn(),
@@ -13,11 +16,17 @@ const redirect = vi.fn((to: string) => {
 });
 const loadSessionUser = vi.fn();
 
-vi.mock("./supabase/server", () => ({ createClient: () => Promise.resolve(supabase) }));
+vi.mock("./supabase/server", () => ({
+  createClient: (...args: unknown[]) => {
+    createClientSpy(...args);
+    return Promise.resolve(supabase);
+  },
+}));
+vi.mock("next/headers", () => ({ cookies: () => Promise.resolve(cookieStore) }));
 vi.mock("next/navigation", () => ({ redirect: (to: string) => redirect(to) }));
 vi.mock("./load-session-user", () => ({ loadSessionUser: () => loadSessionUser() }));
 
-const { updatePassword } = await import("./auth-actions");
+const { login, updatePassword } = await import("./auth-actions");
 
 const TOKEN = "pkce_0123456789abcdef0123456789";
 
@@ -26,6 +35,44 @@ function form(values: Record<string, string>): FormData {
   for (const [k, v] of Object.entries(values)) fd.set(k, v);
   return fd;
 }
+
+describe("login: mantener la sesión iniciada", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    supabase.auth.signInWithPassword.mockResolvedValue({ data: {}, error: null });
+    supabase.auth.signOut.mockResolvedValue({ error: null });
+    loadSessionUser.mockResolvedValue({ id: "u1", status: "active", roles: ["admin"], locale: "es" });
+  });
+  const credentials = { locale: "es", email: "admin@example.test", password: "una-clave-larga" };
+
+  it("remembered: persistent cookies and the session-only preference is cleared", async () => {
+    await expect(login({}, form({ ...credentials, remember: "1" }))).rejects.toThrow("NEXT_REDIRECT:/es/admin");
+    expect(createClientSpy).toHaveBeenCalledWith({ sessionOnly: false });
+    expect(cookieStore.delete).toHaveBeenCalledWith("sp_session_only");
+    expect(cookieStore.set).not.toHaveBeenCalled();
+  });
+
+  it("not remembered (box unchecked or absent): session cookies and a session-only preference cookie", async () => {
+    await expect(login({}, form(credentials))).rejects.toThrow("NEXT_REDIRECT:/es/admin");
+    expect(createClientSpy).toHaveBeenCalledWith({ sessionOnly: true });
+    expect(cookieStore.set).toHaveBeenCalledWith(
+      "sp_session_only",
+      "1",
+      expect.objectContaining({ path: "/", httpOnly: true, sameSite: "lax" }),
+    );
+    const options = cookieStore.set.mock.calls[0]![2] as Record<string, unknown>;
+    expect(options.maxAge).toBeUndefined();
+    expect(options.expires).toBeUndefined();
+    expect(cookieStore.delete).not.toHaveBeenCalled();
+  });
+
+  it("a failed sign-in leaves the preference untouched", async () => {
+    supabase.auth.signInWithPassword.mockResolvedValue({ data: {}, error: { status: 400 } });
+    expect(await login({}, form({ ...credentials, remember: "1" }))).toEqual({ error: "credentials" });
+    expect(cookieStore.set).not.toHaveBeenCalled();
+    expect(cookieStore.delete).not.toHaveBeenCalled();
+  });
+});
 
 describe("resetSchema", () => {
   it("resetSchema rejects passwords shorter than 10", () => {
