@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getPublicArticleSlugs } from "@/lib/content-source";
 import { sitemapEntries } from "@/lib/seo";
 import { loadTeacherSlugs } from "@/lib/teachers-source";
 
@@ -6,5 +7,6 @@ import { loadTeacherSlugs } from "@/lib/teachers-source";
 export const revalidate = 300;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  return sitemapEntries(undefined, undefined, await loadTeacherSlugs());
+  const [teachers, lessons] = await Promise.all([loadTeacherSlugs(), getPublicArticleSlugs()]);
+  return sitemapEntries(undefined, undefined, teachers, lessons);
 }

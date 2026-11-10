@@ -17,6 +17,11 @@ type Env = Partial<Record<string, string | undefined>>;
 
 export type RpcResult<T> = { ok: true; data: T } | { ok: false; reason: "not_configured" | "failed" };
 
+/** Configuración de la plataforma (URL sin barra final y clave anónima), o null si falta. */
+export function platformEnv(env: Env = process.env): { url: string; key: string } | null {
+  return config(env);
+}
+
 function config(env: Env): { url: string; key: string } | null {
   const url = env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
   const key = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -36,6 +41,8 @@ export async function getRpc<T>(
   args: Record<string, unknown> = {},
   env: Env = process.env,
   fetchImpl: typeof fetch = fetch,
+  /** `no-store`: lectura sin caché (p. ej. antes de firmar una descarga). */
+  options: { cache?: "no-store" } = {},
 ): Promise<RpcResult<T>> {
   const cfg = config(env);
   if (!cfg) return { ok: false, reason: "not_configured" };
@@ -45,16 +52,22 @@ export async function getRpc<T>(
       headers: supabaseHeaders(cfg.key),
       body: JSON.stringify(args),
       signal: AbortSignal.timeout(TIMEOUT_MS),
-      next: { revalidate: PLATFORM_REVALIDATE_SECONDS, tags: [WEB_CONTENT_TAG] },
+      ...(options.cache === "no-store"
+        ? { cache: "no-store" as const }
+        : { next: { revalidate: PLATFORM_REVALIDATE_SECONDS, tags: [WEB_CONTENT_TAG] } }),
     });
-    if (!response.ok) return { ok: false, reason: "failed" };
+    if (!response.ok) {
+      console.error(`[platform] ${fn}: HTTP ${response.status}`);
+      return { ok: false, reason: "failed" };
+    }
     return { ok: true, data: (await response.json()) as T };
-  } catch {
+  } catch (error) {
+    console.error(`[platform] ${fn}: ${error instanceof Error ? error.name : "error"}`);
     return { ok: false, reason: "failed" };
   }
 }
 
-/** URL pública de un archivo del bucket público `content-media` (fotos de docentes). null si no hay ruta o configuración. */
+/** URL pública de un archivo del bucket público `content-media` (fotos de docentes, imágenes de lecciones). null si no hay ruta o configuración. */
 export function contentMediaUrl(path: string | null | undefined, env: Env = process.env): string | null {
   const cfg = config(env);
   if (!path || !cfg) return null;

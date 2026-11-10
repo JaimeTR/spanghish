@@ -18,9 +18,20 @@ export type LearnItem = {
   /** Texto: `page.learn.items.<label>` o, en las categorías por nivel, "Nivel A1". */
   label?: "alphabet" | "nouns" | "colors" | "numbers";
   level?: Level;
-  /** Lección publicada; sin ella, el elemento es "Próximamente". */
+  /** Lección interactiva publicada (ruta propia de la web). */
   lesson?: LessonRoute;
+  /** Solo en los elementos de la plataforma: título propio. */
+  title?: Record<"es" | "en", string>;
+  /** Lección artículo de la plataforma: /learn/<slug>. */
+  slug?: string;
+  /** Publicada pero con acceso restringido: enlaza al login del portal. */
+  locked?: boolean;
 };
+
+/** Sin lección interactiva ni artículo, el elemento es "Próximamente". */
+export function isReady(item: LearnItem): boolean {
+  return !item.locked && Boolean(item.lesson || item.slug);
+}
 
 export type LearnCategory = {
   key: "foundations" | "kids" | "adults" | "stories" | "games";

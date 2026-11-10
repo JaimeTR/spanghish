@@ -26,7 +26,7 @@ const TIER: Record<AccessLevel, { bubble: BubbleTone; tile: string }> = {
  * cómo se organizarán por nivel de acceso. No hay formularios de login ni de
  * alta: los recursos de alumnos enlazan al login del portal (apps/app).
  */
-export function ResourcesPage({ locale }: { locale: Locale }) {
+export function ResourcesPage({ locale, cards }: { locale: Locale; cards: readonly ResourceCard[] }) {
   const t = useTranslations("page.resources");
   const tn = useTranslations("nav");
   const tl = useTranslations("learn");
@@ -126,7 +126,7 @@ export function ResourcesPage({ locale }: { locale: Locale }) {
                   </p>
                 </Bubble>
                 <ul className="mt-6 flex flex-col gap-3">
-                  {cardsFor(level).map((card) => (
+                  {cardsFor(level, cards).map((card) => (
                     <ResourceTile key={card.key} card={card} locale={locale} />
                   ))}
                 </ul>
@@ -160,18 +160,21 @@ export function ResourcesPage({ locale }: { locale: Locale }) {
 function ResourceTile({ card, locale }: { card: ResourceCard; locale: Locale }) {
   const t = useTranslations("page.resources.access");
   const video = card.videoId ? VIDEOS.find((v) => v.id === card.videoId) : undefined;
-  const title = video ? video.title : t(`items.${card.key}.title`);
-  const meta = t(`items.${video ? "video" : card.key}.meta`);
+  // Las tarjetas de la plataforma traen sus textos; las del respaldo, de messages.
+  const title = card.title?.[locale] ?? (video ? video.title : t(`items.${card.key}.title`));
+  const meta = card.meta?.[locale] ?? (card.dbKind ? t(`kinds.${card.dbKind}`) : t(`items.${video ? "video" : card.key}.meta`));
+  const titleLang = card.title ? card.titleLang : video ? "en" : undefined;
   const soon = card.state === "soon";
   const locked = card.state === "locked";
   const href =
     card.state === "locked"
-      ? appLoginUrl(locale)
+      ? appLoginUrl(locale, card.dbKind ? `/${locale}/student/resources` : undefined)
       : card.target === "learn"
         ? localePath(locale, "learn")
         : card.videoId
           ? `#video-${card.videoId}`
-          : undefined;
+          : card.href;
+  const external = card.state === "open" && card.external === true;
   const tone = TIER[card.access].tile;
 
   const focus =
@@ -199,7 +202,7 @@ function ResourceTile({ card, locale }: { card: ResourceCard; locale: Locale }) 
           </span>
         ) : (
           <span className={`flex size-14 items-center justify-center rounded-2xl ${soon ? "bg-ink/8 text-ink-muted" : tone}`}>
-            <ResourceIcon kind={card.kind} />
+            <ResourceIcon kind={card.kind === "video" ? "recordings" : card.kind} />
           </span>
         )}
         {(locked || card.access !== "public") && (
@@ -210,14 +213,16 @@ function ResourceTile({ card, locale }: { card: ResourceCard; locale: Locale }) 
       </span>
 
       <span className="min-w-0 flex-1">
-        <h4 className={`leading-snug font-extrabold ${soon ? "text-ink-muted" : "text-ink"}`} lang={video ? "en" : undefined}>
+        <h4 className={`leading-snug font-extrabold ${soon ? "text-ink-muted" : "text-ink"}`} lang={titleLang && titleLang !== locale ? titleLang : undefined}>
           {href ? (
             <a
               href={href}
+              {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="text-current no-underline outline-none after:absolute after:inset-0 after:rounded-[1.5rem] after:content-['']"
             >
               {title}
               {locked && <span className="sr-only">: {t("locked")}</span>}
+              {external && <span className="sr-only"> ({t("external")})</span>}
             </a>
           ) : (
             title

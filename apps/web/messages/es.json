@@ -591,7 +591,6 @@
         }
       }
     },
-
     "contact": {
       "metaTitle": "Contacto y clase gratis · Spanglish",
       "metaDescription": "Llama al 0413 178 583 o escribe a hello@spanglish.com.au, de lunes a sábado de 8:00 a 17:00. Sunshine Coast, Brisbane y online. Tu primera clase es gratis.",
@@ -1338,7 +1337,17 @@
         "accountNote": "Todavía no se pueden crear cuentas desde la web. Cuando estén abiertas, lo verás aquí.",
         "studentsNote": "Si ya eres alumna o alumno, entra con tu cuenta; si aún no, reserva tu clase gratis.",
         "studentsCta": "Reserva tu clase gratis",
-        "discount": "Los alumnos matriculados tienen un 30 % de descuento en los recursos digitales."
+        "discount": "Los alumnos matriculados tienen un 30 % de descuento en los recursos digitales.",
+        "external": "se abre en una pestaña nueva",
+        "kinds": {
+          "video": "Video",
+          "document": "Documento para descargar",
+          "link": "Enlace",
+          "worksheet": "Ficha para descargar",
+          "vocabulary": "Vocabulario",
+          "recording": "Grabación de clase",
+          "coursework": "Material del curso"
+        }
       },
       "materials": {
         "question": "Materiales descargables",
@@ -1465,6 +1474,16 @@
           "body": "La primera clase es gratis: 45 minutos, online.",
           "cta": "Reserva tu clase gratis"
         }
+      },
+      "article": "Lección para leer",
+      "locked": "Entra para verla",
+      "articleMetaTitle": "{title} · Aprende ahora · Spanglish",
+      "articleVideo": "Video de la lección: {title}",
+      "quiz": {
+        "check": "Comprobar",
+        "choose": "Elige una respuesta.",
+        "correct": "¡Correcto!",
+        "incorrect": "No es correcto. Inténtalo otra vez."
       }
     },
     "learnAlphabet": {

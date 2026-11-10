@@ -22,7 +22,9 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     // Sin Resend en la e2e: las solicitudes de /bookings se escriben en la consola
     // (ver src/lib/leads.ts). Nunca definir LEADS_LOG_ONLY en un despliegue real.
-    env: { LEADS_LOG_ONLY: "1" },
+    // Las dos de Supabase vacías: aunque haya un .env.local, esta e2e prueba la web
+    // con su respaldo estático (la web contra la plataforma tiene su propia suite).
+    env: { LEADS_LOG_ONLY: "1", NEXT_PUBLIC_SUPABASE_URL: "", NEXT_PUBLIC_SUPABASE_ANON_KEY: "" },
     timeout: 300_000,
   },
 });

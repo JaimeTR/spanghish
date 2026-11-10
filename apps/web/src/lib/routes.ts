@@ -52,6 +52,11 @@ export function localePath(locale: Locale, route: RouteKey, hash?: string): stri
   return hash ? `${path}#${hash}` : path;
 }
 
+/** Lección artículo publicada en la plataforma: /<locale>/learn/<slug>. */
+export function learnLessonPath(locale: Locale, slug: string): string {
+  return `${localePath(locale, "learn")}/${slug}`;
+}
+
 /** hreflang de una ruta: un enlace por idioma más x-default (idioma por defecto). */
 export function languageAlternates(route: RouteKey): Record<string, string> {
   return {
