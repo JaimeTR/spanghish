@@ -87,6 +87,12 @@ Pendiente de configuración (Vercel; hoy la web desplegada usa el respaldo): en 
 
 Otros avisos vigentes: en la web "Entrar" es un icono a la derecha de "Clase gratis" y solo en home, Recursos y Aprende (`showsPortalLogin`); `SITE_NOINDEX=1` saca la web de buscadores (no está puesto en Vercel `spanglish-web`, por decisión de Jaime). En el portal no existe `text-white` (el tema reinicia los colores): usar `text-on-structure`/`text-on-primary`.
 
+## 5.3 Datos de prueba en la base real (2026-11-10)
+Cargados a petición de Jaime en el proyecto Supabase `eolcrcqyblkfcxtqfssi` para ver las listas con contenido:
+- **14 alumnos** con nombre `Prueba · …` (9 con contacto `prueba.*@example.test`, 5 menores sin tutor ni consentimiento). Para borrarlos todos: `delete from public.students where full_name like 'Prueba · %';` (arrastra sus datos privados y notas).
+- **2 cuentas de docente** con correos provisionales `maribel@spanglish.test` y `pamela@spanglish.test` (sin contraseña, sin correo enviado), enlazadas a sus perfiles públicos (`teacher_profiles.profile_id`). Para poner su correo real: `update auth.users set email = '<correo>' where email = 'maribel@spanglish.test';` (un trigger sincroniza `profiles.email`); después se pueden invitar desde "Invitar docente".
+- Nada de esto es contenido de demostración: es dato de prueba marcado y fácil de retirar.
+
 ## 6. Cómo delegar sin gastar tokens de Claude
 - **Codex** (cuenta ChatGPT ya iniciada): `codex exec -C <worktree> -s workspace-write "<prompt autocontenido que cite el archivo del plan y la tarea>"`. Su sandbox NO puede ejecutar `pnpm` (EPERM): que solo escriba archivos y ejecutar las comprobaciones fuera. Nunca `danger-full-access`, nunca pasar secretos. Un solo escritor por archivo.
 - **OpenCode** (modelos gratuitos `opencode/*-free`): `opencode run --dir <worktree> -m opencode/<modelo>-free "<prompt>"`. Los modelos probados (`deepseek-v4.1-flash-free`, `glm-5.3-flash-free`) agotaron el tiempo; probar otro de `opencode models`. Solo texto no sensible: traducciones, documentación, relleno mecánico.
