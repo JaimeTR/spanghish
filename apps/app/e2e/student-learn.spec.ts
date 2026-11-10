@@ -6,11 +6,15 @@ const db = adminClient(); const lessons: string[] = [];
 async function createArticle(slug: string, access: "account" | "enrolled") {
   const id = randomUUID(); const { data: level } = await db.from("levels").select("id").eq("language_code", "es").eq("code", "A1").single();
   if (!level) throw new Error("No existe nivel A1");
-  const { error } = await db.from("lessons").insert({ id, slug, category: "adults", level_id: level.id, title_es: slug, title_en: slug, summary_es: "e2e-resumen", summary_en: "e2e-summary", access_level: access, kind: "article", status: "published" });
+  lessons.push(id);
+  const { error } = await db.from("lessons").insert({ id, slug, category: "adults", level_id: level.id, title_es: slug, title_en: slug, summary_es: "e2e-resumen", summary_en: "e2e-summary", access_level: access, kind: "article", status: "draft", sort_order: 9000 });
   if (error) throw error;
   const { error: blockError } = await db.from("lesson_blocks").insert({ lesson_id: id, position: 10, kind: "text", body_es: "Texto de prueba", body_en: "Test text" });
-  if (blockError) { await db.from("lessons").delete().eq("id", id); throw blockError; }
-  lessons.push(id); return slug;
+  if (blockError) throw blockError;
+  // Una lección solo se puede publicar cuando ya tiene bloques.
+  const { error: publishError } = await db.from("lessons").update({ status: "published" }).eq("id", id);
+  if (publishError) throw publishError;
+  return slug;
 }
 
 test.afterEach(async () => { for (const id of lessons.splice(0)) await db.from("lessons").delete().eq("id", id); });

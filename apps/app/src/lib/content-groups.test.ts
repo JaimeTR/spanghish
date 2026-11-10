@@ -8,6 +8,6 @@ describe("groupLessons", () => {
       { id: "a", slug: "a", kind: "article", componentKey: null, category: "kids", levelCode: "A1", accessLevel: "public", locked: false, titleEs: "A", titleEn: "A", summaryEs: null, summaryEn: null, sortOrder: 1 },
     ]);
     expect(grouped.map((item) => item.category)).toEqual(["foundations", "kids", "adults", "stories", "games"]);
-    expect(grouped[1].lessons.map((item) => item.id)).toEqual(["a", "b"]);
+    expect(grouped[1]!.lessons.map((item) => item.id)).toEqual(["a", "b"]);
   });
 });

@@ -14,14 +14,15 @@ export default async function StudentLearnPage({ params }: { params: Promise<{ l
   const [t, lessons] = await Promise.all([getTranslations({ locale, namespace: "studentContent.learn" }), createClient().then(listPortalLessons)]);
   const groups = groupLessons(lessons); const labels = { empty: t("empty"), locked: t("locked"), newWindow: t("newWindow") };
   return <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6"><header className="rounded-[var(--shape-lg)] bg-brand-yellow p-6 text-ink"><p className="text-sm font-semibold">{t("eyebrow")}</p><h1 className="mt-1 text-3xl font-extrabold">{t("title")}</h1><p className="mt-2">{t("intro")}</p></header>
-    <div className="mt-8 space-y-10">{groups.map(({ category, lessons: rows }) => <section key={category} aria-labelledby={`learn-${category}`}><h2 id={`learn-${category}`} className="mb-4 text-2xl font-extrabold text-brand-purple">{t(`categories.${category}`)}</h2>
-      {category === "foundations" ? <div className="mb-5"><h3 className="mb-3 text-lg font-bold">{t("foundations")}</h3><LessonList rows={rows.filter((lesson) => lesson.levelCode === null)} locale={locale} labels={labels} /></div> : null}
-      {LEARN_LEVELS.map((level) => <div key={level} className="mb-5"><h3 className="mb-3 text-lg font-bold">{level}</h3><LessonList rows={rows.filter((lesson) => lesson.levelCode === level)} locale={locale} labels={labels} /></div>)}
+    <div className="mt-8 space-y-10">{groups.map(({ category, lessons: rows }) => <section key={category} aria-labelledby={`learn-${category}`}><h2 id={`learn-${category}`} className="mb-4 text-2xl font-extrabold text-structure">{t(`categories.${category}`)}</h2>
+      {/* Solo se muestran los niveles con lecciones: una categoría vacía enseña un único aviso. */}
+      {rows.length === 0 ? <p className="rounded-xl bg-surface-sunken p-4 text-text-muted">{labels.empty}</p> : null}
+      {rows.some((lesson) => lesson.levelCode === null) ? <div className="mb-5"><h3 className="mb-3 text-lg font-bold">{t("foundations")}</h3><LessonList rows={rows.filter((lesson) => lesson.levelCode === null)} locale={locale} labels={labels} /></div> : null}
+      {LEARN_LEVELS.filter((level) => rows.some((lesson) => lesson.levelCode === level)).map((level) => <div key={level} className="mb-5"><h3 className="mb-3 text-lg font-bold">{level}</h3><LessonList rows={rows.filter((lesson) => lesson.levelCode === level)} locale={locale} labels={labels} /></div>)}
     </section>)}</div></div>;
 }
 
 function LessonList({ rows, locale, labels }: { rows: PublishedLessonSummary[]; locale: "es" | "en"; labels: { empty: string; locked: string; newWindow: string } }) {
-  if (rows.length === 0) return <p className="rounded-xl bg-surface-sunken p-4 text-text-muted">{labels.empty}</p>;
   return <ul className="grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3">{rows.map((lesson) => {
     const title = locale === "es" ? lesson.titleEs : lesson.titleEn; const summary = locale === "es" ? lesson.summaryEs : lesson.summaryEn;
     const interactiveHref = process.env.NEXT_PUBLIC_WEB_URL ? `${process.env.NEXT_PUBLIC_WEB_URL.replace(/\/$/, "")}/${locale}/learn/${lesson.slug}` : undefined;

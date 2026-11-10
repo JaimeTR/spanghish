@@ -532,7 +532,7 @@
       "intro": "Explora lecciones y practica a tu ritmo.",
       "foundations": "Sin nivel",
       "categories": { "foundations": "Fundamentos", "kids": "Niños", "adults": "Adultos", "stories": "Historias", "games": "Juegos" },
-      "empty": "Todavía no hay lecciones para este nivel.",
+      "empty": "Todavía no hay lecciones en esta categoría.",
       "locked": "Disponible con el nivel de acceso correspondiente",
       "newWindow": "se abre en una ventana nueva"
     }

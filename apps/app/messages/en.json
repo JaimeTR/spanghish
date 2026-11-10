@@ -532,7 +532,7 @@
       "intro": "Explore lessons and practise at your own pace.",
       "foundations": "No level",
       "categories": { "foundations": "Foundations", "kids": "Kids", "adults": "Adults", "stories": "Stories", "games": "Games" },
-      "empty": "There are no lessons for this level yet.",
+      "empty": "There are no lessons in this category yet.",
       "locked": "Available at the matching access level",
       "newWindow": "opens in a new window"
     }

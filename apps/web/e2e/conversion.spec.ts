@@ -164,7 +164,10 @@ test.describe("header fit", () => {
       // En páginas sin contenido con cuenta (como Preguntas) la cabecera no enlaza al portal.
       await expect(page.locator("header").getByRole("link", { name: /^Entrar al portal de alumnos$/ })).toHaveCount(0);
       // El carrito, en la misma línea y con su nombre accesible.
-      const cart = await page.locator("header").getByRole("button", { name: "Carrito, 1 artículo" }).boundingBox();
+      const cartButton = page.locator("header").getByRole("button", { name: "Carrito, 1 artículo" });
+      // El botón entra con una animación de escala: se mide cuando ya terminó.
+      await cartButton.evaluate((el) => Promise.all(el.getAnimations().map((animation) => animation.finished)));
+      const cart = await cartButton.boundingBox();
       expect(cart).not.toBeNull();
       expect(Math.abs(cart!.y + cart!.height / 2 - (cta!.y + cta!.height / 2))).toBeLessThan(4);
       expect(cart!.width).toBeGreaterThanOrEqual(44);

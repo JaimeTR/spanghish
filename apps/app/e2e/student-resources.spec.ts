@@ -9,7 +9,7 @@ const labels = { public: "e2e-recursos-libre", account: "e2e-recursos-cuenta", e
 test.beforeEach(async () => {
   for (const [tier, slug] of Object.entries(labels)) {
     const id = randomUUID(); const external = tier === "enrolled" ? "https://secret.example.test/locked" : "https://example.test/open";
-    const { error } = await db.from("resources").insert({ id, kind: "link", access_level: tier as "public" | "account" | "enrolled", status: "published", title_es: slug, title_en: slug, description_es: "e2e-resumen", description_en: "e2e-summary", external_url: external });
+    const { error } = await db.from("resources").insert({ id, kind: "link", access_level: tier as "public" | "account" | "enrolled", status: "published", sort_order: 9000, title_es: slug, title_en: slug, description_es: "e2e-resumen", description_en: "e2e-summary", external_url: external });
     if (error) throw error; created.push({ id, path: "" });
   }
 });
@@ -51,13 +51,12 @@ test("student file open redirects with 303 to signed storage URL", async ({ page
   const id = randomUUID(); const path = `resources/${id}/${randomUUID()}.pdf`;
   const { error: uploadError } = await db.storage.from("resource-files").upload(path, Buffer.from("%PDF-1.4\n% e2e\n%%EOF"), { contentType: "application/pdf" });
   if (uploadError) throw uploadError;
-  const { error } = await db.from("resources").insert({ id, kind: "document", access_level: "enrolled", status: "published", title_es: "e2e-pdf", title_en: "e2e-pdf", file_path: path, file_mime: "application/pdf", file_size_bytes: 19 });
+  const { error } = await db.from("resources").insert({ id, kind: "document", access_level: "enrolled", status: "published", sort_order: 9000, title_es: "e2e-pdf", title_en: "e2e-pdf", file_path: path, file_mime: "application/pdf", file_size_bytes: 19 });
   if (error) { await db.storage.from("resource-files").remove([path]); throw error; }
   created.push({ id, path });
   await login(page, USERS.student); await expectPath(page, "/es/student");
-  const redirectResponse = page.waitForResponse((response) => response.url().includes(`/resources/${id}/open`));
-  await page.goto(`/es/student/resources/${id}/open`);
-  const response = await redirectResponse;
+  // Sin seguir la redirección: el destino es una descarga, no una página.
+  const response = await page.request.get(`/es/student/resources/${id}/open`, { maxRedirects: 0 });
   expect(response.status()).toBe(303); expect(response.headers()["cache-control"]).toContain("private, no-store"); expect(response.headers().location).toContain("token=");
 });
 
@@ -67,5 +66,5 @@ test("anonymous open redirects to login and malformed ids return 404", async ({ 
   expect(response?.status()).toBe(404);
   await page.context().clearCookies();
   await page.goto("/es/student/resources/00000000-0000-4000-8000-000000000099/open");
-  await expectPath(page, "/es/login?next=%2Fes%2Fstudent");
+  await expectPath(page, "/es/login?next=%2Fes%2Fstudent%2Fresources%2F00000000-0000-4000-8000-000000000099%2Fopen");
 });
