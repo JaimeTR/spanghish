@@ -16,11 +16,7 @@ export function InviteTeacherForm({ locale }: { locale: Locale }) {
   const errors = form.fieldErrors;
 
   return (
-    <form
-      action={form.formAction}
-      noValidate
-      className="mt-8 max-w-xl space-y-5 rounded-md border border-line bg-surface p-5"
-    >
+    <form action={form.formAction} noValidate className="space-y-5">
       <input type="hidden" name="uiLocale" value={locale} />
       <div key={form.formKey} className="space-y-5">
         <Field name="fullName" label={t("fullName")} error={errors.fullName}>

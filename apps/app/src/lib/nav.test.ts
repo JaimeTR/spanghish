@@ -55,14 +55,35 @@ describe("NAV", () => {
     expect(NAV.guardian.map((i) => i.key)).toEqual(["children", "schedule", "payments", "consents", "resources"]);
   });
 
-  it("navGroupsFor keeps every module once, in order, and never repeats a group", () => {
+  it("navGroupsFor keeps every module once and never repeats a group", () => {
     for (const role of ROLES) {
       const groups = navGroupsFor(role);
-      expect(groups.flatMap((g) => g.items.map((i) => i.key))).toEqual(NAV[role].map((i) => i.key));
+      expect(groups.flatMap((g) => g.items.map((i) => i.key)).sort()).toEqual(NAV[role].map((i) => i.key).sort());
       const titled = groups.map((g) => g.group).filter((g) => g !== null);
       expect(new Set(titled).size, `${role} repite un grupo`).toBe(titled.length);
     }
-    expect(navGroupsFor("admin").map((g) => g.group)).toEqual([null, "operation", "people", "content", "management"]);
+  });
+
+  it("navGroupsFor puts what is finished on top and what is in development at the bottom", () => {
+    // Admin: la portada, luego los grupos con algo listo y al final el que solo tiene módulos en desarrollo.
+    expect(navGroupsFor("admin").map((g) => g.group)).toEqual([null, "people", "content", "management", "operation"]);
+    // Dentro de un grupo, lo listo va antes que lo que está en desarrollo.
+    expect(navGroupsFor("admin").find((g) => g.group === "management")?.items.map((i) => i.key)).toEqual([
+      "catalog",
+      "settings",
+      "payments",
+    ]);
+    expect(navGroupsFor("student").map((g) => g.group)).toEqual([null, "learn", "classes", "account"]);
+    for (const role of ROLES) {
+      let seenDevOnly = false;
+      for (const { group, items } of navGroupsFor(role)) {
+        const devOnly = group !== null && items.every((i) => i.status === "dev");
+        if (devOnly) seenDevOnly = true;
+        else expect(seenDevOnly, `${role}: un grupo con módulos listos va después de uno solo en desarrollo`).toBe(false);
+        const firstDev = items.findIndex((i) => i.status === "dev");
+        if (firstDev >= 0) expect(items.slice(firstDev).every((i) => i.status === "dev"), `${role}.${group}`).toBe(true);
+      }
+    }
   });
 
   it("marks as ready only the modules that exist", () => {

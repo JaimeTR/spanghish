@@ -1,21 +1,28 @@
+import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { buttonLinkClass, PageHeader, tableClass, tdClass, thClass } from "@/components/admin/PageHeader";
+import { PageHeader, RowActions, StatusBadge, TableCard, tableClass, tdClass, thClass } from "@/components/admin/PageHeader";
 import { linkClass } from "@/components/form-styles";
+import { IconLink } from "@/components/ui/IconButton";
+import { ModalButton } from "@/components/ui/Modal";
 import { isLocale } from "@/i18n/routing";
-import { listPrograms } from "@/lib/data/catalog";
+import { listLanguages, listLevels, listPrograms } from "@/lib/data/catalog";
 import { requireArea } from "@/lib/require-area";
 import { createClient } from "@/lib/supabase/server";
+import { languageOptions, levelOptions } from "./options";
+import { ProgramForm } from "./ProgramForm";
 
-export default async function ProgramsPage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function ProgramsPage({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<{ new?: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
   await requireArea(locale, "admin");
   const t = await getTranslations({ locale, namespace: "catalog" });
   const te = await getTranslations({ locale, namespace: "enums" });
-  const programs = await listPrograms(await createClient());
+  const { new: openNew } = await searchParams;
+  const supabase = await createClient();
+  const [programs, languages, levels] = await Promise.all([listPrograms(supabase), listLanguages(supabase), listLevels(supabase)]);
   const nameOf = (p: { name_es: string; name_en: string }) => (locale === "en" ? p.name_en : p.name_es);
   const href = (id: string) => `/${locale}/admin/catalog/programs/${id}`;
 
@@ -26,9 +33,14 @@ export default async function ProgramsPage({ params }: { params: Promise<{ local
         intro={t("programs.intro")}
         back={{ href: `/${locale}/admin/catalog`, label: t("title") }}
         action={
-          <Link href={`/${locale}/admin/catalog/programs/new`} className={buttonLinkClass}>
-            {t("programs.new")}
-          </Link>
+          <ModalButton label={t("programs.new")} title={t("programs.new")} size="lg" defaultOpen={openNew === "1"}>
+            <p className="mb-5 text-sm text-text-muted">{t("programs.newIntro")}</p>
+            <ProgramForm
+              locale={locale}
+              languages={languageOptions(languages, locale)}
+              levels={levelOptions(levels, languages, locale)}
+            />
+          </ModalButton>
         }
       />
 
@@ -36,7 +48,8 @@ export default async function ProgramsPage({ params }: { params: Promise<{ local
         <p className="mt-8 text-text-muted">{t("programs.empty")}</p>
       ) : (
         <>
-          <table className={`mt-8 hidden md:table ${tableClass}`}>
+          <TableCard>
+          <table className={tableClass}>
             <caption className="sr-only">{t("programs.title")}</caption>
             <thead>
               <tr>
@@ -45,6 +58,7 @@ export default async function ProgramsPage({ params }: { params: Promise<{ local
                 <th scope="col" className={thClass}>{t("programs.audience")}</th>
                 <th scope="col" className={thClass}>{t("programs.format")}</th>
                 <th scope="col" className={thClass}>{t("programs.state")}</th>
+                <th scope="col" className={`${thClass} text-right`}>{t("programs.actions")}</th>
               </tr>
             </thead>
             <tbody>
@@ -59,13 +73,19 @@ export default async function ProgramsPage({ params }: { params: Promise<{ local
                   <td className={tdClass}>{te(`audience.${p.audience}`)}</td>
                   <td className={tdClass}>{te(`format.${p.format}`)}</td>
                   <td className={tdClass}>
-                    {p.active ? t("active") : t("inactive")}
-                    {p.is_public ? ` · ${t("programs.public")}` : ""}
+                    <StatusBadge tone={p.active ? "success" : "muted"}>{p.active ? t("active") : t("inactive")}</StatusBadge>
+                    {p.is_public ? <span className="ml-2 text-xs text-text-muted">{t("programs.public")}</span> : null}
+                  </td>
+                  <td className={tdClass}>
+                    <RowActions>
+                      <IconLink href={href(p.id)} label={t("programs.edit")} icon={<Pencil className="size-5" strokeWidth={1.75} />} />
+                    </RowActions>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </TableCard>
           <ul className="mt-6 flex flex-col gap-3 md:hidden">
             {programs.map((p) => (
               <li key={p.id} className="rounded-md border border-line bg-surface p-4">

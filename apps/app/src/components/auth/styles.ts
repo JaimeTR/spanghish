@@ -9,6 +9,6 @@ export const authField =
   "aria-invalid:border-danger";
 
 export const authToggle =
-  "absolute top-1/2 right-1.5 inline-flex min-h-10 -translate-y-1/2 items-center rounded-md px-3 text-sm font-semibold " +
+  "absolute top-1/2 right-1.5 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-md " +
   "text-structure transition-colors duration-150 hover:bg-surface-sunken " +
   "focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-purple";

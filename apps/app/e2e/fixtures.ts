@@ -71,7 +71,7 @@ export async function login(
   const query = next === undefined ? "" : `?next=${encodeURIComponent(next)}`;
   await page.goto(`/${locale}/login${query}`);
   await page.getByLabel(locale === "en" ? "Email" : "Correo electrónico").fill(email);
-  await page.getByLabel(locale === "en" ? "Password" : "Contraseña").fill(password);
+  await page.getByLabel(locale === "en" ? "Password" : "Contraseña", { exact: true }).fill(password);
   await page.getByRole("button", { name: locale === "en" ? "Sign in" : "Iniciar sesión" }).click();
 }
 

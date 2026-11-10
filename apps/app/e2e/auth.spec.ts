@@ -70,7 +70,7 @@ test("/en/login renders English text", async ({ page }) => {
   await page.goto("/en/login");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sign in");
   await expect(page.getByLabel("Email")).toBeVisible();
-  await expect(page.getByLabel("Password")).toBeVisible();
+  await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Forgot your password?" })).toBeVisible();
 });
 

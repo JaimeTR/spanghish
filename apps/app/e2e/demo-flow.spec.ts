@@ -35,8 +35,8 @@ test("admin publishes an account-level resource; the visitor sees it unlocked; u
   await login(page, USERS.admin);
   await expectPath(page, "/es/admin");
   await page.goto("/es/admin/resources/new");
-  await page.getByLabel("Tipo").selectOption("link");
-  await page.getByLabel("Acceso").selectOption("account");
+  await page.getByLabel("Tipo", { exact: true }).selectOption("link");
+  await page.getByLabel("Acceso", { exact: true }).selectOption("account");
   await page.getByLabel("Español").nth(0).fill(TITLE);
   await page.getByLabel("English").nth(0).fill(`English ${TITLE}`);
   await page.getByLabel("URL externa").fill("https://example.com/demo");

@@ -18,8 +18,8 @@
     },
     "eyebrow": "Portal Spanglish",
     "emailPlaceholder": "nombre@correo.com",
-    "show": "Mostrar",
-    "hide": "Ocultar",
+    "show": "Mostrar contraseña",
+    "hide": "Ocultar contraseña",
     "capsLock": "Bloq Mayús está activado.",
     "remember": "Mantener la sesión iniciada",
     "rememberHint": "Desmárcalo si usas un dispositivo compartido.",
@@ -82,7 +82,10 @@
       "teacher": "Docente",
       "student": "Alumno",
       "guardian": "Tutor"
-    }
+    },
+    "close": "Cerrar",
+    "sure": "¿Seguro?",
+    "cancel": "Cancelar"
   },
   "locales": {
     "es": "Español",
@@ -499,7 +502,8 @@
       "noBlocks": "Añade al menos un bloque para publicar.",
       "addAtLevel": "Añadir en {level}",
       "moveUp": "Subir {title}",
-      "moveDown": "Bajar {title}"
+      "moveDown": "Bajar {title}",
+      "edit": "Editar"
     },
     "blocks": {
       "heading": "Bloques",
@@ -606,7 +610,9 @@
       "isPublicHint": "Se usará para el horario público (hito 3).",
       "create": "Crear programa",
       "save": "Guardar programa",
-      "saving": "Guardando…"
+      "saving": "Guardando…",
+      "edit": "Editar",
+      "actions": "Acciones"
     },
     "editions": {
       "title": "Ediciones",
@@ -670,7 +676,10 @@
       "name": "Nombre",
       "audience": "Segmento",
       "status": "Estado",
-      "portal": "Cuenta"
+      "portal": "Cuenta",
+      "level": "Nivel",
+      "contact": "Contacto",
+      "actions": "Acciones"
     },
     "sections": {
       "data": "Datos",
@@ -724,6 +733,11 @@
       "create": "Dar de alta",
       "save": "Guardar ficha",
       "saving": "Guardando…"
+    },
+    "actions": {
+      "edit": "Editar",
+      "deactivate": "Desactivar",
+      "activate": "Reactivar"
     }
   },
   "consents": {

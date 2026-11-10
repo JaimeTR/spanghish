@@ -67,18 +67,18 @@ describe("Sidebar", () => {
     const hrefs = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href"));
     expect(hrefs).toEqual([
       "/es/admin",
-      "/es/admin/calendar",
-      "/es/admin/groups",
-      "/es/admin/enrollments",
-      "/es/admin/attendance",
-      "/es/admin/leads",
       "/es/admin/students",
       "/es/admin/teachers",
       "/es/admin/resources",
       "/es/admin/lessons",
       "/es/admin/catalog",
-      "/es/admin/payments",
       "/es/admin/settings/consent-texts",
+      "/es/admin/payments",
+      "/es/admin/calendar",
+      "/es/admin/groups",
+      "/es/admin/enrollments",
+      "/es/admin/attendance",
+      "/es/admin/leads",
     ]);
     const calendar = screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ });
     expect(calendar).toHaveAttribute("href", "/es/admin/calendar");

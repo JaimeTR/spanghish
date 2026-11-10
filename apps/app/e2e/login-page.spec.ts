@@ -3,19 +3,22 @@ import { DEV_PASSWORD, expectNoAxeViolations, expectPath, USERS } from "./fixtur
 
 async function fillCredentials(page: Page) {
   await page.getByLabel("Correo electrónico").fill(USERS.admin);
-  await page.getByLabel("Contraseña").fill(DEV_PASSWORD);
+  await page.getByLabel("Contraseña", { exact: true }).fill(DEV_PASSWORD);
 }
 
 test.describe("login: opciones del formulario", () => {
   test("the password can be shown and hidden", async ({ page }) => {
     await page.goto("/es/login");
-    const password = page.getByLabel("Contraseña");
+    const password = page.getByLabel("Contraseña", { exact: true });
     await password.fill("secreta-123");
     await expect(password).toHaveAttribute("type", "password");
-    await page.getByRole("button", { name: "Mostrar" }).click();
+    // Solo un icono (ojo): sin texto visible; el nombre accesible dice qué hace.
+    const show = page.getByRole("button", { name: "Mostrar contraseña" });
+    expect(await show.innerText()).toBe("");
+    await show.click();
     await expect(password).toHaveAttribute("type", "text");
     await expect(password).toHaveValue("secreta-123");
-    await page.getByRole("button", { name: "Ocultar" }).click();
+    await page.getByRole("button", { name: "Ocultar contraseña" }).click();
     await expect(password).toHaveAttribute("type", "password");
   });
 
@@ -33,7 +36,7 @@ test.describe("login: opciones del formulario", () => {
     await expectPath(page, "/en/login");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Sign in");
     await expect(page.getByLabel("Keep me signed in")).toBeChecked();
-    await expect(page.getByRole("button", { name: "Show" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Show password" })).toBeVisible();
   });
 
   test("keeping the session writes persistent cookies; unchecking it writes session cookies", async ({ page, context }) => {

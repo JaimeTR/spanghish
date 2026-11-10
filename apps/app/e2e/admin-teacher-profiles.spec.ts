@@ -58,7 +58,7 @@ test("a duplicate slug shows the error on the slug field", async ({ page }) => {
   await page.getByRole("button", { name: "Crear perfil" }).click();
   const field = page.getByLabel("Identificador URL");
   await expect(field).toHaveAttribute("aria-invalid", "true");
-  await expect(page).toHaveURL(/\/profiles\/new/);
+  await expect(page).toHaveURL(/profiles\?new=1/);
 });
 
 test("publishes and unpublishes a teacher profile", async ({ page }) => {
@@ -116,6 +116,8 @@ test("profile pages have no axe violations (desktop and 375px)", async ({ page }
   for (const path of ["/es/admin/teachers/profiles", "/es/admin/teachers/profiles/new"]) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(path);
+    // El alta abre un modal tras hidratar: se espera a que esté a la vista antes de analizar.
+    if (path.endsWith("/new")) await expect(page.getByRole("dialog")).toBeVisible();
     await expectNoAxeViolations(page);
     await page.setViewportSize({ width: 375, height: 812 });
     await expectNoAxeViolations(page);
