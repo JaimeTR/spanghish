@@ -2,7 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { PortalShell } from "@/components/PortalShell";
 import { isLocale } from "@/i18n/routing";
-import { roleHomePath, type AppRole } from "@/lib/access";
+import { displayName, roleHomePath, type AppRole } from "@/lib/access";
 import { getSessionUser } from "@/lib/session";
 
 const AREA_PRIORITY: readonly AppRole[] = ["admin", "teacher", "student", "guardian"];
@@ -26,7 +26,7 @@ export default async function AccountLayout({
   const area = user ? AREA_PRIORITY.find((role) => user.roles.includes(role)) : undefined;
   if (!user || !area) redirect(roleHomePath([], locale));
   return (
-    <PortalShell area={area} locale={locale} name={user.name} roles={user.roles}>
+    <PortalShell area={area} locale={locale} name={displayName(user)} roles={user.roles}>
       {children}
     </PortalShell>
   );

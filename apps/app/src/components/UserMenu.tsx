@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
+import type { AppRole } from "@/lib/access";
 import { onLightFocus } from "./shell-styles";
 
 type LogoutAction = (formData: FormData) => void | Promise<void>;
@@ -12,11 +13,21 @@ type LogoutAction = (formData: FormData) => void | Promise<void>;
 const itemClass = `flex min-h-11 w-full items-center gap-3 rounded-md px-3 text-sm font-semibold text-text hover:bg-surface-sunken ${onLightFocus}`;
 
 /**
- * Menú de la cuenta (patrón disclosure, no modal): avatar y nombre abren un
+ * Menú de la cuenta (patrón disclosure, no modal): avatar, nombre y rol abren un
  * panel con Mi cuenta, Configuración y Cerrar sesión. Escape o un clic fuera lo
  * cierran y el foco vuelve al botón; elegir un enlace también lo cierra.
  */
-export function UserMenu({ name, locale, logout }: { name?: string; locale: Locale; logout: LogoutAction }) {
+export function UserMenu({
+  name,
+  role,
+  locale,
+  logout,
+}: {
+  name?: string;
+  role: AppRole;
+  locale: Locale;
+  logout: LogoutAction;
+}) {
   const t = useTranslations("shell");
   const [open, setOpen] = useState(false);
   const id = useId();
@@ -61,8 +72,11 @@ export function UserMenu({ name, locale, logout }: { name?: string; locale: Loca
         >
           {initial || <UserRound className="size-5" strokeWidth={2} />}
         </span>
-        <span className="hidden max-w-44 truncate text-sm font-semibold sm:block">{name ?? t("userMenu")}</span>
-        <span className="sr-only sm:hidden">{t("userMenu")}</span>
+        <span className="flex min-w-0 max-w-52 flex-col text-left leading-tight">
+          {name && <span className="truncate text-sm font-semibold">{name}</span>}
+          <span className={`truncate ${name ? "text-xs text-text-muted" : "text-sm font-semibold"}`}>{t(`roles.${role}`)}</span>
+        </span>
+        <span className="sr-only">, {t("userMenu")}</span>
         <ChevronDown aria-hidden="true" className="size-4 text-text-muted" strokeWidth={2} />
       </button>
 

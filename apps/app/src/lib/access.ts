@@ -12,7 +12,14 @@ export type SessionUser = {
   locale: Locale;
   /** profiles.full_name recortado; ausente si está vacío. Solo para mostrar. */
   name?: string;
+  /** profiles.email recortado; ausente si está vacío. Solo para mostrar (respaldo del nombre). */
+  email?: string;
 };
+
+/** Nombre para la interfaz: el nombre y, si no lo hay, el correo. */
+export function displayName(user: Pick<SessionUser, "name" | "email">): string | undefined {
+  return user.name ?? user.email;
+}
 
 const ROLE_PRIORITY: readonly AppRole[] = ["admin", "teacher", "student", "guardian"];
 
@@ -62,6 +69,7 @@ type ProfileRow = {
   status: string;
   preferred_locale: string;
   full_name?: string | null;
+  email?: string | null;
 };
 type RoleRow = { role: AppRole };
 
@@ -73,6 +81,7 @@ export function toSessionUser(profile: ProfileRow, roleRows: RoleRow[]): Session
   const status: UserStatus = profile.status === "active" ? "active" : "suspended";
   const suspended = status === "suspended";
   const name = profile.full_name?.trim();
+  const email = profile.email?.trim();
   return {
     id: profile.id,
     roles: suspended
@@ -81,5 +90,6 @@ export function toSessionUser(profile: ProfileRow, roleRows: RoleRow[]): Session
     status,
     locale: isLocale(profile.preferred_locale) ? profile.preferred_locale : "es",
     ...(name && !suspended ? { name } : {}),
+    ...(email && !suspended ? { email } : {}),
   };
 }

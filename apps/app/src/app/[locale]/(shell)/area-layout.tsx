@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { PortalShell } from "@/components/PortalShell";
 import { isLocale } from "@/i18n/routing";
-import type { AppRole } from "@/lib/access";
+import { displayName, type AppRole } from "@/lib/access";
 import { requireArea } from "@/lib/require-area";
 
 /**
@@ -25,7 +25,7 @@ export async function AreaLayout({
   setRequestLocale(locale);
   const user = await requireArea(locale, area);
   return (
-    <PortalShell area={area} locale={locale} name={user.name} roles={user.roles}>
+    <PortalShell area={area} locale={locale} name={displayName(user)} roles={user.roles}>
       {children}
     </PortalShell>
   );
