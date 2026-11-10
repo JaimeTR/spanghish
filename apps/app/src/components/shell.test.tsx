@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import es from "../../messages/es.json";
+import { DesktopSidebar } from "./DesktopSidebar";
 import { LocaleSwitch } from "./LocaleSwitch";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
@@ -122,7 +123,41 @@ describe("LocaleSwitch", () => {
   });
 });
 
+describe("DesktopSidebar", () => {
+  it("minimize is an icon-only button next to the logo, and the footer is just Cerrar sesión", async () => {
+    const user = userEvent.setup();
+    const { container } = wrap(<DesktopSidebar area="admin" locale="es" logout={logout} />);
+    const toggle = screen.getByRole("button", { name: "Minimizar menú" });
+    expect(toggle.textContent).toBe("");
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    const logo = screen.getByRole("link", { name: "Spanglish, inicio" });
+    expect(logo.parentElement).toBe(toggle.parentElement);
+    // Sin barra de desplazamiento visible en la navegación.
+    expect(container.querySelector("[class*='scrollbar-width:none']")).not.toBeNull();
+    const signOut = screen.getByRole("button", { name: "Cerrar sesión" });
+    expect(signOut.closest("form")).not.toBeNull();
+    expect(screen.queryByText("Minimizar menú")).not.toBeInTheDocument();
+
+    await user.click(toggle);
+    expect(screen.getByRole("button", { name: "Expandir menú" })).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "Cerrar sesión" })).toBeInTheDocument();
+  });
+});
+
 describe("Topbar", () => {
+  it("the account button shows the name and the role of the current area", () => {
+    wrap(<Topbar name="Admin Local" roles={["admin"]} area="admin" locale="es" logout={logout} />);
+    const trigger = screen.getByTestId("user-menu-trigger");
+    expect(trigger).toHaveTextContent("Admin Local");
+    expect(trigger).toHaveTextContent("Administrador");
+    expect(trigger).toHaveAccessibleName(/Admin Local.*Administrador.*Menú de la cuenta/);
+  });
+
+  it("without a name it still shows the role, never a bare account-menu label", () => {
+    wrap(<Topbar roles={["student"]} area="student" locale="es" logout={logout} />);
+    expect(screen.getByTestId("user-menu-trigger")).toHaveTextContent("Alumno");
+  });
+
   it("role switcher lists only allowed areas for a teacher+student", () => {
     nav.pathname = "/es/teacher";
     wrap(

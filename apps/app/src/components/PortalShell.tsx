@@ -35,7 +35,7 @@ export function PortalShell({
         {t("skipToContent")}
       </a>
 
-      <DesktopSidebar area={area} locale={locale} />
+      <DesktopSidebar area={area} locale={locale} logout={logout} />
 
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar name={name} roles={roles} area={area} locale={locale} logout={logout} />

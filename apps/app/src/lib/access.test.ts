@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { canAccess, isSafeRedirect, roleHomePath, toSessionUser } from "./access";
+import { canAccess, displayName, isSafeRedirect, roleHomePath, toSessionUser } from "./access";
 
 describe("roleHomePath", () => {
   it("roleHomePath prefers admin over teacher", () => {
@@ -120,6 +120,28 @@ describe("toSessionUser", () => {
       [{ role: "student" }],
     );
     expect(blank.name).toBeUndefined();
+  });
+  it("keeps the trimmed email only to show, and displayName falls back to it when there is no name", () => {
+    const named = toSessionUser(
+      { id: "u7", status: "active", preferred_locale: "es", full_name: "Ana Pérez", email: " ana@example.test " },
+      [{ role: "student" }],
+    );
+    expect(named.email).toBe("ana@example.test");
+    expect(displayName(named)).toBe("Ana Pérez");
+    const unnamed = toSessionUser(
+      { id: "u8", status: "active", preferred_locale: "es", full_name: null, email: "jaime@example.test" },
+      [{ role: "admin" }],
+    );
+    expect(displayName(unnamed)).toBe("jaime@example.test");
+    expect(displayName({})).toBeUndefined();
+  });
+  it("a suspended user exposes neither name nor email", () => {
+    const u = toSessionUser(
+      { id: "u10", status: "suspended", preferred_locale: "es", full_name: "Ana", email: "ana@example.test" },
+      [{ role: "student" }],
+    );
+    expect(u.name).toBeUndefined();
+    expect(u.email).toBeUndefined();
   });
   it("teacher with student role keeps both roles", () => {
     const u = toSessionUser(

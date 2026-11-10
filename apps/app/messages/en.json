@@ -56,7 +56,13 @@
     "expandMenu": "Expand menu",
     "userMenu": "Account menu",
     "myAccount": "My account",
-    "settings": "Settings"
+    "settings": "Settings",
+    "roles": {
+      "admin": "Administrator",
+      "teacher": "Teacher",
+      "student": "Student",
+      "guardian": "Guardian"
+    }
   },
   "locales": {
     "es": "Español",
@@ -233,7 +239,42 @@
       "back": "Back to teachers"
     }
   },
-  "teacherProfiles": {"title":"Public teacher profiles","intro":"Manage the profiles shown on the website.","new":"Add teacher","edit":"Edit","back":"Back to profiles","empty":"There are no profiles yet.","draft":"Draft","published":"Published","publish":"Publish","unpublish":"Unpublish","save":"Save profile","create":"Create profile","saving":"Saving…","delete":"Delete profile","choosePhoto":"Select profile photo","moveUp":"Move {name} up","moveDown":"Move {name} down","fields":{"slug":"URL slug","name":"Name","photoPosition":"Photo position","photoAlt":"Photo alt text","role":"Role","tagline":"Tagline","metaDescription":"SEO description","intro":"Introduction","body":"Biography","specialty":"Specialty (optional)","enrolTitle":"Enrolment title (optional)","enrol":"Enrolment information (optional)","facts":"Key facts (one per line, maximum 6)","showApproach":"Show approach section","profileId":"Teacher account (optional)"}},
+  "teacherProfiles": {
+    "title": "Public teacher profiles",
+    "intro": "Manage the profiles shown on the website.",
+    "new": "Add teacher",
+    "edit": "Edit",
+    "back": "Back to profiles",
+    "empty": "There are no profiles yet.",
+    "draft": "Draft",
+    "published": "Published",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "save": "Save profile",
+    "create": "Create profile",
+    "saving": "Saving…",
+    "delete": "Delete profile",
+    "choosePhoto": "Select profile photo",
+    "moveUp": "Move {name} up",
+    "moveDown": "Move {name} down",
+    "fields": {
+      "slug": "URL slug",
+      "name": "Name",
+      "photoPosition": "Photo position",
+      "photoAlt": "Photo alt text",
+      "role": "Role",
+      "tagline": "Tagline",
+      "metaDescription": "SEO description",
+      "intro": "Introduction",
+      "body": "Biography",
+      "specialty": "Specialty (optional)",
+      "enrolTitle": "Enrolment title (optional)",
+      "enrol": "Enrolment information (optional)",
+      "facts": "Key facts (one per line, maximum 6)",
+      "showApproach": "Show approach section",
+      "profileId": "Teacher account (optional)"
+    }
+  },
   "enums": {
     "audience": {
       "kids": "Kids (6–13)",
@@ -289,18 +330,204 @@
       "recordings": "Recordings",
       "photos": "Photos"
     },
-    "accessLevel": { "public": "Free", "account": "With an account", "enrolled": "Students" },
-    "resourceKind": { "video": "Video", "document": "Document", "link": "Link", "worksheet": "Worksheet", "vocabulary": "Vocabulary", "recording": "Recording", "coursework": "Coursework" },
-    "learnCategory": { "foundations": "Foundations", "kids": "Kids", "adults": "Adults", "stories": "Stories", "games": "Games" },
-    "blockKind": { "text": "Text", "image": "Image", "video": "Video", "quiz": "Question" },
-    "contentStatus": { "draft": "Draft", "published": "Published" }
+    "accessLevel": {
+      "public": "Free",
+      "account": "With an account",
+      "enrolled": "Students"
+    },
+    "resourceKind": {
+      "video": "Video",
+      "document": "Document",
+      "link": "Link",
+      "worksheet": "Worksheet",
+      "vocabulary": "Vocabulary",
+      "recording": "Recording",
+      "coursework": "Coursework"
+    },
+    "learnCategory": {
+      "foundations": "Foundations",
+      "kids": "Kids",
+      "adults": "Adults",
+      "stories": "Stories",
+      "games": "Games"
+    },
+    "blockKind": {
+      "text": "Text",
+      "image": "Image",
+      "video": "Video",
+      "quiz": "Question"
+    },
+    "contentStatus": {
+      "draft": "Draft",
+      "published": "Published"
+    }
   },
   "content": {
-    "resources": { "title": "Resources", "intro": "Manage materials for the portal and website.", "new": "Add resource", "save": "Save resource", "create": "Create resource", "saving": "Saving…", "saved": "Resource saved.", "publish": "Publish", "unpublish": "Unpublish", "delete": "Delete resource", "confirmDelete": "Are you sure you want to delete this resource?", "empty": "There are no resources yet.", "titleLabel": "Title", "kind": "Type", "access": "Access", "chooseResourceFile": "Select resource file", "chooseThumbnail": "Select thumbnail", "kindNames": { "video": "Video", "document": "Document", "link": "Link", "worksheet": "Worksheet", "vocabulary": "Vocabulary", "recording": "Recording", "coursework": "Coursework" }, "levelNames": { "public": "Free", "account": "With an account", "enrolled": "Students" }, "statusNames": { "draft": "Draft", "published": "Published" }, "moveUp": "Move {title} up", "moveDown": "Move {title} down", "description": "Description", "externalUrl": "External URL", "video": "YouTube URL", "titleLang": "Title language", "langEs": "Spanish", "langEn": "English", "level": "Level", "audience": "Audience", "audiences": { "kids": "Kids", "adults": "Adults", "mature": "Mature" }, "teaser": "Show summary when locked", "preview": "Locked card preview", "file": "File", "thumbnail": "Thumbnail", "size": "File size", "back": "Back to resources", "edit": "Edit", "locked": "Available according to access level", "noFile": "No file attached", "section": "Access: {level}", "filterStatus": "Status", "filterKind": "Type", "filter": "Filter", "all": "All" },
-    "lessons": { "previewDraft": "Preview · Draft", "title": "Lessons", "intro": "Organise lessons by category and level.", "new": "Add lesson", "create": "Create lesson", "save": "Save lesson", "saving": "Saving…", "empty": "No lessons", "back": "Back to lessons", "slug": "URL identifier", "category": "Category", "categoryNames": { "foundations": "Foundations", "kids": "Kids", "adults": "Adults", "stories": "Stories", "games": "Games" }, "level": "Level", "access": "Access", "levelAccess": { "public": "Free", "account": "With an account", "enrolled": "Students" }, "kind": "Type", "kindNames": { "article": "Article", "interactive": "Interactive" }, "title": "Title", "summary": "Summary", "teaser": "Show summary when locked", "article": "Article", "interactive": "Interactive", "published": "Published", "draft": "Draft", "statusNames": { "draft": "Draft", "published": "Published" }, "publish": "Publish", "unpublish": "Unpublish", "delete": "Delete lesson", "confirmDelete": "Are you sure you want to delete this lesson?", "blocks": "Blocks", "preview": "Preview", "noBlocks": "Add at least one block before publishing.", "addAtLevel": "Add in {level}", "moveUp": "Move {title} up", "moveDown": "Move {title} down" },
-    "blocks": { "heading": "Blocks", "empty": "There are no blocks yet.", "add": "Add block", "edit": "Edit", "save": "Save block", "saving": "Saving…", "cancel": "Cancel", "delete": "Delete block", "confirm": "Are you sure?", "up": "Move {title} up", "down": "Move {title} down", "textHelp": "Leave a blank line between paragraphs. Start a line with “- ” for a list. **like this** for bold.", "body": "Text", "text": "Text", "videoTitle": "Lesson video", "playVideo": "Play video", "languageEs": "Spanish", "languageEn": "English", "image": "Image", "alt": "Alternative text", "video": "YouTube URL", "quiz": "Question", "options": "Options (one per line)", "correct": "Correct option number (starting at 0)", "explanation": "Explanation" },
-    "upload": { "choose": "Choose file", "uploading": "Uploading file…", "uploaded": "File attached.", "type": "This file type is not allowed.", "size": "The file exceeds the maximum size.", "missing": "The uploaded file was not found. Please try again.", "unavailable": "The file could not be uploaded. Please try again.", "requiresJs": "File uploads require JavaScript.", "current": "Current file", "none": "No file attached", "remove": "Remove file", "forbidden": "You are not allowed to upload this file." },
-    "quiz": { "check": "Check", "correct": "Correct!", "incorrect": "Try again.", "choose": "Choose an answer." }
+    "resources": {
+      "title": "Resources",
+      "intro": "Manage materials for the portal and website.",
+      "new": "Add resource",
+      "save": "Save resource",
+      "create": "Create resource",
+      "saving": "Saving…",
+      "saved": "Resource saved.",
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "delete": "Delete resource",
+      "confirmDelete": "Are you sure you want to delete this resource?",
+      "empty": "There are no resources yet.",
+      "titleLabel": "Title",
+      "kind": "Type",
+      "access": "Access",
+      "chooseResourceFile": "Select resource file",
+      "chooseThumbnail": "Select thumbnail",
+      "kindNames": {
+        "video": "Video",
+        "document": "Document",
+        "link": "Link",
+        "worksheet": "Worksheet",
+        "vocabulary": "Vocabulary",
+        "recording": "Recording",
+        "coursework": "Coursework"
+      },
+      "levelNames": {
+        "public": "Free",
+        "account": "With an account",
+        "enrolled": "Students"
+      },
+      "statusNames": {
+        "draft": "Draft",
+        "published": "Published"
+      },
+      "moveUp": "Move {title} up",
+      "moveDown": "Move {title} down",
+      "description": "Description",
+      "externalUrl": "External URL",
+      "video": "YouTube URL",
+      "titleLang": "Title language",
+      "langEs": "Spanish",
+      "langEn": "English",
+      "level": "Level",
+      "audience": "Audience",
+      "audiences": {
+        "kids": "Kids",
+        "adults": "Adults",
+        "mature": "Mature"
+      },
+      "teaser": "Show summary when locked",
+      "preview": "Locked card preview",
+      "file": "File",
+      "thumbnail": "Thumbnail",
+      "size": "File size",
+      "back": "Back to resources",
+      "edit": "Edit",
+      "locked": "Available according to access level",
+      "noFile": "No file attached",
+      "section": "Access: {level}",
+      "filterStatus": "Status",
+      "filterKind": "Type",
+      "filter": "Filter",
+      "all": "All"
+    },
+    "lessons": {
+      "previewDraft": "Preview · Draft",
+      "title": "Title",
+      "intro": "Organise lessons by category and level.",
+      "new": "Add lesson",
+      "create": "Create lesson",
+      "save": "Save lesson",
+      "saving": "Saving…",
+      "empty": "No lessons",
+      "back": "Back to lessons",
+      "slug": "URL identifier",
+      "category": "Category",
+      "categoryNames": {
+        "foundations": "Foundations",
+        "kids": "Kids",
+        "adults": "Adults",
+        "stories": "Stories",
+        "games": "Games"
+      },
+      "level": "Level",
+      "access": "Access",
+      "levelAccess": {
+        "public": "Free",
+        "account": "With an account",
+        "enrolled": "Students"
+      },
+      "kind": "Type",
+      "kindNames": {
+        "article": "Article",
+        "interactive": "Interactive"
+      },
+      "summary": "Summary",
+      "teaser": "Show summary when locked",
+      "article": "Article",
+      "interactive": "Interactive",
+      "published": "Published",
+      "draft": "Draft",
+      "statusNames": {
+        "draft": "Draft",
+        "published": "Published"
+      },
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "delete": "Delete lesson",
+      "confirmDelete": "Are you sure you want to delete this lesson?",
+      "blocks": "Blocks",
+      "preview": "Preview",
+      "noBlocks": "Add at least one block before publishing.",
+      "addAtLevel": "Add in {level}",
+      "moveUp": "Move {title} up",
+      "moveDown": "Move {title} down"
+    },
+    "blocks": {
+      "heading": "Blocks",
+      "empty": "There are no blocks yet.",
+      "add": "Add block",
+      "edit": "Edit",
+      "save": "Save block",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "delete": "Delete block",
+      "confirm": "Are you sure?",
+      "up": "Move {title} up",
+      "down": "Move {title} down",
+      "textHelp": "Leave a blank line between paragraphs. Start a line with “- ” for a list. **like this** for bold.",
+      "body": "Text",
+      "text": "Text",
+      "videoTitle": "Lesson video",
+      "playVideo": "Play video",
+      "languageEs": "Spanish",
+      "languageEn": "English",
+      "image": "Image",
+      "alt": "Alternative text",
+      "video": "YouTube URL",
+      "quiz": "Question",
+      "options": "Options (one per line)",
+      "correct": "Correct option number (starting at 0)",
+      "explanation": "Explanation"
+    },
+    "upload": {
+      "choose": "Choose file",
+      "uploading": "Uploading file…",
+      "uploaded": "File attached.",
+      "type": "This file type is not allowed.",
+      "size": "The file exceeds the maximum size.",
+      "missing": "The uploaded file was not found. Please try again.",
+      "unavailable": "The file could not be uploaded. Please try again.",
+      "requiresJs": "File uploads require JavaScript.",
+      "current": "Current file",
+      "none": "No file attached",
+      "remove": "Remove file",
+      "forbidden": "You are not allowed to upload this file."
+    },
+    "quiz": {
+      "check": "Check",
+      "correct": "Correct!",
+      "incorrect": "Try again.",
+      "choose": "Choose an answer."
+    }
   },
   "catalog": {
     "title": "Catalogue",
@@ -516,8 +743,16 @@
       "eyebrow": "Your learning library",
       "title": "Resources for you",
       "yourAccess": "Your access: {tier}",
-      "accessTiers": { "public": "Free", "account": "Account holder", "enrolled": "Student" },
-      "tiers": { "public": "Free", "account": "Account holders", "enrolled": "Students" },
+      "accessTiers": {
+        "public": "Free",
+        "account": "Account holder",
+        "enrolled": "Student"
+      },
+      "tiers": {
+        "public": "Free",
+        "account": "Account holders",
+        "enrolled": "Students"
+      },
       "empty": "New materials will appear here soon.",
       "locked": "Available to enrolled students",
       "booking": "Explore classes and book a free lesson",
@@ -531,7 +766,13 @@
       "title": "Learn now",
       "intro": "Explore lessons and practise at your own pace.",
       "foundations": "No level",
-      "categories": { "foundations": "Foundations", "kids": "Kids", "adults": "Adults", "stories": "Stories", "games": "Games" },
+      "categories": {
+        "foundations": "Foundations",
+        "kids": "Kids",
+        "adults": "Adults",
+        "stories": "Stories",
+        "games": "Games"
+      },
       "empty": "There are no lessons in this category yet.",
       "locked": "Available at the matching access level",
       "newWindow": "opens in a new window"
@@ -716,7 +957,11 @@
       "learn": {
         "title": "Learn",
         "summary": "Read lessons and practise with questions at your access level.",
-        "bullets": ["Browse lessons by category and level.", "Open articles available to you.", "Review interactive lessons."],
+        "bullets": [
+          "Browse lessons by category and level.",
+          "Open articles available to you.",
+          "Review interactive lessons."
+        ],
         "previewLabel": "Sample lessons"
       },
       "assignments": {

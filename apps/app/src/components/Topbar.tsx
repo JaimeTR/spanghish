@@ -98,7 +98,7 @@ export function Topbar({
         <div className="ml-auto flex items-center gap-4">
           <LocaleSwitch locale={locale} />
           <div className="hidden lg:block">
-            <UserMenu name={name} locale={locale} logout={logout} />
+            <UserMenu name={name} role={area} locale={locale} logout={logout} />
           </div>
         </div>
       </div>
