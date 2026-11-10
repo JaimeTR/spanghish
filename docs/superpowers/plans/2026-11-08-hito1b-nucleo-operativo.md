@@ -45,6 +45,8 @@ Cada fase es software funcionando, con su propio PR hacia `develop` y CI verde. 
 | 5. Solicitudes de la web | `leads`, `submit_lead`, integración de `apps/web`, bandeja de la administradora | 22–24 | 0014 |
 | 6. Panel y cierre | KPIs de administradora, aislamiento e2e, seed, CI, docs | 25–26 | 0015 |
 
+> **Renumeración (2026-11-10):** el hito Contenido ya usó `0010_content`, `0011_content_storage` y `0012_teacher_profiles`. Las migraciones de las fases 3–6 de este plan **no** llevan los números de la tabla ni los de los títulos de sus tareas: cada una toma el siguiente número libre de `supabase/migrations` en el momento de escribirla (la primera será `0013`).
+
 ## Contratos comunes (valen para todas las tareas)
 
 **Plantilla de migración** (cada tabla nueva):
@@ -339,6 +341,8 @@ Cada fase es software funcionando, con su propio PR hacia `develop` y CI verde. 
 - [ ] **Step 5:** Commit `feat(db): grupos, reglas de repetición, cierres y sesiones`.
 
 ### Task 13: Matrículas, cupo y lista de espera (0011)
+
+> **Pendiente heredado del hito Contenido:** esta tarea debe reemplazar `public.has_enrolled_access()` (hoy un sustituto: "tiene ficha de alumno activa") con `create or replace` para exigir una matrícula `active` o `paused`. Mantener su firma: la usan `content_tier()` y las políticas de contenido.
 
 **Files:**
 - Create: `supabase/migrations/0011_enrollments.sql`, `supabase/tests/database/enrollments.test.sql`

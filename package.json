@@ -9,7 +9,11 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "supabase": "supabase",
-    "db:types": "supabase gen types typescript --local --schema public > packages/db/src/database.types.ts"
+    "db:types": "supabase gen types typescript --local --schema public > packages/db/src/database.types.ts",
+    "db:link": "supabase link --project-ref",
+    "db:push:dry": "supabase db push --dry-run",
+    "db:push": "supabase db push",
+    "db:remote:types": "supabase gen types typescript --linked --schema public"
   },
   "devDependencies": {
     "eslint": "10.14.0",

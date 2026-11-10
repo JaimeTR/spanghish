@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
+    "demo:seed": "tsx --env-file=.env.demo.local scripts/demo-seed.ts",
     "e2e": "playwright test"
   },
   "dependencies": {
@@ -40,6 +41,7 @@
     "eslint-config-next": "16.4.5",
     "jsdom": "31.0.0",
     "tailwindcss": "4.3.5",
+    "tsx": "4.20.6",
     "typescript": "6.0.3",
     "vitest": "5.1.0"
   }

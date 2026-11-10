@@ -1,5 +1,11 @@
 import createNextIntlPlugin from "next-intl/plugin";
 import type { NextConfig } from "next";
+import { assertEnv, checkWebEnv } from "./src/lib/env";
+import { noindexHeaders } from "./src/lib/indexing";
+
+// En Vercel el build se detiene si hay variables peligrosas o a medias (ver src/lib/env.ts).
+// En local y en CI no se valida: sin variables, la web usa su respaldo estático.
+if (process.env.VERCEL === "1") assertEnv(checkWebEnv(process.env), "web");
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -39,8 +45,7 @@ const nextConfig: NextConfig = {
    */
   /** Entorno de demostración (SITE_NOINDEX=1): ninguna respuesta se indexa. */
   async headers() {
-    if (process.env.SITE_NOINDEX !== "1") return [];
-    return [{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }];
+    return noindexHeaders();
   },
   async redirects() {
     return [
