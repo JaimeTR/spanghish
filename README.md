@@ -81,6 +81,17 @@ Pendiente de la propietaria:
 - Si los precios incluyen GST: hoy no se calcula ningún impuesto (`automatic_tax` desactivado).
 - La política de reembolsos de materiales digitales (en `/terms` hay un `TODO(legal)`).
 
+## Entorno demo y despliegue
+
+La guía completa está en [docs/despliegue.md](docs/despliegue.md): arquitectura, referencia de
+todas las variables de entorno, comandos para subir las migraciones y sembrar los datos de
+demostración, checklists de salida a demo y a producción, y el guion de la demo.
+
+- `pnpm db:link <ref>`, `pnpm db:push:dry`, `pnpm db:push`: enlazar un proyecto de Supabase y subir migraciones.
+- `pnpm --filter @spanglish/app demo:seed [--dry-run | remove]`: datos de demostración (solo contra el proyecto de demo).
+- `GET /api/health` en cada app: informe de salud sin datos.
+- `pnpm --filter @spanglish/web e2e:platform`: e2e de la web contra Supabase local.
+
 ## Estructura del repo
 
 - `apps/app`: plataforma educativa (Next.js).

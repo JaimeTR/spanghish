@@ -8,6 +8,7 @@
 - Verificado en el árbol integrado: lint, typecheck, tests (web 94, app 186, content 13, ui 4), pgTAP 311, build, e2e app 89 y e2e web 244 (2 pruebas de la web son intermitentes bajo carga y pasan solas: `conversion.spec.ts:182`, `home.spec.ts:173`). El CI de GitHub no se ha comprobado.
 - **Admin de perfiles públicos de docentes: hecho** (`/admin/teachers/profiles`: crear/editar es/en, foto, publicar, orden; la web lo lee con respaldo estático). e2e app 97 en verde.
 - **Contenido fase 4: hecha** (la web lee recursos y lecciones de la plataforma; ver §5.2). Verificado: web vitest 123, lint, typecheck, build, e2e web 250 (con respaldo estático) y comprobación manual contra Supabase local.
+- **Contenido fase 5: hecha** (entorno demo preparado en código; ver §5.2 y `docs/despliegue.md`).
 - Convención: ramas `feat/*` desde `develop`; al terminar y verificar, merge directo a `develop` y luego `main`; borrar la rama.
 
 ## 1. Cadena de ramas y PRs (fusionar EN ESTE ORDEN)
@@ -53,13 +54,26 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 1. **Contenido fase 2 (T5–T9) — código escrito, faltan 12 e2e (ver 5.2):** gestión en el portal de recursos y lecciones (CRUD, publicar, ordenar, subida de archivos con URL firmada, editor de lecciones por bloques con vista previa). Al terminar, cambiar `status` de `content` a `ready` en `apps/app/src/lib/nav.ts`.
 2. **Contenido fase 3 (T10–T11) — HECHA:** `/student/resources` (con `/open` firmado) y `/student/learn` del alumno por nivel de acceso.
 3. **Contenido fase 4 (T12–T15) — HECHA:** la web lee recursos y lecciones publicados (RPC con clave anónima, caché 300 s, respaldo estático, `/api/revalidate`).
-4. **Contenido fase 5 (T16–T20):** configuración de despliegue, validación de variables, noindex por entorno, `/api/health`, semilla de datos de ejemplo, `docs/despliegue.md`. **T20 debe renumerar** las migraciones de 1B fases 3–6 (reservadas 0010–0015 → pasan a 0012+) en el plan 1B.
+4. **Contenido fase 5 (T16–T20) — HECHA:** configuración de despliegue, validación de variables, noindex por entorno, `/api/health`, semilla de datos de ejemplo, `docs/despliegue.md`. **T20 debe renumerar** las migraciones de 1B fases 3–6 (reservadas 0010–0015 → pasan a 0012+) en el plan 1B.
 5. Contenido fase 6 (tienda gestionable): opcional.
 6. **1B fases 3–6:** grupos/calendario/matrículas, asistencia/packs/"Hoy" del docente, solicitudes web → panel, panel de la administradora. Sustituir `has_enrolled_access()` (marcador temporal) en la tarea 13 de 1B.
 7. Hito 2 (alumno completo) y hito 3 (Stripe de matrículas, CMS, lanzamiento): sin plan escrito aún.
 
 ## 5.2 Punto exacto donde se quedó el trabajo (2026-11-10)
-Ver §0. **Siguiente: Contenido fase 5 (T16–T20)**, luego fase 6 (opcional) y 1B fases 3–6.
+Ver §0. **Siguiente: 1B fases 3–6** (o Contenido fase 6, tienda gestionable, que es opcional). Para montar la demo real solo faltan cuentas: seguir las checklists M1–M3 de `docs/despliegue.md`.
+
+Contenido fase 5, lo que hay que saber:
+- **Guía única: `docs/despliegue.md`** (arquitectura, tabla de todas las variables, comandos, checklists M1–M4, guion de la demo). Dos pruebas (`env-reference.test.ts` en cada app) fallan si una variable que lee el código o que está en `.env.example` no está documentada ahí.
+- **Validación de variables al compilar en Vercel** (`apps/*/src/lib/env.ts`, llamada desde `next.config.ts` solo si `VERCEL=1`). Web: lo que falta solo se avisa (decisión de Jaime: el despliegue actual no tiene variables); falla ante clave de servicio en la web, pares a medias, secreto de menos de 32 o URL sin https. Portal: faltan Supabase, `NEXT_PUBLIC_SITE_URL` o la clave de servicio → falla.
+- **Indexación: se mantiene `SITE_NOINDEX=1` = fuera de buscadores** (decisión de Jaime; el plan proponía `SITE_INDEXING=on`, no se hizo). El portal nunca se indexa (`robots.txt` + `X-Robots-Tag` siempre).
+- Nombres reales de variables (difieren de la tabla del plan): la web usa `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` y `WEB_REVALIDATE_SECRET`.
+- `GET /api/health` en las dos apps (informe sin datos; `db` con el RPC `health_ping`).
+- `apps/*/vercel.json` (instalación con lockfile congelado y `turbo-ignore`), `turbo.json` con `env`/`passThroughEnv` del build.
+- **Datos de demo:** `pnpm --filter @spanglish/app demo:seed [--dry-run | remove]` (`apps/app/scripts/demo-seed.ts`, lógica en `src/lib/demo/`). Solo escribe en `https://<ref>.supabase.co` con `DEMO_SEED_PROJECT_REF` igual al ref. Probado de verdad contra Supabase local con un arnés temporal (siembra dos veces, login de las 4 cuentas con su nivel, borrado limpio); **no se ha ejecutado contra ningún proyecto remoto** (no existe aún). No crea edición del programa (el plan la mencionaba).
+- **e2e nuevas:** `apps/app/e2e/demo-flow.spec.ts` (recorrido de la demo) y `pnpm --filter @spanglish/web e2e:platform` (web contra Supabase local, puerto 3102, `apps/web/e2e-platform/`). El CI ejecuta las tres suites en el job `e2e` (sin comprobar aún en GitHub).
+- Scripts raíz: `db:link`, `db:push:dry`, `db:push`, `db:remote:types`.
+- Plan 1B anotado: las migraciones de sus fases 3–6 toman el siguiente número libre (la primera, `0013`) y la tarea 13 debe reemplazar `has_enrolled_access()`.
+- Reparto: el script de demo lo escribió Codex y lo corrigió Claude (publicaba lecciones antes de crear sus bloques, ocultaba los errores y borraba en mal orden); el resto, Claude.
 
 Contenido fase 4, lo que hay que saber:
 - `apps/web/src/lib/content-source.ts` es la única puerta: `getPublicResourceCards`, `getLearnCategories`, `loadPublicLesson`/`getPublicLesson`, `getPublicArticleSlugs`. Lee con la clave anónima los RPC `list_published_resources`, `list_published_lessons` y `get_published_lesson` (caché 300 s, etiqueta `web-content`). Sin variables, con la base caída o sin nada publicado, `/resources`, `/learn` y el sitemap usan el respaldo estático (un nivel de acceso o una categoría sin nada publicado conserva su respaldo).

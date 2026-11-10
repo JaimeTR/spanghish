@@ -65,7 +65,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -80,9 +80,14 @@ jobs:
         run: pnpm supabase db reset
       - name: Instalar Chromium de Playwright
         run: pnpm --filter @spanglish/app exec playwright install --with-deps chromium
+      # Misma versión de Playwright en las dos apps: el navegador ya instalado sirve para la web.
       # Las claves demo se leen en runtime con `supabase status` (ver playwright.config.ts).
-      - name: e2e
+      - name: e2e del portal
         run: pnpm --filter @spanglish/app e2e
+      - name: e2e de la web (respaldo estático, sin plataforma)
+        run: pnpm --filter @spanglish/web e2e
+      - name: e2e de la web contra la plataforma
+        run: pnpm --filter @spanglish/web e2e:platform
       - name: Subir trazas de Playwright
         if: failure()
         uses: actions/upload-artifact@v4
@@ -91,6 +96,8 @@ jobs:
           path: |
             apps/app/test-results/
             apps/app/playwright-report/
+            apps/web/test-results/
+            apps/web/playwright-report/
           if-no-files-found: ignore
           retention-days: 7
       - name: Detener Supabase
