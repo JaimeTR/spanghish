@@ -37,6 +37,11 @@ const nextConfig: NextConfig = {
    * URLs de la web anterior (WordPress) que cambian de slug: van a la ruta sin
    * idioma y el proxy elige /es o /en según el navegador.
    */
+  /** Entorno de demostración (SITE_NOINDEX=1): ninguna respuesta se indexa. */
+  async headers() {
+    if (process.env.SITE_NOINDEX !== "1") return [];
+    return [{ source: "/:path*", headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] }];
+  },
   async redirects() {
     return [
       { source: "/learn-spanish/spanish-foundations/spanish-alphabet", destination: "/learn/alphabet", permanent: true },

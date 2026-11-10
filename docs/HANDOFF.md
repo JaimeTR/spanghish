@@ -50,7 +50,7 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 
 ## 5.1 Siguiente trabajo, en orden
 1. **Contenido fase 2 (T5–T9) — código escrito, faltan 12 e2e (ver 5.2):** gestión en el portal de recursos y lecciones (CRUD, publicar, ordenar, subida de archivos con URL firmada, editor de lecciones por bloques con vista previa). Al terminar, cambiar `status` de `content` a `ready` en `apps/app/src/lib/nav.ts`.
-2. **Contenido fase 3 (T10–T11):** vista de Recursos y "Aprende" del alumno por nivel de acceso.
+2. **Contenido fase 3 (T10–T11) — HECHA:** `/student/resources` (con `/open` firmado) y `/student/learn` del alumno por nivel de acceso.
 3. **Contenido fase 4 (T12–T15):** la web lee recursos y lecciones publicados (RPC con clave anónima, caché 300 s, respaldo estático, `/api/revalidate`).
 4. **Contenido fase 5 (T16–T20):** configuración de despliegue, validación de variables, noindex por entorno, `/api/health`, semilla de datos de ejemplo, `docs/despliegue.md`. **T20 debe renumerar** las migraciones de 1B fases 3–6 (reservadas 0010–0015 → pasan a 0012+) en el plan 1B.
 5. Contenido fase 6 (tienda gestionable): opcional.
@@ -58,7 +58,7 @@ Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se confi
 7. Hito 2 (alumno completo) y hito 3 (Stripe de matrículas, CMS, lanzamiento): sin plan escrito aún.
 
 ## 5.2 Punto exacto donde se quedó el trabajo (2026-11-09)
-Ver §0. Siguiente: (1) Contenido fase 3 (recursos y Aprende del alumno), fase 4 (la web lee recursos y lecciones: el cliente `apps/web/src/lib/platform.ts` y `/api/revalidate` ya existen), fases 5-6; (3) 1B fases 3-6. Pendiente de configuración: `WEB_REVALIDATE_URL`/`WEB_REVALIDATE_SECRET` en la app y `WEB_REVALIDATE_SECRET` + `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` en la web para que lea de la base.
+Ver §0. Hecho además: Contenido fase 3; en la web "Entrar" es un icono a la derecha de "Clase gratis" y solo en home, Recursos y Aprende (`showsPortalLogin`); `SITE_NOINDEX=1` saca la web de buscadores (demo en Vercel `spanglish-web`). Ojo: en el portal no existe `text-white` (el tema reinicia los colores): usar `text-on-structure`/`text-on-primary`. Siguiente: (1) Contenido fase 4 (la web lee recursos y lecciones: el cliente `apps/web/src/lib/platform.ts` y `/api/revalidate` ya existen), fases 5-6; (3) 1B fases 3-6. Pendiente de configuración: `WEB_REVALIDATE_URL`/`WEB_REVALIDATE_SECRET` en la app y `WEB_REVALIDATE_SECRET` + `NEXT_PUBLIC_SUPABASE_URL`/`ANON_KEY` en la web para que lea de la base.
 
 ## 6. Cómo delegar sin gastar tokens de Claude
 - **Codex** (cuenta ChatGPT ya iniciada): `codex exec -C <worktree> -s workspace-write "<prompt autocontenido que cite el archivo del plan y la tarea>"`. Su sandbox NO puede ejecutar `pnpm` (EPERM): que solo escriba archivos y ejecutar las comprobaciones fuera. Nunca `danger-full-access`, nunca pasar secretos. Un solo escritor por archivo.

@@ -5,6 +5,7 @@ import en from "../../messages/en.json";
 import es from "../../messages/es.json";
 import {
   activeNavKey,
+  showsPortalLogin,
   bookingPath,
   FOOTER_NAV,
   HEADER_NAV,
@@ -126,6 +127,16 @@ describe("routes", () => {
     expect(activeNavKey("faq")).toBe("contact");
     expect(activeNavKey("home")).toBeUndefined();
     expect(activeNavKey("bookings")).toBeUndefined();
+  });
+
+  it("shows the portal sign-in only on the home, resources and learn pages", () => {
+    for (const route of ["home", "resources", "learn", "learnAlphabet", "learnNouns"] as const) {
+      expect(showsPortalLogin(route), route).toBe(true);
+    }
+    for (const route of ["prices", "faq", "teachers", "contact", "adults", "shop", "bookings"] as const) {
+      expect(showsPortalLogin(route), route).toBe(false);
+    }
+    expect(showsPortalLogin(undefined)).toBe(false);
   });
 
   it("keeps the confirmations and the legal drafts out of search engines", () => {

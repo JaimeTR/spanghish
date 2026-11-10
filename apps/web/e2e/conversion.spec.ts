@@ -155,19 +155,19 @@ test.describe("header fit", () => {
       await page.evaluate(() => window.localStorage.setItem("spanglish.cart.v1", JSON.stringify({ ids: ["alphabet"] })));
       await page.reload();
       const items = page.getByRole("navigation", { name: "Navegación principal" }).getByRole("listitem");
-      // Clases y Recursos (con sus desplegables cerrados), Precios, Preguntas, Conócenos y Contacto.
-      await expect(items).toHaveCount(6);
+      // Clases, Recursos y Contacto (con sus desplegables cerrados), Precios y Conócenos.
+      await expect(items).toHaveCount(5);
       const tops = await items.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
       expect(new Set(tops).size).toBe(1);
       const cta = await page.locator("header").getByRole("link", { name: "Clase gratis" }).boundingBox();
       expect(cta && cta.x + cta.width).toBeLessThanOrEqual(width);
-      // "Entrar" al portal, en la misma línea (solo icono por debajo de 1180px).
-      const login = await page.locator("header").getByRole("link", { name: /^Entrar al portal de alumnos$/ }).boundingBox();
-      expect(login).not.toBeNull();
-      expect(Math.abs(login!.y + login!.height / 2 - (cta!.y + cta!.height / 2))).toBeLessThan(4);
-      expect(login!.width).toBeLessThan(width < 1180 ? 60 : 140);
+      // En páginas sin contenido con cuenta (como Preguntas) la cabecera no enlaza al portal.
+      await expect(page.locator("header").getByRole("link", { name: /^Entrar al portal de alumnos$/ })).toHaveCount(0);
       // El carrito, en la misma línea y con su nombre accesible.
-      const cart = await page.locator("header").getByRole("button", { name: "Carrito, 1 artículo" }).boundingBox();
+      const cartButton = page.locator("header").getByRole("button", { name: "Carrito, 1 artículo" });
+      // El botón entra con una animación de escala: se mide cuando ya terminó.
+      await cartButton.evaluate((el) => Promise.all(el.getAnimations().map((animation) => animation.finished)));
+      const cart = await cartButton.boundingBox();
       expect(cart).not.toBeNull();
       expect(Math.abs(cart!.y + cart!.height / 2 - (cta!.y + cta!.height / 2))).toBeLessThan(4);
       expect(cart!.width).toBeGreaterThanOrEqual(44);

@@ -155,7 +155,7 @@ test.describe("student portal sign-in", () => {
   for (const locale of ["es", "en"] as const) {
     test(`the header links to the ${locale} portal login`, async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
-      await page.goto(`/${locale}/prices`);
+      await page.goto(`/${locale}/resources`);
       const login = page.locator("header").getByRole("link", { name: L[locale].login });
       await expect(login).toHaveCount(1);
       await expect(login).toHaveAttribute("href", new RegExp(`^https://[^/]+/${locale}/login$`));
@@ -172,14 +172,30 @@ test.describe("student portal sign-in", () => {
     });
   }
 
-  test("below 1180px the sign-in link is icon-only but keeps its name; above, it shows text", async ({ page }) => {
-    await page.setViewportSize({ width: 1024, height: 800 });
-    await page.goto("/es/faq");
-    const login = page.locator("header").getByRole("link", { name: L.es.login });
-    expect((await login.boundingBox())!.width).toBeLessThan(50);
-    await page.setViewportSize({ width: 1280, height: 800 });
-    await expect(login).toContainText("Entrar");
-    expect((await login.boundingBox())!.width).toBeGreaterThan(70);
+  test("the sign-in link is an icon to the right of the free-lesson button, on the same line", async ({ page }) => {
+    for (const width of [1024, 1280]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto("/es");
+      const header = page.locator("header");
+      const login = (await header.getByRole("link", { name: L.es.login }).boundingBox())!;
+      const cta = (await header.getByRole("link", { name: "Clase gratis" }).boundingBox())!;
+      expect(login.width).toBeLessThan(50);
+      expect(login.x).toBeGreaterThanOrEqual(cta.x + cta.width);
+      expect(login.x + login.width).toBeLessThanOrEqual(width);
+      expect(Math.abs(login.y + login.height / 2 - (cta.y + cta.height / 2))).toBeLessThan(4);
+    }
+  });
+
+  test("pages without account content do not link to the portal in the header", async ({ page }) => {
+    for (const path of ["/es/prices", "/es/faq", "/es/teachers", "/es/contact-us"]) {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await page.goto(path);
+      await expect(page.locator("header").getByRole("link", { name: L.es.login })).toHaveCount(0);
+    }
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("/es/prices");
+    await page.getByRole("button", { name: L.es.menu }).click();
+    await expect(page.locator("header").getByRole("link", { name: L.es.login })).toHaveCount(0);
   });
 });
 
