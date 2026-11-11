@@ -84,3 +84,29 @@ describe("paymentStatus", () => {
     spy.mockRestore();
   });
 });
+
+describe("pago dentro de la web (embedded)", () => {
+  it("pide ui_mode embedded_page con return_url y sin success_url/cancel_url", () => {
+    const params = checkoutParams(["alphabet"], "en", "https://x.test", undefined, true);
+    expect(params).toMatchObject({
+      ui_mode: "embedded_page",
+      redirect_on_completion: "if_required",
+      return_url: "https://x.test/en/shop/success?session_id={CHECKOUT_SESSION_ID}",
+    });
+    expect(params).not.toHaveProperty("success_url");
+    expect(params).not.toHaveProperty("cancel_url");
+  });
+
+  it("devuelve el client_secret y nunca una url", async () => {
+    const create = vi.fn(async () => ({ url: null, client_secret: "cs_test_abc_secret_xyz" }));
+    const client: CheckoutClient = { checkout: { sessions: { create } } };
+    const res = await createCheckoutSession(["alphabet"], "es", client, "https://x.test", undefined, true);
+    expect(res).toEqual({ ok: true, clientSecret: "cs_test_abc_secret_xyz" });
+  });
+
+  it("si Stripe no devuelve client_secret, falla sin fingir el pago", async () => {
+    const create = vi.fn(async () => ({ url: null, client_secret: null }));
+    const client: CheckoutClient = { checkout: { sessions: { create } } };
+    expect(await createCheckoutSession(["alphabet"], "es", client, "https://x.test", undefined, true)).toEqual({ ok: false, reason: "failed" });
+  });
+});

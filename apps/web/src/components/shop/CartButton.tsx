@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useActionState, useEffect, useId, useRef } from "react";
+import { useActionState, useEffect, useId, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { startCheckout, type CheckoutState } from "@/app/[locale]/shop/actions";
 import type { Locale } from "@/i18n/routing";
@@ -12,6 +12,7 @@ import { CONTACT } from "@/lib/site";
 import { ArrowIcon } from "../icons";
 import { btnPrimary } from "../styles";
 import { useCart } from "./CartProvider";
+import { EmbeddedPayment } from "./EmbeddedPayment";
 
 export function CartIcon({ className = "size-6" }: { className?: string }) {
   return (
@@ -100,7 +101,44 @@ function CartPanel({ locale, titleId, onClose }: { locale: Locale; titleId: stri
   const t = useTranslations("cart");
   const { ids, remove, products: catalog } = useCart();
   const [state, formAction, pending] = useActionState<CheckoutState, FormData>(startCheckout, { status: "idle" });
+  // El pago se hace dentro de este modal; "Volver al carrito" lo descarta sin perder el carrito.
+  const [dismissed, setDismissed] = useState<string | null>(null);
   const products = ids.map((id) => findProduct(id, catalog)).filter((p): p is NonNullable<typeof p> => Boolean(p));
+
+  if (state.status === "embedded" && dismissed !== state.clientSecret) {
+    const secret = state.clientSecret;
+    return (
+      <div className="flex max-h-[calc(100dvh-2rem)] flex-col rounded-[1.75rem] border-2 sm:max-h-[calc(100dvh-7rem)] border-ink/10 bg-cream" style={{ filter: "drop-shadow(var(--bubble-shadow))" }}>
+        <div className="flex items-center justify-between gap-4 border-b-2 border-ink/10 px-5 py-3 sm:px-6">
+          <h2 id={titleId} className="font-display text-[2rem] leading-none text-brand-burgundy">
+            {t("payTitle")}
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t("close")}
+            className="inline-flex size-11 items-center justify-center rounded-full text-ink transition-colors duration-200 hover:bg-ink/8"
+          >
+            <svg aria-hidden="true" viewBox="0 0 20 20" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round">
+              <path d="M5 5l10 10M15 5L5 15" />
+            </svg>
+          </button>
+        </div>
+        <div className="overflow-y-auto px-2 py-3 sm:px-3">
+          <EmbeddedPayment clientSecret={secret} locale={locale} onDone={onClose} />
+        </div>
+        <div className="border-t-2 border-ink/10 px-5 py-3 sm:px-6">
+          <button
+            type="button"
+            onClick={() => setDismissed(secret)}
+            className="inline-flex min-h-11 items-center rounded-full px-3 text-sm font-bold text-ink underline decoration-2 underline-offset-4 transition-colors duration-200 hover:bg-ink/8"
+          >
+            {t("backToCart")}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex max-h-[calc(100dvh-2rem)] flex-col rounded-[1.75rem] border-2 sm:max-h-[calc(100dvh-7rem)] border-ink/10 bg-cream" style={{ filter: "drop-shadow(var(--bubble-shadow))" }}>
@@ -174,7 +212,7 @@ function CartPanel({ locale, titleId, onClose }: { locale: Locale; titleId: stri
               </button>
             </form>
 
-            {state.status !== "idle" && !pending ? (
+            {state.status !== "idle" && state.status !== "embedded" && !pending ? (
               <div role="alert" className="mt-4 rounded-[1.25rem] border-2 border-brand-burgundy bg-surface px-4 py-3">
                 <p className="font-bold text-ink">{t(state.status)}</p>
                 <p className="mt-1 text-ink">{t("contactLead")}</p>

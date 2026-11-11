@@ -1640,7 +1640,9 @@
     "failed": "We couldn’t open the payment page. Try again in a moment, or get in touch and we’ll send it to you.",
     "invalid": "One of the products in your cart is no longer available. Check your cart and try again.",
     "contactLead": "Email or call us:",
-    "itemsLabel": "Products in your cart"
+    "itemsLabel": "Products in your cart",
+    "payTitle": "Payment",
+    "backToCart": "← Back to cart"
   },
   "shop": {
     "sale": "Sale!",

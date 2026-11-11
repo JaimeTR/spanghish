@@ -1640,7 +1640,9 @@
     "failed": "No hemos podido abrir la página de pago. Inténtalo de nuevo en un momento o escríbenos y te lo enviamos.",
     "invalid": "Uno de los productos de tu carrito ya no está disponible. Revisa el carrito y vuelve a intentarlo.",
     "contactLead": "Escríbenos o llámanos:",
-    "itemsLabel": "Productos en tu carrito"
+    "itemsLabel": "Productos en tu carrito",
+    "payTitle": "Pagar",
+    "backToCart": "← Volver al carrito"
   },
   "shop": {
     "sale": "¡Oferta!",

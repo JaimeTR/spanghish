@@ -18,13 +18,14 @@ import { SITE_URL } from "./site";
  */
 export type CheckoutResult =
   | { ok: true; url: string }
+  | { ok: true; clientSecret: string }
   | { ok: false; reason: "invalid" | "unavailable" | "failed" };
 
 /** Lo único que se usa del cliente de Stripe (se inyecta para poder probarlo). */
 export type CheckoutClient = {
   checkout: {
     sessions: {
-      create(params: Stripe.Checkout.SessionCreateParams): Promise<{ url: string | null }>;
+      create(params: Stripe.Checkout.SessionCreateParams): Promise<{ url: string | null; client_secret?: string | null }>;
     };
   };
 };
@@ -51,6 +52,7 @@ export function checkoutParams(
   locale: Locale,
   siteUrl: string = SITE_URL,
   products: readonly Product[] = PRODUCTS,
+  embedded = false,
 ): Stripe.Checkout.SessionCreateParams {
   return {
     mode: "payment",
@@ -72,8 +74,17 @@ export function checkoutParams(
     customer_creation: "always",
     metadata: { productIds: ids.join(","), locale },
     // {CHECKOUT_SESSION_ID} lo rellena Stripe: la página de éxito comprueba el pago con él.
-    success_url: `${siteUrl}/${locale}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${siteUrl}/${locale}/shop`,
+    ...(embedded
+      ? {
+          // Pago dentro de la web (modal del carrito): no hay redirección salvo que el método de pago la exija.
+          ui_mode: "embedded_page" as const,
+          redirect_on_completion: "if_required" as const,
+          return_url: `${siteUrl}/${locale}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
+        }
+      : {
+          success_url: `${siteUrl}/${locale}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${siteUrl}/${locale}/shop`,
+        }),
   };
 }
 
@@ -122,6 +133,8 @@ export async function createCheckoutSession(
   client: CheckoutClient | null = stripeFromEnv(),
   siteUrl: string = SITE_URL,
   products?: readonly Product[],
+  /** true: pago dentro de la web (devuelve client_secret); false: página de pago de Stripe (devuelve url). */
+  embedded = false,
 ): Promise<CheckoutResult> {
   // El precio y el nombre salen SIEMPRE de la lista del servidor (base de datos o respaldo fijo), nunca del navegador.
   const catalogue = products ?? (await getShopProducts());
@@ -132,7 +145,10 @@ export async function createCheckoutSession(
     return { ok: false, reason: "unavailable" };
   }
   try {
-    const session = await client.checkout.sessions.create(checkoutParams(ids, locale, siteUrl, catalogue));
+    const session = await client.checkout.sessions.create(checkoutParams(ids, locale, siteUrl, catalogue, embedded));
+    if (embedded) {
+      return session.client_secret ? { ok: true, clientSecret: session.client_secret } : { ok: false, reason: "failed" };
+    }
     if (!session.url) return { ok: false, reason: "failed" };
     return { ok: true, url: session.url };
   } catch (error) {

@@ -28,6 +28,7 @@ Al compilar en Vercel, cada app comprueba sus variables (`apps/web/src/lib/env.t
 | `WEB_REVALIDATE_SECRET` | web, app (mismo valor) | `apps/web/src/app/api/revalidate/route.ts`, `apps/app/src/lib/web-revalidate.ts` | **sí** | no | recomendada | recomendada | salida de `openssl rand -hex 32` | sin ella `/api/revalidate` responde 503; con menos de 32 caracteres el build falla |
 | `SITE_NOINDEX` | web | `apps/web/src/lib/indexing.ts` | no | no | **`1`** | **no definirla** | `1` | la web es indexable por buscadores |
 | `STRIPE_SECRET_KEY` | web | `apps/web/src/lib/checkout.ts` | **sí** | no | opcional (`sk_test_…`) | sí (`sk_live_…`) | `sk_test_…` | la tienda avisa de que los pagos no están activos |
+| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | web | `apps/web/src/components/shop/EmbeddedPayment.tsx` | no (es la clave pública) | sí | opcional (`pk_test_…`) | sí (`pk_live_…`) | `pk_test_…` | el pago se hace en la página de Stripe (redirección) en vez de dentro de la web |
 | `STRIPE_WEBHOOK_SECRET` | web | `apps/web/src/app/api/stripe/webhook/route.ts` | **sí** | no | con la anterior | sí | `whsec_…` | el webhook responde 400; van siempre las dos |
 | `RESEND_API_KEY` | web | `apps/web/src/lib/leads.ts` | **sí** | no | opcional | sí | `re_…` | el formulario de clase gratis avisa de que no está disponible |
 | `LEAD_TO_EMAIL` | web | `apps/web/src/lib/leads.ts` | no | no | con Resend | sí | `hola@example.com` | van siempre las tres de Resend |
