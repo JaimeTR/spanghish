@@ -2028,7 +2028,8 @@
         "send": "Send request",
         "sending": "Sending…",
         "response": "Reply (optional)"
-      }
+      },
+      "introAdmin": "All the students' class-change notices and requests. The group's teacher can also handle them."
     },
     "teacherGroups": {
       "title": "My groups",
@@ -2158,6 +2159,63 @@
     "lesson": {
       "mark": "Mark as completed",
       "done": "Completed"
+    }
+  },
+  "guardian": {
+    "children": {
+      "eyebrow": "My family",
+      "title": "My children",
+      "lead": "Each child with their level, enrolments, balance and attendance.",
+      "empty": "No children are linked to your account yet. If you think this is a mistake, contact us.",
+      "age": "{years} years old",
+      "noAge": "Age not given",
+      "enrollments": "Enrolments",
+      "noEnrollments": "No enrolments yet.",
+      "balance": "Balance {amount}",
+      "paidUp": "Up to date",
+      "attendance": "Attendance",
+      "noClasses": "no classes to count yet",
+      "attendanceValue": "{percent}% ({present} present, {late} late, {absent} absent)",
+      "go": {
+        "schedule": "See schedule",
+        "payments": "See payments",
+        "consents": "See consents"
+      }
+    },
+    "schedule": {
+      "eyebrow": "My family",
+      "title": "Schedule",
+      "lead": "Your children's classes over the next 30 days.",
+      "empty": "There are no classes scheduled in the next 30 days."
+    },
+    "payments": {
+      "eyebrow": "My family",
+      "title": "Payments",
+      "lead": "What you've paid for your children and what is still due.",
+      "dueTitle": "Balance due",
+      "dueHint": "To pay, contact us or make the transfer with your child's name as the reference.",
+      "history": "History",
+      "empty": "There are no payments recorded yet.",
+      "refunded": "refunded {amount}"
+    },
+    "consents": {
+      "eyebrow": "My family",
+      "title": "Consents",
+      "lead": "What you've authorised for each child. You can give or withdraw the recordings and photos consents whenever you like.",
+      "empty": "No children are linked to your account yet.",
+      "kind": {
+        "minor_data": "Processing of the child's data",
+        "recordings": "Class recordings",
+        "photos": "Photos"
+      },
+      "granted": "Authorised",
+      "withdrawn": "Withdrawn",
+      "none": "No answer",
+      "since": "Since {date}",
+      "grant": "Authorise",
+      "withdraw": "Withdraw authorisation",
+      "noText": "The school hasn't published the text of this consent yet.",
+      "managedBySchool": "The school manages this consent when enrolling."
     }
   }
 }

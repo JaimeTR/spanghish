@@ -1179,6 +1179,9 @@ isOneToOne: false
 "set_enrollment_request_method":
 { Args: { "p_method": string,"p_token": string }; Returns: Json
                            },
+"set_my_consent":
+{ Args: { "p_granted": boolean,"p_kind": Database["public"]['Enums']["consent_kind"],"p_student_id": string }; Returns: undefined
+                           },
 "start_test":
 { Args: { "p_test_id": string }; Returns: Json
                            },

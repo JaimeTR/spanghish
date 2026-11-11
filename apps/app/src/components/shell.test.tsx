@@ -62,7 +62,7 @@ describe("Sidebar", () => {
     expect(within(navEl).getAllByRole("list").length).toBeGreaterThan(0);
   });
 
-  it("modules in development are links with a visible badge and an accessible name", () => {
+  it("every module of the portal is ready: plain links without an in-development badge", () => {
     const { container } = wrap(<Sidebar role="admin" locale="es" />);
     const hrefs = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href"));
     expect(hrefs).toEqual([
@@ -71,6 +71,7 @@ describe("Sidebar", () => {
       "/es/admin/groups",
       "/es/admin/enrollments",
       "/es/admin/attendance",
+      "/es/admin/requests",
       "/es/admin/leads",
       "/es/admin/users",
       "/es/admin/students",
@@ -84,20 +85,15 @@ describe("Sidebar", () => {
       "/es/admin/legal",
       "/es/admin/settings",
     ]);
-    // Todo el menú de administración está listo: ninguno lleva insignia.
+    // Todo el menú está listo: ninguno lleva insignia.
     expect(screen.queryByText("En desarrollo")).toBeNull();
     expect(container.querySelector("[aria-disabled]")).toBeNull();
-    // Un módulo en desarrollo de otra área sí es un enlace con insignia.
-    const guardian = wrap(<Sidebar role="guardian" locale="es" />);
-    const children = within(guardian.container).getByRole("link", { name: /^Mis hijos,\s*En desarrollo$/ });
-    expect(children).toHaveAttribute("href", "/es/guardian/children");
-    expect(within(children).getByText("En desarrollo")).toBeVisible();
   });
 
-  it("a module in development marks itself as current", () => {
+  it("a module of another area marks itself as current", () => {
     nav.pathname = "/es/guardian/children";
     wrap(<Sidebar role="guardian" locale="es" />);
-    expect(screen.getByRole("link", { name: /^Mis hijos,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Mis hijos" })).toHaveAttribute("aria-current", "page");
     nav.pathname = "/es/admin";
   });
 

@@ -2028,7 +2028,8 @@
         "send": "Enviar solicitud",
         "sending": "Enviando…",
         "response": "Respuesta (opcional)"
-      }
+      },
+      "introAdmin": "Todos los avisos y pedidos de cambio de clase de los alumnos. Los puede atender también la docente del grupo."
     },
     "teacherGroups": {
       "title": "Mis grupos",
@@ -2158,6 +2159,63 @@
     "lesson": {
       "mark": "Marcar como completada",
       "done": "Completada"
+    }
+  },
+  "guardian": {
+    "children": {
+      "eyebrow": "Mi familia",
+      "title": "Mis hijos",
+      "lead": "Cada hijo con su nivel, sus matrículas, su saldo y su asistencia.",
+      "empty": "Todavía no hay hijos vinculados a tu cuenta. Si crees que es un error, escríbenos.",
+      "age": "{years} años",
+      "noAge": "Edad sin indicar",
+      "enrollments": "Matrículas",
+      "noEnrollments": "Sin matrículas todavía.",
+      "balance": "Saldo {amount}",
+      "paidUp": "Al día",
+      "attendance": "Asistencia",
+      "noClasses": "todavía no hay clases que contar",
+      "attendanceValue": "{percent}% ({present} presentes, {late} tarde, {absent} faltas)",
+      "go": {
+        "schedule": "Ver horario",
+        "payments": "Ver pagos",
+        "consents": "Ver consentimientos"
+      }
+    },
+    "schedule": {
+      "eyebrow": "Mi familia",
+      "title": "Horario",
+      "lead": "Las clases de tus hijos en los próximos 30 días.",
+      "empty": "No hay clases programadas en los próximos 30 días."
+    },
+    "payments": {
+      "eyebrow": "Mi familia",
+      "title": "Pagos",
+      "lead": "Lo pagado por tus hijos y lo que queda pendiente.",
+      "dueTitle": "Saldo pendiente",
+      "dueHint": "Para pagar, escríbenos o haz la transferencia con el nombre de tu hijo como referencia.",
+      "history": "Historial",
+      "empty": "Todavía no hay pagos registrados.",
+      "refunded": "devuelto {amount}"
+    },
+    "consents": {
+      "eyebrow": "Mi familia",
+      "title": "Consentimientos",
+      "lead": "Lo que has autorizado para cada hijo. Puedes dar o retirar el de grabaciones y el de fotos cuando quieras.",
+      "empty": "Todavía no hay hijos vinculados a tu cuenta.",
+      "kind": {
+        "minor_data": "Tratamiento de datos del menor",
+        "recordings": "Grabaciones de las clases",
+        "photos": "Fotos"
+      },
+      "granted": "Autorizado",
+      "withdrawn": "Retirado",
+      "none": "Sin respuesta",
+      "since": "Desde {date}",
+      "grant": "Autorizar",
+      "withdraw": "Retirar autorización",
+      "noText": "La escuela todavía no ha publicado el texto de este consentimiento.",
+      "managedBySchool": "Este consentimiento lo gestiona la escuela al matricular."
     }
   }
 }

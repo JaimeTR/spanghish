@@ -79,6 +79,7 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.r("groups", "groups"),
     a.r("enrollments", "enrollments"),
     a.r("attendance", "attendance"),
+    a.r("requests", "requests"),
     a.r("leads", "leads"),
     a.r("users", "users"),
     a.r("students", "students"),
@@ -105,7 +106,7 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     s.r("progress", "progress"),
     s.r("payments", "payments"),
   ],
-  guardian: [g.d("children"), g.d("schedule"), g.d("payments"), g.d("consents"), g.d("resources")],
+  guardian: [g.r("children", "children"), g.r("schedule", "schedule"), g.r("payments", "payments"), g.r("consents", "consents"), g.r("resources", "resources")],
 };
 
 /** Grupos del menú lateral (claves de `nav.groups`). `null` = sin título, arriba del todo. */
@@ -118,6 +119,7 @@ const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
     groups: "operation",
     enrollments: "operation",
     attendance: "operation",
+    requests: "operation",
     leads: "operation",
     users: "people",
     students: "people",

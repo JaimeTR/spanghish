@@ -24,6 +24,7 @@ describe("NAV", () => {
       "groups",
       "enrollments",
       "attendance",
+      "requests",
       "leads",
       "users",
       "students",
@@ -104,6 +105,7 @@ describe("NAV", () => {
       "admin.groups",
       "admin.enrollments",
       "admin.attendance",
+      "admin.requests",
       "admin.leads",
       "admin.users",
       "admin.students",
@@ -133,6 +135,11 @@ describe("NAV", () => {
       "student.assignments",
       "student.progress",
       "student.payments",
+      "guardian.children",
+      "guardian.schedule",
+      "guardian.payments",
+      "guardian.consents",
+      "guardian.resources",
     ]);
   });
 
@@ -176,7 +183,7 @@ describe("NAV", () => {
     expect(devModules("admin")).toEqual([]);
     expect(devModules("teacher")).toEqual([]);
     expect(devModules("student")).toEqual([]);
-    expect(devModules("guardian")).toHaveLength(5);
+    expect(devModules("guardian")).toEqual([]);
   });
 
   it("every item has a label and every dev module its texts in es and en", () => {
