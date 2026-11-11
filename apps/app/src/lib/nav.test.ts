@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import en from "../../messages/en.json";
 import es from "../../messages/es.json";
-import { devModules, NAV, navGroupsFor, navItemsFor, navUrl, switchableAreas } from "./nav";
+import { NAV, navGroupsFor, navItemsFor, navUrl, switchableAreas } from "./nav";
 import { swapLocale } from "./locale-path";
 
 const ROLES = ["admin", "teacher", "student", "guardian"] as const;
@@ -71,10 +71,9 @@ describe("NAV", () => {
     }
   });
 
-  it("navGroupsFor puts what is finished on top and what is in development at the bottom", () => {
-    // Admin: la portada, luego los grupos con algo listo y al final el que solo tiene módulos en desarrollo.
+  it("navGroupsFor puts the home on top and keeps the order of NAV", () => {
+    // Admin: la portada, luego los grupos en el orden de aparición.
     expect(navGroupsFor("admin").map((g) => g.group)).toEqual([null, "operation", "people", "content", "management"]);
-    // Dentro de un grupo, lo listo va antes que lo que está en desarrollo.
     expect(navGroupsFor("admin").find((g) => g.group === "management")?.items.map((i) => i.key)).toEqual([
       "catalog",
       "products",
@@ -83,21 +82,11 @@ describe("NAV", () => {
       "settings",
     ]);
     expect(navGroupsFor("student").map((g) => g.group)).toEqual([null, "classes", "learn", "account"]);
-    for (const role of ROLES) {
-      let seenDevOnly = false;
-      for (const { group, items } of navGroupsFor(role)) {
-        const devOnly = group !== null && items.every((i) => i.status === "dev");
-        if (devOnly) seenDevOnly = true;
-        else expect(seenDevOnly, `${role}: un grupo con módulos listos va después de uno solo en desarrollo`).toBe(false);
-        const firstDev = items.findIndex((i) => i.status === "dev");
-        if (firstDev >= 0) expect(items.slice(firstDev).every((i) => i.status === "dev"), `${role}.${group}`).toBe(true);
-      }
-    }
   });
 
-  it("marks as ready only the modules that exist", () => {
+  it("lists every module of the portal", () => {
     const readyKeys = ROLES.flatMap((r) =>
-      NAV[r].filter((i) => i.status === "ready").map((i) => `${r}.${i.key}`),
+      NAV[r].map((i) => `${r}.${i.key}`),
     );
     expect(readyKeys).toEqual([
       "admin.dashboard",
@@ -143,9 +132,9 @@ describe("NAV", () => {
     ]);
   });
 
-  it("a ready module points to a real page", () => {
+  it("every module points to a real page", () => {
     for (const role of ROLES) {
-      for (const item of NAV[role].filter((i) => i.status === "ready")) {
+      for (const item of NAV[role]) {
         expect(existsSync(path.join(SHELL, item.href, "page.tsx")), `${item.href}/page.tsx`).toBe(true);
       }
     }
@@ -159,15 +148,6 @@ describe("NAV", () => {
     expect(NAV.student.find((item) => item.key === "resources")?.href).toBe("/student/resources");
   });
 
-  it("a dev module uses /<area>/<key> and no real page shadows it", () => {
-    for (const role of ROLES) {
-      for (const item of NAV[role].filter((i) => i.status === "dev")) {
-        expect(item.href).toBe(`/${role}/${item.key}`);
-        expect(existsSync(path.join(SHELL, role, item.key)), `${role}/${item.key} exists`).toBe(false);
-      }
-    }
-  });
-
   it("every item stays inside its own area and keys are unique within it", () => {
     for (const role of ROLES) {
       const keys = NAV[role].map((i) => i.key);
@@ -179,30 +159,11 @@ describe("NAV", () => {
     }
   });
 
-  it("devModules returns the dev keys of an area", () => {
-    expect(devModules("admin")).toEqual([]);
-    expect(devModules("teacher")).toEqual([]);
-    expect(devModules("student")).toEqual([]);
-    expect(devModules("guardian")).toEqual([]);
-  });
-
-  it("every item has a label and every dev module its texts in es and en", () => {
+  it("every item has a label in es and en", () => {
     for (const messages of [es, en]) {
-      expect(typeof lookup(messages, "nav.status.dev")).toBe("string");
       for (const role of ROLES) {
         for (const item of NAV[role]) {
           expect(typeof lookup(messages, `nav.items.${item.key}`), `nav.items.${item.key}`).toBe("string");
-          if (item.status !== "dev") continue;
-          // Texto por área: el mismo módulo (p. ej. "groups") es distinto para admin y docente.
-          const base = `devModules.${role}.${item.key}`;
-          for (const field of ["title", "summary", "previewLabel"]) {
-            const value = lookup(messages, `${base}.${field}`);
-            expect(typeof value === "string" && value.length > 0, `${base}.${field}`).toBe(true);
-          }
-          const bullets = lookup(messages, `${base}.bullets`);
-          expect(Array.isArray(bullets), `${base}.bullets`).toBe(true);
-          expect((bullets as unknown[]).length).toBeGreaterThanOrEqual(3);
-          expect((bullets as unknown[]).length).toBeLessThanOrEqual(5);
         }
       }
     }

@@ -65,17 +65,29 @@ isOneToOne: false
                   ]
                 },"attendance": {
                   Row: {
-                    "id": string,"marked_at": string,"marked_by": string | null,"note": string | null,"session_id": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
+                    "charge_status": string,"credit_pack_id": string | null,"id": string,"marked_at": string,"marked_by": string | null,"note": string | null,"session_id": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "id"?: string,"marked_at"?: string,"marked_by"?: string | null,"note"?: string | null,"session_id": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
+                    "charge_status"?: string,"credit_pack_id"?: string | null,"id"?: string,"marked_at"?: string,"marked_by"?: string | null,"note"?: string | null,"session_id": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
                   }
                   Update: {
-                    "id"?: string,"marked_at"?: string,"marked_by"?: string | null,"note"?: string | null,"session_id"?: string,"status"?: Database["public"]['Enums']["attendance_status"],"student_id"?: string
+                    "charge_status"?: string,"credit_pack_id"?: string | null,"id"?: string,"marked_at"?: string,"marked_by"?: string | null,"note"?: string | null,"session_id"?: string,"status"?: Database["public"]['Enums']["attendance_status"],"student_id"?: string
                   }
                   Relationships: [
                     {
+      foreignKeyName: "attendance_credit_pack_id_fkey"
+      columns: ["credit_pack_id"]
+isOneToOne: false
+      referencedRelation: "credit_pack_balances"
+      referencedColumns: ["pack_id"]
+    },{
+      foreignKeyName: "attendance_credit_pack_id_fkey"
+      columns: ["credit_pack_id"]
+isOneToOne: false
+      referencedRelation: "credit_packs"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "attendance_marked_by_fkey"
       columns: ["marked_by"]
 isOneToOne: false
@@ -108,6 +120,32 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"closures": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"ends_on": string,"id": string,"location_id": string | null,"reason_en": string | null,"reason_es": string | null,"starts_on": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"ends_on": string,"id"?: string,"location_id"?: string | null,"reason_en"?: string | null,"reason_es"?: string | null,"starts_on": string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"ends_on"?: string,"id"?: string,"location_id"?: string | null,"reason_en"?: string | null,"reason_es"?: string | null,"starts_on"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "closures_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "closures_location_id_fkey"
+      columns: ["location_id"]
+isOneToOne: false
+      referencedRelation: "locations"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"consent_texts": {
                   Row: {
@@ -159,6 +197,82 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "consent_texts"
       referencedColumns: ["id","kind"]
+    }
+                  ]
+                },"credit_movements": {
+                  Row: {
+                    "attendance_id": string | null,"created_at": string,"created_by": string | null,"delta": number,"id": string,"note": string | null,"pack_id": string,"reason": Database["public"]['Enums']["credit_reason"],"student_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "attendance_id"?: string | null,"created_at"?: string,"created_by"?: string | null,"delta": number,"id"?: string,"note"?: string | null,"pack_id": string,"reason": Database["public"]['Enums']["credit_reason"],"student_id": string
+                  }
+                  Update: {
+                    "attendance_id"?: string | null,"created_at"?: string,"created_by"?: string | null,"delta"?: number,"id"?: string,"note"?: string | null,"pack_id"?: string,"reason"?: Database["public"]['Enums']["credit_reason"],"student_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "credit_movements_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "credit_movements_pack_id_fkey"
+      columns: ["pack_id"]
+isOneToOne: false
+      referencedRelation: "credit_pack_balances"
+      referencedColumns: ["pack_id"]
+    },{
+      foreignKeyName: "credit_movements_pack_id_fkey"
+      columns: ["pack_id"]
+isOneToOne: false
+      referencedRelation: "credit_packs"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "credit_movements_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"credit_packs": {
+                  Row: {
+                    "amount_cents": number | null,"created_at": string,"created_by": string | null,"enrollment_id": string | null,"expires_on": string | null,"id": string,"lessons_total": number,"note": string | null,"program_id": string | null,"starts_on": string,"student_id": string,"updated_at": string,"voided_at": string | null,"voided_reason": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "amount_cents"?: number | null,"created_at"?: string,"created_by"?: string | null,"enrollment_id"?: string | null,"expires_on"?: string | null,"id"?: string,"lessons_total": number,"note"?: string | null,"program_id"?: string | null,"starts_on"?: string,"student_id": string,"updated_at"?: string,"voided_at"?: string | null,"voided_reason"?: string | null
+                  }
+                  Update: {
+                    "amount_cents"?: number | null,"created_at"?: string,"created_by"?: string | null,"enrollment_id"?: string | null,"expires_on"?: string | null,"id"?: string,"lessons_total"?: number,"note"?: string | null,"program_id"?: string | null,"starts_on"?: string,"student_id"?: string,"updated_at"?: string,"voided_at"?: string | null,"voided_reason"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "credit_packs_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "credit_packs_enrollment_id_fkey"
+      columns: ["enrollment_id"]
+isOneToOne: false
+      referencedRelation: "enrollments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "credit_packs_program_id_fkey"
+      columns: ["program_id"]
+isOneToOne: false
+      referencedRelation: "programs"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "credit_packs_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
     }
                   ]
                 },"enrollment_payments": {
@@ -1010,11 +1124,34 @@ isOneToOne: false
                 }
           }
           Views: {
-            [_ in never]: never
+            "credit_pack_balances": {
+                  Row: {
+                    "expires_on": string | null,"is_expired": boolean | null,"lessons_total": number,"note": string | null,"pack_id": string,"program_id": string | null,"remaining": number | null,"starts_on": string,"student_id": string,"voided_at": string | null
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "credit_packs_program_id_fkey"
+      columns: ["program_id"]
+isOneToOne: false
+      referencedRelation: "programs"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "credit_packs_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                }
           }
           Functions: {
             "account_status":
 { Args: Record<PropertyKey, never>; Returns: string
+                           },
+"add_closure":
+{ Args: { "p_ends_on": string,"p_location_id": string,"p_reason_en": string,"p_reason_es": string,"p_starts_on": string }; Returns: number
                            },
 "admin_confirm_request":
 { Args: { "p_payment": Json,"p_request_id": string }; Returns: Json
@@ -1048,6 +1185,11 @@ isOneToOne: false
                            },
 "create_student":
 { Args: { "p_payload": Json }; Returns: string
+                           },
+"credit_pack_balances_internal":
+{ Args: { "p_student_id": string }; Returns: {
+              "created_at": string,"expires_on": string,"pack_id": string,"program_id": string,"remaining": number,"starts_on": string,"voided_at": string
+            }[]
                            },
 "current_guardian_ids":
 { Args: Record<PropertyKey, never>; Returns: string[]
@@ -1170,7 +1312,7 @@ isOneToOne: false
                            },
 "session_roster":
 { Args: { "p_session_id": string }; Returns: {
-              "attendance_id": string,"full_name": string,"note": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
+              "attendance_id": string,"charge_status": string,"full_name": string,"note": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
             }[]
                            },
 "session_roster_internal":
@@ -1217,7 +1359,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","assignment_status": "draft"|"published","attendance_status": "present"|"late"|"absent"|"excused","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","change_request_kind": "absence"|"reschedule","change_request_status": "pending"|"approved"|"declined"|"cancelled","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","session_status": "scheduled"|"completed"|"cancelled","student_status": "active"|"inactive","submission_status": "submitted"|"graded","test_question_kind": "single"|"truefalse"|"fill"
+            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","assignment_status": "draft"|"published","attendance_status": "present"|"late"|"absent"|"excused","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","change_request_kind": "absence"|"reschedule","change_request_status": "pending"|"approved"|"declined"|"cancelled","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","credit_reason": "attendance"|"attendance_reversal"|"adjustment","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","session_status": "scheduled"|"completed"|"cancelled","student_status": "active"|"inactive","submission_status": "submitted"|"graded","test_question_kind": "single"|"truefalse"|"fill"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -1333,7 +1475,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"assignment_status": ["draft", "published"],"attendance_status": ["present", "late", "absent", "excused"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"change_request_kind": ["absence", "reschedule"],"change_request_status": ["pending", "approved", "declined", "cancelled"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"session_status": ["scheduled", "completed", "cancelled"],"student_status": ["active", "inactive"],"submission_status": ["submitted", "graded"],"test_question_kind": ["single", "truefalse", "fill"]
+            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"assignment_status": ["draft", "published"],"attendance_status": ["present", "late", "absent", "excused"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"change_request_kind": ["absence", "reschedule"],"change_request_status": ["pending", "approved", "declined", "cancelled"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"credit_reason": ["attendance", "attendance_reversal", "adjustment"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"session_status": ["scheduled", "completed", "cancelled"],"student_status": ["active", "inactive"],"submission_status": ["submitted", "graded"],"test_question_kind": ["single", "truefalse", "fill"]
           }
         }
 } as const

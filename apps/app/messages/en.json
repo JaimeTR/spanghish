@@ -93,9 +93,6 @@
   },
   "nav": {
     "label": "Main navigation",
-    "status": {
-      "dev": "In development"
-    },
     "groups": {
       "operation": "Operations",
       "people": "People",
@@ -192,29 +189,32 @@
     "admin": {
       "intro": "The school's management dashboard.",
       "summaryTitle": "Overview",
-      "sample": {
-        "badge": "Sample data",
-        "note": "Sample figures to show how the summary will look; they will be replaced by real data from each module.",
+      "kpi": {
         "activeStudents": "Active students",
-        "pendingEnrollments": "Pending enrolments",
+        "pendingEnrollments": "Pending pre-enrolments",
         "newLeads": "New enquiries",
-        "classesToday": "Classes today"
+        "classesToday": "Classes today",
+        "pendingChanges": "Pending class changes"
       }
     },
     "teacher": {
       "intro": "Your teaching day.",
       "todayTitle": "Today's classes",
-      "todayEmpty": "No classes scheduled yet."
+      "todayEmpty": "No classes today.",
+      "takeAttendance": "Take attendance"
     },
     "student": {
       "intro": "Your classes and progress will show up here.",
       "nextTitle": "Your next class",
-      "nextEmpty": "No classes scheduled yet."
+      "nextEmpty": "No classes scheduled.",
+      "pendingTasks": "{count, plural, one {You have # assignment to submit} other {You have # assignments to submit}}"
     },
     "guardian": {
       "intro": "Your children's progress will show up here.",
       "summaryTitle": "Overview",
-      "summaryEmpty": "No students are linked to your account yet."
+      "summaryEmpty": "No students are linked to your account yet.",
+      "children": "Your children: {names}.",
+      "next": "Next class"
     },
     "modulesTitle": "Modules"
   },
@@ -951,286 +951,6 @@
       "newWindow": "opens in a new window"
     }
   },
-  "inDevelopment": {
-    "badge": "In development",
-    "whatYouCanDo": "What you will be able to do here",
-    "previewCaption": "Sample view (not real data)",
-    "back": "Back to home"
-  },
-  "devModules": {
-    "admin": {
-      "calendar": {
-        "title": "Calendar",
-        "summary": "View school classes by week or month and filter the calendar.",
-        "bullets": [
-          "View classes by week or month.",
-          "Filter by venue, teacher or group.",
-          "Open the Zoom or Meet link for an online class."
-        ],
-        "previewLabel": "Sample school calendar"
-      },
-      "groups": {
-        "title": "Groups",
-        "summary": "Set up groups from a programme edition and view their students.",
-        "bullets": [
-          "Create groups from a programme edition.",
-          "Assign a teacher, venue, schedule and capacity.",
-          "View the students in each group."
-        ],
-        "previewLabel": "Sample group details"
-      },
-      "enrollments": {
-        "title": "Enrolments",
-        "summary": "Enrol students in groups and view their status and chosen payment plan.",
-        "bullets": [
-          "Enrol students in groups.",
-          "View pending, active, paused or finished status.",
-          "View the chosen pack, pay-as-you-go or upfront plan."
-        ],
-        "previewLabel": "Sample student enrolment"
-      },
-      "attendance": {
-        "title": "Attendance",
-        "summary": "Review attendance for every class, absences and classes to make up.",
-        "bullets": [
-          "Review attendance for each class.",
-          "Check absences.",
-          "Identify classes to make up."
-        ],
-        "previewLabel": "Sample attendance record"
-      },
-      "payments": {
-        "title": "Payments",
-        "summary": "Record and reconcile payments in AUD with GST, with a clear record of entries.",
-        "bullets": [
-          "Record card payments through Stripe.",
-          "Manually record bank transfers and Eventbrite payments.",
-          "Reconcile payments and view amounts in AUD with GST.",
-          "View recorded payments, which cannot be changed."
-        ],
-        "previewLabel": "Sample payment records"
-      },
-      "leads": {
-        "title": "Enquiries",
-        "summary": "Follow up website enquiries and bookings for the free 45-minute class.",
-        "bullets": [
-          "View enquiries received through the website.",
-          "Review bookings for the free 45-minute class.",
-          "Update follow-up status.",
-          "Turn an enquiry into a student."
-        ],
-        "previewLabel": "Sample enquiry follow-up"
-      },
-      "content": {
-        "title": "Content",
-        "summary": "Manage Resources and Learn Now lessons for the public website.",
-        "bullets": [
-          "Manage videos, documents, links, worksheets and Learn Now lessons.",
-          "Set access to public, account holders or students only.",
-          "Save content as a draft or publish it.",
-          "Set the order and update the public website."
-        ],
-        "previewLabel": "Sample resource management"
-      }
-    },
-    "teacher": {
-      "today": {
-        "title": "Today",
-        "summary": "View today's classes and quickly access attendance taking.",
-        "bullets": [
-          "View the time and group for each class.",
-          "Check the venue or video-call link.",
-          "Quickly access attendance taking."
-        ],
-        "previewLabel": "Sample classes for today"
-      },
-      "groups": {
-        "title": "Groups",
-        "summary": "View your assigned groups, their students and their levels.",
-        "bullets": [
-          "View only the groups assigned to you.",
-          "Review the students in each group.",
-          "View each group's level."
-        ],
-        "previewLabel": "Sample assigned groups"
-      },
-      "calendar": {
-        "title": "Calendar",
-        "summary": "View your classes by week or month.",
-        "bullets": [
-          "View your classes for the week.",
-          "View your classes for the month.",
-          "Check the time and group of each class."
-        ],
-        "previewLabel": "Sample teacher calendar"
-      },
-      "attendance": {
-        "title": "Attendance",
-        "summary": "Take the roll for your classes and mark each student's attendance.",
-        "bullets": [
-          "Take the roll for your classes.",
-          "Mark each student present.",
-          "Mark each student absent or excused."
-        ],
-        "previewLabel": "Sample class roll"
-      },
-      "resources": {
-        "title": "Resources",
-        "summary": "Access all published teaching materials to use in class.",
-        "bullets": [
-          "View published teaching materials.",
-          "Access resources for any level.",
-          "Use resources in class."
-        ],
-        "previewLabel": "Sample teaching materials"
-      },
-      "requests": {
-        "title": "Class changes",
-        "summary": "Review and respond to class change or make-up requests.",
-        "bullets": [
-          "View requests from your groups.",
-          "Review requests to change a class.",
-          "Review requests to make up a class.",
-          "Respond to requests."
-        ],
-        "previewLabel": "Sample class requests"
-      }
-    },
-    "student": {
-      "schedule": {
-        "title": "Schedule",
-        "summary": "View your upcoming classes with Brisbane time and attendance details.",
-        "bullets": [
-          "View your upcoming classes.",
-          "Check the time in Brisbane.",
-          "View the venue or video-call link."
-        ],
-        "previewLabel": "Sample upcoming classes"
-      },
-      "courses": {
-        "title": "My courses",
-        "summary": "View your enrolled programmes and groups, including level and teacher.",
-        "bullets": [
-          "View your programmes and groups.",
-          "Check the level of each course.",
-          "See who your teacher is."
-        ],
-        "previewLabel": "Sample enrolled courses"
-      },
-      "resources": {
-        "title": "Resources",
-        "summary": "Access videos, documents and worksheets available at your access level.",
-        "bullets": [
-          "View videos available to you.",
-          "Access documents at your access level.",
-          "View unlocked worksheets."
-        ],
-        "previewLabel": "Sample study resources"
-      },
-      "learn": {
-        "title": "Learn",
-        "summary": "Read lessons and practise with questions at your access level.",
-        "bullets": [
-          "Browse lessons by category and level.",
-          "Open articles available to you.",
-          "Review interactive lessons."
-        ],
-        "previewLabel": "Sample lessons"
-      },
-      "assignments": {
-        "title": "Assignments",
-        "summary": "View class homework and due dates, and hand in your files.",
-        "bullets": [
-          "View class homework.",
-          "Check due dates.",
-          "Hand in your files."
-        ],
-        "previewLabel": "Sample assignment and due date"
-      },
-      "progress": {
-        "title": "Progress",
-        "summary": "Review your attendance, completed lessons and level.",
-        "bullets": [
-          "Review your attendance.",
-          "View completed lessons.",
-          "Check your level."
-        ],
-        "previewLabel": "Sample learning progress"
-      },
-      "payments": {
-        "title": "Payments",
-        "summary": "View payments, receipts and amounts due, and pay by card.",
-        "bullets": [
-          "View completed and pending payments.",
-          "Review your receipts.",
-          "Pay by card."
-        ],
-        "previewLabel": "Sample payments and receipts"
-      },
-      "requests": {
-        "title": "Class changes",
-        "summary": "Request a class change or make-up and check your request status.",
-        "bullets": [
-          "Request a class change.",
-          "Request a class make-up.",
-          "Check the status of your requests."
-        ],
-        "previewLabel": "Sample request status"
-      }
-    },
-    "guardian": {
-      "children": {
-        "title": "My children",
-        "summary": "View the minors linked to your account, including their group, level and teacher.",
-        "bullets": [
-          "View the minors linked to your account.",
-          "Check each child's group and level.",
-          "See who their teacher is."
-        ],
-        "previewLabel": "Sample linked children"
-      },
-      "schedule": {
-        "title": "Schedule",
-        "summary": "View your children's upcoming classes.",
-        "bullets": [
-          "View your children's upcoming classes.",
-          "Check the time of each class.",
-          "View the venue or video-call link."
-        ],
-        "previewLabel": "Sample family schedule"
-      },
-      "payments": {
-        "title": "Payments",
-        "summary": "View payments for your children's enrolments and their receipts.",
-        "bullets": [
-          "View payments for your children's enrolments.",
-          "Review the receipts.",
-          "View pending payments."
-        ],
-        "previewLabel": "Sample enrolment payments"
-      },
-      "consents": {
-        "title": "Consents",
-        "summary": "Review, give or withdraw consents relating to your children.",
-        "bullets": [
-          "Review consents about minors' data.",
-          "Give or withdraw consent for class recordings.",
-          "Give or withdraw consent for photos."
-        ],
-        "previewLabel": "Sample consent settings"
-      },
-      "resources": {
-        "title": "Resources",
-        "summary": "View your children's study materials.",
-        "bullets": [
-          "View your children's study materials.",
-          "Check the resources available to them.",
-          "Access unlocked videos, documents and worksheets."
-        ],
-        "previewLabel": "Sample study materials"
-      }
-    }
-  },
   "table": {
     "search": "Search",
     "filterBy": "Filter by",
@@ -1896,7 +1616,8 @@
       "balance": "Balance",
       "paidUp": "Up to date",
       "join": "Join the online class",
-      "seePayments": "See my payments"
+      "seePayments": "See my payments",
+      "lessonsLeft": "Lessons available"
     },
     "payments": {
       "title": "My payments",
@@ -1932,7 +1653,8 @@
         "late": "Late",
         "absent": "Absent",
         "excused": "Excused"
-      }
+      },
+      "uncovered": "No balance"
     },
     "today": {
       "title": "Today",
@@ -1958,7 +1680,10 @@
       "cancelButton": "Cancel class",
       "cancelling": "Cancelling…",
       "restore": "Reinstate class",
-      "introTeacher": "Your classes, week by week. Take attendance or cancel a class."
+      "introTeacher": "Your classes, week by week. Take attendance or cancel a class.",
+      "closed": "Closed: {reason} · {place}",
+      "closedNoReason": "no reason given",
+      "allLocations": "All venues"
     },
     "schedule": {
       "title": "My schedule",
@@ -2047,6 +1772,25 @@
       "noStudents": "No students enrolled yet.",
       "seeCalendar": "See calendar",
       "seeAttendance": "Take attendance"
+    },
+    "closures": {
+      "button": "Closures",
+      "title": "Closures and holidays",
+      "upcoming": "Upcoming closures",
+      "none": "There are no upcoming closures.",
+      "add": "Add a closure",
+      "addHint": "No classes are generated on those days, and future classes without attendance that fall inside are cancelled automatically.",
+      "startsOn": "From",
+      "endsOn": "Until",
+      "endsOnHint": "Leave empty for a single day.",
+      "location": "Venue",
+      "locationHint": "If you don't choose a venue, the closure applies to all.",
+      "allLocations": "All venues",
+      "reasonEs": "Reason (Spanish)",
+      "reasonEn": "Reason (English)",
+      "save": "Add closure",
+      "saving": "Saving…",
+      "delete": "Remove closure"
     }
   },
   "assignments": {
@@ -2180,7 +1924,8 @@
         "schedule": "See schedule",
         "payments": "See payments",
         "consents": "See consents"
-      }
+      },
+      "lessonsLeft": "Lessons available"
     },
     "schedule": {
       "eyebrow": "My family",
@@ -2216,6 +1961,50 @@
       "withdraw": "Withdraw authorisation",
       "noText": "The school hasn't published the text of this consent yet.",
       "managedBySchool": "The school manages this consent when enrolling."
+    }
+  },
+  "credits": {
+    "title": "Lesson packs",
+    "new": "New pack",
+    "newTitle": "New lesson pack",
+    "empty": "This student has no lesson packs.",
+    "remainingOf": "{remaining} of {total} lessons",
+    "anyProgram": "Any program",
+    "since": "from {date}",
+    "expires": "expires {date}",
+    "noExpiry": "no expiry",
+    "void": "Void pack",
+    "adjustTitle": "Adjust balance",
+    "state": {
+      "active": "Active",
+      "expired": "Expired",
+      "voided": "Voided"
+    },
+    "reason": {
+      "attendance": "Attendance",
+      "attendance_reversal": "Refund",
+      "adjustment": "Adjustment"
+    },
+    "form": {
+      "lessons": "Lessons",
+      "program": "Program",
+      "programHint": "Left on any, it works for every program.",
+      "startsOn": "Valid from",
+      "expiresOn": "Expires on",
+      "expiresHint": "Optional.",
+      "amount": "Amount paid",
+      "amountHint": "In dollars (AUD). Optional.",
+      "note": "Note",
+      "create": "Create pack",
+      "saving": "Saving…"
+    },
+    "adjust": {
+      "hint": "Add or remove lessons with a reason. It stays in the history and the balance can't go below zero.",
+      "delta": "Change in lessons",
+      "deltaHint": "E.g. 2 to add or -1 to remove.",
+      "note": "Reason",
+      "save": "Save adjustment",
+      "saving": "Saving…"
     }
   }
 }

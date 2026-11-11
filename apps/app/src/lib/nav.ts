@@ -31,18 +31,13 @@ export type NavIcon =
   | "children"
   | "consents";
 
-/** `ready`: el módulo existe. `dev`: se muestra con la etiqueta "En desarrollo". */
-export type ModuleStatus = "ready" | "dev";
-
 /**
- * Módulo del menú lateral. `key` es la clave de traducción en `nav.items` (y,
- * si está en desarrollo, en `devModules.<area>.<key>`). `href` es la ruta sin
- * locale: la real si está `ready`, `/<area>/<key>` (página "En desarrollo") si no.
+ * Módulo del menú lateral. `key` es la clave de traducción en `nav.items`. `href` es la ruta
+ * sin locale (nav.test.ts comprueba que cada una exista).
  */
 export type NavItem = {
   key: NavIcon;
   area: AppRole;
-  status: ModuleStatus;
   href: string;
   icon: NavIcon;
 };
@@ -53,24 +48,17 @@ const ready =
   (key: NavIcon, path: string): NavItem => ({
     key,
     area,
-    status: "ready",
     href: path ? `/${area}/${path}` : `/${area}`,
     icon: key,
   });
 
-const dev =
-  (area: AppRole) =>
-  (key: NavIcon): NavItem => ({ key, area, status: "dev", href: `/${area}/${key}`, icon: key });
-
-const a = { r: ready("admin"), d: dev("admin") };
-const t = { r: ready("teacher"), d: dev("teacher") };
-const s = { r: ready("student"), d: dev("student") };
-const g = { r: ready("guardian"), d: dev("guardian") };
+const a = { r: ready("admin") };
+const t = { r: ready("teacher") };
+const s = { r: ready("student") };
+const g = { r: ready("guardian") };
 
 /**
- * Menú completo de cada rol, con todo lo que tendrá el portal. Cada tarea que
- * construya un módulo cambia su entrada a `ready` con su ruta real (nav.test.ts
- * comprueba que la ruta exista).
+ * Menú completo de cada rol. Cada entrada apunta a su página real (nav.test.ts comprueba que exista).
  */
 export const NAV: Record<AppRole, readonly NavItem[]> = {
   admin: [
@@ -162,37 +150,22 @@ const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
   },
 };
 
-/**
- * Menú de un área partido en grupos. Lo ya construido va arriba y lo que sigue
- * en desarrollo, abajo: dentro de cada grupo los módulos listos van primero, y
- * los grupos que solo tienen módulos en desarrollo van al final. El resto del
- * orden es el de `NAV`. Lo que no tiene grupo (la portada) va siempre arriba.
- */
+/** Menú de un área partido en grupos, en el orden de `NAV`. Lo que no tiene grupo (la portada) va siempre arriba. */
 export function navGroupsFor(role: AppRole): { group: NavGroup | null; items: NavItem[] }[] {
   const byGroup = new Map<NavGroup | null, NavItem[]>();
   for (const item of NAV[role]) {
     const group = GROUP_OF[role][item.key] ?? null;
     byGroup.set(group, [...(byGroup.get(group) ?? []), item]);
   }
-  const groups = [...byGroup].map(([group, items]) => ({
-    group,
-    // Estable: dentro de cada estado se conserva el orden de NAV.
-    items: [...items.filter((i) => i.status === "ready"), ...items.filter((i) => i.status === "dev")],
-  }));
-  const rank = ({ group, items }: (typeof groups)[number]) => (group === null ? 0 : items.some((i) => i.status === "ready") ? 1 : 2);
+  const groups = [...byGroup].map(([group, items]) => ({ group, items }));
   return groups
     .map((entry, index) => ({ entry, index }))
-    .sort((x, y) => rank(x.entry) - rank(y.entry) || x.index - y.index)
+    .sort((x, y) => (x.entry.group === null ? 0 : 1) - (y.entry.group === null ? 0 : 1) || x.index - y.index)
     .map(({ entry }) => entry);
 }
 
 export function navItemsFor(role: AppRole): NavItem[] {
   return [...NAV[role]];
-}
-
-/** Claves de los módulos en desarrollo de un área (las que admite `/<area>/[module]`). */
-export function devModules(area: AppRole): string[] {
-  return NAV[area].filter((i) => i.status === "dev").map((i) => i.key);
 }
 
 /** Ruta con locale de un elemento del menú. */

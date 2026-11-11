@@ -19,7 +19,7 @@ export async function SessionRegister({ locale, sessionId, heading = "h2" }: { l
   if (!session) return null;
   const roster = await supabase.rpc("session_roster", { p_session_id: sessionId });
   if (roster.error) throw new Error(`session_roster: ${roster.error.code}`);
-  const rows: RosterRow[] = roster.data.map((r) => ({ studentId: r.student_id, name: r.full_name, status: r.status }));
+  const rows: RosterRow[] = roster.data.map((r) => ({ studentId: r.student_id, name: r.full_name, status: r.status, uncovered: r.charge_status === "uncovered" }));
   const H = heading;
   const day = schoolToday(new Date(session.starts_at));
   const place = session.groups?.locations?.name ?? session.groups?.location_note ?? null;

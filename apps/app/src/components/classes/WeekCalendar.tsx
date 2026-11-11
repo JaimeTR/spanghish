@@ -6,7 +6,7 @@ import { SESSION_TONES } from "@/components/attendance/SessionRegister";
 import { IconLink } from "@/components/ui/IconButton";
 import { ModalButton } from "@/components/ui/Modal";
 import type { Locale } from "@/i18n/routing";
-import { listWeekSessions } from "@/lib/data/sessions";
+import { listWeekClosures, listWeekSessions } from "@/lib/data/sessions";
 import { createClient } from "@/lib/supabase/server";
 import { addDays, formatDay, formatSessionTime, schoolToday, weekStart } from "@/lib/time";
 import { CancelSessionForm, RestoreSession } from "./SessionActions";
@@ -36,7 +36,8 @@ export async function WeekCalendar({
   const ts = await getTranslations({ locale, namespace: "classes" });
   const today = schoolToday();
   const start = weekStart(week && DAY.test(week) ? week : today);
-  const sessions = await listWeekSessions(await createClient(), start);
+  const supabase = await createClient();
+  const [sessions, closures] = await Promise.all([listWeekSessions(supabase, start), listWeekClosures(supabase, start)]);
   const days = Array.from({ length: 7 }, (_, i) => addDays(start, i));
 
   return (
@@ -54,12 +55,18 @@ export async function WeekCalendar({
       <div className="mt-6 space-y-5">
         {days.map((day) => {
           const ofDay = sessions.filter((s) => schoolToday(new Date(s.starts_at)) === day);
+          const closed = closures.filter((c) => day >= c.starts_on && day <= c.ends_on);
           return (
             <section key={day} aria-labelledby={`day-${day}`}>
               <h2 id={`day-${day}`} className={`text-sm font-bold uppercase ${day === today ? "text-structure" : "text-text-muted"}`}>
                 {new Intl.DateTimeFormat(locale === "es" ? "es-ES" : "en-AU", { weekday: "long", timeZone: "UTC" }).format(new Date(`${day}T00:00:00Z`))} · {formatDay(day, locale)}
                 {day === today ? ` · ${t("today")}` : ""}
               </h2>
+              {closed.map((c) => (
+                <p key={c.id} className="mt-1 rounded-md bg-warning/15 px-3 py-1.5 text-sm font-semibold text-[color-mix(in_srgb,var(--role-warning)_78%,black)]">
+                  {t("closed", { reason: (locale === "es" ? c.reason_es : c.reason_en) ?? c.reason_es ?? c.reason_en ?? t("closedNoReason"), place: c.locations?.name ?? t("allLocations") })}
+                </p>
+              ))}
               {ofDay.length === 0 ? (
                 <p className="mt-1 text-sm text-text-muted">{t("noClasses")}</p>
               ) : (

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader, Section } from "@/components/admin/PageHeader";
+import { CreditPacksSection } from "@/components/credits/CreditPacksSection";
 import { isLocale } from "@/i18n/routing";
 import { listLanguages, listLevels } from "@/lib/data/catalog";
 import { getStudentDetail, listConsentTexts } from "@/lib/data/people";
@@ -101,6 +102,8 @@ export default async function StudentPage({
           )}
         </Section>
       ) : null}
+
+      <CreditPacksSection locale={locale} studentId={student.id} />
 
       <Section id="student-consents" title={t("sections.consents")}>
         {student.consents.length === 0 ? (

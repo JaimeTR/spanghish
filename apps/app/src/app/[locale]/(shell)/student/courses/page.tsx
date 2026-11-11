@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { StatusBadge } from "@/components/admin/PageHeader";
 import { EmptyState, HeroHeader, PageContainer } from "@/components/layout/page-parts";
 import { isLocale } from "@/i18n/routing";
+import { availableLessons } from "@/lib/credits/balance";
 import { balanceCents, paidCents } from "@/lib/enrollments/status";
 import { formatAud } from "@/lib/money";
 import { requireArea } from "@/lib/require-area";
@@ -19,7 +20,10 @@ export default async function StudentCoursesPage({ params }: { params: Promise<{
   setRequestLocale(locale);
   await requireArea(locale, "student");
   const t = await getTranslations({ locale, namespace: "studentEnrolment" });
-  const { data, error } = await (await createClient())
+  const supabase = await createClient();
+  const packs = await supabase.from("credit_pack_balances").select("remaining, voided_at, is_expired");
+  if (packs.error) throw new Error(`credit_pack_balances: ${packs.error.code}`);
+  const { data, error } = await supabase
     .from("enrollments")
     .select(
       "id, status, starts_on, agreed_amount_cents, groups(name, meeting_url, location_note, programs(name_es, name_en, lesson_minutes), program_editions(starts_on, ends_on, schedule_es, schedule_en), locations(name, kind, map_url)), enrollment_payments(amount_cents, refunded_cents)",
@@ -32,6 +36,12 @@ export default async function StudentCoursesPage({ params }: { params: Promise<{
   return (
     <PageContainer size="lg">
       <HeroHeader eyebrow={t("eyebrow")} title={t("courses.title")} lead={t("courses.lead")} />
+      {packs.data.length > 0 ? (
+        <p className="mt-6 rounded-[var(--shape-lg)] border border-line border-l-4 border-l-brand-yellow bg-surface p-4 text-text">
+          <span className="font-semibold">{t("courses.lessonsLeft")}: </span>
+          <span className="text-2xl font-extrabold">{availableLessons(packs.data)}</span>
+        </p>
+      ) : null}
       {data.length === 0 ? (
         <EmptyState>{t("courses.empty")}</EmptyState>
       ) : (

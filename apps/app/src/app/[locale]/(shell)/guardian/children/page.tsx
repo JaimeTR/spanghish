@@ -5,6 +5,7 @@ import { StatusBadge } from "@/components/admin/PageHeader";
 import { EmptyState, HeroHeader, PageContainer } from "@/components/layout/page-parts";
 import { isLocale } from "@/i18n/routing";
 import { attendanceSummary } from "@/lib/assignments/progress";
+import { availableLessons } from "@/lib/credits/balance";
 import { balanceCents, paidCents } from "@/lib/enrollments/status";
 import { formatAud } from "@/lib/money";
 import { requireArea } from "@/lib/require-area";
@@ -23,15 +24,17 @@ export default async function GuardianChildrenPage({ params }: { params: Promise
   const ts = await getTranslations({ locale, namespace: "studentEnrolment.status" });
   const supabase = await createClient();
   const es = locale === "es";
-  const [children, attendance] = await Promise.all([
+  const [children, attendance, packs] = await Promise.all([
     supabase
       .from("students")
       .select("id, full_name, student_private(birth_date), levels(code, name_es, name_en), enrollments(id, status, agreed_amount_cents, groups(name, programs(name_es, name_en)), enrollment_payments(amount_cents, refunded_cents))")
       .order("full_name"),
     supabase.from("attendance").select("student_id, status").limit(2000),
+    supabase.from("credit_pack_balances").select("student_id, remaining, voided_at, is_expired"),
   ]);
   if (children.error) throw new Error(`students: ${children.error.code}`);
   if (attendance.error) throw new Error(`attendance: ${attendance.error.code}`);
+  if (packs.error) throw new Error(`credit_pack_balances: ${packs.error.code}`);
   const today = schoolToday();
 
   return (
@@ -44,6 +47,7 @@ export default async function GuardianChildrenPage({ params }: { params: Promise
           {children.data.map((c) => {
             const att = attendanceSummary(attendance.data.filter((a) => a.student_id === c.id) as { status: "present" | "late" | "absent" | "excused" }[]);
             const born = c.student_private?.birth_date;
+            const childPacks = packs.data.filter((p) => p.student_id === c.id);
             const enrollments = c.enrollments.filter((e) => e.status !== "cancelled");
             return (
               <li key={c.id} className="rounded-[var(--shape-lg)] border border-line border-t-4 border-t-brand-yellow bg-surface p-5">
@@ -73,7 +77,13 @@ export default async function GuardianChildrenPage({ params }: { params: Promise
                     })}
                   </ul>
                 )}
-                <p className="mt-4 text-sm text-text">
+                {childPacks.length > 0 ? (
+                  <p className="mt-4 text-sm text-text">
+                    <span className="font-semibold">{t("lessonsLeft")}: </span>
+                    {availableLessons(childPacks)}
+                  </p>
+                ) : null}
+                <p className="mt-2 text-sm text-text">
                   <span className="font-semibold">{t("attendance")}: </span>
                   {att.percent === null ? t("noClasses") : t("attendanceValue", { percent: att.percent, present: att.present, late: att.late, absent: att.absent })}
                 </p>

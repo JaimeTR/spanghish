@@ -6,7 +6,8 @@ import { FormStatus } from "@/components/forms/FormStatus";
 import { useFormAction } from "@/components/forms/useFormAction";
 import { markAllPresent, markAttendance } from "@/lib/sessions/actions";
 
-export type RosterRow = { studentId: string; name: string; status: string | null };
+/** `uncovered`: alumno con pack sin saldo (la asistencia se guarda igual, pero no descontó clase). */
+export type RosterRow = { studentId: string; name: string; status: string | null; uncovered?: boolean };
 
 const STATUSES = ["present", "late", "absent", "excused"] as const;
 // Estado elegido: fondo tintado + texto del color + anillo (mismo criterio de contraste que las insignias).
@@ -26,7 +27,10 @@ function StudentRow({ locale, sessionId, row, editable }: { locale: string; sess
         <input type="hidden" name="uiLocale" value={locale} />
         <input type="hidden" name="sessionId" value={sessionId} />
         <input type="hidden" name="studentId" value={row.studentId} />
-        <span className="min-w-0 font-semibold text-text">{row.name}</span>
+        <span className="min-w-0 font-semibold text-text">
+          {row.name}
+          {row.uncovered ? <span className="ml-2 rounded-full bg-warning/15 px-2 py-0.5 text-xs font-bold text-[color-mix(in_srgb,var(--role-warning)_78%,black)]">{t("uncovered")}</span> : null}
+        </span>
         <span role="group" aria-label={t("markFor", { name: row.name })} className="flex flex-wrap gap-1.5">
           {STATUSES.map((s) => (
             <button

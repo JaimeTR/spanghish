@@ -107,13 +107,12 @@ test.describe("modales y acciones con iconos", () => {
     await expect(row.getByRole("button", { name: "Eliminar recurso" })).toBeFocused();
   });
 
-  test("el menú lateral pone arriba lo terminado y abajo lo que está en desarrollo", async ({ page }) => {
+  test("el menú lateral empieza por el Panel, sigue el orden por secciones y no hay nada en desarrollo", async ({ page }) => {
     const nav = page.getByRole("navigation", { name: "Navegación principal" });
     const links = (await nav.getByRole("link").allInnerTexts()).map((text) => text.replace(/\s+/g, " ").trim());
-    const firstDev = links.findIndex((text) => text.includes("En desarrollo"));
-    expect(firstDev).toBeGreaterThan(0);
-    expect(links.slice(0, firstDev).every((text) => !text.includes("En desarrollo"))).toBe(true);
-    expect(links.slice(firstDev).every((text) => text.includes("En desarrollo"))).toBe(true);
-    expect(links.slice(0, 3)).toEqual(["Panel", "Alumnos", "Docentes"]);
+    expect(links.some((text) => text.includes("En desarrollo"))).toBe(false);
+    expect(links.slice(0, 4)).toEqual(["Panel", "Calendario", "Grupos", "Matrículas"]);
+    expect(links).toContain("Alumnos");
+    expect(links).toContain("Docentes");
   });
 });

@@ -64,17 +64,16 @@ export function Sidebar({
               </p>
             )}
             <ul className="flex flex-col gap-1">
-              {items.map(({ key, icon, url, status }) => {
+              {items.map(({ key, icon, url }) => {
                 const Icon = NAV_ICONS[icon];
                 const label = t(`items.${key}`);
-                const inDev = status === "dev";
                 const current = url === active;
                 return (
                   <li key={key}>
                     <Link
                       href={url}
                       aria-current={current ? "page" : undefined}
-                      title={collapsed ? (inDev ? `${label} · ${t("status.dev")}` : label) : undefined}
+                      title={collapsed ? label : undefined}
                       onClick={onNavigate}
                       className={`${itemBase} ${collapsed ? "justify-center px-0" : ""} ${onStructureFocus} transition-colors duration-150 ${
                         current
@@ -84,26 +83,6 @@ export function Sidebar({
                     >
                       <Icon aria-hidden="true" className="size-5 shrink-0" strokeWidth={current ? 2.25 : 1.75} />
                       <span className={collapsed ? "sr-only" : "flex-1"}>{label}</span>
-                      {/* Nombre accesible = texto visible: "Calendario, En desarrollo". */}
-                      {inDev && <span className="sr-only">, </span>}
-                      {inDev && collapsed && (
-                        <>
-                          <span className="sr-only">{t("status.dev")}</span>
-                          <span
-                            aria-hidden="true"
-                            className="absolute top-1.5 right-2 size-2 rounded-full bg-brand-yellow"
-                          />
-                        </>
-                      )}
-                      {inDev && !collapsed && (
-                        <span
-                          className={`shrink-0 rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-semibold tracking-wide whitespace-nowrap ${
-                            current ? "bg-structure text-on-structure" : "bg-brand-yellow text-text"
-                          }`}
-                        >
-                          {t("status.dev")}
-                        </span>
-                      )}
                     </Link>
                   </li>
                 );
