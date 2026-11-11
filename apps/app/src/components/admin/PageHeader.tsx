@@ -24,6 +24,7 @@ export function PageHeader({
             <IconLink href={back.href} label={back.label} icon={<ArrowLeft className="size-5" strokeWidth={2} />} />
           </div>
         ) : null}
+        {typeof title === "string" ? <title>{`${title} · Spanglish`}</title> : null}
         <h1 className="text-[1.75rem] leading-tight font-bold tracking-[-0.02em] text-text">{title}</h1>
         {intro ? <p className="mt-1.5 max-w-[65ch] text-text-muted">{intro}</p> : null}
       </div>

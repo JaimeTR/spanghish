@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -9,6 +9,8 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+export const viewport: Viewport = { themeColor: "#FCD404" };
+
 export async function generateMetadata({
   params,
 }: {
@@ -17,7 +19,12 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const t = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("title") };
+  // Portal privado: sin indexar (además de robots.txt) y con título "Página · Spanglish".
+  return {
+    title: { default: t("title"), template: "%s · Spanglish" },
+    applicationName: "Spanglish",
+    robots: { index: false, follow: false },
+  };
 }
 
 export default async function LocaleLayout({
