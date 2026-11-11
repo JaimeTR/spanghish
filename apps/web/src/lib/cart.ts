@@ -1,4 +1,4 @@
-import { isProductId, MAX_ITEMS } from "./shop";
+import { isProductId, MAX_ITEMS, PRODUCTS, type Product } from "./shop";
 
 /**
  * Carrito (lógica pura, sin React ni navegador). Guarda solo ids de producto:
@@ -19,38 +19,38 @@ export const EMPTY_CART: CartState = { ids: [] };
 export const CART_STORAGE_KEY = "spanglish.cart.v1";
 
 /** Ids válidos, sin repetir y como mucho MAX_ITEMS. */
-export function sanitizeIds(ids: readonly unknown[]): string[] {
+export function sanitizeIds(ids: readonly unknown[], products: readonly Product[] = PRODUCTS): string[] {
   const out: string[] = [];
   for (const id of ids) {
-    if (isProductId(id) && !out.includes(id)) out.push(id);
+    if (isProductId(id, products) && !out.includes(id)) out.push(id);
     if (out.length >= MAX_ITEMS) break;
   }
   return out;
 }
 
-export function cartReducer(state: CartState, action: CartAction): CartState {
+export function cartReducer(state: CartState, action: CartAction, products: readonly Product[] = PRODUCTS): CartState {
   switch (action.type) {
     case "add":
-      if (!isProductId(action.id) || state.ids.includes(action.id) || state.ids.length >= MAX_ITEMS) return state;
+      if (!isProductId(action.id, products) || state.ids.includes(action.id) || state.ids.length >= MAX_ITEMS) return state;
       return { ids: [...state.ids, action.id] };
     case "remove":
       return state.ids.includes(action.id) ? { ids: state.ids.filter((id) => id !== action.id) } : state;
     case "clear":
       return state.ids.length ? EMPTY_CART : state;
     case "replace": {
-      const ids = sanitizeIds(action.ids);
+      const ids = sanitizeIds(action.ids, products);
       return ids.length === state.ids.length && ids.every((id, i) => id === state.ids[i]) ? state : { ids };
     }
   }
 }
 
 /** Lee el carrito guardado. Cualquier dato roto o ajeno da un carrito vacío. */
-export function parseStoredCart(raw: string | null | undefined): CartState {
+export function parseStoredCart(raw: string | null | undefined, products: readonly Product[] = PRODUCTS): CartState {
   if (!raw) return EMPTY_CART;
   try {
     const data: unknown = JSON.parse(raw);
     const ids = typeof data === "object" && data !== null && Array.isArray((data as { ids?: unknown }).ids) ? (data as { ids: unknown[] }).ids : [];
-    return { ids: sanitizeIds(ids) };
+    return { ids: sanitizeIds(ids, products) };
   } catch {
     return EMPTY_CART;
   }
@@ -63,9 +63,9 @@ export function serializeCart(state: CartState): string {
 type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;
 
 /** localStorage puede no existir o lanzar (modo privado, cookies bloqueadas): el carrito funciona igual en memoria. */
-export function loadCart(storage: StorageLike | undefined): CartState {
+export function loadCart(storage: StorageLike | undefined, products: readonly Product[] = PRODUCTS): CartState {
   try {
-    return parseStoredCart(storage?.getItem(CART_STORAGE_KEY));
+    return parseStoredCart(storage?.getItem(CART_STORAGE_KEY), products);
   } catch {
     return EMPTY_CART;
   }

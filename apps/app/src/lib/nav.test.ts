@@ -32,6 +32,7 @@ describe("NAV", () => {
       "lessons",
       "tests",
       "catalog",
+      "products",
       "payments",
       "legal",
       "settings",
@@ -74,6 +75,7 @@ describe("NAV", () => {
     // Dentro de un grupo, lo listo va antes que lo que está en desarrollo.
     expect(navGroupsFor("admin").find((g) => g.group === "management")?.items.map((i) => i.key)).toEqual([
       "catalog",
+      "products",
       "legal",
       "settings",
       "payments",
@@ -105,6 +107,7 @@ describe("NAV", () => {
       "admin.lessons",
       "admin.tests",
       "admin.catalog",
+      "admin.products",
       "admin.legal",
       "admin.settings",
       "student.home",

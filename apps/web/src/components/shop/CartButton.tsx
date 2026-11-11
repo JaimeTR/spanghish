@@ -98,9 +98,9 @@ export function PriceLine({ priceCents, compareAtCents, className = "" }: { pric
 
 function CartPanel({ locale, titleId, onClose }: { locale: Locale; titleId: string; onClose: () => void }) {
   const t = useTranslations("cart");
-  const { ids, remove } = useCart();
+  const { ids, remove, products: catalog } = useCart();
   const [state, formAction, pending] = useActionState<CheckoutState, FormData>(startCheckout, { status: "idle" });
-  const products = ids.map((id) => findProduct(id)!).filter(Boolean);
+  const products = ids.map((id) => findProduct(id, catalog)).filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <div className="flex max-h-[calc(100dvh-2rem)] flex-col rounded-[1.75rem] border-2 sm:max-h-[calc(100dvh-7rem)] border-ink/10 bg-cream" style={{ filter: "drop-shadow(var(--bubble-shadow))" }}>
@@ -134,7 +134,7 @@ function CartPanel({ locale, titleId, onClose }: { locale: Locale; titleId: stri
             {products.map((p) => (
               <li key={p.id} className="flex items-center gap-3 rounded-[1.25rem] bg-surface p-2.5 pr-2 ring-1 ring-ink/10">
                 <span className="relative block size-14 shrink-0 overflow-hidden rounded-xl bg-surface ring-1 ring-ink/10">
-                  <Image src={p.image.src} alt="" fill sizes="3.5rem" className="object-contain" />
+                  {p.image ? <Image src={p.image.src} alt="" fill sizes="3.5rem" unoptimized={p.image.src.startsWith("http")} className="object-contain" /> : null}
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block leading-snug font-extrabold" lang={locale === "es" ? p.nameLang : undefined}>
@@ -158,7 +158,7 @@ function CartPanel({ locale, titleId, onClose }: { locale: Locale; titleId: stri
             <p className="flex items-baseline justify-between gap-4 text-lg">
               <span className="font-bold">{t("subtotal")}</span>
               <span data-testid="cart-subtotal" className="font-display text-[1.75rem] leading-none text-brand-burgundy">
-                {formatAud(subtotalCents(ids))} <span className="font-sans text-base font-bold text-ink">AUD</span>
+                {formatAud(subtotalCents(ids, catalog))} <span className="font-sans text-base font-bold text-ink">AUD</span>
               </span>
             </p>
             <p className="mt-1 text-sm text-ink-muted">{t("currencyNote")}</p>

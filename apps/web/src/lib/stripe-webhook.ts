@@ -1,7 +1,8 @@
 import Stripe from "stripe";
 import { isLocale, routing } from "../i18n/routing";
 import { deliverLead, type DeliveryResult, type OrderLead } from "./leads";
-import { findProduct } from "./shop";
+import { findProduct, PRODUCTS, type Product } from "./shop";
+import { getShopProducts } from "./shop-source";
 
 /**
  * Webhook de Stripe (POST /api/stripe/webhook). Verifica la firma con
@@ -24,10 +25,12 @@ type Env = Partial<Record<string, string | undefined>>;
 export type WebhookDeps = {
   env?: Env;
   deliver?: (lead: OrderLead) => Promise<DeliveryResult>;
+  /** Productos a la venta (por defecto, los de la base de datos o el respaldo fijo). */
+  products?: readonly Product[];
 };
 
 /** Pedido a partir de la sesión: productos y precios de lib/shop.ts, importes cobrados de Stripe. */
-export function orderFromSession(session: Stripe.Checkout.Session): OrderLead {
+export function orderFromSession(session: Stripe.Checkout.Session, products: readonly Product[] = PRODUCTS): OrderLead {
   const ids = (session.metadata?.productIds ?? "").split(",").filter(Boolean);
   const metaLocale = session.metadata?.locale ?? "";
   const locale = isLocale(metaLocale) ? metaLocale : routing.defaultLocale;
@@ -37,7 +40,7 @@ export function orderFromSession(session: Stripe.Checkout.Session): OrderLead {
     email: session.customer_details?.email ?? session.customer_email ?? "",
     sessionId: session.id,
     items: ids.map((id) => {
-      const p = findProduct(id);
+      const p = findProduct(id, products);
       return { id, name: p ? p.name.en : "Unknown product", amountCents: p?.priceCents ?? 0 };
     }),
     totalCents: session.amount_total ?? 0,
@@ -48,7 +51,7 @@ export function orderFromSession(session: Stripe.Checkout.Session): OrderLead {
 export async function handleStripeWebhook(
   rawBody: string,
   signature: string | null,
-  { env = process.env, deliver = (lead) => deliverLead(lead) }: WebhookDeps = {},
+  { env = process.env, deliver = (lead) => deliverLead(lead), products }: WebhookDeps = {},
 ): Promise<WebhookResponse> {
   const secret = env.STRIPE_WEBHOOK_SECRET?.trim();
   if (!secret) {
@@ -72,7 +75,7 @@ export async function handleStripeWebhook(
   const session = event.data.object;
   if (session.payment_status !== "paid") return { status: 200, body: "Not paid yet" };
 
-  const result = await deliver(orderFromSession(session));
+  const result = await deliver(orderFromSession(session, products ?? (await getShopProducts(env))));
   if (!result.ok) return { status: 500, body: "Order notification failed" };
   return { status: 200, body: "OK" };
 }

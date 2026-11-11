@@ -205,6 +205,26 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"products": {
+                  Row: {
+                    "compare_at_cents": number | null,"cover_height": number | null,"cover_path": string | null,"cover_width": number | null,"created_at": string,"created_by": string | null,"file_name": string | null,"file_path": string | null,"file_size_bytes": number | null,"id": string,"name_en": string,"name_es": string,"price_cents": number,"published_at": string | null,"slug": string,"status": Database["public"]['Enums']["content_status"],"summary_en": string | null,"summary_es": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "compare_at_cents"?: number | null,"cover_height"?: number | null,"cover_path"?: string | null,"cover_width"?: number | null,"created_at"?: string,"created_by"?: string | null,"file_name"?: string | null,"file_path"?: string | null,"file_size_bytes"?: number | null,"id"?: string,"name_en": string,"name_es": string,"price_cents": number,"published_at"?: string | null,"slug": string,"status"?: Database["public"]['Enums']["content_status"],"summary_en"?: string | null,"summary_es"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "compare_at_cents"?: number | null,"cover_height"?: number | null,"cover_path"?: string | null,"cover_width"?: number | null,"created_at"?: string,"created_by"?: string | null,"file_name"?: string | null,"file_path"?: string | null,"file_size_bytes"?: number | null,"id"?: string,"name_en"?: string,"name_es"?: string,"price_cents"?: number,"published_at"?: string | null,"slug"?: string,"status"?: Database["public"]['Enums']["content_status"],"summary_en"?: string | null,"summary_es"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+    {
+      foreignKeyName: "products_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"profiles": {
                   Row: {
                     "address": string | null,"avatar_path": string | null,"birth_date": string | null,"city": string | null,"country": string | null,"created_at": string,"email": string | null,"full_name": string | null,"id": string,"phone": string | null,"preferred_locale": string,"status": string,"updated_at": string
@@ -627,6 +647,11 @@ isOneToOne: false
                            },
 "is_active":
 { Args: Record<PropertyKey, never>; Returns: boolean
+                           },
+"list_shop_products":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "compare_at_cents": number,"cover_height": number,"cover_path": string,"cover_width": number,"has_file": boolean,"name_en": string,"name_es": string,"price_cents": number,"slug": string,"summary_en": string,"summary_es": string
+            }[]
                            },
 "list_published_lessons":
 { Args: Record<PropertyKey, never>; Returns: {

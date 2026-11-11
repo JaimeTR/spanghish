@@ -17,6 +17,7 @@ export type NavIcon =
   | "legal"
   | "tests"
   | "users"
+  | "products"
   | "today"
   | "resources"
   | "lessons"
@@ -86,6 +87,7 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.r("lessons", "lessons"),
     a.r("tests", "tests"),
     a.r("catalog", "catalog"),
+    a.r("products", "products"),
     a.d("payments"),
     a.r("legal", "legal"),
     a.r("settings", "settings"),
@@ -124,6 +126,7 @@ const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
     lessons: "content",
     tests: "content",
     catalog: "management",
+    products: "management",
     payments: "management",
     legal: "management",
     settings: "management",

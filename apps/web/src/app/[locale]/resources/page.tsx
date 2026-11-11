@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
+import { getShopProducts } from "@/lib/shop-source";
 import { ResourcesPage } from "@/components/resources/ResourcesPage";
 import { isLocale } from "@/i18n/routing";
 import { getPublicResourceCards } from "@/lib/content-source";
@@ -26,10 +27,11 @@ export default async function Page({ params }: PageProps) {
   const tn = await getTranslations({ locale, namespace: "nav" });
   const crumbs = await crumbsJsonLd(locale, [{ route: "resources", name: tn("resources") }]);
   const { cards } = await getPublicResourceCards();
+  const products = await getShopProducts();
 
   return (
     <PageShell locale={locale} route="resources" jsonLd={[crumbs]}>
-      <ResourcesPage locale={locale} cards={cards} />
+      <ResourcesPage locale={locale} cards={cards} products={products} />
     </PageShell>
   );
 }

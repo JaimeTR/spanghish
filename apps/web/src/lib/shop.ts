@@ -30,9 +30,13 @@ export type Product = {
   priceCents: number;
   /** Precio anterior (tachado), en centavos de AUD. */
   compareAtCents?: number;
-  image: { src: string; width: number; height: number };
-  /** Clave de los textos en messages: `shop.products.<key>.{summary,alt}`. */
-  copyKey: string;
+  /** Imagen de la tarjeta; null si el producto aún no tiene portada. */
+  image: { src: string; width: number; height: number } | null;
+  /** Texto de la tarjeta de un producto de la base de datos (los fijos usan `copyKey`). */
+  summary?: Record<Locale, string>;
+  alt?: Record<Locale, string>;
+  /** Clave de los textos en messages: `shop.products.<key>.{summary,alt}` (productos fijos). */
+  copyKey?: string;
   type: ProductType;
   /** La descripción publicada era un texto de plantilla: pendiente del texto real. */
   placeholderCopy?: boolean;
@@ -74,12 +78,17 @@ export const PRODUCTS: readonly Product[] = [
 /** Máximo de productos distintos por pedido (materiales digitales: uno de cada). */
 export const MAX_ITEMS = 10;
 
-export function findProduct(id: string): Product | undefined {
-  return PRODUCTS.find((p) => p.id === id);
+/** Imágenes de los productos fijos, por id: respaldo para los productos de la base sin portada propia. */
+export const STATIC_IMAGES: Record<string, NonNullable<Product["image"]>> = Object.fromEntries(
+  PRODUCTS.flatMap((p) => (p.image ? [[p.id, p.image] as const] : [])),
+);
+
+export function findProduct(id: string, products: readonly Product[] = PRODUCTS): Product | undefined {
+  return products.find((p) => p.id === id);
 }
 
-export function isProductId(id: unknown): id is string {
-  return typeof id === "string" && PRODUCTS.some((p) => p.id === id);
+export function isProductId(id: unknown, products: readonly Product[] = PRODUCTS): id is string {
+  return typeof id === "string" && products.some((p) => p.id === id);
 }
 
 /** "$2.00": mismo formato en ambos idiomas (el que usaba la tienda publicada). */
@@ -88,8 +97,8 @@ export function formatAud(cents: number): string {
 }
 
 /** Suma de los precios (servidor) de los ids conocidos. */
-export function subtotalCents(ids: readonly string[]): number {
-  return ids.reduce((sum, id) => sum + (findProduct(id)?.priceCents ?? 0), 0);
+export function subtotalCents(ids: readonly string[], products: readonly Product[] = PRODUCTS): number {
+  return ids.reduce((sum, id) => sum + (findProduct(id, products)?.priceCents ?? 0), 0);
 }
 
 /** Descuento publicado para alumnos matriculados (solo informativo: no se aplica en el pago). */

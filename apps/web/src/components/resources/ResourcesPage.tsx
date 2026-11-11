@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
+import type { Product } from "@/lib/shop";
 import { ACCESS_LEVELS, cardsFor, type AccessLevel, type ResourceCard } from "@/lib/resources";
 import { bookingPath, localePath } from "@/lib/routes";
 import { appLoginUrl } from "@/lib/site";
@@ -26,7 +27,7 @@ const TIER: Record<AccessLevel, { bubble: BubbleTone; tile: string }> = {
  * cómo se organizarán por nivel de acceso. No hay formularios de login ni de
  * alta: los recursos de alumnos enlazan al login del portal (apps/app).
  */
-export function ResourcesPage({ locale, cards }: { locale: Locale; cards: readonly ResourceCard[] }) {
+export function ResourcesPage({ locale, cards, products }: { locale: Locale; cards: readonly ResourceCard[]; products: readonly Product[] }) {
   const t = useTranslations("page.resources");
   const tn = useTranslations("nav");
   const tl = useTranslations("learn");
@@ -95,7 +96,7 @@ export function ResourcesPage({ locale, cards }: { locale: Locale; cards: readon
               </Link>
             </div>
           </div>
-          <ProductPreviews locale={locale} />
+          <ProductPreviews locale={locale} products={products} />
         </div>
       </section>
 

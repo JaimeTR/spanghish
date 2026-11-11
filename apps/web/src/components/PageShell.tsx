@@ -4,7 +4,7 @@ import type { Locale } from "@/i18n/routing";
 import { activeNavKey, type RouteKey } from "@/lib/routes";
 import { serializeJsonLd } from "@/lib/structured-data";
 import { RevealOnScroll } from "./RevealOnScroll";
-import { CartProvider } from "./shop/CartProvider";
+import { ShopCartProvider } from "./shop/ShopCartProvider";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
@@ -36,13 +36,13 @@ export function PageShell({
       >
         {t("skip")}
       </a>
-      <CartProvider>
+      <ShopCartProvider>
         <SiteHeader locale={locale} current={activeNavKey(route)} route={route} />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}
         </main>
         <SiteFooter locale={locale} />
-      </CartProvider>
+      </ShopCartProvider>
       <RevealOnScroll />
       {jsonLd.map((data, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />

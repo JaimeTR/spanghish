@@ -133,7 +133,8 @@
       "consents": "Consents",
       "legal": "Legal documents",
       "tests": "Tests",
-      "users": "Users"
+      "users": "Users",
+      "products": "Products"
     }
   },
   "account": {
@@ -1567,6 +1568,68 @@
       "notesHint": "Only administration sees these.",
       "save": "Save",
       "saving": "Saving…"
+    }
+  },
+  "products": {
+    "title": "Products",
+    "intro": "Books and downloadable materials sold in the website shop. Upload the cover and the file, set the price and publish.",
+    "new": "New product",
+    "empty": "There are no products yet.",
+    "search": "Search by name or slug",
+    "edit": "Edit",
+    "delete": "Delete product",
+    "publish": "Publish to the shop",
+    "unpublish": "Remove from the shop",
+    "back": "Back to products",
+    "columns": {
+      "name": "Product",
+      "price": "Price",
+      "file": "File",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "file": {
+      "yes": "Has file",
+      "no": "No file"
+    },
+    "status": {
+      "draft": "Draft",
+      "published": "In the shop"
+    },
+    "sections": {
+      "data": "Details",
+      "files": "Cover and file"
+    },
+    "filesIntro": "The cover shows in the shop. The file is private: it is only delivered to buyers. Until there is a file, delivery stays manual by email.",
+    "form": {
+      "name": "Name",
+      "summary": "Description",
+      "slug": "Slug",
+      "slugHint": "Lowercase letters, numbers and hyphens. Do not change it once it sells: the cart uses it.",
+      "price": "Price (AUD)",
+      "priceHint": "In dollars, e.g. 2 or 2.50. At least 0.50 to publish.",
+      "compareAt": "Previous price (crossed out)",
+      "compareAtHint": "Optional; must be higher than the price.",
+      "save": "Save product",
+      "saving": "Saving…",
+      "create": "Create product"
+    },
+    "uploads": {
+      "cover": "Cover",
+      "coverHelp": "PNG, JPG or WebP, 2 MB max.",
+      "file": "Product file",
+      "fileHelp": "PDF, ZIP, Word, PowerPoint, Excel, image or MP3. 25 MB max.",
+      "noFile": "No file",
+      "upload": "Upload",
+      "change": "Change",
+      "remove": "Remove",
+      "uploading": "Uploading…",
+      "saved": "Saved.",
+      "error": "We couldn't save the file. Please try again.",
+      "coverType": "Use a PNG, JPG or WebP image.",
+      "coverSize": "The cover is larger than 2 MB.",
+      "fileType": "That file type can't be sold.",
+      "fileSize": "The file is larger than 25 MB."
     }
   }
 }

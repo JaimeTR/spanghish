@@ -36,13 +36,16 @@ export function ProductCard({ product, locale, headingLevel = 3 }: { product: Pr
       <div className="relative overflow-hidden rounded-[1.75rem] bg-surface ring-2 ring-ink/10 transition-transform duration-300 ease-out group-hover:-translate-y-1 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
         {product.compareAtCents && <SaleBadge label={t("sale")} />}
         <div className="relative aspect-[4/3]">
-          <Image
-            src={product.image.src}
-            alt={t(`products.${product.copyKey}.alt`)}
-            fill
-            sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw"
-            className="object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-          />
+          {product.image ? (
+            <Image
+              src={product.image.src}
+              alt={product.alt?.[locale] ?? t(`products.${product.copyKey}.alt`)}
+              fill
+              sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw"
+              unoptimized={product.image.src.startsWith("http")}
+              className="object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            />
+          ) : null}
         </div>
       </div>
 
@@ -51,7 +54,7 @@ export function ProductCard({ product, locale, headingLevel = 3 }: { product: Pr
         <Heading id={titleId} className="mt-1 font-display text-[1.75rem] leading-[1.1] text-ink" lang={locale === "es" ? product.nameLang : undefined}>
           {name}
         </Heading>
-        <p className="mt-2 flex-1 leading-relaxed text-ink">{t(`products.${product.copyKey}.summary`)}</p>
+        <p className="mt-2 flex-1 leading-relaxed text-ink">{product.summary?.[locale] ?? t(`products.${product.copyKey}.summary`)}</p>
         <PriceLine
           priceCents={product.priceCents}
           compareAtCents={product.compareAtCents}

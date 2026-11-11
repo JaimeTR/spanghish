@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import type { Locale } from "../i18n/routing";
-import { findProduct, MAX_ITEMS } from "./shop";
+import { findProduct, MAX_ITEMS, PRODUCTS, type Product } from "./shop";
+import { getShopProducts } from "./shop-source";
 import { SITE_URL } from "./site";
 
 /**
@@ -37,21 +38,26 @@ export function stripeFromEnv(env: Env = process.env): Stripe | null {
 }
 
 /** Valida los ids: conocidos, sin repetir y entre 1 y MAX_ITEMS. */
-export function validateProductIds(ids: unknown): string[] | null {
+export function validateProductIds(ids: unknown, products: readonly Product[] = PRODUCTS): string[] | null {
   if (!Array.isArray(ids) || ids.length < 1 || ids.length > MAX_ITEMS) return null;
-  if (!ids.every((id) => typeof id === "string" && findProduct(id))) return null;
+  if (!ids.every((id) => typeof id === "string" && findProduct(id, products))) return null;
   if (new Set(ids).size !== ids.length) return null;
   return ids as string[];
 }
 
 /** Parámetros de la sesión, solo con datos del servidor. */
-export function checkoutParams(ids: readonly string[], locale: Locale, siteUrl: string = SITE_URL): Stripe.Checkout.SessionCreateParams {
+export function checkoutParams(
+  ids: readonly string[],
+  locale: Locale,
+  siteUrl: string = SITE_URL,
+  products: readonly Product[] = PRODUCTS,
+): Stripe.Checkout.SessionCreateParams {
   return {
     mode: "payment",
     currency: "aud",
     locale,
     line_items: ids.map((id) => {
-      const product = findProduct(id)!;
+      const product = findProduct(id, products)!;
       return {
         quantity: 1,
         price_data: {
@@ -100,15 +106,18 @@ export async function createCheckoutSession(
   locale: Locale,
   client: CheckoutClient | null = stripeFromEnv(),
   siteUrl: string = SITE_URL,
+  products?: readonly Product[],
 ): Promise<CheckoutResult> {
-  const ids = validateProductIds(productIds);
+  // El precio y el nombre salen SIEMPRE de la lista del servidor (base de datos o respaldo fijo), nunca del navegador.
+  const catalogue = products ?? (await getShopProducts());
+  const ids = validateProductIds(productIds, catalogue);
   if (!ids) return { ok: false, reason: "invalid" };
   if (!client) {
     console.error("[checkout] Falta STRIPE_SECRET_KEY: pagos no activos");
     return { ok: false, reason: "unavailable" };
   }
   try {
-    const session = await client.checkout.sessions.create(checkoutParams(ids, locale, siteUrl));
+    const session = await client.checkout.sessions.create(checkoutParams(ids, locale, siteUrl, catalogue));
     if (!session.url) return { ok: false, reason: "failed" };
     return { ok: true, url: session.url };
   } catch (error) {

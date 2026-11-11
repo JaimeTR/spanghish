@@ -133,7 +133,8 @@
       "consents": "Consentimientos",
       "legal": "Documentos legales",
       "tests": "Tests",
-      "users": "Usuarios"
+      "users": "Usuarios",
+      "products": "Productos"
     }
   },
   "account": {
@@ -1567,6 +1568,68 @@
       "notesHint": "Solo las ve la administración.",
       "save": "Guardar",
       "saving": "Guardando…"
+    }
+  },
+  "products": {
+    "title": "Productos",
+    "intro": "Libros y materiales descargables que se venden en la tienda de la web. Sube la portada y el archivo, fija el precio y publícalos.",
+    "new": "Nuevo producto",
+    "empty": "Todavía no hay productos.",
+    "search": "Buscar por nombre o identificador",
+    "edit": "Editar",
+    "delete": "Eliminar producto",
+    "publish": "Publicar en la tienda",
+    "unpublish": "Quitar de la tienda",
+    "back": "Volver a productos",
+    "columns": {
+      "name": "Producto",
+      "price": "Precio",
+      "file": "Archivo",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "file": {
+      "yes": "Con archivo",
+      "no": "Sin archivo"
+    },
+    "status": {
+      "draft": "Borrador",
+      "published": "En la tienda"
+    },
+    "sections": {
+      "data": "Datos",
+      "files": "Portada y archivo"
+    },
+    "filesIntro": "La portada se ve en la tienda. El archivo es privado: solo se entrega a quien lo compra. Mientras no haya archivo, la entrega sigue siendo manual por correo.",
+    "form": {
+      "name": "Nombre",
+      "summary": "Descripción",
+      "slug": "Identificador",
+      "slugHint": "Letras minúsculas, números y guiones. No lo cambies si ya se vende: lo usa el carrito.",
+      "price": "Precio (AUD)",
+      "priceHint": "En dólares, por ejemplo 2 o 2.50. Mínimo 0.50 para publicar.",
+      "compareAt": "Precio anterior (tachado)",
+      "compareAtHint": "Opcional; debe ser mayor que el precio.",
+      "save": "Guardar producto",
+      "saving": "Guardando…",
+      "create": "Crear producto"
+    },
+    "uploads": {
+      "cover": "Portada",
+      "coverHelp": "PNG, JPG o WebP, máximo 2 MB.",
+      "file": "Archivo del producto",
+      "fileHelp": "PDF, ZIP, Word, PowerPoint, Excel, imagen o MP3. Máximo 25 MB.",
+      "noFile": "Sin archivo",
+      "upload": "Subir",
+      "change": "Cambiar",
+      "remove": "Quitar",
+      "uploading": "Subiendo…",
+      "saved": "Guardado.",
+      "error": "No pudimos guardar el archivo. Inténtalo de nuevo.",
+      "coverType": "Usa una imagen PNG, JPG o WebP.",
+      "coverSize": "La portada pesa más de 2 MB.",
+      "fileType": "Ese tipo de archivo no se puede vender.",
+      "fileSize": "El archivo pesa más de 25 MB."
     }
   }
 }

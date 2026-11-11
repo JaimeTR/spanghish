@@ -12,7 +12,7 @@ import { btnInk, container } from "@/components/styles";
 import { isLocale } from "@/i18n/routing";
 import { crumbsJsonLd, innerPageMetadata, type PageProps } from "@/lib/page-meta";
 import { localePath } from "@/lib/routes";
-import { PRODUCTS } from "@/lib/shop";
+import { getShopProducts } from "@/lib/shop-source";
 
 export function generateMetadata({ params }: PageProps) {
   return innerPageMetadata(params, "shop", "shop");
@@ -31,6 +31,7 @@ export default async function ShopPage({ params }: PageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   setRequestLocale(locale);
+  const products = await getShopProducts();
 
   const t = await getTranslations({ locale, namespace: "page.shop" });
   const tn = await getTranslations({ locale, namespace: "nav" });
@@ -72,7 +73,7 @@ export default async function ShopPage({ params }: PageProps) {
             {t("question")}
           </SectionQuestion>
           <ul className="mt-14 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-            {PRODUCTS.map((product) => (
+            {products.map((product) => (
               <li key={product.id} className="flex">
                 <ProductCard product={product} locale={locale} />
               </li>
