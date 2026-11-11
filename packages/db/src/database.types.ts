@@ -5,7 +5,39 @@ export type Database = {
   
   "public": {
           Tables: {
-            "audit_logs": {
+            "attendance": {
+                  Row: {
+                    "id": string,"marked_at": string,"marked_by": string | null,"note": string | null,"session_id": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "id"?: string,"marked_at"?: string,"marked_by"?: string | null,"note"?: string | null,"session_id": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
+                  }
+                  Update: {
+                    "id"?: string,"marked_at"?: string,"marked_by"?: string | null,"note"?: string | null,"session_id"?: string,"status"?: Database["public"]['Enums']["attendance_status"],"student_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "attendance_marked_by_fkey"
+      columns: ["marked_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "attendance_session_id_fkey"
+      columns: ["session_id"]
+isOneToOne: false
+      referencedRelation: "sessions"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "attendance_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"audit_logs": {
                   Row: {
                     "action": string,"actor": string | null,"at": string,"id": number,"new_data": Json | null,"old_data": Json | null,"row_id": string | null,"table_name": string
                   }
@@ -507,6 +539,58 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"schedule_rules": {
+                  Row: {
+                    "active": boolean,"created_at": string,"duration_minutes": number,"ends_on": string | null,"group_id": string,"id": string,"interval_weeks": number,"start_time": string,"starts_on": string,"updated_at": string,"weekday": number
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"created_at"?: string,"duration_minutes"?: number,"ends_on"?: string | null,"group_id": string,"id"?: string,"interval_weeks"?: number,"start_time": string,"starts_on": string,"updated_at"?: string,"weekday": number
+                  }
+                  Update: {
+                    "active"?: boolean,"created_at"?: string,"duration_minutes"?: number,"ends_on"?: string | null,"group_id"?: string,"id"?: string,"interval_weeks"?: number,"start_time"?: string,"starts_on"?: string,"updated_at"?: string,"weekday"?: number
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "schedule_rules_group_id_fkey"
+      columns: ["group_id"]
+isOneToOne: false
+      referencedRelation: "groups"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"sessions": {
+                  Row: {
+                    "cancel_reason": string | null,"created_at": string,"ends_at": string,"group_id": string,"id": string,"rule_id": string | null,"starts_at": string,"status": Database["public"]['Enums']["session_status"],"teacher_id": string | null,"teacher_notes": string | null,"topic": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "cancel_reason"?: string | null,"created_at"?: string,"ends_at": string,"group_id": string,"id"?: string,"rule_id"?: string | null,"starts_at": string,"status"?: Database["public"]['Enums']["session_status"],"teacher_id"?: string | null,"teacher_notes"?: string | null,"topic"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "cancel_reason"?: string | null,"created_at"?: string,"ends_at"?: string,"group_id"?: string,"id"?: string,"rule_id"?: string | null,"starts_at"?: string,"status"?: Database["public"]['Enums']["session_status"],"teacher_id"?: string | null,"teacher_notes"?: string | null,"topic"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "sessions_group_id_fkey"
+      columns: ["group_id"]
+isOneToOne: false
+      referencedRelation: "groups"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "sessions_rule_id_fkey"
+      columns: ["rule_id"]
+isOneToOne: false
+      referencedRelation: "schedule_rules"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "sessions_teacher_id_fkey"
+      columns: ["teacher_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"shop_order_items": {
                   Row: {
                     "amount_cents": number,"id": string,"name": string,"order_id": string,"product_id": string | null,"slug": string
@@ -846,6 +930,9 @@ isOneToOne: false
 "enable_audit":
 { Args: { "p_table": unknown }; Returns: undefined
                            },
+"generate_sessions":
+{ Args: { "p_group_id": string,"p_until": string }; Returns: number
+                           },
 "get_enrollment_request":
 { Args: { "p_token": string }; Returns: Json
                            },
@@ -950,6 +1037,17 @@ isOneToOne: false
 "school_today":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
+"school_ts":
+{ Args: { "p_date": string,"p_time": string }; Returns: string
+                           },
+"session_roster":
+{ Args: { "p_session_id": string }; Returns: {
+              "attendance_id": string,"full_name": string,"note": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
+            }[]
+                           },
+"session_roster_internal":
+{ Args: { "p_session_id": string }; Returns: string[]
+                           },
 "set_enrollment_request_method":
 { Args: { "p_method": string,"p_token": string }; Returns: Json
                            },
@@ -971,6 +1069,9 @@ isOneToOne: false
 "teaches_group":
 { Args: { "p_group_id": string }; Returns: boolean
                            },
+"teaches_session":
+{ Args: { "p_session_id": string }; Returns: boolean
+                           },
 "test_attempt_payload":
 { Args: { "p_attempt_id": string }; Returns: Json
                            },
@@ -982,7 +1083,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","student_status": "active"|"inactive","test_question_kind": "single"|"truefalse"|"fill"
+            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","attendance_status": "present"|"late"|"absent"|"excused","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","session_status": "scheduled"|"completed"|"cancelled","student_status": "active"|"inactive","test_question_kind": "single"|"truefalse"|"fill"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -1098,7 +1199,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"student_status": ["active", "inactive"],"test_question_kind": ["single", "truefalse", "fill"]
+            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"attendance_status": ["present", "late", "absent", "excused"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"session_status": ["scheduled", "completed", "cancelled"],"student_status": ["active", "inactive"],"test_question_kind": ["single", "truefalse", "fill"]
           }
         }
 } as const
