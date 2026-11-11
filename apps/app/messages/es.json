@@ -130,7 +130,8 @@
       "assignments": "Tareas",
       "progress": "Progreso",
       "children": "Mis hijos",
-      "consents": "Consentimientos"
+      "consents": "Consentimientos",
+      "legal": "Documentos legales"
     }
   },
   "account": {
@@ -858,8 +859,8 @@
     "record": "Registrar",
     "saving": "Guardando…",
     "texts": {
-      "title": "Textos de consentimiento",
-      "intro": "Cada cambio crea una versión nueva; las anteriores se conservan con sus consentimientos.",
+      "title": "Documentos legales",
+      "intro": "Textos que aceptan los tutores y las familias (consentimientos de datos, grabaciones, fotos, términos). Cada cambio crea una versión nueva; las anteriores se conservan con los consentimientos ya firmados.",
       "list": "Versiones",
       "empty": "Todavía no hay textos.",
       "current": "Vigente",
@@ -1202,5 +1203,40 @@
     "clear": "Limpiar",
     "results": "{count, plural, =0 {Sin resultados} one {# resultado} other {# resultados}}",
     "empty": "Ningún resultado con estos filtros."
+  },
+  "systemSettings": {
+    "title": "Ajustes del sistema",
+    "intro": "Estado de la conexión del portal y de lo necesario para enviar correos y crear cuentas.",
+    "status": "Estado del sistema",
+    "configured": "Configurado",
+    "missing": "Falta configurar",
+    "db": {
+      "label": "Base de datos",
+      "hint": "Conexión del portal con Supabase.",
+      "ok": "Conectada",
+      "notConfigured": "Sin configurar",
+      "unreachable": "Sin respuesta"
+    },
+    "accounts": {
+      "label": "Alta de cuentas",
+      "hint": "Clave de servidor para invitar a docentes y crear cuentas de alumnos."
+    },
+    "resetLink": {
+      "label": "Enlaces de correo",
+      "hint": "Dirección del portal usada en los enlaces de recuperación de contraseña."
+    },
+    "web": {
+      "label": "Conexión con la web",
+      "hint": "Permite que la web pública se actualice al publicar contenido."
+    },
+    "version": {
+      "label": "Versión desplegada",
+      "hint": "Identificador del despliegue actual.",
+      "local": "Local"
+    },
+    "email": {
+      "title": "Correos y notificaciones",
+      "body": "Los correos de acceso y recuperación de contraseña usan hoy el envío por defecto de la plataforma, que es limitado. Cuando se configure un servidor de correo propio podrás elegir aquí qué avisos se envían y probar el envío."
+    }
   }
 }

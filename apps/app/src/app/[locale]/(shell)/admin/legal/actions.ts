@@ -41,7 +41,7 @@ export async function createConsentText(
   });
   if (error) return { status: "error", error: toDomainError(error) };
 
-  revalidatePath(`/${locale}/admin/settings/consent-texts`);
+  revalidatePath(`/${locale}/admin/legal`);
   revalidatePath(`/${locale}/admin/students`, "layout");
   return { status: "ok" };
 }

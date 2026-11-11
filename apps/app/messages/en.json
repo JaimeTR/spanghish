@@ -130,7 +130,8 @@
       "assignments": "Assignments",
       "progress": "Progress",
       "children": "My children",
-      "consents": "Consents"
+      "consents": "Consents",
+      "legal": "Legal documents"
     }
   },
   "account": {
@@ -858,8 +859,8 @@
     "record": "Record",
     "saving": "Saving…",
     "texts": {
-      "title": "Consent texts",
-      "intro": "Every change creates a new version; earlier versions are kept with their consents.",
+      "title": "Legal documents",
+      "intro": "Texts that guardians and families accept (data consents, recordings, photos, terms). Each change creates a new version; earlier ones are kept with the consents already given.",
       "list": "Versions",
       "empty": "There are no texts yet.",
       "current": "Current",
@@ -1202,5 +1203,40 @@
     "clear": "Clear",
     "results": "{count, plural, =0 {No results} one {# result} other {# results}}",
     "empty": "No results match these filters."
+  },
+  "systemSettings": {
+    "title": "System settings",
+    "intro": "Status of the portal's connections and of what is needed to send emails and create accounts.",
+    "status": "System status",
+    "configured": "Configured",
+    "missing": "Not configured",
+    "db": {
+      "label": "Database",
+      "hint": "The portal's connection to Supabase.",
+      "ok": "Connected",
+      "notConfigured": "Not configured",
+      "unreachable": "No response"
+    },
+    "accounts": {
+      "label": "Account creation",
+      "hint": "Server key used to invite teachers and create student accounts."
+    },
+    "resetLink": {
+      "label": "Email links",
+      "hint": "Portal address used in password-reset links."
+    },
+    "web": {
+      "label": "Website connection",
+      "hint": "Lets the public website refresh when content is published."
+    },
+    "version": {
+      "label": "Deployed version",
+      "hint": "Identifier of the current deployment.",
+      "local": "Local"
+    },
+    "email": {
+      "title": "Emails and notifications",
+      "body": "Sign-in and password-reset emails currently use the platform's default sender, which is limited. Once your own mail server is set up you will be able to choose which notices are sent and test delivery here."
+    }
   }
 }

@@ -14,6 +14,7 @@ export type NavIcon =
   | "teachers"
   | "content"
   | "settings"
+  | "legal"
   | "today"
   | "resources"
   | "lessons"
@@ -82,7 +83,8 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.r("lessons", "lessons"),
     a.r("catalog", "catalog"),
     a.d("payments"),
-    a.r("settings", "settings/consent-texts"),
+    a.r("legal", "legal"),
+    a.r("settings", "settings"),
   ],
   teacher: [t.d("today"), t.d("groups"), t.d("calendar"), t.d("attendance"), t.d("requests"), t.d("resources")],
   student: [
@@ -116,6 +118,7 @@ const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
     lessons: "content",
     catalog: "management",
     payments: "management",
+    legal: "management",
     settings: "management",
   },
   teacher: {

@@ -142,7 +142,7 @@ test("student pages and consent texts have no axe violations", async ({ page }) 
     "/es/admin/students",
     "/es/admin/students/new",
     `/es/admin/students/${SEED_IDS.students.local}`,
-    "/en/admin/settings/consent-texts",
+    "/en/admin/legal",
   ]) {
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -152,7 +152,7 @@ test("student pages and consent texts have no axe violations", async ({ page }) 
 
 test("admin publishes a new consent text version and it becomes current", async ({ page }) => {
   await loginAdmin(page);
-  await page.goto("/es/admin/settings/consent-texts");
+  await page.goto("/es/admin/legal");
   const form = page.getByRole("region", { name: "Nueva versión" });
   await form.getByLabel("Tipo").selectOption("photos");
   await form.getByLabel("Texto (español)").fill("Autorizo fotos (texto e2e).");
@@ -171,6 +171,6 @@ test("teacher and guardian cannot open the students admin", async ({ page }) => 
   await expectPath(page, "/es/login");
   await login(page, USERS.guardian);
   await expectPath(page, "/es/guardian");
-  await page.goto("/es/admin/settings/consent-texts");
+  await page.goto("/es/admin/legal");
   await expectPath(page, "/es/guardian");
 });
