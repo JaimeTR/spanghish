@@ -43,6 +43,19 @@ insert into public.guardians (id, profile_id, full_name, email, phone) values
 insert into public.student_guardians (student_id, guardian_id, relationship) values
   ('d1100000-0000-4000-8000-0000000000f1', 'd1200000-0000-4000-8000-0000000000d1', 'parent');
 
+-- "Matriculado" exige una matrícula activa (0035): student1 y el menor (con consentimiento de su tutor) tienen una.
+insert into public.programs (id, code, name_es, name_en, language_code, audience, format)
+values ('d1500000-0000-4000-8000-000000000001', 'd1-prog', 'D1 programa', 'D1 program', 'es', 'adults', 'local_group');
+insert into public.groups (id, code, name, program_id, format, capacity, status)
+values ('d1500000-0000-4000-8000-000000000002', 'D1-GRP', 'D1 grupo', 'd1500000-0000-4000-8000-000000000001', 'local_group', 10, 'active');
+insert into public.consent_texts (id, kind, body_es, body_en, effective_from)
+values ('minor_data-v91', 'minor_data', 'D1 texto', 'D1 text', '2026-01-01');
+insert into public.consents (student_id, guardian_id, text_id, kind, granted, method)
+values ('d1100000-0000-4000-8000-0000000000f1', 'd1200000-0000-4000-8000-0000000000d1', 'minor_data-v91', 'minor_data', true, 'paper');
+insert into public.enrollments (student_id, group_id, status, billing_mode) values
+  ('d1100000-0000-4000-8000-0000000000c1', 'd1500000-0000-4000-8000-000000000002', 'active', 'free'),
+  ('d1100000-0000-4000-8000-0000000000f1', 'd1500000-0000-4000-8000-000000000002', 'active', 'free');
+
 -- Contenido de partida (como postgres). Recursos: R1 public, R2 account,
 -- R3 enrolled (publicados), R4 public en borrador, R9 enrolled publicado sin
 -- teaser y R10 account publicado con archivo.
@@ -99,7 +112,7 @@ returns setof text language sql as $$
 $$;
 create function pg_temp.d1_blocks()
 returns setof text language sql as $$
-  select right(id::text, 2) from public.lesson_blocks where id::text like 'd15%' order by 1;
+  select right(id::text, 2) from public.lesson_blocks where id::text like 'd1500000-0000-4000-8000-%' order by 1;
 $$;
 grant execute on function pg_temp.d1_resources() to authenticated;
 grant execute on function pg_temp.d1_lessons() to authenticated;

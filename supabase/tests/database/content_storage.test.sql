@@ -26,6 +26,14 @@ update public.profiles set status = 'suspended' where id = 'd2000000-0000-4000-8
 insert into public.students (id, profile_id, full_name, audience) values
   ('d2100000-0000-4000-8000-0000000000c1', 'd2000000-0000-4000-8000-0000000000c1', 'D2 Student One', 'adults');
 
+-- "Matriculado" exige una matrícula activa (0035).
+insert into public.programs (id, code, name_es, name_en, language_code, audience, format)
+values ('d2500000-0000-4000-8000-000000000001', 'd2-prog', 'D2 programa', 'D2 program', 'es', 'adults', 'local_group');
+insert into public.groups (id, code, name, program_id, format, capacity, status)
+values ('d2500000-0000-4000-8000-000000000002', 'D2-GRP', 'D2 grupo', 'd2500000-0000-4000-8000-000000000001', 'local_group', 10, 'active');
+insert into public.enrollments (student_id, group_id, status, billing_mode)
+values ('d2100000-0000-4000-8000-0000000000c1', 'd2500000-0000-4000-8000-000000000002', 'active', 'free');
+
 -- F1 public publicado, F2 enrolled publicado, F3 public borrador; objeto 09 huérfano.
 insert into public.resources (id, kind, access_level, status, title_es, title_en, file_path, file_mime, file_size_bytes)
 values

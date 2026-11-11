@@ -52,7 +52,7 @@ export default async function PricesPage({ params }: PageProps) {
   // Ediciones con un grupo de reserva en línea: el botón lleva al formulario de ese grupo (o a la lista si hay varios).
   const bookable: Record<string, string> = {};
   if (editions.length > 0) {
-    for (const g of await getPublicGroups()) {
+    for (const g of await getPublicGroups(process.env, fetch, false)) {
       bookable[g.editionId] = bookable[g.editionId] ? localePath(locale, "enrol") : `${localePath(locale, "enrol")}/${g.id}`;
     }
   }

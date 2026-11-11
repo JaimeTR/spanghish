@@ -98,9 +98,12 @@ export function parseGroup(row: unknown): PublicGroup | null {
   };
 }
 
-/** Grupos que admiten reservas. Sin caché: las plazas libres cambian con cada reserva. */
-export async function getPublicGroups(env: Env = process.env, fetchImpl: typeof fetch = fetch): Promise<PublicGroup[]> {
-  const result = await getRpc<unknown>("list_public_groups", {}, env, fetchImpl, { cache: "no-store" });
+/**
+ * Grupos que admiten reservas. Por defecto sin caché (las plazas libres cambian con cada reserva);
+ * `fresh = false` usa la caché de 5 minutos, para páginas estáticas como Precios.
+ */
+export async function getPublicGroups(env: Env = process.env, fetchImpl: typeof fetch = fetch, fresh = true): Promise<PublicGroup[]> {
+  const result = await getRpc<unknown>("list_public_groups", {}, env, fetchImpl, fresh ? { cache: "no-store" } : {});
   if (!result.ok || !Array.isArray(result.data)) return [];
   return result.data.map(parseGroup).filter((g): g is PublicGroup => g !== null);
 }

@@ -5,9 +5,9 @@ const MAIN_NAV = "Navegación principal";
 
 // Módulos "en desarrollo" de cada área (lib/nav.ts).
 const AREAS = [
-  { who: "admin", home: "/es/admin", dev: 6, total: 13 },
+  { who: "admin", home: "/es/admin", dev: 2, total: 17 },
   { who: "teacher", home: "/es/teacher", dev: 6, total: 6 },
-  { who: "student", home: "/es/student", dev: 6, total: 9 },
+  { who: "student", home: "/es/student", dev: 4, total: 10 },
   { who: "guardian", home: "/es/guardian", dev: 5, total: 5 },
 ] as const;
 
@@ -73,7 +73,7 @@ test("a module in development of another role redirects like any other route of 
 test("an unknown module key is a 404, also for a ready module's key", async ({ page }) => {
   await login(page, USERS.admin);
   await expectPath(page, "/es/admin");
-  for (const path of ["/es/admin/unknown", "/es/admin/settings", "/es/admin/dashboard"]) {
+  for (const path of ["/es/admin/unknown", "/es/admin/dashboard"]) {
     const response = await page.goto(path);
     expect(response?.status(), path).toBe(404);
   }
