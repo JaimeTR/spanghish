@@ -132,7 +132,8 @@
       "children": "Mis hijos",
       "consents": "Consentimientos",
       "legal": "Documentos legales",
-      "tests": "Tests"
+      "tests": "Tests",
+      "users": "Usuarios"
     }
   },
   "account": {
@@ -245,23 +246,23 @@
   },
   "teachers": {
     "title": "Docentes",
-    "intro": "Cuentas del equipo: docentes y administración.",
+    "intro": "Las cuentas de docentes. Edita sus datos o habilita y deshabilita su acceso.",
     "invite": "Invitar docente",
     "empty": "Todavía no hay docentes.",
     "noName": "Sin nombre",
     "columns": {
       "name": "Nombre",
       "email": "Correo",
-      "roles": "Roles",
       "status": "Estado",
-      "actions": "Acciones"
+      "actions": "Acciones",
+      "phone": "Teléfono"
     },
     "status": {
-      "active": "Activa",
-      "suspended": "Suspendida"
+      "active": "Habilitada",
+      "suspended": "Deshabilitada"
     },
-    "suspend": "Suspender",
-    "reactivate": "Reactivar",
+    "suspend": "Deshabilitar",
+    "reactivate": "Habilitar",
     "who": "a {name}",
     "saving": "Guardando…",
     "invited": {
@@ -279,11 +280,13 @@
       "submitting": "Enviando…",
       "back": "Volver a docentes"
     },
-    "search": "Buscar por nombre o correo"
+    "search": "Buscar por nombre o correo",
+    "edit": "Editar",
+    "publicProfiles": "Perfiles públicos"
   },
   "teacherProfiles": {
     "title": "Perfiles públicos de docentes",
-    "intro": "Gestiona los perfiles que aparecen en la web.",
+    "intro": "La ficha pública que aparece en la página «Docentes» de la web: foto, presentación y datos. No es la cuenta ni da acceso al portal; la cuenta se gestiona en Docentes y Usuarios.",
     "new": "Añadir docente",
     "edit": "Editar",
     "back": "Volver a perfiles",
@@ -1426,5 +1429,60 @@
       "date": "Fecha",
       "resourcesTitle": "Tests"
     }
+  },
+  "users": {
+    "title": "Usuarios",
+    "intro": "Todas las cuentas del portal: administración, docentes, alumnado y tutores. Edita sus datos, roles y acceso.",
+    "new": "Nuevo usuario",
+    "empty": "Todavía no hay usuarios.",
+    "search": "Buscar por nombre, correo o teléfono",
+    "noName": "Sin nombre",
+    "edit": "Editar",
+    "back": "Volver a usuarios",
+    "columns": {
+      "name": "Nombre",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "roles": "Roles",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "status": {
+      "active": "Habilitado",
+      "suspended": "Deshabilitado"
+    },
+    "invite": {
+      "intro": "Crearemos la cuenta y enviaremos un enlace para que elija su contraseña.",
+      "fullName": "Nombre completo",
+      "email": "Correo electrónico",
+      "emailHint": "Le llegará el enlace a este correo.",
+      "role": "Rol",
+      "roleHint": "Se puede cambiar después en su ficha.",
+      "locale": "Idioma del correo",
+      "create": "Crear cuenta",
+      "creating": "Creando…",
+      "sent": "Cuenta creada: recibirá un correo para crear su contraseña.",
+      "nomail": "Cuenta creada, pero no pudimos enviar el correo. Pídele que entre con «¿Olvidaste tu contraseña?»."
+    },
+    "sections": {
+      "data": "Datos",
+      "roles": "Roles",
+      "status": "Acceso"
+    },
+    "emailFixed": "Correo de acceso: {email}. No se cambia desde aquí.",
+    "roles": {
+      "help": "Una cuenta puede tener varios roles. Debe quedar al menos uno.",
+      "save": "Guardar roles",
+      "saving": "Guardando…",
+      "desc": {
+        "admin": "Gestiona todo el portal.",
+        "teacher": "Ve sus clases y recursos.",
+        "student": "Aprende y hace tests.",
+        "guardian": "Sigue a sus hijos o hijas."
+      }
+    },
+    "statusActiveHelp": "La cuenta está habilitada. Si la deshabilitas, no podrá entrar al portal; sus datos se conservan.",
+    "statusSuspendedHelp": "La cuenta está deshabilitada y no puede entrar. Habilítala para devolverle el acceso.",
+    "statusSelf": "No puedes deshabilitar tu propia cuenta."
   }
 }

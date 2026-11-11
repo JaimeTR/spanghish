@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   Smile,
   TrendingUp,
+  UserCog,
   UsersRound,
   type LucideIcon,
 } from "lucide-react";
@@ -42,6 +43,7 @@ export const NAV_ICONS: Record<NavIcon, LucideIcon> = {
   content: FolderOpen,
   legal: Scale,
   tests: FileCheck,
+  users: UserCog,
   settings: Settings,
   today: CalendarDays,
   resources: Library,

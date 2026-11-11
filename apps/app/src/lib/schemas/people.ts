@@ -13,6 +13,16 @@ export const inviteTeacherSchema = z.object({
 });
 export type InviteTeacherInput = z.infer<typeof inviteTeacherSchema>;
 
+export const APP_ROLES = ["admin", "teacher", "student", "guardian"] as const;
+
+/** Alta de cuenta con cualquier rol (admin se concede después del alta, nunca por metadatos). */
+export const inviteUserSchema = z.object({
+  email: emailField,
+  fullName: z.string().trim().min(1).max(120),
+  role: z.enum(APP_ROLES),
+  locale: localeField,
+});
+
 export const suspendAccountSchema = z.object({
   userId: z.uuid(),
   suspended: z.enum(["true", "false"]),

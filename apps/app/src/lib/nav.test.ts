@@ -25,6 +25,7 @@ describe("NAV", () => {
       "enrollments",
       "attendance",
       "leads",
+      "users",
       "students",
       "teachers",
       "content",
@@ -96,6 +97,7 @@ describe("NAV", () => {
     );
     expect(readyKeys).toEqual([
       "admin.dashboard",
+      "admin.users",
       "admin.students",
       "admin.teachers",
       "admin.content",

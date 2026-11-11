@@ -20,7 +20,7 @@ export type ProfileValues = {
 };
 
 /** Formulario de "Mis datos": el mismo para administración, docentes, alumnos y tutores. */
-export function ProfileForm({ locale, profile }: { locale: Locale; profile: ProfileValues }) {
+export function ProfileForm({ locale, profile, userId }: { locale: Locale; profile: ProfileValues; userId?: string }) {
   const t = useTranslations("account.form");
   const tl = useTranslations("locales");
   const form = useFormAction<ProfileField>(saveProfile, { status: "idle" }, true);
@@ -29,6 +29,7 @@ export function ProfileForm({ locale, profile }: { locale: Locale; profile: Prof
   return (
     <form action={form.formAction} noValidate className="space-y-5">
       <input type="hidden" name="uiLocale" value={locale} />
+      {userId ? <input type="hidden" name="userId" value={userId} /> : null}
       <div key={form.formKey} className="grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <Field name="fullName" label={t("fullName")} error={errors.fullName} hint={t("fullNameHint")}>

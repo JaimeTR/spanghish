@@ -10,7 +10,8 @@ export type DataColumn = {
   id: string;
   header: string;
   /** Con opciones, la cabecera lleva un filtro desplegable. */
-  filter?: { options: { value: string; label: string }[] };
+  /** `multi`: el valor de la fila es una lista separada por comas (p. ej. varios roles) y basta con que incluya la opción. */
+  filter?: { options: { value: string; label: string }[]; multi?: boolean };
   sortable?: boolean;
   align?: "right";
   /** La primera celda de la fila (el nombre) es el encabezado de fila. */
@@ -63,7 +64,12 @@ export function DataTable({
     const first = columns[0]!.id;
     return rows
       .filter((row) => {
-        for (const [col, value] of Object.entries(filters)) if (value && row.values[col] !== value) return false;
+        for (const [col, value] of Object.entries(filters)) {
+          if (!value) continue;
+          const have = row.values[col] ?? "";
+          const multi = columns.find((c) => c.id === col)?.filter?.multi;
+          if (multi ? !have.split(",").includes(value) : have !== value) return false;
+        }
         if (!q) return true;
         return norm(row.searchText ?? Object.values(row.values).join(" ")).includes(q);
       })

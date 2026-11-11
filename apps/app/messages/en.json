@@ -132,7 +132,8 @@
       "children": "My children",
       "consents": "Consents",
       "legal": "Legal documents",
-      "tests": "Tests"
+      "tests": "Tests",
+      "users": "Users"
     }
   },
   "account": {
@@ -245,23 +246,23 @@
   },
   "teachers": {
     "title": "Teachers",
-    "intro": "Team accounts: teachers and administration.",
+    "intro": "Teacher accounts. Edit their details or enable and disable their access.",
     "invite": "Invite a teacher",
     "empty": "There are no teachers yet.",
     "noName": "No name",
     "columns": {
       "name": "Name",
       "email": "Email",
-      "roles": "Roles",
       "status": "Status",
-      "actions": "Actions"
+      "actions": "Actions",
+      "phone": "Phone"
     },
     "status": {
-      "active": "Active",
-      "suspended": "Suspended"
+      "active": "Enabled",
+      "suspended": "Disabled"
     },
-    "suspend": "Suspend",
-    "reactivate": "Reactivate",
+    "suspend": "Disable",
+    "reactivate": "Enable",
     "who": "{name}",
     "saving": "Saving…",
     "invited": {
@@ -279,11 +280,13 @@
       "submitting": "Sending…",
       "back": "Back to teachers"
     },
-    "search": "Search by name or email"
+    "search": "Search by name or email",
+    "edit": "Edit",
+    "publicProfiles": "Public profiles"
   },
   "teacherProfiles": {
     "title": "Public teacher profiles",
-    "intro": "Manage the profiles shown on the website.",
+    "intro": "The public card shown on the website's \"Teachers\" page: photo, introduction and facts. It is not the account and gives no portal access; the account is managed in Teachers and Users.",
     "new": "Add teacher",
     "edit": "Edit",
     "back": "Back to profiles",
@@ -1426,5 +1429,60 @@
       "date": "Date",
       "resourcesTitle": "Tests"
     }
+  },
+  "users": {
+    "title": "Users",
+    "intro": "Every portal account: administration, teachers, students and guardians. Edit their details, roles and access.",
+    "new": "New user",
+    "empty": "There are no users yet.",
+    "search": "Search by name, email or phone",
+    "noName": "No name",
+    "edit": "Edit",
+    "back": "Back to users",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "roles": "Roles",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "status": {
+      "active": "Enabled",
+      "suspended": "Disabled"
+    },
+    "invite": {
+      "intro": "We will create the account and send a link so they can choose a password.",
+      "fullName": "Full name",
+      "email": "Email",
+      "emailHint": "The link will be sent to this address.",
+      "role": "Role",
+      "roleHint": "You can change it later on their page.",
+      "locale": "Email language",
+      "create": "Create account",
+      "creating": "Creating…",
+      "sent": "Account created: they will get an email to create their password.",
+      "nomail": "Account created, but the email could not be sent. Ask them to use \"Forgot your password?\"."
+    },
+    "sections": {
+      "data": "Details",
+      "roles": "Roles",
+      "status": "Access"
+    },
+    "emailFixed": "Sign-in email: {email}. It cannot be changed here.",
+    "roles": {
+      "help": "An account can have several roles. At least one must remain.",
+      "save": "Save roles",
+      "saving": "Saving…",
+      "desc": {
+        "admin": "Manages the whole portal.",
+        "teacher": "Sees their classes and resources.",
+        "student": "Learns and takes tests.",
+        "guardian": "Follows their children."
+      }
+    },
+    "statusActiveHelp": "The account is enabled. If you disable it, they cannot sign in; their data is kept.",
+    "statusSuspendedHelp": "The account is disabled and cannot sign in. Enable it to give access back.",
+    "statusSelf": "You cannot disable your own account."
   }
 }

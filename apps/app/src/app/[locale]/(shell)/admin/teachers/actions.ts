@@ -63,6 +63,6 @@ export async function setAccountSuspended(
   if (error) return { status: "error", error: toDomainError(error) };
   if (!data) return { status: "error", error: "not_found" };
 
-  revalidatePath(`/${locale}/admin/teachers`);
+  revalidatePath(`/${locale}/admin`, "layout");
   return { status: "ok" };
 }

@@ -38,6 +38,59 @@ export async function listStaff(supabase: Client): Promise<StaffMember[]> {
   }));
 }
 
+export type UserRow = {
+  id: string;
+  fullName: string | null;
+  email: string | null;
+  phone: string | null;
+  status: UserStatus;
+  roles: AppRole[];
+};
+
+const USER_COLUMNS = "id, full_name, email, phone, status, user_roles(role)";
+
+function toUserRow(p: {
+  id: string;
+  full_name: string | null;
+  email: string | null;
+  phone: string | null;
+  status: string;
+  user_roles: { role: AppRole }[];
+}): UserRow {
+  return {
+    id: p.id,
+    fullName: p.full_name,
+    email: p.email,
+    phone: p.phone,
+    status: p.status === "active" ? "active" : "suspended",
+    roles: p.user_roles.map((r) => r.role),
+  };
+}
+
+/** Todas las cuentas con sus roles (RLS: solo una admin ve todas). */
+export async function listUsers(supabase: Client): Promise<UserRow[]> {
+  const { data, error } = await supabase.from("profiles").select(USER_COLUMNS).order("full_name", { nullsFirst: false }).limit(1000);
+  if (error) throw new Error(`listUsers: ${error.code}`);
+  return data.map(toUserRow);
+}
+
+/** Solo las cuentas con rol docente. */
+export async function listTeachers(supabase: Client): Promise<UserRow[]> {
+  return (await listUsers(supabase)).filter((u) => u.roles.includes("teacher"));
+}
+
+/** Una cuenta con todos sus datos de perfil; null si no existe. */
+export async function getUserDetail(supabase: Client, id: string) {
+  if (!UUID.test(id)) return null;
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("id, full_name, email, phone, birth_date, address, city, country, preferred_locale, status, created_at, user_roles(role)")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw new Error(`getUserDetail: ${error.code}`);
+  return data;
+}
+
 // ---------------------------------------------------------------------------
 // Alumnos, tutores y consentimientos (lecturas con el JWT del usuario: RLS
 // decide; las páginas de administración las llaman tras requireArea("admin")).

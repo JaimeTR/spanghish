@@ -67,6 +67,7 @@ describe("Sidebar", () => {
     const hrefs = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href"));
     expect(hrefs).toEqual([
       "/es/admin",
+      "/es/admin/users",
       "/es/admin/students",
       "/es/admin/teachers",
       "/es/admin/resources",
