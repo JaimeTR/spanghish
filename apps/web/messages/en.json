@@ -1578,7 +1578,7 @@
         "leadDownloads": "Payment received: your materials are ready to download.",
         "downloadsTitle": "Download your materials",
         "download": "Download {name}",
-        "downloadsNote": "The links work for 30 days. If a material isn't listed here, Maribel will email it to you."
+        "downloadsNote": "The links work for 30 days. If a material isn't listed here, Maribel will email it to you. To download again later, open “My purchases” with your email."
       },
       "unpaid": {
         "title": "Payment not completed",
@@ -1595,7 +1595,28 @@
         "receipt": "If no receipt arrives, the payment wasn’t completed: your cart is still saved. Questions? Get in touch."
       },
       "backShop": "Back to the shop",
-      "toLearn": "Go to Learn now"
+      "toLearn": "Go to Learn now",
+      "myPurchases": "View my purchases"
+    },
+    "myPurchases": {
+      "metaTitle": "My purchases · Spanglish",
+      "metaDescription": "Your Spanglish purchases and downloads.",
+      "crumb": "My purchases",
+      "title": "My purchases",
+      "leadOut": "Sign in with your email to see what you bought and download it any time.",
+      "leadIn": "Here are your purchases. Download them any time.",
+      "backShop": "Back to the shop",
+      "howItWorks": "We email a link to the address you bought with. No password: open the link and you are in.",
+      "email": "Your email",
+      "send": "Email me the link",
+      "sent": "If that email has purchases, we sent you a link. Check your inbox (and spam).",
+      "invalid": "Enter a valid email.",
+      "failed": "We could not send the link right now. Please try again shortly.",
+      "linkError": "The link is invalid or has expired. Request a new one.",
+      "empty": "There are no purchases on this account yet.",
+      "download": "Download",
+      "noFile": "Maribel will email it to you",
+      "signOut": "Sign out"
     }
   },
   "notFound": {

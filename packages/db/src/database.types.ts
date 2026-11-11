@@ -449,14 +449,14 @@ isOneToOne: false
                   ]
                 },"shop_orders": {
                   Row: {
-                    "created_at": string,"currency": string,"email": string | null,"expires_at": string,"id": string,"locale": string,"stripe_session_id": string,"token": string,"total_cents": number
+                    "created_at": string,"currency": string,"email": string | null,"expires_at": string,"id": string,"locale": string,"stripe_session_id": string,"token": string,"total_cents": number,"user_id": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"stripe_session_id": string,"token"?: string,"total_cents": number
+                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"stripe_session_id": string,"token"?: string,"total_cents": number,"user_id"?: string | null
                   }
                   Update: {
-                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"stripe_session_id"?: string,"token"?: string,"total_cents"?: number
+                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"stripe_session_id"?: string,"token"?: string,"total_cents"?: number,"user_id"?: string | null
                   }
                   Relationships: [
     
@@ -688,6 +688,9 @@ isOneToOne: false
 "is_active":
 { Args: Record<PropertyKey, never>; Returns: boolean
                            },
+"my_shop_purchases":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
 "list_shop_products":
 { Args: Record<PropertyKey, never>; Returns: {
               "compare_at_cents": number,"cover_height": number,"cover_path": string,"cover_width": number,"has_file": boolean,"name_en": string,"name_es": string,"price_cents": number,"slug": string,"summary_en": string,"summary_es": string
@@ -756,7 +759,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian","audience_segment": "kids"|"adults"|"mature","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","test_question_kind": "single"|"truefalse"|"fill","edition_status": "draft"|"open"|"closed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","student_status": "active"|"inactive"
+            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","audience_segment": "kids"|"adults"|"mature","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","test_question_kind": "single"|"truefalse"|"fill","edition_status": "draft"|"open"|"closed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","student_status": "active"|"inactive"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -872,7 +875,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian"],"audience_segment": ["kids", "adults", "mature"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"test_question_kind": ["single", "truefalse", "fill"],"edition_status": ["draft", "open", "closed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"student_status": ["active", "inactive"]
+            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"audience_segment": ["kids", "adults", "mature"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"test_question_kind": ["single", "truefalse", "fill"],"edition_status": ["draft", "open", "closed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"student_status": ["active", "inactive"]
           }
         }
 } as const

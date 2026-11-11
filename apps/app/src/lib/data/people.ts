@@ -1,7 +1,7 @@
 import "server-only";
 import type { Database, Enums, Tables } from "@spanglish/db";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { AppRole, UserStatus } from "../access";
+import type { StoredRole, UserStatus } from "../access";
 
 type Client = SupabaseClient<Database>;
 
@@ -9,11 +9,11 @@ export type StaffMember = {
   id: string;
   fullName: string | null;
   email: string | null;
-  roles: AppRole[];
+  roles: StoredRole[];
   status: UserStatus;
 };
 
-const STAFF_ROLES: AppRole[] = ["admin", "teacher"];
+const STAFF_ROLES: StoredRole[] = ["admin", "teacher"];
 
 /** Cuentas con rol admin o teacher (RLS: solo una admin ve todas). */
 export async function listStaff(supabase: Client): Promise<StaffMember[]> {
@@ -44,7 +44,7 @@ export type UserRow = {
   email: string | null;
   phone: string | null;
   status: UserStatus;
-  roles: AppRole[];
+  roles: StoredRole[];
 };
 
 const USER_COLUMNS = "id, full_name, email, phone, status, user_roles(role)";
@@ -55,7 +55,7 @@ function toUserRow(p: {
   email: string | null;
   phone: string | null;
   status: string;
-  user_roles: { role: AppRole }[];
+  user_roles: { role: StoredRole }[];
 }): UserRow {
   return {
     id: p.id,

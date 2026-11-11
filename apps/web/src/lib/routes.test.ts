@@ -43,6 +43,7 @@ describe("routes", () => {
       learnNouns: "learn/nouns-and-articles",
       shop: "shop",
       shopSuccess: "shop/success",
+      myPurchases: "my-purchases",
     });
   });
 
@@ -140,7 +141,7 @@ describe("routes", () => {
   });
 
   it("keeps the confirmations and the legal drafts out of search engines", () => {
-    expect(ROUTE_KEYS.filter((r) => !isIndexable(r))).toEqual(["thankYou", "privacy", "terms", "shopSuccess"]);
+    expect(ROUTE_KEYS.filter((r) => !isIndexable(r))).toEqual(["thankYou", "privacy", "terms", "shopSuccess", "myPurchases"]);
     expect(isIndexable("bookings")).toBe(true);
     expect(isIndexable("shop")).toBe(true);
     expect(isIndexable("learnNouns")).toBe(true);

@@ -65,6 +65,11 @@ export default async function ShopSuccessPage({ params, searchParams }: PageProp
             <Link href={localePath(locale, "shop")} className={buttons.primary}>
               {t("backShop")}
             </Link>
+            {status === "paid" ? (
+              <Link href={localePath(locale, "myPurchases")} className={buttons.secondary}>
+                {t("myPurchases")}
+              </Link>
+            ) : null}
             <Link href={localePath(locale, "learn")} className={buttons.secondary}>
               {t("toLearn")}
             </Link>

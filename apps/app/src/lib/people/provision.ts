@@ -5,7 +5,7 @@ import type { Locale } from "../../i18n/routing";
 import { resetPasswordUrl } from "../site-url";
 import { createAdminClient } from "../supabase/admin";
 
-export type InitialRole = "teacher" | "student" | "guardian";
+export type InitialRole = "teacher" | "student" | "guardian" | "customer";
 
 export type ProvisionInput = {
   email: string;

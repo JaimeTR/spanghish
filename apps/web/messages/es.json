@@ -1578,7 +1578,7 @@
         "leadDownloads": "Pago recibido: tus materiales ya están listos para descargar.",
         "downloadsTitle": "Descarga tus materiales",
         "download": "Descargar {name}",
-        "downloadsNote": "Los enlaces funcionan durante 30 días. Si algún material no aparece aquí, Maribel te lo enviará por correo."
+        "downloadsNote": "Los enlaces funcionan durante 30 días. Si algún material no aparece aquí, Maribel te lo enviará por correo. Para volver a descargar más adelante, entra en «Mis compras» con tu correo."
       },
       "unpaid": {
         "title": "Pago sin completar",
@@ -1595,7 +1595,28 @@
         "receipt": "Si no te llega el recibo, tu pago no se completó: tu carrito sigue guardado. ¿Dudas? Escríbenos."
       },
       "backShop": "Volver a la tienda",
-      "toLearn": "Ir a Aprende ahora"
+      "toLearn": "Ir a Aprende ahora",
+      "myPurchases": "Ver mis compras"
+    },
+    "myPurchases": {
+      "metaTitle": "Mis compras · Spanglish",
+      "metaDescription": "Tus compras de Spanglish y tus descargas.",
+      "crumb": "Mis compras",
+      "title": "Mis compras",
+      "leadOut": "Entra con tu correo para ver lo que compraste y descargarlo cuando quieras.",
+      "leadIn": "Aquí están tus compras. Puedes descargarlas cuando quieras.",
+      "backShop": "Volver a la tienda",
+      "howItWorks": "Te enviamos un enlace al correo con el que compraste. Sin contraseña: abre el enlace y listo.",
+      "email": "Tu correo",
+      "send": "Enviarme el enlace",
+      "sent": "Si ese correo tiene compras, te enviamos un enlace. Revisa tu bandeja (y el spam).",
+      "invalid": "Escribe un correo válido.",
+      "failed": "No pudimos enviar el enlace ahora. Inténtalo de nuevo en un rato.",
+      "linkError": "El enlace no es válido o ya caducó. Pide uno nuevo.",
+      "empty": "Todavía no hay compras en esta cuenta.",
+      "download": "Descargar",
+      "noFile": "Maribel te lo envía por correo",
+      "signOut": "Cerrar sesión"
     }
   },
   "notFound": {

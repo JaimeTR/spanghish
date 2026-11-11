@@ -183,7 +183,8 @@
     "teacher": "Docente",
     "student": "Alumno",
     "guardian": "Tutor",
-    "placeholder": "Este panel estará disponible pronto."
+    "placeholder": "Este panel estará disponible pronto.",
+    "customer": "Cliente"
   },
   "home": {
     "greeting": "Hola, {name}",
@@ -1504,7 +1505,8 @@
         "admin": "Gestiona todo el portal.",
         "teacher": "Ve sus clases y recursos.",
         "student": "Aprende y hace tests.",
-        "guardian": "Sigue a sus hijos o hijas."
+        "guardian": "Sigue a sus hijos o hijas.",
+        "customer": "Compra en la tienda de la web; no entra al portal."
       }
     },
     "statusActiveHelp": "La cuenta está habilitada. Si la deshabilitas, no podrá entrar al portal; sus datos se conservan.",

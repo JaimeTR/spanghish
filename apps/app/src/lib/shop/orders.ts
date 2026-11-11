@@ -60,15 +60,48 @@ async function downloadsFor(admin: Admin, order: { id: string; token: string }):
   }));
 }
 
+/**
+ * Cuenta de la persona que compró: la existente con ese correo, o una nueva con el rol
+ * `customer` (cliente de la tienda web: no es alumna y no entra al portal). Entra a la web
+ * con un enlace que se envía a su correo, así que basta con que el correo sea suyo.
+ */
+export async function ensureCustomer(admin: Admin, email: string, locale: "es" | "en"): Promise<string | null> {
+  const clean = email.trim().toLowerCase();
+  if (!clean || clean.length > 254) return null;
+  const found = await admin.from("profiles").select("id").eq("email", clean).maybeSingle();
+  if (found.error) return null;
+  if (found.data) return found.data.id;
+
+  const created = await admin.auth.admin.createUser({
+    email: clean,
+    email_confirm: true,
+    app_metadata: { initial_role: "customer" },
+  });
+  if (created.error || !created.data.user) {
+    // Carrera: otro aviso del mismo pago la acaba de crear.
+    const again = await admin.from("profiles").select("id").eq("email", clean).maybeSingle();
+    return again.data?.id ?? null;
+  }
+  await admin.from("profiles").update({ preferred_locale: locale }).eq("id", created.data.user.id);
+  return created.data.user.id;
+}
+
 /** Registra un pedido pagado (idempotente por sesión de Stripe) y devuelve los enlaces de descarga. */
 export async function registerOrder(input: OrderInput, admin: Admin = createAdminClient()): Promise<OrderResult> {
   if (!SESSION.test(input.sessionId)) return { ok: false, status: 404 };
 
-  const existing = await admin.from("shop_orders").select("id, token").eq("stripe_session_id", input.sessionId).maybeSingle();
+  const existing = await admin.from("shop_orders").select("id, token, user_id").eq("stripe_session_id", input.sessionId).maybeSingle();
   if (existing.error) return { ok: false, status: 500 };
   let order = existing.data;
 
+  // Pedido ya registrado sin cuenta (p. ej. antes de existir esta función): se enlaza ahora.
+  if (order && !order.user_id && input.email) {
+    const userId = await ensureCustomer(admin, input.email, input.locale);
+    if (userId) await admin.from("shop_orders").update({ user_id: userId }).eq("id", order.id);
+  }
+
   if (!order) {
+    const userId = input.email ? await ensureCustomer(admin, input.email, input.locale) : null;
     const slugs = input.items.map((i) => i.id);
     const products = await admin.from("products").select("id, slug, name_en, name_es").in("slug", slugs);
     if (products.error) return { ok: false, status: 500 };
@@ -82,12 +115,13 @@ export async function registerOrder(input: OrderInput, admin: Admin = createAdmi
         locale: input.locale,
         total_cents: input.totalCents,
         currency: input.currency.toLowerCase(),
+        user_id: userId,
       })
-      .select("id, token")
+      .select("id, token, user_id")
       .single();
     if (created.error) {
       // Carrera con otro aviso del mismo pago: se vuelve a leer el que ganó.
-      const again = await admin.from("shop_orders").select("id, token").eq("stripe_session_id", input.sessionId).maybeSingle();
+      const again = await admin.from("shop_orders").select("id, token, user_id").eq("stripe_session_id", input.sessionId).maybeSingle();
       if (again.error || !again.data) return { ok: false, status: 500 };
       order = again.data;
     } else {

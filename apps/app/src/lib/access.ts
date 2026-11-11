@@ -1,6 +1,8 @@
 import { isLocale, type Locale } from "../i18n/routing";
 
 export type AppRole = "admin" | "teacher" | "student" | "guardian";
+/** Rol tal como se guarda en la base de datos: además de los del portal, "customer" (cliente de la tienda web, sin acceso al portal). */
+export type StoredRole = AppRole | "customer";
 export type UserStatus = "active" | "suspended";
 /** Estado de sesión: el de la base de datos o "no_profile" (cuenta sin perfil). */
 export type SessionStatus = UserStatus | "no_profile";
@@ -74,7 +76,7 @@ type ProfileRow = {
   email?: string | null;
   avatar_path?: string | null;
 };
-type RoleRow = { role: AppRole };
+type RoleRow = { role: StoredRole };
 
 /**
  * Un usuario suspendido no tiene acceso: se descartan sus roles. Falla cerrado:
@@ -89,7 +91,7 @@ export function toSessionUser(profile: ProfileRow, roleRows: RoleRow[]): Session
     id: profile.id,
     roles: suspended
       ? []
-      : roleRows.map((r) => r.role).filter((r): r is AppRole => ROLE_PRIORITY.includes(r)),
+      : roleRows.map((r) => r.role).filter((r): r is AppRole => ROLE_PRIORITY.includes(r as AppRole)),
     status,
     locale: isLocale(profile.preferred_locale) ? profile.preferred_locale : "es",
     ...(name && !suspended ? { name } : {}),

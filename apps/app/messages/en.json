@@ -183,7 +183,8 @@
     "teacher": "Teacher",
     "student": "Student",
     "guardian": "Guardian",
-    "placeholder": "This dashboard will be available soon."
+    "placeholder": "This dashboard will be available soon.",
+    "customer": "Customer"
   },
   "home": {
     "greeting": "Hi, {name}",
@@ -1504,7 +1505,8 @@
         "admin": "Manages the whole portal.",
         "teacher": "Sees their classes and resources.",
         "student": "Learns and takes tests.",
-        "guardian": "Follows their children."
+        "guardian": "Follows their children.",
+        "customer": "Buys in the website shop; no portal access."
       }
     },
     "statusActiveHelp": "The account is enabled. If you disable it, they cannot sign in; their data is kept.",
