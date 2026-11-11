@@ -5,7 +5,65 @@ export type Database = {
   
   "public": {
           Tables: {
-            "attendance": {
+            "assignment_submissions": {
+                  Row: {
+                    "assignment_id": string,"created_at": string,"feedback": string | null,"file_name": string | null,"file_path": string | null,"grade": number | null,"graded_at": string | null,"graded_by": string | null,"id": string,"is_late": boolean,"status": Database["public"]['Enums']["submission_status"],"student_id": string,"submitted_at": string,"text_answer": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "assignment_id": string,"created_at"?: string,"feedback"?: string | null,"file_name"?: string | null,"file_path"?: string | null,"grade"?: number | null,"graded_at"?: string | null,"graded_by"?: string | null,"id"?: string,"is_late"?: boolean,"status"?: Database["public"]['Enums']["submission_status"],"student_id": string,"submitted_at"?: string,"text_answer"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "assignment_id"?: string,"created_at"?: string,"feedback"?: string | null,"file_name"?: string | null,"file_path"?: string | null,"grade"?: number | null,"graded_at"?: string | null,"graded_by"?: string | null,"id"?: string,"is_late"?: boolean,"status"?: Database["public"]['Enums']["submission_status"],"student_id"?: string,"submitted_at"?: string,"text_answer"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "assignment_submissions_assignment_id_fkey"
+      columns: ["assignment_id"]
+isOneToOne: false
+      referencedRelation: "assignments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "assignment_submissions_graded_by_fkey"
+      columns: ["graded_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "assignment_submissions_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"assignments": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"due_at": string | null,"group_id": string,"id": string,"instructions": string | null,"max_grade": number,"status": Database["public"]['Enums']["assignment_status"],"title": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"due_at"?: string | null,"group_id": string,"id"?: string,"instructions"?: string | null,"max_grade"?: number,"status"?: Database["public"]['Enums']["assignment_status"],"title": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"due_at"?: string | null,"group_id"?: string,"id"?: string,"instructions"?: string | null,"max_grade"?: number,"status"?: Database["public"]['Enums']["assignment_status"],"title"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "assignments_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "assignments_group_id_fkey"
+      columns: ["group_id"]
+isOneToOne: false
+      referencedRelation: "groups"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"attendance": {
                   Row: {
                     "id": string,"marked_at": string,"marked_by": string | null,"note": string | null,"session_id": string,"status": Database["public"]['Enums']["attendance_status"],"student_id": string
                   }
@@ -320,6 +378,32 @@ isOneToOne: true
       columns: ["lesson_id"]
 isOneToOne: false
       referencedRelation: "lessons"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"lesson_completions": {
+                  Row: {
+                    "completed_at": string,"lesson_id": string,"student_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "completed_at"?: string,"lesson_id": string,"student_id": string
+                  }
+                  Update: {
+                    "completed_at"?: string,"lesson_id"?: string,"student_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "lesson_completions_lesson_id_fkey"
+      columns: ["lesson_id"]
+isOneToOne: false
+      referencedRelation: "lessons"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "lesson_completions_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
       referencedColumns: ["id"]
     }
                   ]
@@ -938,8 +1022,14 @@ isOneToOne: false
 "admin_update_request":
 { Args: { "p_action": string,"p_request_id": string }; Returns: Database["public"]['Enums']["enrollment_request_status"]
                            },
+"assignment_file_access":
+{ Args: { "p_name": string,"p_write": boolean }; Returns: boolean
+                           },
 "can_read_resource_object":
 { Args: { "p_name": string }; Returns: boolean
+                           },
+"can_submit_assignment":
+{ Args: { "p_assignment_id": string }; Returns: boolean
                            },
 "can_take_test":
 { Args: { "p_test_id": string }; Returns: boolean
@@ -1104,6 +1194,9 @@ isOneToOne: false
 "taught_student_ids":
 { Args: Record<PropertyKey, never>; Returns: string[]
                            },
+"teaches_assignment":
+{ Args: { "p_assignment_id": string }; Returns: boolean
+                           },
 "teaches_group":
 { Args: { "p_group_id": string }; Returns: boolean
                            },
@@ -1121,7 +1214,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","attendance_status": "present"|"late"|"absent"|"excused","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","change_request_kind": "absence"|"reschedule","change_request_status": "pending"|"approved"|"declined"|"cancelled","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","session_status": "scheduled"|"completed"|"cancelled","student_status": "active"|"inactive","test_question_kind": "single"|"truefalse"|"fill"
+            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","assignment_status": "draft"|"published","attendance_status": "present"|"late"|"absent"|"excused","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","change_request_kind": "absence"|"reschedule","change_request_status": "pending"|"approved"|"declined"|"cancelled","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","session_status": "scheduled"|"completed"|"cancelled","student_status": "active"|"inactive","submission_status": "submitted"|"graded","test_question_kind": "single"|"truefalse"|"fill"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -1237,7 +1330,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"attendance_status": ["present", "late", "absent", "excused"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"change_request_kind": ["absence", "reschedule"],"change_request_status": ["pending", "approved", "declined", "cancelled"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"session_status": ["scheduled", "completed", "cancelled"],"student_status": ["active", "inactive"],"test_question_kind": ["single", "truefalse", "fill"]
+            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"assignment_status": ["draft", "published"],"attendance_status": ["present", "late", "absent", "excused"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"change_request_kind": ["absence", "reschedule"],"change_request_status": ["pending", "approved", "declined", "cancelled"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"session_status": ["scheduled", "completed", "cancelled"],"student_status": ["active", "inactive"],"submission_status": ["submitted", "graded"],"test_question_kind": ["single", "truefalse", "fill"]
           }
         }
 } as const

@@ -85,11 +85,13 @@ export function TableCard({ children }: { children: ReactNode }) {
   return <div className="mt-6 hidden overflow-x-auto rounded-lg border border-line bg-surface md:block">{children}</div>;
 }
 
+// Texto un poco más oscuro que el color del rol: sobre el fondo crema de las páginas, la insignia
+// con tinte necesita más contraste que dentro de una tarjeta blanca (WCAG AA).
 const badgeTones = {
-  success: "bg-success/12 text-success",
+  success: "bg-success/12 text-[color-mix(in_srgb,var(--role-success)_78%,black)]",
   muted: "bg-ink/8 text-text-muted",
-  warning: "bg-warning/15 text-warning",
-  info: "bg-info/12 text-info",
+  warning: "bg-warning/15 text-[color-mix(in_srgb,var(--role-warning)_78%,black)]",
+  info: "bg-info/12 text-[color-mix(in_srgb,var(--role-info)_78%,black)]",
 } as const;
 
 /** Estado en forma de insignia (texto siempre visible, además del color). */

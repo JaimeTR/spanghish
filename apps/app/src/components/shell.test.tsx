@@ -88,16 +88,16 @@ describe("Sidebar", () => {
     expect(screen.queryByText("En desarrollo")).toBeNull();
     expect(container.querySelector("[aria-disabled]")).toBeNull();
     // Un módulo en desarrollo de otra área sí es un enlace con insignia.
-    const student = wrap(<Sidebar role="student" locale="es" />);
-    const tasks = within(student.container).getByRole("link", { name: /^Tareas,\s*En desarrollo$/ });
-    expect(tasks).toHaveAttribute("href", "/es/student/assignments");
-    expect(within(tasks).getByText("En desarrollo")).toBeVisible();
+    const guardian = wrap(<Sidebar role="guardian" locale="es" />);
+    const children = within(guardian.container).getByRole("link", { name: /^Mis hijos,\s*En desarrollo$/ });
+    expect(children).toHaveAttribute("href", "/es/guardian/children");
+    expect(within(children).getByText("En desarrollo")).toBeVisible();
   });
 
   it("a module in development marks itself as current", () => {
-    nav.pathname = "/es/student/assignments";
-    wrap(<Sidebar role="student" locale="es" />);
-    expect(screen.getByRole("link", { name: /^Tareas,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
+    nav.pathname = "/es/guardian/children";
+    wrap(<Sidebar role="guardian" locale="es" />);
+    expect(screen.getByRole("link", { name: /^Mis hijos,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
     nav.pathname = "/es/admin";
   });
 

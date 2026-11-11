@@ -39,3 +39,16 @@ export function ListSection({ id, title, children, className = "mt-10" }: { id: 
     </section>
   );
 }
+
+/** Dato destacado (número grande con su etiqueta): progreso, saldos, conteos. */
+export function StatCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
+  return (
+    <div className="rounded-[var(--shape-lg)] border border-line border-t-4 border-t-brand-yellow bg-surface p-5">
+      <dt className="text-sm font-semibold text-text-muted">{label}</dt>
+      <dd className="mt-1 text-3xl font-extrabold text-text">
+        {value}
+        {hint ? <span className="mt-1 block text-sm font-normal text-text-muted">{hint}</span> : null}
+      </dd>
+    </div>
+  );
+}

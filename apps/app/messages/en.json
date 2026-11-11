@@ -2047,5 +2047,117 @@
       "seeCalendar": "See calendar",
       "seeAttendance": "Take attendance"
     }
+  },
+  "assignments": {
+    "eyebrow": "My classes",
+    "back": "Back to my assignments",
+    "dueOn": "Due: {date}",
+    "noDue": "No due date",
+    "file": "Attached file",
+    "state": {
+      "todo": "To submit",
+      "overdue": "Overdue",
+      "submitted": "Submitted",
+      "late": "Submitted late",
+      "graded": "Graded"
+    },
+    "student": {
+      "title": "Assignments",
+      "lead": "The assignments of your groups: submit text or a file before the deadline.",
+      "empty": "You have no assignments yet.",
+      "result": "Your grade",
+      "mine": "My submission",
+      "locked": "Your teacher has graded it: it can't be changed.",
+      "sentAt": "Sent on {date}"
+    },
+    "submit": {
+      "text": "Your answer",
+      "textHint": "Write your assignment here, or attach a file, or both.",
+      "file": "File",
+      "fileHint": "PDF, image (PNG or JPG), MP3 audio or Word. 10 MB at most.",
+      "attach": "Attach a file",
+      "changeFile": "Change file",
+      "removeFile": "Remove",
+      "uploading": "Uploading…",
+      "send": "Submit assignment",
+      "resend": "Submit again",
+      "sending": "Sending…",
+      "errors": {
+        "type": "That file type isn't allowed.",
+        "size": "The file is larger than 10 MB.",
+        "upload": "The file couldn't be uploaded. Try again."
+      }
+    },
+    "teacher": {
+      "title": "Assignments",
+      "intro": "Create assignments for your groups and grade the submissions.",
+      "new": "New assignment",
+      "newTitle": "New assignment",
+      "edit": "Edit assignment",
+      "editTitle": "Edit assignment",
+      "delete": "Delete assignment",
+      "grading": "See submissions and grade",
+      "empty": "You haven't created any assignments yet.",
+      "noGroups": "You need an assigned group to create assignments.",
+      "dueOn": "Due: {date}",
+      "noDue": "No due date",
+      "counts": "{submitted, plural, =0 {No submissions} one {# submission} other {# submissions}} · {graded} graded",
+      "seeGroups": "See my groups",
+      "back": "Back to assignments",
+      "submissions": "Submissions",
+      "noStudents": "This group has no enrolled students yet.",
+      "notSubmitted": "Not submitted",
+      "submitted": "Submitted",
+      "late": "Late",
+      "graded": "Graded",
+      "sentAt": "Submitted on {date}",
+      "file": "Attached file",
+      "form": {
+        "group": "Group",
+        "choose": "Choose a group…",
+        "title": "Title",
+        "instructions": "Instructions",
+        "dueAt": "Due date",
+        "dueAtHint": "Queensland time. Optional.",
+        "maxGrade": "Maximum grade",
+        "status": "Status",
+        "statusHint": "Students can't see a draft.",
+        "published": "Published",
+        "draft": "Draft",
+        "save": "Save changes",
+        "create": "Create assignment",
+        "saving": "Saving…"
+      },
+      "grade": {
+        "grade": "Grade (max {max})",
+        "feedback": "Feedback",
+        "save": "Save grade",
+        "saving": "Saving…"
+      }
+    }
+  },
+  "progress": {
+    "eyebrow": "My learning",
+    "title": "Progress",
+    "lead": "Your level, your attendance and what you've done so far.",
+    "level": "Level",
+    "noLevel": "No level assigned yet",
+    "attendance": "Attendance",
+    "noClasses": "No classes to count yet",
+    "attendanceHint": "{present} present, {late} late, {absent} absent, {excused} excused",
+    "lessons": "Lessons completed",
+    "lessonsHint": "Mark them when you finish each lesson",
+    "tests": "Tests passed",
+    "testsHint": "Passed out of submitted attempts",
+    "assignments": "Assignments average",
+    "noGraded": "No graded assignments yet",
+    "assignmentsHint": "{count, plural, one {# graded assignment} other {# graded assignments}}",
+    "completedLessons": "Completed lessons",
+    "noLessons": "You haven't completed any lessons yet.",
+    "goLearn": "Go to Learn",
+    "lesson": {
+      "mark": "Mark as completed",
+      "done": "Completed"
+    }
   }
 }

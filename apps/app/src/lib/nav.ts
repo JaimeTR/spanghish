@@ -92,7 +92,7 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.r("legal", "legal"),
     a.r("settings", "settings"),
   ],
-  teacher: [t.r("today", "today"), t.r("groups", "groups"), t.r("calendar", "calendar"), t.r("attendance", "attendance"), t.r("requests", "requests"), t.r("resources", "resources")],
+  teacher: [t.r("today", "today"), t.r("groups", "groups"), t.r("calendar", "calendar"), t.r("attendance", "attendance"), t.r("requests", "requests"), t.r("assignments", "assignments"), t.r("resources", "resources")],
   student: [
     s.r("home", ""),
     s.r("schedule", "schedule"),
@@ -101,8 +101,8 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     s.r("resources", "resources"),
     s.r("learn", "learn"),
     s.r("tests", "tests"),
-    s.d("assignments"),
-    s.d("progress"),
+    s.r("assignments", "assignments"),
+    s.r("progress", "progress"),
     s.r("payments", "payments"),
   ],
   guardian: [g.d("children"), g.d("schedule"), g.d("payments"), g.d("consents"), g.d("resources")],
@@ -137,6 +137,7 @@ const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
     calendar: "classes",
     attendance: "classes",
     requests: "classes",
+    assignments: "classes",
     resources: "learn",
   },
   student: {

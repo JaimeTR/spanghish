@@ -2047,5 +2047,117 @@
       "seeCalendar": "Ver calendario",
       "seeAttendance": "Tomar asistencia"
     }
+  },
+  "assignments": {
+    "eyebrow": "Mis clases",
+    "back": "Volver a mis tareas",
+    "dueOn": "Entrega: {date}",
+    "noDue": "Sin fecha de entrega",
+    "file": "Archivo adjunto",
+    "state": {
+      "todo": "Por entregar",
+      "overdue": "Vencida",
+      "submitted": "Entregada",
+      "late": "Entregada fuera de plazo",
+      "graded": "Calificada"
+    },
+    "student": {
+      "title": "Tareas",
+      "lead": "Las tareas de tus grupos: entrega texto o un archivo antes de la fecha límite.",
+      "empty": "Todavía no tienes tareas.",
+      "result": "Tu nota",
+      "mine": "Mi entrega",
+      "locked": "Tu docente ya la calificó: no se puede cambiar.",
+      "sentAt": "Enviada el {date}"
+    },
+    "submit": {
+      "text": "Tu respuesta",
+      "textHint": "Escribe aquí tu tarea, o adjunta un archivo, o las dos cosas.",
+      "file": "Archivo",
+      "fileHint": "PDF, imagen (PNG o JPG), audio MP3 o Word. Máximo 10 MB.",
+      "attach": "Adjuntar archivo",
+      "changeFile": "Cambiar archivo",
+      "removeFile": "Quitar",
+      "uploading": "Subiendo…",
+      "send": "Entregar tarea",
+      "resend": "Volver a entregar",
+      "sending": "Enviando…",
+      "errors": {
+        "type": "Ese tipo de archivo no está permitido.",
+        "size": "El archivo pesa más de 10 MB.",
+        "upload": "No se pudo subir el archivo. Inténtalo de nuevo."
+      }
+    },
+    "teacher": {
+      "title": "Tareas",
+      "intro": "Crea tareas para tus grupos y califica las entregas.",
+      "new": "Nueva tarea",
+      "newTitle": "Nueva tarea",
+      "edit": "Editar tarea",
+      "editTitle": "Editar tarea",
+      "delete": "Eliminar tarea",
+      "grading": "Ver entregas y calificar",
+      "empty": "Todavía no has creado ninguna tarea.",
+      "noGroups": "Necesitas un grupo asignado para crear tareas.",
+      "dueOn": "Entrega: {date}",
+      "noDue": "Sin fecha de entrega",
+      "counts": "{submitted, plural, =0 {Sin entregas} one {# entrega} other {# entregas}} · {graded} calificadas",
+      "seeGroups": "Ver mis grupos",
+      "back": "Volver a tareas",
+      "submissions": "Entregas",
+      "noStudents": "Este grupo todavía no tiene alumnos matriculados.",
+      "notSubmitted": "Sin entregar",
+      "submitted": "Entregada",
+      "late": "Fuera de plazo",
+      "graded": "Calificada",
+      "sentAt": "Entregada el {date}",
+      "file": "Archivo adjunto",
+      "form": {
+        "group": "Grupo",
+        "choose": "Elige un grupo…",
+        "title": "Título",
+        "instructions": "Instrucciones",
+        "dueAt": "Fecha de entrega",
+        "dueAtHint": "Hora de Queensland. Opcional.",
+        "maxGrade": "Nota máxima",
+        "status": "Estado",
+        "statusHint": "Un borrador no lo ven los alumnos.",
+        "published": "Publicada",
+        "draft": "Borrador",
+        "save": "Guardar cambios",
+        "create": "Crear tarea",
+        "saving": "Guardando…"
+      },
+      "grade": {
+        "grade": "Nota (máx. {max})",
+        "feedback": "Comentario",
+        "save": "Guardar nota",
+        "saving": "Guardando…"
+      }
+    }
+  },
+  "progress": {
+    "eyebrow": "Mi aprendizaje",
+    "title": "Progreso",
+    "lead": "Tu nivel, tu asistencia y lo que llevas hecho.",
+    "level": "Nivel",
+    "noLevel": "Aún sin nivel asignado",
+    "attendance": "Asistencia",
+    "noClasses": "Todavía no hay clases que contar",
+    "attendanceHint": "{present} presentes, {late} tarde, {absent} faltas, {excused} justificadas",
+    "lessons": "Lecciones completadas",
+    "lessonsHint": "Márcalas al terminar cada lección",
+    "tests": "Tests aprobados",
+    "testsHint": "Aprobados sobre intentos enviados",
+    "assignments": "Promedio de tareas",
+    "noGraded": "Aún no tienes tareas calificadas",
+    "assignmentsHint": "{count, plural, one {# tarea calificada} other {# tareas calificadas}}",
+    "completedLessons": "Lecciones completadas",
+    "noLessons": "Todavía no has completado ninguna lección.",
+    "goLearn": "Ir a Aprende",
+    "lesson": {
+      "mark": "Marcar como completada",
+      "done": "Completada"
+    }
   }
 }
