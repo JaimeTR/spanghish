@@ -6,8 +6,8 @@ const MAIN_NAV = "Navegación principal";
 // Módulos "en desarrollo" de cada área (lib/nav.ts).
 const AREAS = [
   { who: "admin", home: "/es/admin", dev: 0, total: 17 },
-  { who: "teacher", home: "/es/teacher", dev: 4, total: 6 },
-  { who: "student", home: "/es/student", dev: 3, total: 10 },
+  { who: "teacher", home: "/es/teacher", dev: 0, total: 6 },
+  { who: "student", home: "/es/student", dev: 2, total: 10 },
   { who: "guardian", home: "/es/guardian", dev: 5, total: 5 },
 ] as const;
 
@@ -28,34 +28,34 @@ for (const { who, home, dev, total } of AREAS) {
 test("a module in development explains what it will do, with a sample view and no data requests", async ({
   page,
 }) => {
-  await login(page, USERS.teacher);
-  await expectPath(page, "/es/teacher");
+  await login(page, USERS.student);
+  await expectPath(page, "/es/student");
 
   const dataRequests: string[] = [];
   page.on("request", (r) => {
     if (/\/rest\/v1\/|\/storage\/v1\//.test(r.url())) dataRequests.push(r.url());
   });
 
-  const calendarLink = page
+  const devLink = page
     .getByRole("navigation", { name: MAIN_NAV })
-    .getByRole("link", { name: /^Calendario\s*,\s*En desarrollo$/ });
-  await calendarLink.click();
-  await expectPath(page, "/es/teacher/calendar");
+    .getByRole("link", { name: /^Tareas\s*,\s*En desarrollo$/ });
+  await devLink.click();
+  await expectPath(page, "/es/student/assignments");
   const main = page.getByRole("main");
-  await expect(main.getByRole("heading", { level: 1 })).toHaveText("Calendario");
+  await expect(main.getByRole("heading", { level: 1 })).toHaveText("Tareas");
   await expect(main.getByText("En desarrollo", { exact: true })).toBeVisible();
   const bullets = main.getByRole("region", { name: "Qué podrás hacer aquí" }).getByRole("listitem");
   expect(await bullets.count()).toBeGreaterThanOrEqual(3);
   expect(await bullets.count()).toBeLessThanOrEqual(5);
   await expect(main.getByText("Vista de ejemplo (no son datos reales)")).toBeVisible();
-  await expect(calendarLink).toHaveAttribute("aria-current", "page");
+  await expect(devLink).toHaveAttribute("aria-current", "page");
 
   await page.reload();
-  await expect(main.getByRole("heading", { level: 1 })).toHaveText("Calendario");
+  await expect(main.getByRole("heading", { level: 1 })).toHaveText("Tareas");
   expect(dataRequests).toEqual([]);
 
   await main.getByRole("link", { name: "Volver al inicio" }).click();
-  await expectPath(page, "/es/teacher");
+  await expectPath(page, "/es/student");
 });
 
 test("a module in development of another role redirects like any other route of that role", async ({ page }) => {
@@ -79,9 +79,9 @@ test("an unknown module key is a 404, also for a ready module's key", async ({ p
 });
 
 test("a module in development has no accessibility violations (es/en, desktop and mobile)", async ({ page }) => {
-  await login(page, USERS.teacher);
-  await expectPath(page, "/es/teacher");
-  for (const path of ["/es/teacher/requests", "/en/teacher/requests"]) {
+  await login(page, USERS.student);
+  await expectPath(page, "/es/student");
+  for (const path of ["/es/student/assignments", "/en/student/assignments"]) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();

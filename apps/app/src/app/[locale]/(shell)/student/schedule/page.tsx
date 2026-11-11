@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { StatusBadge } from "@/components/admin/PageHeader";
 import { SESSION_TONES } from "@/components/attendance/SessionRegister";
+import { EmptyState, HeroHeader, PageContainer } from "@/components/layout/page-parts";
 import { isLocale } from "@/i18n/routing";
 import { requireArea } from "@/lib/require-area";
 import { createClient } from "@/lib/supabase/server";
@@ -25,14 +26,10 @@ export default async function StudentSchedulePage({ params }: { params: Promise<
   if (error) throw new Error(`sessions: ${error.code}`);
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6">
-      <header className="rounded-[var(--shape-lg)] bg-structure p-6 text-on-structure">
-        <p className="text-sm font-semibold">{t("eyebrow")}</p>
-        <h1 className="mt-1 text-3xl font-extrabold">{t("schedule.title")}</h1>
-        <p className="mt-3 text-lg">{t("schedule.lead")}</p>
-      </header>
+    <PageContainer>
+      <HeroHeader eyebrow={t("eyebrow")} title={t("schedule.title")} lead={t("schedule.lead")} />
       {data.length === 0 ? (
-        <p className="mt-8 rounded-xl bg-surface-sunken p-4 text-text-muted">{t("schedule.empty")}</p>
+        <EmptyState>{t("schedule.empty")}</EmptyState>
       ) : (
         <ul className="mt-8 list-none space-y-3 p-0">
           {data.map((s) => {
@@ -60,6 +57,6 @@ export default async function StudentSchedulePage({ params }: { params: Promise<
           })}
         </ul>
       )}
-    </div>
+    </PageContainer>
   );
 }

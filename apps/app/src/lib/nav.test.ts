@@ -116,10 +116,15 @@ describe("NAV", () => {
       "admin.legal",
       "admin.settings",
       "teacher.today",
+      "teacher.groups",
+      "teacher.calendar",
       "teacher.attendance",
+      "teacher.requests",
+      "teacher.resources",
       "student.home",
       "student.schedule",
       "student.courses",
+      "student.requests",
       "student.resources",
       "student.learn",
       "student.tests",
@@ -165,8 +170,8 @@ describe("NAV", () => {
 
   it("devModules returns the dev keys of an area", () => {
     expect(devModules("admin")).toEqual([]);
-    expect(devModules("teacher")).toHaveLength(4);
-    expect(devModules("student")).toHaveLength(3);
+    expect(devModules("teacher")).toEqual([]);
+    expect(devModules("student")).toEqual(["assignments", "progress"]);
     expect(devModules("guardian")).toHaveLength(5);
   });
 

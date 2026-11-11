@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SessionList } from "@/components/attendance/SessionList";
+import { PageContainer } from "@/components/layout/page-parts";
 import { isLocale } from "@/i18n/routing";
 import { requireArea } from "@/lib/require-area";
 
@@ -13,9 +14,9 @@ export default async function TeacherAttendancePage({ params }: { params: Promis
   await requireArea(locale, "teacher");
   const t = await getTranslations({ locale, namespace: "classes.attendance" });
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6">
+    <PageContainer>
       <PageHeader title={t("title")} intro={t("introTeacher")} />
       <SessionList locale={locale} base={`/${locale}/teacher/attendance`} />
-    </div>
+    </PageContainer>
   );
 }

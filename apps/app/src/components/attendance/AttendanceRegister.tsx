@@ -9,11 +9,12 @@ import { markAllPresent, markAttendance } from "@/lib/sessions/actions";
 export type RosterRow = { studentId: string; name: string; status: string | null };
 
 const STATUSES = ["present", "late", "absent", "excused"] as const;
+// Estado elegido: fondo tintado + texto del color + anillo (mismo criterio de contraste que las insignias).
 const TONE: Record<(typeof STATUSES)[number], string> = {
-  present: "bg-success text-white",
-  late: "bg-warning text-white",
-  absent: "bg-danger text-white",
-  excused: "bg-info text-white",
+  present: "bg-success/12 text-success ring-2 ring-success",
+  late: "bg-warning/15 text-warning ring-2 ring-warning",
+  absent: "bg-danger/10 text-danger ring-2 ring-danger",
+  excused: "bg-info/12 text-info ring-2 ring-info",
 };
 
 function StudentRow({ locale, sessionId, row, editable }: { locale: string; sessionId: string; row: RosterRow; editable: boolean }) {
@@ -36,7 +37,7 @@ function StudentRow({ locale, sessionId, row, editable }: { locale: string; sess
               disabled={!editable}
               aria-pressed={row.status === s}
               className={`inline-flex min-h-11 min-w-20 items-center justify-center rounded-md border px-3 text-sm font-semibold focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-purple disabled:cursor-not-allowed disabled:opacity-60 ${
-                row.status === s ? `${TONE[s]} border-transparent` : "border-line bg-surface text-text hover:bg-surface-sunken"
+                row.status === s ? `${TONE[s]} border-transparent font-bold` : "border-line bg-surface text-text hover:bg-surface-sunken"
               }`}
             >
               {t(`status.${s}`)}

@@ -559,6 +559,44 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"session_change_requests": {
+                  Row: {
+                    "created_at": string,"created_by": string | null,"decided_at": string | null,"decided_by": string | null,"id": string,"kind": Database["public"]['Enums']["change_request_kind"],"note": string | null,"response_note": string | null,"session_id": string,"status": Database["public"]['Enums']["change_request_status"],"student_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"created_by"?: string | null,"decided_at"?: string | null,"decided_by"?: string | null,"id"?: string,"kind": Database["public"]['Enums']["change_request_kind"],"note"?: string | null,"response_note"?: string | null,"session_id": string,"status"?: Database["public"]['Enums']["change_request_status"],"student_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"created_by"?: string | null,"decided_at"?: string | null,"decided_by"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["change_request_kind"],"note"?: string | null,"response_note"?: string | null,"session_id"?: string,"status"?: Database["public"]['Enums']["change_request_status"],"student_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "session_change_requests_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "session_change_requests_decided_by_fkey"
+      columns: ["decided_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "session_change_requests_session_id_fkey"
+      columns: ["session_id"]
+isOneToOne: false
+      referencedRelation: "sessions"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "session_change_requests_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"sessions": {
                   Row: {
                     "cancel_reason": string | null,"created_at": string,"ends_at": string,"group_id": string,"id": string,"rule_id": string | null,"starts_at": string,"status": Database["public"]['Enums']["session_status"],"teacher_id": string | null,"teacher_notes": string | null,"topic": string | null,"updated_at": string
@@ -1083,7 +1121,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","attendance_status": "present"|"late"|"absent"|"excused","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","session_status": "scheduled"|"completed"|"cancelled","student_status": "active"|"inactive","test_question_kind": "single"|"truefalse"|"fill"
+            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","attendance_status": "present"|"late"|"absent"|"excused","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","change_request_kind": "absence"|"reschedule","change_request_status": "pending"|"approved"|"declined"|"cancelled","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","session_status": "scheduled"|"completed"|"cancelled","student_status": "active"|"inactive","test_question_kind": "single"|"truefalse"|"fill"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -1199,7 +1237,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"attendance_status": ["present", "late", "absent", "excused"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"session_status": ["scheduled", "completed", "cancelled"],"student_status": ["active", "inactive"],"test_question_kind": ["single", "truefalse", "fill"]
+            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"attendance_status": ["present", "late", "absent", "excused"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"change_request_kind": ["absence", "reschedule"],"change_request_status": ["pending", "approved", "declined", "cancelled"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"session_status": ["scheduled", "completed", "cancelled"],"student_status": ["active", "inactive"],"test_question_kind": ["single", "truefalse", "fill"]
           }
         }
 } as const

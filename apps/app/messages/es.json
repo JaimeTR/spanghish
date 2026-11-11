@@ -1957,7 +1957,8 @@
       "reason": "Motivo (opcional)",
       "cancelButton": "Cancelar clase",
       "cancelling": "Cancelando…",
-      "restore": "Reactivar clase"
+      "restore": "Reactivar clase",
+      "introTeacher": "Tus clases, semana a semana. Toma asistencia o cancela una clase."
     },
     "schedule": {
       "title": "Mi horario",
@@ -1992,6 +1993,59 @@
         "6": "Sábado",
         "7": "Domingo"
       }
+    },
+    "requests": {
+      "title": "Cambios de clase",
+      "lead": "Avisa que no podrás asistir o pide cambiar una de tus próximas clases. Tu docente te responderá aquí.",
+      "introTeacher": "Avisos y pedidos de tus alumnos sobre sus próximas clases. Aprueba o rechaza, y deja una respuesta si quieres.",
+      "pending": "Pendientes",
+      "history": "Historial",
+      "mine": "Mis solicitudes",
+      "noClasses": "No tienes clases programadas en los próximos 30 días para pedir un cambio.",
+      "noneYet": "Todavía no has enviado ninguna solicitud.",
+      "noPending": "No hay solicitudes pendientes.",
+      "noHistory": "Todavía no hay solicitudes resueltas.",
+      "approve": "Aprobar",
+      "decline": "Rechazar",
+      "cancelRequest": "Cancelar solicitud",
+      "response": "Respuesta: {text}",
+      "kind": {
+        "absence": "No asistiré",
+        "reschedule": "Pedir otra fecha"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "approved": "Aprobada",
+        "declined": "Rechazada",
+        "cancelled": "Cancelada"
+      },
+      "form": {
+        "session": "Clase",
+        "choose": "Elige una clase…",
+        "kind": "¿Qué necesitas?",
+        "note": "Motivo",
+        "noteHint": "Opcional. Si pides otra fecha, di cuáles te vienen bien.",
+        "send": "Enviar solicitud",
+        "sending": "Enviando…",
+        "response": "Respuesta (opcional)"
+      }
+    },
+    "teacherGroups": {
+      "title": "Mis grupos",
+      "intro": "Tus grupos activos con sus alumnos, horario y próxima clase.",
+      "empty": "Todavía no tienes grupos asignados.",
+      "schedule": "Horario",
+      "noSchedule": "Sin horario",
+      "where": "Lugar",
+      "noPlace": "Sin sede",
+      "online": "Clase en línea",
+      "next": "Próxima clase",
+      "noNext": "Ninguna programada",
+      "seats": "Alumnos",
+      "students": "Alumnos matriculados",
+      "noStudents": "Aún no hay alumnos matriculados.",
+      "seeCalendar": "Ver calendario",
+      "seeAttendance": "Tomar asistencia"
     }
   }
 }

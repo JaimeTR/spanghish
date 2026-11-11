@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { EmptyState, HeroHeader, PageContainer } from "@/components/layout/page-parts";
 import { isLocale } from "@/i18n/routing";
 import { balanceCents, paidCents } from "@/lib/enrollments/status";
 import { formatAud } from "@/lib/money";
@@ -26,12 +27,8 @@ export default async function StudentPaymentsPage({ params }: { params: Promise<
     .filter((e) => e.balance > 0);
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6">
-      <header className="rounded-[var(--shape-lg)] bg-structure p-6 text-on-structure">
-        <p className="text-sm font-semibold">{t("eyebrow")}</p>
-        <h1 className="mt-1 text-3xl font-extrabold">{t("payments.title")}</h1>
-        <p className="mt-3 text-lg">{t("payments.lead")}</p>
-      </header>
+    <PageContainer>
+      <HeroHeader eyebrow={t("eyebrow")} title={t("payments.title")} lead={t("payments.lead")} />
 
       {due.length > 0 ? (
         <section aria-labelledby="payments-due" className="mt-8 rounded-[var(--shape-lg)] border border-line border-l-4 border-l-danger bg-surface p-5">
@@ -55,7 +52,7 @@ export default async function StudentPaymentsPage({ params }: { params: Promise<
           {t("payments.history")}
         </h2>
         {payments.data.length === 0 ? (
-          <p className="rounded-xl bg-surface-sunken p-4 text-text-muted">{t("payments.empty")}</p>
+          <EmptyState className="">{t("payments.empty")}</EmptyState>
         ) : (
           <ul className="list-none divide-y divide-line rounded-[var(--shape-lg)] border border-line bg-surface p-0">
             {payments.data.map((p) => (
@@ -76,6 +73,6 @@ export default async function StudentPaymentsPage({ params }: { params: Promise<
           </ul>
         )}
       </section>
-    </div>
+    </PageContainer>
   );
 }

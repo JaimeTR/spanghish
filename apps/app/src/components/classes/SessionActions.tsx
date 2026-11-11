@@ -10,6 +10,7 @@ import { useFormAction } from "@/components/forms/useFormAction";
 import { IconSubmit } from "@/components/ui/IconButton";
 import { cancelSession, restoreSession, type CancelField } from "@/lib/sessions/actions";
 
+/** Cancelar una clase con un motivo (administración y docente de ese grupo). */
 export function CancelSessionForm({ locale, sessionId }: { locale: string; sessionId: string }) {
   const t = useTranslations("classes.calendar");
   const form = useFormAction<CancelField>(cancelSession, { status: "idle" }, true);
@@ -29,6 +30,7 @@ export function CancelSessionForm({ locale, sessionId }: { locale: string; sessi
   );
 }
 
+/** Reactivar una clase cancelada: solo icono. */
 export function RestoreSession({ locale, sessionId }: { locale: string; sessionId: string }) {
   const t = useTranslations("classes.calendar");
   const form = useFormAction(restoreSession);

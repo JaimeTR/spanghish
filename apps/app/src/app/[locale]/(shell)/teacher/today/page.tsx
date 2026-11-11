@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SessionRegister } from "@/components/attendance/SessionRegister";
+import { PageContainer } from "@/components/layout/page-parts";
 import { isLocale } from "@/i18n/routing";
 import { requireArea } from "@/lib/require-area";
 import { createClient } from "@/lib/supabase/server";
@@ -33,7 +34,7 @@ export default async function TeacherTodayPage({ params }: { params: Promise<{ l
   if (upcoming.error) throw new Error(`sessions: ${upcoming.error.code}`);
 
   return (
-    <div className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6">
+    <PageContainer>
       <PageHeader title={t("title")} intro={formatDay(today, locale)} />
       {todays.data.length === 0 ? (
         <p className="mt-8 rounded-xl bg-surface-sunken p-4 text-text-muted">{t("empty")}</p>
@@ -66,6 +67,6 @@ export default async function TeacherTodayPage({ params }: { params: Promise<{ l
           {t("seeAll")}
         </Link>
       </p>
-    </div>
+    </PageContainer>
   );
 }

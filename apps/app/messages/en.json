@@ -1957,7 +1957,8 @@
       "reason": "Reason (optional)",
       "cancelButton": "Cancel class",
       "cancelling": "Cancelling…",
-      "restore": "Reinstate class"
+      "restore": "Reinstate class",
+      "introTeacher": "Your classes, week by week. Take attendance or cancel a class."
     },
     "schedule": {
       "title": "My schedule",
@@ -1992,6 +1993,59 @@
         "6": "Saturday",
         "7": "Sunday"
       }
+    },
+    "requests": {
+      "title": "Class changes",
+      "lead": "Let us know you can't make it or ask to change one of your upcoming classes. Your teacher will reply here.",
+      "introTeacher": "Notices and requests from your students about their upcoming classes. Approve or decline, and leave a reply if you like.",
+      "pending": "Pending",
+      "history": "History",
+      "mine": "My requests",
+      "noClasses": "You have no classes in the next 30 days to ask a change for.",
+      "noneYet": "You haven't sent any requests yet.",
+      "noPending": "There are no pending requests.",
+      "noHistory": "There are no resolved requests yet.",
+      "approve": "Approve",
+      "decline": "Decline",
+      "cancelRequest": "Cancel request",
+      "response": "Reply: {text}",
+      "kind": {
+        "absence": "I won't attend",
+        "reschedule": "Ask for another date"
+      },
+      "status": {
+        "pending": "Pending",
+        "approved": "Approved",
+        "declined": "Declined",
+        "cancelled": "Cancelled"
+      },
+      "form": {
+        "session": "Class",
+        "choose": "Choose a class…",
+        "kind": "What do you need?",
+        "note": "Reason",
+        "noteHint": "Optional. If you ask for another date, say which ones suit you.",
+        "send": "Send request",
+        "sending": "Sending…",
+        "response": "Reply (optional)"
+      }
+    },
+    "teacherGroups": {
+      "title": "My groups",
+      "intro": "Your active groups with their students, schedule and next class.",
+      "empty": "You have no groups assigned yet.",
+      "schedule": "Schedule",
+      "noSchedule": "No schedule",
+      "where": "Venue",
+      "noPlace": "No venue",
+      "online": "Online class",
+      "next": "Next class",
+      "noNext": "None scheduled",
+      "seats": "Students",
+      "students": "Enrolled students",
+      "noStudents": "No students enrolled yet.",
+      "seeCalendar": "See calendar",
+      "seeAttendance": "Take attendance"
     }
   }
 }

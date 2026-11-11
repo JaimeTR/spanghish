@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { StatusBadge } from "@/components/admin/PageHeader";
+import { EmptyState, HeroHeader, PageContainer } from "@/components/layout/page-parts";
 import { isLocale } from "@/i18n/routing";
 import { balanceCents, paidCents } from "@/lib/enrollments/status";
 import { formatAud } from "@/lib/money";
@@ -29,14 +30,10 @@ export default async function StudentCoursesPage({ params }: { params: Promise<{
   const es = locale === "es";
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
-      <header className="rounded-[var(--shape-lg)] bg-structure p-6 text-on-structure">
-        <p className="text-sm font-semibold">{t("eyebrow")}</p>
-        <h1 className="mt-1 text-3xl font-extrabold">{t("courses.title")}</h1>
-        <p className="mt-3 text-lg">{t("courses.lead")}</p>
-      </header>
+    <PageContainer size="lg">
+      <HeroHeader eyebrow={t("eyebrow")} title={t("courses.title")} lead={t("courses.lead")} />
       {data.length === 0 ? (
-        <p className="mt-8 rounded-xl bg-surface-sunken p-4 text-text-muted">{t("courses.empty")}</p>
+        <EmptyState>{t("courses.empty")}</EmptyState>
       ) : (
         <ul className="mt-8 grid list-none gap-4 p-0 md:grid-cols-2">
           {data.map((e) => {
@@ -103,6 +100,6 @@ export default async function StudentCoursesPage({ params }: { params: Promise<{
           })}
         </ul>
       )}
-    </div>
+    </PageContainer>
   );
 }
