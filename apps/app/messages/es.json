@@ -472,7 +472,12 @@
       "filterStatus": "Estado",
       "filterKind": "Tipo",
       "filter": "Filtrar",
-      "all": "Todos"
+      "all": "Todos",
+      "search": "Buscar por título o nivel",
+      "columns": {
+        "status": "Estado",
+        "actions": "Acciones"
+      }
     },
     "lessons": {
       "previewDraft": "Vista previa · Borrador",
@@ -525,7 +530,19 @@
       "addAtLevel": "Añadir en {level}",
       "moveUp": "Subir {title}",
       "moveDown": "Bajar {title}",
-      "edit": "Editar"
+      "edit": "Editar",
+      "pageTitle": "Lecciones",
+      "search": "Buscar por título, identificador o nivel",
+      "noLevel": "Sin nivel",
+      "columns": {
+        "lesson": "Lección",
+        "status": "Estado",
+        "actions": "Acciones"
+      },
+      "cover": "Portada",
+      "coverHelp": "Imagen pequeña que se ve en las listas (PNG, JPG o WebP, máx. 2 MB). Mejor cuadrada o 16:9.",
+      "coverSet": "Portada subida",
+      "coverAfterCreate": "Podrás añadir la portada y los bloques después de crear la lección."
     },
     "blocks": {
       "heading": "Bloques",

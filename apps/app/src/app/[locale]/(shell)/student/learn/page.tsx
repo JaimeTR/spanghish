@@ -1,8 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { PublishedLessonSummary } from "@spanglish/content";
 import { isLocale } from "@/i18n/routing";
+import { mediaUrl } from "@/components/content/Cover";
 import { listPortalLessons } from "@/lib/data/content";
 import { groupLessons, LEARN_LEVELS } from "@/lib/content-groups";
 import { createClient } from "@/lib/supabase/server";
@@ -27,7 +29,8 @@ function LessonList({ rows, locale, labels }: { rows: PublishedLessonSummary[]; 
     const title = locale === "es" ? lesson.titleEs : lesson.titleEn; const summary = locale === "es" ? lesson.summaryEs : lesson.summaryEn;
     const interactiveHref = process.env.NEXT_PUBLIC_WEB_URL ? `${process.env.NEXT_PUBLIC_WEB_URL.replace(/\/$/, "")}/${locale}/learn/${lesson.slug}` : undefined;
     const href = lesson.locked ? undefined : lesson.kind === "article" ? `/${locale}/student/learn/${lesson.slug}` : interactiveHref;
-    const body = <><span aria-hidden="true">{lesson.locked ? "🔒 " : lesson.kind === "interactive" ? "✦ " : "📖 "}</span><span className="font-bold">{title}</span>{summary ? <span className="mt-2 block text-sm font-normal text-text-muted">{summary}</span> : null}{lesson.locked ? <span className="mt-3 block text-sm font-semibold">{labels.locked}</span> : null}</>;
+    const cover = lesson.coverPath ? <Image src={mediaUrl(lesson.coverPath)} alt="" width={480} height={270} unoptimized className="-mx-4 -mt-4 mb-3 aspect-video w-[calc(100%+2rem)] max-w-none rounded-t-[var(--shape-md)] object-cover" /> : null;
+    const body = <>{cover}<span aria-hidden="true">{lesson.locked ? "🔒 " : lesson.kind === "interactive" ? "✦ " : "📖 "}</span><span className="font-bold">{title}</span>{summary ? <span className="mt-2 block text-sm font-normal text-text-muted">{summary}</span> : null}{lesson.locked ? <span className="mt-3 block text-sm font-semibold">{labels.locked}</span> : null}</>;
     return <li key={lesson.id} className="rounded-[var(--shape-md)] border border-line bg-surface p-4">{href ? <Link className="block min-h-11 rounded focus-visible:outline-[var(--focus-ring)]" href={href} target={lesson.kind === "interactive" ? "_blank" : undefined} rel={lesson.kind === "interactive" ? "noopener noreferrer" : undefined}>{body}{lesson.kind === "interactive" ? <span className="sr-only"> ({labels.newWindow})</span> : null}</Link> : <div>{body}</div>}</li>;
   })}</ul>;
 }

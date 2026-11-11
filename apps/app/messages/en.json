@@ -472,7 +472,12 @@
       "filterStatus": "Status",
       "filterKind": "Type",
       "filter": "Filter",
-      "all": "All"
+      "all": "All",
+      "search": "Search by title or level",
+      "columns": {
+        "status": "Status",
+        "actions": "Actions"
+      }
     },
     "lessons": {
       "previewDraft": "Preview · Draft",
@@ -525,7 +530,19 @@
       "addAtLevel": "Add in {level}",
       "moveUp": "Move {title} up",
       "moveDown": "Move {title} down",
-      "edit": "Edit"
+      "edit": "Edit",
+      "pageTitle": "Lessons",
+      "search": "Search by title, slug or level",
+      "noLevel": "No level",
+      "columns": {
+        "lesson": "Lesson",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "cover": "Cover",
+      "coverHelp": "Small image shown in lists (PNG, JPG or WebP, max 2 MB). Square or 16:9 works best.",
+      "coverSet": "Cover uploaded",
+      "coverAfterCreate": "You can add the cover and blocks after creating the lesson."
     },
     "blocks": {
       "heading": "Blocks",

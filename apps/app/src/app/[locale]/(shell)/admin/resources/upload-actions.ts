@@ -9,7 +9,7 @@ import { checkUpload, uploadRequestSchema, type UploadError, type UploadRequest,
 import { UPLOAD_RULES, extensionFor } from "@spanglish/content";
 import { actionLocale } from "@/lib/action-locale";
 import { z } from "zod";
-const attachSchema = z.object({ ownerId: z.uuid(), target: z.enum(["resourceFile", "thumbnail", "lessonImage", "teacherPhoto"]), path: z.string().min(1), mime: z.string().max(120), size: z.number().int().positive(), width: z.number().int().positive().optional(), height: z.number().int().positive().optional(), locale: z.enum(["es", "en"]).default("es") });
+const attachSchema = z.object({ ownerId: z.uuid(), target: z.enum(["resourceFile", "thumbnail", "lessonImage", "lessonCover", "teacherPhoto"]), path: z.string().min(1), mime: z.string().max(120), size: z.number().int().positive(), width: z.number().int().positive().optional(), height: z.number().int().positive().optional(), locale: z.enum(["es", "en"]).default("es") });
 export async function requestUpload(input: UploadRequest): Promise<{ ok: true; bucket: string; path: string; token: string } | { ok: false; error: UploadError }> {
   await requireArea("es", "admin"); const parsed = uploadRequestSchema.safeParse(input); if (!parsed.success) return { ok: false, error: "type" };
   const checked = checkUpload(parsed.data); if (!checked.ok) return checked;
@@ -18,6 +18,8 @@ export async function requestUpload(input: UploadRequest): Promise<{ ok: true; b
     const { data } = await db.from("resources").select("id").eq("id", parsed.data.ownerId).maybeSingle(); if (!data) return { ok: false, error: "forbidden" };
   } else if (parsed.data.target === "teacherPhoto") {
     const { data } = await db.from("teacher_profiles").select("id").eq("id", parsed.data.ownerId).maybeSingle(); if (!data) return { ok: false, error: "forbidden" };
+  } else if (parsed.data.target === "lessonCover") {
+    const { data } = await db.from("lessons").select("id").eq("id", parsed.data.ownerId).maybeSingle(); if (!data) return { ok: false, error: "forbidden" };
   } else {
     const { data } = await db.from("lessons").select("id, kind").eq("id", parsed.data.ownerId).maybeSingle(); if (!data || data.kind !== "article") return { ok: false, error: "forbidden" };
   }
@@ -32,7 +34,7 @@ export async function attachUpload(input: { ownerId: string; target: UploadTarge
   const rule = data.target === "resourceFile" ? UPLOAD_RULES.resourceFile : UPLOAD_RULES.contentImage;
   const extension = extensionFor(data.mime);
   if (!extension || !rule.mimeTypes.includes(data.mime as never) || data.size > rule.maxBytes) return { status: "error", error: "forbidden" };
-  const expectedPath = data.target === "resourceFile" ? new RegExp(`^resources/${data.ownerId}/[0-9a-f-]+\\.${extension}$`) : data.target === "thumbnail" ? new RegExp(`^thumbnails/[0-9a-f-]+\\.${extension}$`) : data.target === "teacherPhoto" ? new RegExp(`^teachers/[0-9a-f-]{36}\\.${extension}$`) : new RegExp(`^lessons/${data.ownerId}/[0-9a-f-]+\\.${extension}$`);
+  const expectedPath = data.target === "resourceFile" ? new RegExp(`^resources/${data.ownerId}/[0-9a-f-]+\\.${extension}$`) : (data.target === "thumbnail" || data.target === "lessonCover") ? new RegExp(`^thumbnails/[0-9a-f-]+\\.${extension}$`) : data.target === "teacherPhoto" ? new RegExp(`^teachers/[0-9a-f-]{36}\\.${extension}$`) : new RegExp(`^lessons/${data.ownerId}/[0-9a-f-]+\\.${extension}$`);
   if (!expectedPath.test(data.path)) return { status: "error", error: "forbidden" };
   const checked = { bucket: rule.bucket };
   const db = await createClient(); const directory = data.path.slice(0, data.path.lastIndexOf("/")); const file = data.path.slice(data.path.lastIndexOf("/") + 1);
@@ -44,6 +46,10 @@ export async function attachUpload(input: { ownerId: string; target: UploadTarge
     old = data.target === "resourceFile" ? row.file_path : row.thumbnail_path; published = row.status === "published";
     const updates = data.target === "resourceFile" ? { file_path: data.path, file_mime: data.mime, file_size_bytes: data.size } : { thumbnail_path: data.path };
     const { error } = await db.from("resources").update(updates).eq("id", data.ownerId); if (error) return { status: "error", error: toDomainError(error) };
+  } else if (data.target === "lessonCover") {
+    const { data: row } = await db.from("lessons").select("cover_path, status").eq("id", data.ownerId).maybeSingle(); if (!row) return { status: "error", error: "not_found" };
+    old = row.cover_path; published = row.status === "published";
+    const { error } = await db.from("lessons").update({ cover_path: data.path }).eq("id", data.ownerId); if (error) return { status: "error", error: toDomainError(error) };
   } else if (data.target === "teacherPhoto") {
     const { data: row } = await db.from("teacher_profiles").select("photo_path, status").eq("id", data.ownerId).maybeSingle(); if (!row) return { status: "error", error: "not_found" };
     old = row.photo_path; published = row.status === "published";
