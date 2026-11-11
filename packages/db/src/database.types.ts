@@ -369,14 +369,14 @@ isOneToOne: false
                   ]
                 },"student_private": {
                   Row: {
-                    "birth_year": number | null,"created_at": string,"email": string | null,"id": string,"phone": string | null,"student_id": string,"updated_at": string
+                    "birth_date": string | null,"birth_year": number | null,"created_at": string,"email": string | null,"gender": string | null,"id": string,"phone": string | null,"student_id": string,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"id"?: string,"phone"?: string | null,"student_id": string,"updated_at"?: string
+                    "birth_date"?: string | null,"birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"gender"?: string | null,"id"?: string,"phone"?: string | null,"student_id": string,"updated_at"?: string
                   }
                   Update: {
-                    "birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"id"?: string,"phone"?: string | null,"student_id"?: string,"updated_at"?: string
+                    "birth_date"?: string | null,"birth_year"?: number | null,"created_at"?: string,"email"?: string | null,"gender"?: string | null,"id"?: string,"phone"?: string | null,"student_id"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {

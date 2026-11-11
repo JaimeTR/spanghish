@@ -4,12 +4,13 @@ import { useTranslations } from "next-intl";
 import { inputClass } from "@/components/form-styles";
 import { Checkbox } from "@/components/forms/Checkbox";
 import { Field } from "@/components/forms/Field";
+import { GuardianPicker, type GuardianOption } from "@/components/forms/GuardianPicker";
 import { FormStatus } from "@/components/forms/FormStatus";
 import { SubmitButton } from "@/components/forms/SubmitButton";
 import { useFormAction } from "@/components/forms/useFormAction";
 import type { Locale } from "@/i18n/routing";
 import { AUDIENCES } from "@/lib/schemas/catalog";
-import { CONSENT_METHODS, RELATIONSHIPS, type StudentField } from "@/lib/schemas/people";
+import { CONSENT_METHODS, GENDERS, RELATIONSHIPS, type StudentField } from "@/lib/schemas/people";
 import { createStudent } from "../actions";
 
 type Option = { value: string; label: string };
@@ -32,7 +33,7 @@ export function StudentForm({
 }: {
   locale: Locale;
   levels: Option[];
-  guardians: Option[];
+  guardians: GuardianOption[];
   consentText: ConsentTextView | null;
 }) {
   const t = useTranslations("students.form");
@@ -89,11 +90,18 @@ export function StudentForm({
             <Field name="phone" label={t("phone")} error={errors.phone}>
               <input type="tel" maxLength={30} autoComplete="off" defaultValue={form.value("phone")} className={inputClass} />
             </Field>
-            <Field name="birthYear" label={t("birthYear")} error={errors.birthYear}>
-              <input type="number" inputMode="numeric" min={1900} max={2100} defaultValue={form.value("birthYear")} className={inputClass} />
+            <Field name="gender" label={t("gender")} error={errors.gender}>
+              <select defaultValue={form.value("gender", "")} className={inputClass}>
+                <option value="">{t("noGender")}</option>
+                {GENDERS.map((g) => (
+                  <option key={g} value={g}>
+                    {te(`gender.${g}`)}
+                  </option>
+                ))}
+              </select>
             </Field>
-            <Field name="adminNotes" label={t("adminNotes")} error={errors.adminNotes} hint={t("adminNotesHint")}>
-              <textarea rows={3} maxLength={2000} defaultValue={form.value("adminNotes")} className={inputClass} />
+            <Field name="birthDate" label={t("birthDate")} error={errors.birthDate} hint={t("birthDateHint")}>
+              <input type="date" min="1900-01-01" defaultValue={form.value("birthDate")} className={inputClass} />
             </Field>
           </div>
         </fieldset>
@@ -101,36 +109,26 @@ export function StudentForm({
         <fieldset className={`kid-only ${fieldsetClass}`}>
           <legend className={legendClass}>{t("guardian")}</legend>
           <p className="mb-4 text-sm text-text-muted">{t("guardianHint")}</p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field name="guardianId" label={t("existingGuardian")} error={errors.guardianId}>
-              <select defaultValue={form.value("guardianId", "")} className={inputClass}>
-                <option value="">{t("newGuardian")}</option>
-                {guardians.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field name="guardianRelationship" label={t("relationship")} error={errors.guardianRelationship}>
-              <select defaultValue={form.value("guardianRelationship", "parent")} className={inputClass}>
-                {RELATIONSHIPS.map((r) => (
-                  <option key={r} value={r}>
-                    {te(`relationship.${r}`)}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field name="guardianFullName" label={t("guardianFullName")} error={errors.guardianFullName}>
-              <input type="text" maxLength={120} autoComplete="off" defaultValue={form.value("guardianFullName")} className={inputClass} />
-            </Field>
-            <Field name="guardianEmail" label={t("guardianEmail")} error={errors.guardianEmail}>
-              <input type="email" maxLength={254} autoComplete="off" defaultValue={form.value("guardianEmail")} className={inputClass} />
-            </Field>
-            <Field name="guardianPhone" label={t("guardianPhone")} error={errors.guardianPhone}>
-              <input type="tel" maxLength={30} autoComplete="off" defaultValue={form.value("guardianPhone")} className={inputClass} />
-            </Field>
-          </div>
+          <GuardianPicker
+            guardians={guardians}
+            relationships={RELATIONSHIPS.map((r) => ({ value: r, label: te(`relationship.${r}`) }))}
+            labels={{
+              name: t("guardianFullName"),
+              relationship: t("relationship"),
+              email: t("guardianEmail"),
+              phone: t("guardianPhone"),
+              registered: t("guardianRegistered"),
+              newOne: t("guardianNew"),
+            }}
+            values={{
+              id: form.value("guardianId"),
+              name: form.value("guardianFullName"),
+              email: form.value("guardianEmail"),
+              phone: form.value("guardianPhone"),
+              relationship: form.value("guardianRelationship"),
+            }}
+            errors={errors}
+          />
         </fieldset>
 
         <fieldset className={`kid-only ${fieldsetClass}`}>

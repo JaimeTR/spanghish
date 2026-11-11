@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { buttonLinkClass, Notice, PageHeader, StatusBadge, TableCard, tableClass, tdClass, thClass } from "@/components/admin/PageHeader";
+import { DataTable, type DataColumn, type DataRow } from "@/components/admin/DataTable";
+import { buttonLinkClass, Notice, PageHeader, StatusBadge } from "@/components/admin/PageHeader";
 import { ModalButton } from "@/components/ui/Modal";
 import { isLocale } from "@/i18n/routing";
 import { listStaff } from "@/lib/data/people";
@@ -36,6 +37,58 @@ export default async function TeachersPage({
     <StatusBadge tone={status === "active" ? "success" : "muted"}>{t(`status.${status}`)}</StatusBadge>
   );
 
+  const columns: DataColumn[] = [
+    { id: "name", header: t("columns.name"), sortable: true, rowHeader: true },
+    { id: "email", header: t("columns.email"), sortable: true },
+    {
+      id: "roles",
+      header: t("columns.roles"),
+      sortable: true,
+      filter: { options: (["admin", "teacher"] as const).map((r) => ({ value: r, label: ta(r) })) },
+    },
+    {
+      id: "status",
+      header: t("columns.status"),
+      sortable: true,
+      filter: { options: (["active", "suspended"] as const).map((v) => ({ value: v, label: t(`status.${v}`) })) },
+    },
+    { id: "actions", header: t("columns.actions"), align: "right" },
+  ];
+  const rows: DataRow[] = staff.map((m) => {
+    const suspend = <SuspendForm locale={locale} userId={m.id} suspended={m.status === "suspended"} />;
+    return {
+      id: m.id,
+      // Un filtro de rol por el rol principal: admin si lo tiene.
+      values: {
+        name: m.fullName ?? t("noName"),
+        email: m.email ?? "",
+        roles: m.roles.includes("admin") ? "admin" : "teacher",
+        status: m.status,
+      },
+      searchText: `${m.fullName ?? ""} ${m.email ?? ""}`,
+      cells: {
+        name: m.fullName ?? t("noName"),
+        email: m.email,
+        roles: rolesOf(m.roles),
+        status: badge(m.status),
+        actions: <div className="flex justify-end">{suspend}</div>,
+      },
+      card: (
+        <>
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="font-semibold text-text">{m.fullName ?? t("noName")}</p>
+              <p className="text-sm break-all text-text-muted">{m.email}</p>
+              <p className="mt-1 text-sm text-text">{rolesOf(m.roles)}</p>
+            </div>
+            {badge(m.status)}
+          </div>
+          <div className="mt-2 flex justify-end border-t border-line pt-2">{suspend}</div>
+        </>
+      ),
+    };
+  });
+
   return (
     <>
       <PageHeader
@@ -60,57 +113,7 @@ export default async function TeachersPage({
       {staff.length === 0 ? (
         <p className="mt-8 text-text-muted">{t("empty")}</p>
       ) : (
-        <>
-          {/* Escritorio: tabla */}
-          <TableCard>
-            <table className={tableClass}>
-              <caption className="sr-only">{t("title")}</caption>
-              <thead>
-                <tr>
-                  <th scope="col" className={thClass}>{t("columns.name")}</th>
-                  <th scope="col" className={thClass}>{t("columns.email")}</th>
-                  <th scope="col" className={thClass}>{t("columns.roles")}</th>
-                  <th scope="col" className={thClass}>{t("columns.status")}</th>
-                  <th scope="col" className={`${thClass} text-right`}>{t("columns.actions")}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {staff.map((m) => (
-                  <tr key={m.id} className="hover:bg-surface-sunken/40">
-                    <th scope="row" className={`${tdClass} font-semibold`}>{m.fullName ?? t("noName")}</th>
-                    <td className={tdClass}>{m.email}</td>
-                    <td className={tdClass}>{rolesOf(m.roles)}</td>
-                    <td className={tdClass}>{badge(m.status)}</td>
-                    <td className={`${tdClass} text-right`}>
-                      <div className="flex justify-end">
-                        <SuspendForm locale={locale} userId={m.id} suspended={m.status === "suspended"} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </TableCard>
-
-          {/* Móvil: lista */}
-          <ul className="mt-6 flex flex-col gap-3 md:hidden">
-            {staff.map((m) => (
-              <li key={m.id} className="rounded-lg border border-line bg-surface p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="font-semibold text-text">{m.fullName ?? t("noName")}</p>
-                    <p className="text-sm break-all text-text-muted">{m.email}</p>
-                    <p className="mt-1 text-sm text-text">{rolesOf(m.roles)}</p>
-                  </div>
-                  {badge(m.status)}
-                </div>
-                <div className="mt-2 flex justify-end border-t border-line pt-2">
-                  <SuspendForm locale={locale} userId={m.id} suspended={m.status === "suspended"} />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </>
+        <DataTable caption={t("title")} columns={columns} rows={rows} searchLabel={t("search")} defaultSort={{ id: "name" }} />
       )}
     </>
   );

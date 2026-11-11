@@ -275,7 +275,8 @@
       "submit": "Enviar invitación",
       "submitting": "Enviando…",
       "back": "Volver a docentes"
-    }
+    },
+    "search": "Buscar por nombre o correo"
   },
   "teacherProfiles": {
     "title": "Perfiles públicos de docentes",
@@ -398,6 +399,12 @@
     "contentStatus": {
       "draft": "Borrador",
       "published": "Publicado"
+    },
+    "gender": {
+      "female": "Femenino",
+      "male": "Masculino",
+      "other": "Otro",
+      "unspecified": "Prefiere no decirlo"
     }
   },
   "content": {
@@ -627,7 +634,8 @@
       "save": "Guardar programa",
       "saving": "Guardando…",
       "edit": "Editar",
-      "actions": "Acciones"
+      "actions": "Acciones",
+      "search": "Buscar por nombre o código"
     },
     "editions": {
       "title": "Ediciones",
@@ -674,14 +682,13 @@
   "students": {
     "title": "Alumnos",
     "intro": "Adultos, mayores y menores (con su tutor y consentimiento).",
-    "consentTexts": "Textos de consentimiento",
     "count": "{count, plural, =0 {Ningún alumno con estos filtros} one {# alumno} other {# alumnos}}",
     "minor": "Menor",
     "noGuardians": "Este menor no tiene tutores vinculados.",
     "guardianAccount": "Cuenta de portal",
     "filters": {
       "label": "Buscar alumnos",
-      "search": "Nombre",
+      "search": "Buscar por nombre, correo o teléfono",
       "audience": "Segmento",
       "status": "Estado",
       "all": "Todos",
@@ -694,7 +701,8 @@
       "portal": "Cuenta",
       "level": "Nivel",
       "contact": "Contacto",
-      "actions": "Acciones"
+      "actions": "Acciones",
+      "age": "Edad"
     },
     "sections": {
       "data": "Datos",
@@ -728,13 +736,10 @@
       "contactHint": "Las docentes no ven estos datos.",
       "email": "Correo electrónico",
       "phone": "Teléfono",
-      "birthYear": "Año de nacimiento",
       "adminNotes": "Notas internas",
       "adminNotesHint": "Solo las ve la administración (ni el alumno ni su tutor).",
       "guardian": "Tutor",
-      "guardianHint": "Elige un tutor ya registrado o escribe los datos de uno nuevo.",
-      "existingGuardian": "Tutor registrado",
-      "newGuardian": "Tutor nuevo",
+      "guardianHint": "Escribe el nombre: si el tutor ya está registrado, elígelo de la lista y se rellenan sus datos; si no, se registra como nuevo.",
       "relationship": "Relación",
       "guardianFullName": "Nombre del tutor",
       "guardianEmail": "Correo del tutor",
@@ -747,13 +752,20 @@
       "noConsentText": "No hay un texto de consentimiento de datos del menor vigente. Créalo en «Textos de consentimiento» antes de dar de alta a un menor.",
       "create": "Dar de alta",
       "save": "Guardar ficha",
-      "saving": "Guardando…"
+      "saving": "Guardando…",
+      "gender": "Género",
+      "noGender": "Sin indicar",
+      "birthDate": "Fecha de nacimiento",
+      "birthDateHint": "De aquí se calcula la edad.",
+      "guardianRegistered": "Tutor ya registrado.",
+      "guardianNew": "Se registrará como tutor nuevo."
     },
     "actions": {
       "edit": "Editar",
       "deactivate": "Desactivar",
       "activate": "Reactivar"
-    }
+    },
+    "ageYears": "{age} años"
   },
   "consents": {
     "empty": "No hay consentimientos registrados.",
@@ -1106,5 +1118,13 @@
         "previewLabel": "Ejemplo de material de estudio"
       }
     }
+  },
+  "table": {
+    "search": "Buscar",
+    "filterBy": "Filtrar por",
+    "all": "Todos",
+    "clear": "Limpiar",
+    "results": "{count, plural, =0 {Sin resultados} one {# resultado} other {# resultados}}",
+    "empty": "Ningún resultado con estos filtros."
   }
 }

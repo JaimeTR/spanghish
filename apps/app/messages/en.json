@@ -275,7 +275,8 @@
       "submit": "Send invitation",
       "submitting": "Sending…",
       "back": "Back to teachers"
-    }
+    },
+    "search": "Search by name or email"
   },
   "teacherProfiles": {
     "title": "Public teacher profiles",
@@ -398,6 +399,12 @@
     "contentStatus": {
       "draft": "Draft",
       "published": "Published"
+    },
+    "gender": {
+      "female": "Female",
+      "male": "Male",
+      "other": "Other",
+      "unspecified": "Prefer not to say"
     }
   },
   "content": {
@@ -627,7 +634,8 @@
       "save": "Save programme",
       "saving": "Saving…",
       "edit": "Edit",
-      "actions": "Actions"
+      "actions": "Actions",
+      "search": "Search by name or code"
     },
     "editions": {
       "title": "Editions",
@@ -674,14 +682,13 @@
   "students": {
     "title": "Students",
     "intro": "Adults, seniors and minors (with their guardian and consent).",
-    "consentTexts": "Consent texts",
     "count": "{count, plural, =0 {No students match these filters} one {# student} other {# students}}",
     "minor": "Minor",
     "noGuardians": "This minor has no linked guardians.",
     "guardianAccount": "Portal account",
     "filters": {
       "label": "Search students",
-      "search": "Name",
+      "search": "Search by name, email or phone",
       "audience": "Segment",
       "status": "Status",
       "all": "All",
@@ -694,7 +701,8 @@
       "portal": "Account",
       "level": "Level",
       "contact": "Contact",
-      "actions": "Actions"
+      "actions": "Actions",
+      "age": "Age"
     },
     "sections": {
       "data": "Details",
@@ -728,13 +736,10 @@
       "contactHint": "Teachers do not see these details.",
       "email": "Email",
       "phone": "Phone",
-      "birthYear": "Year of birth",
       "adminNotes": "Internal notes",
       "adminNotesHint": "Only the administration sees them (not the student or their guardian).",
       "guardian": "Guardian",
-      "guardianHint": "Choose a registered guardian or enter a new one.",
-      "existingGuardian": "Registered guardian",
-      "newGuardian": "New guardian",
+      "guardianHint": "Type the name: if the guardian is already registered, pick them from the list and their details fill in; otherwise they are registered as new.",
       "relationship": "Relationship",
       "guardianFullName": "Guardian's name",
       "guardianEmail": "Guardian's email",
@@ -747,13 +752,20 @@
       "noConsentText": "There is no current minor data consent text. Create one under “Consent texts” before registering a minor.",
       "create": "Register",
       "save": "Save details",
-      "saving": "Saving…"
+      "saving": "Saving…",
+      "gender": "Gender",
+      "noGender": "Not specified",
+      "birthDate": "Date of birth",
+      "birthDateHint": "Age is worked out from this.",
+      "guardianRegistered": "Existing guardian.",
+      "guardianNew": "Will be registered as a new guardian."
     },
     "actions": {
       "edit": "Edit",
       "deactivate": "Deactivate",
       "activate": "Reactivate"
-    }
+    },
+    "ageYears": "{age} years old"
   },
   "consents": {
     "empty": "No consents recorded.",
@@ -1106,5 +1118,13 @@
         "previewLabel": "Sample study materials"
       }
     }
+  },
+  "table": {
+    "search": "Search",
+    "filterBy": "Filter by",
+    "all": "All",
+    "clear": "Clear",
+    "results": "{count, plural, =0 {No results} one {# result} other {# results}}",
+    "empty": "No results match these filters."
   }
 }

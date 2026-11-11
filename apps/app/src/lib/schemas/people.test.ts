@@ -108,14 +108,15 @@ describe("studentSchema", () => {
         audience: "mature",
         preferredLocale: "es",
         email: "ANA@example.com",
-        birthYear: "1955",
+        birthDate: "1955-03-08",
+        gender: "female",
         guardianEmail: "not-checked",
         consentTextId: "x",
       }),
     );
     expect(r).toEqual({
       ok: true,
-      data: { fullName: "Ana", audience: "mature", preferredLocale: "es", email: "ana@example.com", birthYear: 1955 },
+      data: { fullName: "Ana", audience: "mature", preferredLocale: "es", email: "ana@example.com", birthDate: "1955-03-08", gender: "female" },
     });
     expect(studentSchema.safeParse({ fullName: "Ana", audience: "adults", preferredLocale: "es" }).success).toBe(true);
   });

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   addDays,
+  ageFrom,
   formatDay,
   formatInstant,
   formatSessionTime,
@@ -80,5 +81,13 @@ describe("school time (Australia/Brisbane)", () => {
   it("formatInstant shows the Brisbane date and time of an instant", () => {
     // 2026-11-08T21:30Z = 9 Nov 07:30 in Brisbane.
     expect(formatInstant("2026-11-08T21:30:00Z", "en")).toMatch(/9 Nov\.? 2026.*07:30/);
+  });
+});
+
+describe("ageFrom", () => {
+  it("cuenta años cumplidos", () => {
+    expect(ageFrom("2015-06-15", "2026-06-14")).toBe(10);
+    expect(ageFrom("2015-06-15", "2026-06-15")).toBe(11);
+    expect(ageFrom("1960-12-31", "2026-01-01")).toBe(65);
   });
 });

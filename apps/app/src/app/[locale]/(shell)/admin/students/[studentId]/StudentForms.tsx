@@ -7,7 +7,7 @@ import { FormStatus } from "@/components/forms/FormStatus";
 import { SubmitButton } from "@/components/forms/SubmitButton";
 import { useFormAction } from "@/components/forms/useFormAction";
 import type { Locale } from "@/i18n/routing";
-import { CONSENT_METHODS, STUDENT_STATUSES } from "@/lib/schemas/people";
+import { CONSENT_METHODS, GENDERS, STUDENT_STATUSES } from "@/lib/schemas/people";
 import {
   grantPortalAccess,
   recordConsent,
@@ -29,7 +29,8 @@ export type StudentEditValues = {
   status: string;
   email: string | null;
   phone: string | null;
-  birth_year: number | null;
+  gender: string | null;
+  birth_date: string | null;
   admin_notes: string | null;
 };
 
@@ -97,8 +98,18 @@ export function StudentEditForm({
             <Field name="phone" label={t("phone")} error={errors.phone}>
               <input type="tel" maxLength={30} defaultValue={form.value("phone", student.phone)} className={inputClass} />
             </Field>
-            <Field name="birthYear" label={t("birthYear")} error={errors.birthYear}>
-              <input type="number" inputMode="numeric" min={1900} max={2100} defaultValue={form.value("birthYear", student.birth_year)} className={inputClass} />
+            <Field name="gender" label={t("gender")} error={errors.gender}>
+              <select defaultValue={form.value("gender", student.gender ?? "")} className={inputClass}>
+                <option value="">{t("noGender")}</option>
+                {GENDERS.map((g) => (
+                  <option key={g} value={g}>
+                    {te(`gender.${g}`)}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field name="birthDate" label={t("birthDate")} error={errors.birthDate} hint={t("birthDateHint")}>
+              <input type="date" min="1900-01-01" defaultValue={form.value("birthDate", student.birth_date)} className={inputClass} />
             </Field>
             <Field name="adminNotes" label={t("adminNotes")} error={errors.adminNotes} hint={t("adminNotesHint")}>
               <textarea rows={3} maxLength={2000} defaultValue={form.value("adminNotes", student.admin_notes)} className={inputClass} />

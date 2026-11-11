@@ -65,7 +65,8 @@ export default async function StudentPage({
             status: student.status,
             email: privateRow?.email ?? null,
             phone: privateRow?.phone ?? null,
-            birth_year: privateRow?.birth_year ?? null,
+            gender: privateRow?.gender ?? null,
+            birth_date: privateRow?.birth_date ?? null,
             admin_notes: student.student_admin_notes?.notes ?? null,
           }}
         />

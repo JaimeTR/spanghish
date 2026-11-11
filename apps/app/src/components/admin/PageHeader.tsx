@@ -2,6 +2,7 @@ import { ArrowLeft, ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { IconLink } from "@/components/ui/IconButton";
+import { thClass } from "./table-styles";
 
 /** Cabecera de página de administración: volver (solo icono), título, intro y acción. */
 export function PageHeader({
@@ -76,9 +77,7 @@ export function Notice({ children, tone = "info" }: { children: ReactNode; tone?
   );
 }
 
-export const tableClass = "w-full border-collapse text-left text-sm";
-export const thClass = "bg-surface-sunken/70 px-4 py-3 text-xs font-bold tracking-wide whitespace-nowrap text-text-muted uppercase";
-export const tdClass = "border-t border-line px-4 py-3 align-middle text-text";
+export { tableClass, tdClass, thClass } from "./table-styles";
 
 /** Tarjeta que envuelve una tabla de escritorio (en móvil se usa la lista de tarjetas). */
 export function TableCard({ children }: { children: ReactNode }) {

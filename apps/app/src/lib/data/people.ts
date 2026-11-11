@@ -65,20 +65,16 @@ export function sanitizeSearch(search: string): string {
 
 /** Fila de la lista de alumnos: la ficha con su nivel y su contacto (RLS: el contacto solo lo ve admin, alumno o tutor). */
 export type StudentListRow = StudentRow & {
-  student_private: Pick<Tables<"student_private">, "email" | "phone"> | null;
+  student_private: Pick<Tables<"student_private">, "email" | "phone" | "birth_date"> | null;
   levels: Pick<Tables<"levels">, "code" | "name_es" | "name_en"> | null;
 };
 
-export async function listStudents(
-  supabase: Client,
-  q: { search?: string; audience?: AudienceSegment; status?: StudentStatus } = {},
-): Promise<StudentListRow[]> {
-  let query = supabase.from("students").select("*, student_private(email, phone), levels(code, name_es, name_en)");
-  const search = q.search ? sanitizeSearch(q.search) : "";
-  if (search) query = query.ilike("full_name", `%${search}%`);
-  if (q.audience) query = query.eq("audience", q.audience);
-  if (q.status) query = query.eq("status", q.status);
-  const { data, error } = await query.order("full_name").limit(500);
+export async function listStudents(supabase: Client): Promise<StudentListRow[]> {
+  const { data, error } = await supabase
+    .from("students")
+    .select("*, student_private(email, phone, birth_date), levels(code, name_es, name_en)")
+    .order("full_name")
+    .limit(500);
   if (error) throw new Error(`listStudents: ${error.code}`);
   return data;
 }

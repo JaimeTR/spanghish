@@ -22,7 +22,14 @@ export const suspendAccountSchema = z.object({
 // Alumnos
 // ---------------------------------------------------------------------------
 const optionalText = (max: number) => z.string().trim().max(max).optional();
-const birthYear = z.coerce.number().int().min(1900).max(2100).optional();
+export const GENDERS = ["female", "male", "other", "unspecified"] as const;
+const today = () => new Date().toISOString().slice(0, 10);
+const gender = z.enum(GENDERS).optional();
+/** Fecha de nacimiento completa (de ella sale la edad); no puede ser futura. */
+const birthDate = z.iso
+  .date()
+  .refine((d) => d >= "1900-01-01" && d <= today(), { message: "range" })
+  .optional();
 const optionalEmail = emailField.optional();
 
 export const CONSENT_KINDS = ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"] as const;
@@ -36,8 +43,8 @@ const studentBase = {
   preferredLocale: localeField,
   email: optionalEmail,
   phone: optionalText(30),
-  birthYear,
-  adminNotes: optionalText(2000),
+  gender,
+  birthDate,
 };
 
 /** Adulto (14+) o mayor (65+): sin tutor ni consentimiento de menor. */
@@ -102,7 +109,8 @@ export const updateStudentSchema = z.object({
   status: z.enum(STUDENT_STATUSES),
   email: optionalEmail,
   phone: optionalText(30),
-  birthYear,
+  gender,
+  birthDate,
   adminNotes: optionalText(2000),
 });
 

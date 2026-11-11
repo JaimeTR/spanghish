@@ -100,3 +100,10 @@ export function formatInstant(iso: string, locale: Locale): string {
     minute: "2-digit",
   }).format(new Date(iso));
 }
+
+/** Edad en años cumplidos a `today` (ambos YYYY-MM-DD). */
+export function ageFrom(birthDate: string, today: string): number {
+  const [by, bm, bd] = birthDate.split("-").map(Number) as [number, number, number];
+  const [ty, tm, td] = today.split("-").map(Number) as [number, number, number];
+  return ty - by - (tm < bm || (tm === bm && td < bd) ? 1 : 0);
+}

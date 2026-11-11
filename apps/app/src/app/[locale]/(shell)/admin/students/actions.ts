@@ -25,7 +25,8 @@ export type UpdateStudentField =
   | "status"
   | "email"
   | "phone"
-  | "birthYear"
+  | "gender"
+  | "birthDate"
   | "adminNotes";
 export type ConsentField = "studentId" | "textId" | "granted" | "method" | "guardianId";
 export type PortalField = "studentId" | "email";
@@ -57,8 +58,8 @@ export async function createStudent(
     preferred_locale: d.preferredLocale,
     email: d.email,
     phone: d.phone,
-    birth_year: d.birthYear,
-    admin_notes: d.adminNotes,
+    gender: d.gender,
+    birth_date: d.birthDate,
     ...(d.audience === "kids"
       ? {
           guardian: d.guardianId
@@ -115,7 +116,8 @@ export async function updateStudent(
       student_id: d.studentId,
       email: d.email ?? null,
       phone: d.phone ?? null,
-      birth_year: d.birthYear ?? null,
+      gender: d.gender ?? null,
+      birth_date: d.birthDate ?? null,
     },
     { onConflict: "student_id" },
   );
