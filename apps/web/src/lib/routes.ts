@@ -30,6 +30,8 @@ export const ROUTES = {
   shopSuccess: "shop/success",
   shopCheckout: "shop/checkout",
   myPurchases: "my-purchases",
+  enrol: "enrol",
+  enrolSuccess: "enrol/success",
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
@@ -41,7 +43,7 @@ export const ROUTE_KEYS = Object.keys(ROUTES) as RouteKey[];
  * pago; no tiene sentido llegar desde un buscador) y los textos legales,
  * pendientes de revisión del propietario/abogado antes de publicarse como definitivos.
  */
-export const NOINDEX_ROUTES = ["thankYou", "privacy", "terms", "shopSuccess", "shopCheckout", "myPurchases"] as const satisfies readonly RouteKey[];
+export const NOINDEX_ROUTES = ["thankYou", "privacy", "terms", "shopSuccess", "shopCheckout", "myPurchases", "enrolSuccess"] as const satisfies readonly RouteKey[];
 
 export function isIndexable(route: RouteKey): boolean {
   return !(NOINDEX_ROUTES as readonly RouteKey[]).includes(route);
@@ -150,6 +152,8 @@ const NAV_PARENT: Partial<Record<RouteKey, RouteKey>> = {
   shopSuccess: "shop",
   shopCheckout: "shop",
   myPurchases: "shop",
+  enrol: "prices",
+  enrolSuccess: "prices",
 };
 
 /**

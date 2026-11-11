@@ -791,6 +791,7 @@ declare
   v_method public.payment_method := coalesce(nullif(p_payment ->> 'method', ''), 'stripe')::public.payment_method;
   v_amount integer := coalesce(nullif(p_payment ->> 'amount_cents', '')::integer, 0);
   v_terms text;
+  v_new_student boolean;
 begin
   select * into v_req from public.enrollment_requests r where r.id = p_request_id for update;
   if v_req.id is null then
@@ -809,19 +810,35 @@ begin
   select * into v_group from public.groups g where g.id = v_req.group_id for update;
   select p.audience into v_audience from public.programs p where p.id = v_group.program_id;
 
-  -- Alumno: se crea la ficha (la cuenta, si procede, la enlaza después el servidor del portal).
-  insert into public.students (full_name, audience, preferred_locale, created_by)
-  values (v_req.full_name, v_audience, v_req.site_locale, (select auth.uid()))
-  returning id into v_student_id;
+  -- Alumno adulto que ya existe (misma cuenta por correo, o misma ficha por correo y nombre): se reutiliza.
+  if not v_req.is_minor then
+    select s.id into v_student_id
+    from public.students s
+    left join public.profiles pr on pr.id = s.profile_id
+    left join public.student_private sp on sp.student_id = s.id
+    where s.status = 'active' and not s.is_minor
+      and (lower(pr.email) = v_req.email
+        or (lower(sp.email) = v_req.email and lower(s.full_name) = lower(v_req.full_name)))
+    order by (pr.id is null), s.created_at
+    limit 1;
+  end if;
+  v_new_student := v_student_id is null;
 
-  insert into public.student_private (student_id, email, phone, birth_year, birth_date)
-  values (
-    v_student_id,
-    case when v_req.is_minor then null else v_req.email end,
-    case when v_req.is_minor then null else v_req.phone end,
-    extract(year from v_req.birth_date)::smallint,
-    v_req.birth_date
-  );
+  -- Si no, se crea la ficha (la cuenta, si procede, la enlaza después el servidor del portal).
+  if v_new_student then
+    insert into public.students (full_name, audience, preferred_locale, created_by)
+    values (v_req.full_name, v_audience, v_req.site_locale, (select auth.uid()))
+    returning id into v_student_id;
+
+    insert into public.student_private (student_id, email, phone, birth_year, birth_date)
+    values (
+      v_student_id,
+      case when v_req.is_minor then null else v_req.email end,
+      case when v_req.is_minor then null else v_req.phone end,
+      extract(year from v_req.birth_date)::smallint,
+      v_req.birth_date
+    );
+  end if;
 
   if v_req.is_minor then
     select g.id into v_guardian_id from public.guardians g where lower(g.email) = v_req.email order by g.created_at limit 1;
@@ -845,17 +862,22 @@ begin
     values (v_student_id, v_guardian_id, v_terms, 'enrolment_terms', true, 'web_form');
   end if;
 
-  perform set_config('spanglish.confirming_request', v_req.id::text, true);
-  perform set_config('spanglish.skip_capacity', case when p_skip_capacity then 'on' else 'off' end, true);
-  insert into public.enrollments (student_id, group_id, status, billing_mode, price_id, agreed_amount_cents, starts_on)
-  values (
-    v_student_id, v_req.group_id, 'active',
-    case v_req.price_kind when 'upfront' then 'upfront' when 'pack' then 'pack' else 'payg' end::public.billing_mode,
-    v_req.price_id, v_req.amount_cents, public.school_today()
-  )
-  returning id into v_enrollment_id;
-  perform set_config('spanglish.confirming_request', '', true);
-  perform set_config('spanglish.skip_capacity', 'off', true);
+  -- Si ya tiene plaza en este grupo (pagó dos veces o se matriculó a mano), el pago va a esa matrícula.
+  select e.id into v_enrollment_id from public.enrollments e
+  where e.student_id = v_student_id and e.group_id = v_req.group_id and e.status in ('pending', 'active', 'paused');
+  if v_enrollment_id is null then
+    perform set_config('spanglish.confirming_request', v_req.id::text, true);
+    perform set_config('spanglish.skip_capacity', case when p_skip_capacity then 'on' else 'off' end, true);
+    insert into public.enrollments (student_id, group_id, status, billing_mode, price_id, agreed_amount_cents, starts_on)
+    values (
+      v_student_id, v_req.group_id, 'active',
+      case v_req.price_kind when 'upfront' then 'upfront' when 'pack' then 'pack' else 'payg' end::public.billing_mode,
+      v_req.price_id, v_req.amount_cents, public.school_today()
+    )
+    returning id into v_enrollment_id;
+    perform set_config('spanglish.confirming_request', '', true);
+    perform set_config('spanglish.skip_capacity', 'off', true);
+  end if;
 
   if v_amount > 0 then
     insert into public.enrollment_payments (

@@ -1051,7 +1051,8 @@
         "priceUpfront": "{upfront} upfront",
         "priceLesson": "{lesson} per lesson",
         "enrol": "Enrol now",
-        "note": "Payment is by bank transfer; we send you the details when we confirm your place."
+        "note": "Payment is by bank transfer; we send you the details when we confirm your place.",
+        "reserve": "Book a place"
       }
     },
     "privacy": {
@@ -1642,6 +1643,17 @@
       "crumb": "Checkout",
       "title": "Complete your purchase",
       "lead": "Check your order and pay securely."
+    },
+    "enrol": {
+      "metaTitle": "Book your place · Spanglish",
+      "metaDescription": "Book your place in Spanglish's upcoming Spanish groups and pay securely online.",
+      "crumb": "Book a place",
+      "title": "Book your place",
+      "lead": "Choose your group, tell us who is coming and pay online. Your place is confirmed straight away."
+    },
+    "enrolSuccess": {
+      "metaTitle": "Booking confirmed · Spanglish",
+      "metaDescription": "Confirmation of your Spanglish booking."
     }
   },
   "notFound": {
@@ -1728,5 +1740,190 @@
     "payLead": "Check your order and continue to pay without leaving the site.",
     "continue": "Continue to payment",
     "keepShopping": "Keep shopping"
+  },
+  "enrol": {
+    "list": {
+      "title": "Open groups",
+      "empty": "There are no groups with online booking right now. Send us a message and we'll tell you the next dates.",
+      "emptyCta": "Contact us",
+      "seatsLeft": "{count, plural, one {# place left} other {# places left}}",
+      "full": "Group full",
+      "reserve": "Book a place",
+      "joinWaitlist": "Join the waiting list",
+      "startsOn": "Starts {date}",
+      "endsOn": "ends {date}",
+      "lessonLength": "{minutes}-minute lessons",
+      "online": "Online",
+      "from": "from {amount}",
+      "kids": "Kids",
+      "adults": "Adults",
+      "mature": "Mature"
+    },
+    "price": {
+      "upfront": "Full course",
+      "pack": "{count} lessons",
+      "per_lesson": "One lesson"
+    },
+    "form": {
+      "crumb": "Your details",
+      "title": "Your details",
+      "leadSeat": "Fill in the form and you'll go on to payment. We hold your place while you pay.",
+      "leadFull": "This group is full. Leave your details and we'll let you know if a place opens up; nothing is charged now.",
+      "groupLabel": "Your group",
+      "optional": "(optional)",
+      "fields": {
+        "priceId": {
+          "label": "What would you like to pay for?"
+        },
+        "name": {
+          "label": "Full name",
+          "labelMinor": "Child's full name"
+        },
+        "birthDate": {
+          "label": "Date of birth"
+        },
+        "guardianName": {
+          "label": "Full name of the parent or guardian"
+        },
+        "guardianRelationship": {
+          "label": "Relationship",
+          "parent": "Parent",
+          "legal_guardian": "Legal guardian",
+          "other": "Other"
+        },
+        "email": {
+          "label": "Email",
+          "hint": "We'll send your confirmation and access here.",
+          "hintMinor": "The email of the responsible adult."
+        },
+        "phone": {
+          "label": "Phone",
+          "hint": "In case we need to tell you about a change."
+        },
+        "method": {
+          "label": "How would you like to pay?",
+          "stripe": "By card, now",
+          "transfer": "By bank transfer"
+        },
+        "message": {
+          "label": "Anything we should know?",
+          "hint": "Level, times, special needs…"
+        },
+        "consent": {
+          "label": "I am the parent or legal guardian and I authorise the processing of the child's data to manage their lessons."
+        },
+        "terms": {
+          "label": "I have read and accept the <terms>terms and conditions</terms> and the <privacy>privacy policy</privacy>."
+        },
+        "honeypot": "Do not fill in this field"
+      },
+      "errors": {
+        "priceId": {
+          "required": "Choose what you'd like to pay for."
+        },
+        "name": {
+          "required": "Enter the full name.",
+          "invalid": "The name is too long."
+        },
+        "birthDate": {
+          "required": "Enter the date of birth.",
+          "invalid": "Check the date of birth."
+        },
+        "guardianName": {
+          "required": "Enter the name of the responsible adult.",
+          "invalid": "The name is too long."
+        },
+        "email": {
+          "required": "Enter your email.",
+          "invalid": "Check the email: something seems to be missing."
+        },
+        "phone": {
+          "required": "Check the phone number.",
+          "invalid": "Check the phone number."
+        },
+        "method": {
+          "required": "Choose how you'd like to pay."
+        },
+        "consent": {
+          "required": "We need your authorisation to enrol a child."
+        },
+        "terms": {
+          "required": "You need to accept the terms to book."
+        }
+      },
+      "errorSummary": "{count, plural, one {There is # thing to check} other {There are # things to check}}",
+      "status": {
+        "spam": "We couldn't send your booking. Wait a few seconds and try again.",
+        "unavailable": "Online booking isn't available right now. Call or email us and we'll book you in.",
+        "failed": "Something went wrong saving your booking. Try again or contact us.",
+        "not_configured": "Online booking isn't available right now. Call or email us and we'll book you in.",
+        "not_available": "This group no longer takes online bookings. Contact us and we'll find another option.",
+        "price_invalid": "That price is no longer available. Reload the page and choose again.",
+        "rate_limited": "We're receiving a lot of bookings. Try again in a few minutes.",
+        "consent_text_missing": "Online enrolment for children isn't available yet. Contact us and we'll book you in.",
+        "invalid": "Check your details and try again.",
+        "not_found": "We couldn't find this group. Go back to the list of groups."
+      },
+      "submit": "Continue to payment",
+      "submitWaitlist": "Join the waiting list",
+      "sending": "Holding your place…"
+    },
+    "pay": {
+      "crumb": "Payment",
+      "title": "Confirm your place",
+      "titleWaitlist": "You're on the waiting list",
+      "titleExpired": "Your booking expired",
+      "titleCancelled": "This booking was cancelled",
+      "titleConverted": "Your place is already confirmed",
+      "notFound": "This payment link isn't valid. Check the link or book again.",
+      "summary": "Your booking",
+      "course": "Course",
+      "group": "Group",
+      "student": "Student",
+      "starts": "Starts",
+      "schedule": "Schedule",
+      "reference": "Reference",
+      "amount": "Amount",
+      "currencyNote": "Prices in Australian dollars (AUD).",
+      "holdUntil": "We're holding your place until {time} (Queensland time).",
+      "holdUntilDate": "We're holding your place until {date}.",
+      "cardTitle": "Pay by card",
+      "cardLead": "Secure payment with Stripe, without leaving this page. Your place is confirmed straight away.",
+      "cardButton": "Pay {amount} by card",
+      "cardPending": "Preparing payment…",
+      "transferTitle": "Pay by bank transfer",
+      "transferLead": "We hold your place for 5 days. We email you the bank details and confirm your place when the payment arrives.",
+      "transferButton": "I'd rather pay by transfer",
+      "transferChosen": "You chose bank transfer. We'll email {email} with the account details. Use the reference {reference} in the description.",
+      "transferSwitch": "You can also pay now by card:",
+      "waitlistLead": "The group is full. If a place opens up we'll email {email} with the link to pay. Nothing has been charged.",
+      "expiredLead": "The time to pay ran out and the place was released. You can book again if there are places left.",
+      "cancelledLead": "If you think this is a mistake, contact us.",
+      "convertedLead": "We've received your payment. See you in class!",
+      "again": "Book again",
+      "contact": "Contact us",
+      "error": {
+        "unavailable": "Card payment isn't available right now. You can choose bank transfer or contact us.",
+        "failed": "We couldn't prepare the payment. Try again.",
+        "not_available": "Your booking is no longer active. Book again if there are places left.",
+        "invalid": "This payment link isn't valid."
+      }
+    },
+    "success": {
+      "crumb": "Confirmation",
+      "paidTitle": "Place confirmed!",
+      "paidLead": "We've received your payment and your enrolment is active. Stripe emails you the receipt.",
+      "paidMinor": "The child's enrolment is active. We'll email you the details of the first lesson.",
+      "processingTitle": "Payment received",
+      "processingLead": "Your payment is confirmed and we're finishing your enrolment. There's nothing else you need to do: we'll be in touch shortly.",
+      "unpaidTitle": "The payment wasn't completed",
+      "unpaidLead": "We haven't received the payment. Your place is still held for a little while: you can try again.",
+      "retry": "Back to payment",
+      "portalTitle": "Your portal access",
+      "portalLead": "Your enrolment comes with an account on the student portal, with your course's lessons and resources. Sign in with your email; the first time, use “Forgot your password?” to set yours.",
+      "portalCta": "Go to the portal",
+      "backHome": "Back to home",
+      "receipt": "View receipt"
+    }
   }
 }

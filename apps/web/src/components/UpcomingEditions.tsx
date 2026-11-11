@@ -10,7 +10,16 @@ import { btnPrimary } from "./styles";
  * sede y precio. Cada tarjeta lleva a inscribirse: al enlace externo de la
  * edición si lo tiene, y si no, a escribirnos.
  */
-export async function UpcomingEditions({ locale, editions }: { locale: Locale; editions: PublicEdition[] }) {
+export async function UpcomingEditions({
+  locale,
+  editions,
+  bookable = {},
+}: {
+  locale: Locale;
+  editions: PublicEdition[];
+  /** Edición → ruta de reserva en línea (grupo con reserva abierta). */
+  bookable?: Record<string, string>;
+}) {
   const t = await getTranslations({ locale, namespace: "page.prices.editions" });
   const es = locale === "es";
 
@@ -29,6 +38,7 @@ export async function UpcomingEditions({ locale, editions }: { locale: Locale; e
                 : e.perLessonCents !== null
                   ? t("priceLesson", { lesson: audFromCents(e.perLessonCents) })
                   : null;
+          const reserveHref = bookable[e.id];
           const href = e.enrolUrl ?? localePath(locale, "contact");
           return (
             <li key={e.id} className="flex flex-col rounded-3xl border-2 border-ink bg-surface p-6">
@@ -75,7 +85,11 @@ export async function UpcomingEditions({ locale, editions }: { locale: Locale; e
                 ) : null}
               </dl>
               <div className="mt-auto pt-5">
-                {e.enrolUrl ? (
+                {reserveHref ? (
+                  <Link href={reserveHref} className={btnPrimary}>
+                    {t("reserve")}
+                  </Link>
+                ) : e.enrolUrl ? (
                   <a href={href} target="_blank" rel="noopener noreferrer" className={btnPrimary}>
                     {t("enrol")}
                     <span className="sr-only"> ({t("newWindow")})</span>

@@ -1051,7 +1051,8 @@
         "priceUpfront": "{upfront} por adelantado",
         "priceLesson": "{lesson} por clase",
         "enrol": "Quiero apuntarme",
-        "note": "El pago es por transferencia bancaria; te enviamos los datos al confirmar tu plaza."
+        "note": "El pago es por transferencia bancaria; te enviamos los datos al confirmar tu plaza.",
+        "reserve": "Reservar plaza"
       }
     },
     "privacy": {
@@ -1642,6 +1643,17 @@
       "crumb": "Checkout",
       "title": "Finaliza tu compra",
       "lead": "Revisa tu pedido y paga de forma segura."
+    },
+    "enrol": {
+      "metaTitle": "Reserva tu plaza · Spanglish",
+      "metaDescription": "Reserva tu plaza en los próximos grupos de español de Spanglish y paga en línea de forma segura.",
+      "crumb": "Reservar plaza",
+      "title": "Reserva tu plaza",
+      "lead": "Elige tu grupo, déjanos tus datos y paga en línea. Tu plaza queda confirmada al momento."
+    },
+    "enrolSuccess": {
+      "metaTitle": "Reserva confirmada · Spanglish",
+      "metaDescription": "Confirmación de tu reserva en Spanglish."
     }
   },
   "notFound": {
@@ -1728,5 +1740,190 @@
     "payLead": "Revisa tu pedido y continúa para pagar sin salir de la web.",
     "continue": "Continuar al pago",
     "keepShopping": "Seguir comprando"
+  },
+  "enrol": {
+    "list": {
+      "title": "Grupos abiertos",
+      "empty": "Ahora mismo no hay grupos con reserva en línea. Escríbenos y te contamos las próximas fechas.",
+      "emptyCta": "Escríbenos",
+      "seatsLeft": "{count, plural, one {Queda # plaza} other {Quedan # plazas}}",
+      "full": "Grupo completo",
+      "reserve": "Reservar plaza",
+      "joinWaitlist": "Apuntarme a la lista de espera",
+      "startsOn": "Empieza el {date}",
+      "endsOn": "termina el {date}",
+      "lessonLength": "clases de {minutes} min",
+      "online": "Online",
+      "from": "desde {amount}",
+      "kids": "Niños",
+      "adults": "Adultos",
+      "mature": "Mayores"
+    },
+    "price": {
+      "upfront": "Curso completo",
+      "pack": "{count} clases",
+      "per_lesson": "Una clase"
+    },
+    "form": {
+      "crumb": "Tus datos",
+      "title": "Tus datos",
+      "leadSeat": "Completa el formulario y pasarás al pago. Guardamos tu plaza mientras pagas.",
+      "leadFull": "Este grupo está completo. Déjanos tus datos y te avisamos si se libera una plaza; no se cobra nada ahora.",
+      "groupLabel": "Tu grupo",
+      "optional": "(opcional)",
+      "fields": {
+        "priceId": {
+          "label": "¿Qué quieres pagar?"
+        },
+        "name": {
+          "label": "Nombre y apellidos",
+          "labelMinor": "Nombre y apellidos del niño o la niña"
+        },
+        "birthDate": {
+          "label": "Fecha de nacimiento"
+        },
+        "guardianName": {
+          "label": "Nombre y apellidos de la madre, el padre o el tutor"
+        },
+        "guardianRelationship": {
+          "label": "Parentesco",
+          "parent": "Madre o padre",
+          "legal_guardian": "Tutor legal",
+          "other": "Otro"
+        },
+        "email": {
+          "label": "Correo electrónico",
+          "hint": "Te enviaremos aquí la confirmación y el acceso.",
+          "hintMinor": "El correo de la persona adulta responsable."
+        },
+        "phone": {
+          "label": "Teléfono",
+          "hint": "Por si necesitamos avisarte de un cambio."
+        },
+        "method": {
+          "label": "¿Cómo quieres pagar?",
+          "stripe": "Con tarjeta, ahora",
+          "transfer": "Por transferencia bancaria"
+        },
+        "message": {
+          "label": "¿Algo que debamos saber?",
+          "hint": "Nivel, horarios, necesidades especiales…"
+        },
+        "consent": {
+          "label": "Soy la madre, el padre o el tutor legal y autorizo el tratamiento de los datos del menor para gestionar sus clases."
+        },
+        "terms": {
+          "label": "He leído y acepto los <terms>términos y condiciones</terms> y la <privacy>política de privacidad</privacy>."
+        },
+        "honeypot": "No rellenes este campo"
+      },
+      "errors": {
+        "priceId": {
+          "required": "Elige qué quieres pagar."
+        },
+        "name": {
+          "required": "Escribe el nombre y los apellidos.",
+          "invalid": "El nombre es demasiado largo."
+        },
+        "birthDate": {
+          "required": "Indica la fecha de nacimiento.",
+          "invalid": "Revisa la fecha de nacimiento."
+        },
+        "guardianName": {
+          "required": "Escribe el nombre de la persona adulta responsable.",
+          "invalid": "El nombre es demasiado largo."
+        },
+        "email": {
+          "required": "Escribe tu correo electrónico.",
+          "invalid": "Revisa el correo: parece que le falta algo."
+        },
+        "phone": {
+          "required": "Revisa el teléfono.",
+          "invalid": "Revisa el teléfono."
+        },
+        "method": {
+          "required": "Elige cómo quieres pagar."
+        },
+        "consent": {
+          "required": "Necesitamos tu autorización para inscribir a un menor."
+        },
+        "terms": {
+          "required": "Tienes que aceptar los términos para reservar."
+        }
+      },
+      "errorSummary": "{count, plural, one {Hay # dato por revisar} other {Hay # datos por revisar}}",
+      "status": {
+        "spam": "No hemos podido enviar tu reserva. Espera unos segundos y vuelve a intentarlo.",
+        "unavailable": "La reserva en línea no está disponible ahora mismo. Llámanos o escríbenos y te apuntamos.",
+        "failed": "Algo ha fallado al guardar tu reserva. Vuelve a intentarlo o escríbenos.",
+        "not_configured": "La reserva en línea no está disponible ahora mismo. Llámanos o escríbenos y te apuntamos.",
+        "not_available": "Este grupo ya no admite reservas en línea. Escríbenos y buscamos otra opción.",
+        "price_invalid": "Ese precio ya no está disponible. Recarga la página y elige de nuevo.",
+        "rate_limited": "Estamos recibiendo muchas reservas. Inténtalo de nuevo en unos minutos.",
+        "consent_text_missing": "La inscripción en línea de menores no está disponible todavía. Escríbenos y te apuntamos.",
+        "invalid": "Revisa los datos y vuelve a intentarlo.",
+        "not_found": "No encontramos este grupo. Vuelve a la lista de grupos."
+      },
+      "submit": "Continuar al pago",
+      "submitWaitlist": "Apuntarme a la lista de espera",
+      "sending": "Guardando tu plaza…"
+    },
+    "pay": {
+      "crumb": "Pago",
+      "title": "Confirma tu plaza",
+      "titleWaitlist": "Estás en la lista de espera",
+      "titleExpired": "Tu reserva caducó",
+      "titleCancelled": "Esta reserva se canceló",
+      "titleConverted": "Tu plaza ya está confirmada",
+      "notFound": "Este enlace de pago no es válido. Revisa el enlace o vuelve a reservar.",
+      "summary": "Tu reserva",
+      "course": "Curso",
+      "group": "Grupo",
+      "student": "Alumno/a",
+      "starts": "Empieza",
+      "schedule": "Horario",
+      "reference": "Referencia",
+      "amount": "Importe",
+      "currencyNote": "Precios en dólares australianos (AUD).",
+      "holdUntil": "Guardamos tu plaza hasta las {time} (hora de Queensland).",
+      "holdUntilDate": "Guardamos tu plaza hasta el {date}.",
+      "cardTitle": "Pagar con tarjeta",
+      "cardLead": "Pago seguro con Stripe, sin salir de esta página. Tu plaza queda confirmada al momento.",
+      "cardButton": "Pagar {amount} con tarjeta",
+      "cardPending": "Preparando el pago…",
+      "transferTitle": "Pagar por transferencia",
+      "transferLead": "Guardamos tu plaza 5 días. Te enviamos los datos bancarios a tu correo y confirmamos tu plaza cuando llegue el pago.",
+      "transferButton": "Prefiero transferencia",
+      "transferChosen": "Has elegido transferencia bancaria. Te escribiremos a {email} con los datos de la cuenta. Indica la referencia {reference} en el concepto.",
+      "transferSwitch": "También puedes pagar ahora con tarjeta:",
+      "waitlistLead": "El grupo está completo. Si se libera una plaza te escribiremos a {email} con el enlace para pagar. No se ha cobrado nada.",
+      "expiredLead": "Pasó el tiempo para pagar y la plaza se liberó. Puedes volver a reservar si quedan plazas.",
+      "cancelledLead": "Si crees que es un error, escríbenos.",
+      "convertedLead": "Ya recibimos tu pago. ¡Nos vemos en clase!",
+      "again": "Volver a reservar",
+      "contact": "Escríbenos",
+      "error": {
+        "unavailable": "El pago con tarjeta no está disponible ahora mismo. Puedes elegir transferencia o escribirnos.",
+        "failed": "No hemos podido preparar el pago. Vuelve a intentarlo.",
+        "not_available": "Tu reserva ya no está activa. Vuelve a reservar si quedan plazas.",
+        "invalid": "Este enlace de pago no es válido."
+      }
+    },
+    "success": {
+      "crumb": "Confirmación",
+      "paidTitle": "¡Plaza confirmada!",
+      "paidLead": "Hemos recibido tu pago y tu matrícula está activa. Stripe te envía el recibo a tu correo.",
+      "paidMinor": "La matrícula del menor está activa. Te escribiremos con los detalles de la primera clase.",
+      "processingTitle": "Pago recibido",
+      "processingLead": "Tu pago está confirmado y estamos terminando de registrar tu matrícula. No tienes que hacer nada más: te escribiremos en breve.",
+      "unpaidTitle": "El pago no se completó",
+      "unpaidLead": "No hemos recibido el pago. Tu plaza sigue reservada un rato: puedes volver a intentarlo.",
+      "retry": "Volver al pago",
+      "portalTitle": "Tu acceso al portal",
+      "portalLead": "Con tu matrícula tienes cuenta en el portal de alumnos, con las lecciones y recursos de tu curso. Entra con tu correo; la primera vez usa «¿Olvidaste tu contraseña?» para crear la tuya.",
+      "portalCta": "Ir al portal",
+      "backHome": "Volver al inicio",
+      "receipt": "Ver recibo"
+    }
   }
 }

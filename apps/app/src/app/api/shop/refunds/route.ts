@@ -1,3 +1,4 @@
+import { registerEnrollmentRefund } from "@/lib/enrollments/confirm";
 import { isAuthorized, refundSchema, registerRefund } from "@/lib/shop/orders";
 
 /**
@@ -21,7 +22,9 @@ export async function POST(request: Request) {
   const parsed = refundSchema.safeParse(body);
   if (!parsed.success) return Response.json({ error: "invalid" }, { status: 400, headers: HEADERS });
 
-  const result = await registerRefund(parsed.data);
+  let result = await registerRefund(parsed.data);
+  // No es un pedido de la tienda: puede ser el pago de una matrícula.
+  if (!result.ok && result.status === 404) result = await registerEnrollmentRefund(parsed.data);
   if (!result.ok) return Response.json({ error: "failed" }, { status: result.status, headers: HEADERS });
   return Response.json({ ok: true }, { headers: HEADERS });
 }

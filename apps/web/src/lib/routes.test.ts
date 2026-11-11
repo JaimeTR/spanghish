@@ -45,6 +45,8 @@ describe("routes", () => {
       shopSuccess: "shop/success",
       shopCheckout: "shop/checkout",
       myPurchases: "my-purchases",
+      enrol: "enrol",
+      enrolSuccess: "enrol/success",
     });
   });
 
@@ -142,7 +144,7 @@ describe("routes", () => {
   });
 
   it("keeps the confirmations and the legal drafts out of search engines", () => {
-    expect(ROUTE_KEYS.filter((r) => !isIndexable(r))).toEqual(["thankYou", "privacy", "terms", "shopSuccess", "shopCheckout", "myPurchases"]);
+    expect(ROUTE_KEYS.filter((r) => !isIndexable(r))).toEqual(["thankYou", "privacy", "terms", "shopSuccess", "shopCheckout", "myPurchases", "enrolSuccess"]);
     expect(isIndexable("bookings")).toBe(true);
     expect(isIndexable("shop")).toBe(true);
     expect(isIndexable("learnNouns")).toBe(true);

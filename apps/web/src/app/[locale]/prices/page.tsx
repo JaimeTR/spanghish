@@ -13,6 +13,7 @@ import { btnInk, btnPrimary, container } from "@/components/styles";
 import { isLocale } from "@/i18n/routing";
 import { crumbsJsonLd, innerPageMetadata, type PageProps } from "@/lib/page-meta";
 import { getPublicEditions } from "@/lib/editions";
+import { getPublicGroups } from "@/lib/enrol";
 import { PRICE_VALUES, type PriceName } from "@/lib/prices";
 import { bookingPath, localePath } from "@/lib/routes";
 import { CONTACT } from "@/lib/site";
@@ -48,6 +49,13 @@ export default async function PricesPage({ params }: PageProps) {
   const v = (key: string) => t(key, PRICE_VALUES);
   const buttons = heroButtons("burgundy");
   const editions = await getPublicEditions();
+  // Ediciones con un grupo de reserva en línea: el botón lleva al formulario de ese grupo (o a la lista si hay varios).
+  const bookable: Record<string, string> = {};
+  if (editions.length > 0) {
+    for (const g of await getPublicGroups()) {
+      bookable[g.editionId] = bookable[g.editionId] ? localePath(locale, "enrol") : `${localePath(locale, "enrol")}/${g.id}`;
+    }
+  }
 
   return (
     <PageShell locale={locale} route="prices" jsonLd={[await crumbsJsonLd(locale, [{ route: "prices", name: t("title") }])]}>
@@ -109,7 +117,7 @@ export default async function PricesPage({ params }: PageProps) {
               </PriceItem>
             ))}
           </ul>
-          {editions.length > 0 ? <UpcomingEditions locale={locale} editions={editions} /> : null}
+          {editions.length > 0 ? <UpcomingEditions locale={locale} editions={editions} bookable={bookable} /> : null}
           <Bubble
             tone="yellow"
             tail="right"

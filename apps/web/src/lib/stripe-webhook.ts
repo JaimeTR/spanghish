@@ -3,6 +3,7 @@ import { isLocale, routing } from "../i18n/routing";
 import { deliverLead, type DeliveryResult, type OrderLead } from "./leads";
 import { findProduct, PRODUCTS, type Product } from "./shop";
 import { getShopProducts } from "./shop-source";
+import { enrolmentRequestIdOf, recordEnrolmentPayment } from "./enrol";
 import { recordShopOrder, recordShopRefund } from "./shop-orders";
 
 /**
@@ -32,6 +33,8 @@ export type WebhookDeps = {
   record?: (lead: OrderLead) => Promise<{ name: string; url: string }[] | null>;
   /** Anota en el portal lo reembolsado de un pago (true si quedó registrado). */
   refund?: (paymentIntentId: string, refundedCents: number) => Promise<boolean>;
+  /** Confirma en el portal una prematrícula pagada (true si quedó registrada). */
+  enrol?: (session: Stripe.Checkout.Session) => Promise<boolean>;
 };
 
 /** Pedido a partir de la sesión: productos y precios de lib/shop.ts, importes cobrados de Stripe. */
@@ -63,6 +66,7 @@ export async function handleStripeWebhook(
     products,
     record = (lead) => recordShopOrder(lead, env),
     refund = (intent, cents) => recordShopRefund(intent, cents, env),
+    enrol = (session) => recordEnrolmentPayment(session, env),
   }: WebhookDeps = {},
 ): Promise<WebhookResponse> {
   const secret = env.STRIPE_WEBHOOK_SECRET?.trim();
@@ -95,6 +99,11 @@ export async function handleStripeWebhook(
   }
   const session = event.data.object;
   if (session.payment_status !== "paid") return { status: 200, body: "Not paid yet" };
+
+  // Pago de una prematrícula: el portal crea la matrícula (idempotente). Si falla, Stripe reintenta.
+  if (enrolmentRequestIdOf(session)) {
+    return (await enrol(session)) ? { status: 200, body: "OK" } : { status: 500, body: "Enrollment not recorded" };
+  }
 
   const order = orderFromSession(session, products ?? (await getShopProducts(env)));
   // Primero se registra en el portal (idempotente) para que el aviso lleve los enlaces; si falla, sigue el aviso normal.
