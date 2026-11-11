@@ -6,6 +6,7 @@ import { getUserDetail } from "@/lib/data/people";
 import { requireArea } from "@/lib/require-area";
 import { createClient } from "@/lib/supabase/server";
 import { formatInstant } from "@/lib/time";
+import { AvatarUploader } from "../../../account/AvatarUploader";
 import { ProfileForm } from "../../../account/ProfileForm";
 import { SuspendForm } from "../../teachers/SuspendForm";
 import { RolesForm } from "./RolesForm";
@@ -42,6 +43,9 @@ export default async function UserDetailPage({
       {invited === "nomail" ? <Notice tone="warning">{t("invite.nomail")}</Notice> : null}
 
       <Section id="user-data" title={t("sections.data")}>
+        <div className="mb-6">
+          <AvatarUploader locale={locale} userId={user.id} name={user.full_name ?? user.email} initialPath={user.avatar_path} />
+        </div>
         <p className="mb-4 text-sm text-text-muted">{t("emailFixed", { email: user.email ?? "—" })}</p>
         <ProfileForm locale={locale} userId={user.id} profile={user} />
       </Section>

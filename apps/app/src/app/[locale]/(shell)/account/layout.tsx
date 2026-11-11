@@ -26,7 +26,7 @@ export default async function AccountLayout({
   const area = user ? AREA_PRIORITY.find((role) => user.roles.includes(role)) : undefined;
   if (!user || !area) redirect(roleHomePath([], locale));
   return (
-    <PortalShell area={area} locale={locale} name={displayName(user)} roles={user.roles}>
+    <PortalShell area={area} locale={locale} name={displayName(user)} avatarPath={user.avatarPath} roles={user.roles}>
       {children}
     </PortalShell>
   );

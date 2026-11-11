@@ -37,3 +37,27 @@ export async function deleteTeacherProfile(_prev: ActionState, formData: FormDat
   const db = await createClient(); const { data: row } = await db.from("teacher_profiles").select("status, photo_path").eq("id", id).maybeSingle(); const { error } = await db.from("teacher_profiles").delete().eq("id", id); if (error) return { status: "error", error: toDomainError(error) };
   if (row?.photo_path?.startsWith("teachers/")) await db.storage.from("content-media").remove([row.photo_path]); await changed(locale, row?.status === "published"); return { status: "ok" };
 }
+
+/**
+ * Usa la foto de perfil de la cuenta del docente como foto de su ficha pública:
+ * copia el archivo a teachers/ (así la ficha no depende de la foto de la cuenta
+ * si esta cambia) y borra la foto anterior de la ficha.
+ */
+export async function adoptAccountPhoto(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin");
+  const id = formData.get("id"); if (typeof id !== "string") return { status: "error", error: "not_found" };
+  const db = await createClient();
+  const { data: ficha } = await db.from("teacher_profiles").select("profile_id, photo_path, status").eq("id", id).maybeSingle();
+  if (!ficha?.profile_id) return { status: "error", error: "not_found" };
+  const { data: account } = await db.from("profiles").select("avatar_path").eq("id", ficha.profile_id).maybeSingle();
+  const source = account?.avatar_path; if (!source) return { status: "error", error: "not_found" };
+  const extension = source.slice(source.lastIndexOf(".") + 1);
+  const target = `teachers/${crypto.randomUUID()}.${extension}`;
+  const copied = await db.storage.from("content-media").copy(source, target); if (copied.error) return { status: "error", error: "unknown" };
+  const { error } = await db.from("teacher_profiles").update({ photo_path: target }).eq("id", id);
+  if (error) { await db.storage.from("content-media").remove([target]); return { status: "error", error: toDomainError(error) }; }
+  if (ficha.photo_path && ficha.photo_path.startsWith("teachers/")) await db.storage.from("content-media").remove([ficha.photo_path]);
+  revalidatePath(`/${locale}/admin/teachers`); revalidatePath(`/${locale}/admin/teachers/profiles/${id}`);
+  if (ficha.status === "published") await pingWebRevalidate();
+  return { status: "ok" };
+}

@@ -84,7 +84,7 @@ export async function getUserDetail(supabase: Client, id: string) {
   if (!UUID.test(id)) return null;
   const { data, error } = await supabase
     .from("profiles")
-    .select("id, full_name, email, phone, birth_date, address, city, country, preferred_locale, status, created_at, user_roles(role)")
+    .select("id, full_name, email, phone, birth_date, address, city, country, preferred_locale, avatar_path, status, created_at, user_roles(role)")
     .eq("id", id)
     .maybeSingle();
   if (error) throw new Error(`getUserDetail: ${error.code}`);

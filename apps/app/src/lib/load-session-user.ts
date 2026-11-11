@@ -25,7 +25,7 @@ export async function loadSessionUser(
   if (status.data !== "active") return { id, roles: [], status: "suspended", locale: "es" };
 
   const [profile, roles] = await Promise.all([
-    supabase.from("profiles").select("id, status, preferred_locale, full_name, email").eq("id", id).maybeSingle(),
+    supabase.from("profiles").select("id, status, preferred_locale, full_name, email, avatar_path").eq("id", id).maybeSingle(),
     supabase.from("user_roles").select("role").eq("user_id", id),
   ]);
   if (profile.error || roles.error || !profile.data) return null;

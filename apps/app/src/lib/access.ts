@@ -14,6 +14,8 @@ export type SessionUser = {
   name?: string;
   /** profiles.email recortado; ausente si está vacío. Solo para mostrar (respaldo del nombre). */
   email?: string;
+  /** profiles.avatar_path: foto de perfil en el bucket público; ausente si no hay. */
+  avatarPath?: string;
 };
 
 /** Nombre para la interfaz: el nombre y, si no lo hay, el correo. */
@@ -70,6 +72,7 @@ type ProfileRow = {
   preferred_locale: string;
   full_name?: string | null;
   email?: string | null;
+  avatar_path?: string | null;
 };
 type RoleRow = { role: AppRole };
 
@@ -91,5 +94,6 @@ export function toSessionUser(profile: ProfileRow, roleRows: RoleRow[]): Session
     locale: isLocale(profile.preferred_locale) ? profile.preferred_locale : "es",
     ...(name && !suspended ? { name } : {}),
     ...(email && !suspended ? { email } : {}),
+    ...(profile.avatar_path && !suspended ? { avatarPath: profile.avatar_path } : {}),
   };
 }

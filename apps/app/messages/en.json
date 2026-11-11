@@ -161,6 +161,20 @@
       "preferredLocaleHint": "For the emails and notices we send you.",
       "save": "Save changes",
       "saving": "Saving…"
+    },
+    "avatar": {
+      "title": "Profile photo",
+      "help": "PNG, JPG or WebP, 2 MB max. It shows in the top corner and on your card.",
+      "upload": "Upload photo",
+      "change": "Change photo",
+      "remove": "Remove photo",
+      "choose": "Choose photo",
+      "uploading": "Uploading…",
+      "saved": "Photo updated.",
+      "removed": "Photo removed.",
+      "type": "Use a PNG, JPG or WebP image.",
+      "size": "The image is larger than 2 MB.",
+      "error": "We couldn't save the photo. Please try again."
     }
   },
   "areas": {
@@ -327,7 +341,9 @@
       "profileId": "Teacher account (optional)"
     },
     "hideFromWeb": "Hide from the website",
-    "showOnWeb": "Show on the website"
+    "showOnWeb": "Show on the website",
+    "useAccountPhoto": "Use the account's profile photo",
+    "copying": "Copying…"
   },
   "enums": {
     "audience": {

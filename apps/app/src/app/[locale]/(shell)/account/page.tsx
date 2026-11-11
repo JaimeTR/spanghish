@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { isLocale } from "@/i18n/routing";
 import { getSessionUser } from "@/lib/session";
 import { createClient } from "@/lib/supabase/server";
+import { AvatarUploader } from "./AvatarUploader";
 import { ProfileForm } from "./ProfileForm";
 
 export default async function AccountPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -17,7 +18,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
 
   const { data: profile } = await (await createClient())
     .from("profiles")
-    .select("full_name, email, phone, birth_date, address, city, country, preferred_locale")
+    .select("full_name, email, phone, birth_date, address, city, country, preferred_locale, avatar_path")
     .eq("id", user.id)
     .maybeSingle();
   if (!profile) notFound();
@@ -29,7 +30,12 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
       </h1>
       <p className="mt-2 text-text-muted">{t("intro")}</p>
 
-      <dl className="mt-8 divide-y divide-line rounded-lg border border-line bg-surface">
+      <div className="mt-8 rounded-lg border border-line bg-surface p-5">
+        <h2 className="mb-4 text-base font-semibold text-text">{t("avatar.title")}</h2>
+        <AvatarUploader locale={locale} name={profile.full_name ?? profile.email} initialPath={profile.avatar_path} />
+      </div>
+
+      <dl className="mt-6 divide-y divide-line rounded-lg border border-line bg-surface">
         <div className="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
           <dt className="text-sm font-semibold text-text-muted">{t("email")}</dt>
           <dd className="min-w-0 break-words">

@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { Locale } from "@/i18n/routing";
 import type { AppRole } from "@/lib/access";
+import { Avatar } from "./Avatar";
 import { onLightFocus } from "./shell-styles";
 
 type LogoutAction = (formData: FormData) => void | Promise<void>;
@@ -19,11 +20,13 @@ const itemClass = `flex min-h-11 w-full items-center gap-3 rounded-md px-3 text-
  */
 export function UserMenu({
   name,
+  avatarPath,
   role,
   locale,
   logout,
 }: {
   name?: string;
+  avatarPath?: string;
   role: AppRole;
   locale: Locale;
   logout: LogoutAction;
@@ -66,12 +69,7 @@ export function UserMenu({
         onClick={() => setOpen((v) => !v)}
         className={`flex min-h-11 items-center gap-2.5 rounded-md py-1 pr-2 pl-1 hover:bg-surface-sunken ${onLightFocus}`}
       >
-        <span
-          aria-hidden="true"
-          className="inline-flex size-9 items-center justify-center rounded-full bg-highlight text-sm font-bold text-on-highlight"
-        >
-          {initial || <UserRound className="size-5" strokeWidth={2} />}
-        </span>
+        <Avatar path={avatarPath} name={name} size={36} />
         <span className="flex min-w-0 max-w-52 flex-col text-left leading-tight">
           {name && <span className="truncate text-sm font-semibold">{name}</span>}
           <span className={`truncate ${name ? "text-xs text-text-muted" : "text-sm font-semibold"}`}>{t(`roles.${role}`)}</span>

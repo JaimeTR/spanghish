@@ -161,6 +161,20 @@
       "preferredLocaleHint": "Para los correos y avisos que te enviemos.",
       "save": "Guardar cambios",
       "saving": "Guardando…"
+    },
+    "avatar": {
+      "title": "Foto de perfil",
+      "help": "PNG, JPG o WebP, máximo 2 MB. Se ve en la esquina superior y en tu ficha.",
+      "upload": "Subir foto",
+      "change": "Cambiar foto",
+      "remove": "Quitar foto",
+      "choose": "Elegir foto",
+      "uploading": "Subiendo…",
+      "saved": "Foto actualizada.",
+      "removed": "Foto quitada.",
+      "type": "Usa una imagen PNG, JPG o WebP.",
+      "size": "La imagen pesa más de 2 MB.",
+      "error": "No pudimos guardar la foto. Inténtalo de nuevo."
     }
   },
   "areas": {
@@ -327,7 +341,9 @@
       "profileId": "Cuenta de docente (opcional)"
     },
     "hideFromWeb": "Ocultar de la web",
-    "showOnWeb": "Mostrar en la web"
+    "showOnWeb": "Mostrar en la web",
+    "useAccountPhoto": "Usar la foto de perfil de la cuenta",
+    "copying": "Copiando…"
   },
   "enums": {
     "audience": {

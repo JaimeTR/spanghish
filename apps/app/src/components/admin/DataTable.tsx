@@ -85,16 +85,18 @@ export function DataTable({
   const toggleSort = (id: string) =>
     setSort((s) => (s.id === id ? { id, dir: s.dir === "asc" ? "desc" : "asc" } : { id, dir: "asc" }));
 
-  const filterSelect = (c: DataColumn, compact: boolean) => (
+  /** Filtro de una columna: va en la misma fila que el buscador; la primera opción dice a qué columna filtra. */
+  const filterSelect = (c: DataColumn) => (
     <select
+      key={c.id}
       aria-label={`${t("filterBy")} ${c.header}`}
       value={filters[c.id] ?? ""}
       onChange={(e) => setFilters((f) => ({ ...f, [c.id]: e.target.value }))}
-      className={`block w-full rounded-md border border-line bg-surface text-text normal-case focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-purple ${
-        compact ? "mt-1 min-h-9 px-2 py-1 text-xs font-medium tracking-normal" : "min-h-11 px-3 py-2 text-sm"
-      }`}
+      className={`${inputClass} mt-0 w-auto min-w-36 max-w-56 shrink-0 ${filters[c.id] ? "border-structure font-semibold" : ""}`}
     >
-      <option value="">{t("all")}</option>
+      <option value="">
+        {c.header}: {t("all")}
+      </option>
       {c.filter!.options.map((o) => (
         <option key={o.value} value={o.value}>
           {o.label}
@@ -107,7 +109,7 @@ export function DataTable({
     <section aria-label={caption} className="mt-8 overflow-hidden rounded-lg border border-line bg-surface">
       <div role="search" className="flex flex-col gap-3 border-b border-line p-4">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="relative min-w-0 flex-1 basis-64">
+          <div className="relative min-w-0 flex-1 basis-56">
             <label htmlFor={searchId} className="sr-only">
               {searchLabel}
             </label>
@@ -123,6 +125,7 @@ export function DataTable({
               className={`${inputClass} mt-0 pl-10`}
             />
           </div>
+          {filterable.map((c) => filterSelect(c))}
           {active ? (
             <button
               type="button"
@@ -140,17 +143,6 @@ export function DataTable({
             {t("results", { count: visible.length })}
           </p>
         </div>
-        {/* En móvil no hay cabecera de tabla: los filtros van aquí. */}
-        {filterable.length > 0 ? (
-          <div className="grid gap-3 sm:grid-cols-2 md:hidden">
-            {filterable.map((c) => (
-              <div key={c.id}>
-                <span className="mb-1 block text-xs font-bold tracking-wide text-text-muted uppercase">{c.header}</span>
-                {filterSelect(c, false)}
-              </div>
-            ))}
-          </div>
-        ) : null}
       </div>
 
       {visible.length === 0 ? (
@@ -170,7 +162,7 @@ export function DataTable({
                         key={c.id}
                         scope="col"
                         aria-sort={isSorted ? (sort.dir === "asc" ? "ascending" : "descending") : undefined}
-                        className={`${thClass} align-top ${c.align === "right" ? "text-right" : ""}`}
+                        className={`${thClass} ${c.align === "right" ? "text-right" : ""}`}
                       >
                         {c.sortable ? (
                           <button
@@ -184,7 +176,6 @@ export function DataTable({
                         ) : (
                           c.header
                         )}
-                        {c.filter ? filterSelect(c, true) : null}
                       </th>
                     );
                   })}

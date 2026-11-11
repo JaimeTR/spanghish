@@ -25,7 +25,7 @@ export async function AreaLayout({
   setRequestLocale(locale);
   const user = await requireArea(locale, area);
   return (
-    <PortalShell area={area} locale={locale} name={displayName(user)} roles={user.roles}>
+    <PortalShell area={area} locale={locale} name={displayName(user)} avatarPath={user.avatarPath} roles={user.roles}>
       {children}
     </PortalShell>
   );
