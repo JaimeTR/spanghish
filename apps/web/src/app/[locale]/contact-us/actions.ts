@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { isLocale } from "@/i18n/routing";
 import { isLikelySpam } from "@/lib/booking";
 import { validateContact, type ContactErrors } from "@/lib/contact";
-import { deliverLead } from "@/lib/leads";
+import { submitLead } from "@/lib/leads";
 import { localePath } from "@/lib/routes";
 
 export type ContactState =
@@ -24,7 +24,7 @@ export async function submitContact(_prev: ContactState, formData: FormData): Pr
   const result = validateContact(formData);
   if (!result.ok) return { status: "invalid", errors: result.errors };
 
-  const delivery = await deliverLead({ ...result.data, locale, kind: "contact" });
+  const delivery = await submitLead({ ...result.data, locale, kind: "contact" });
   if (!delivery.ok) return { status: delivery.reason };
 
   redirect(localePath(locale, "thankYou"));

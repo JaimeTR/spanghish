@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { deliverLead, leadEmailText, leadSubject, type Lead } from "./leads";
+import { deliverLead, leadEmailText, leadSubject, saveLead, submitLead, type Lead } from "./leads";
 
 const LEAD: Lead = {
   kind: "booking",
@@ -88,5 +88,44 @@ describe("lead email", () => {
     expect(text).toContain("Phone: -");
     expect(text).toContain("Website language: es");
     expect(leadSubject({ ...LEAD, name: "A\r\nBcc: x@y.z" })).toBe("Free lesson request: A Bcc: x@y.z");
+  });
+});
+
+describe("submitLead", () => {
+  const booking = {
+    kind: "booking" as const,
+    locale: "en" as const,
+    name: "Ana",
+    email: "ana@example.com",
+    phone: "",
+    audience: "adults" as const,
+    place: "online" as const,
+    times: "",
+    language: "spanish" as const,
+    message: "",
+    consent: true as const,
+  };
+  const platform = { NEXT_PUBLIC_SUPABASE_URL: "https://x.supabase.co", NEXT_PUBLIC_SUPABASE_ANON_KEY: "sb_publishable_x", NODE_ENV: "production" };
+
+  it("sin correo configurado, se guarda en el portal y cuenta como entregada", async () => {
+    const calls: string[] = [];
+    const fetchImpl = (async (url: string) => {
+      calls.push(String(url));
+      return new Response("{}", { status: 200 });
+    }) as unknown as typeof fetch;
+    const r = await submitLead(booking, platform, fetchImpl);
+    expect(r).toEqual({ ok: true, via: "platform" });
+    expect(calls.some((u) => u.endsWith("/rpc/submit_lead"))).toBe(true);
+  });
+
+  it("si ni el correo ni el portal funcionan, no finge que se envió", async () => {
+    const fetchImpl = (async () => new Response("no", { status: 500 })) as unknown as typeof fetch;
+    const r = await submitLead(booking, platform, fetchImpl);
+    expect(r.ok).toBe(false);
+  });
+
+  it("los pedidos de la tienda no se guardan como solicitudes", async () => {
+    const order = { kind: "order" as const, locale: "en" as const, email: "a@b.co", sessionId: "cs_1", items: [], totalCents: 0, currency: "aud" };
+    expect(await saveLead(order, platform, (async () => new Response("{}")) as unknown as typeof fetch)).toBe(false);
   });
 });

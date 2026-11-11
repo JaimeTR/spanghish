@@ -157,6 +157,20 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"leads": {
+                  Row: {
+                    "admin_notes": string | null,"audience": string | null,"created_at": string,"email": string,"full_name": string,"id": string,"kind": string,"language": string | null,"message": string | null,"phone": string | null,"place": string | null,"site_locale": string,"status": string,"times": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "admin_notes"?: string | null,"audience"?: string | null,"created_at"?: string,"email": string,"full_name": string,"id"?: string,"kind": string,"language"?: string | null,"message"?: string | null,"phone"?: string | null,"place"?: string | null,"site_locale"?: string,"status"?: string,"times"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "admin_notes"?: string | null,"audience"?: string | null,"created_at"?: string,"email"?: string,"full_name"?: string,"id"?: string,"kind"?: string,"language"?: string | null,"message"?: string | null,"phone"?: string | null,"place"?: string | null,"site_locale"?: string,"status"?: string,"times"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
                 },"levels": {
                   Row: {
                     "code": string,"id": string,"language_code": string,"name_en": string,"name_es": string,"sort": number
@@ -642,6 +656,9 @@ isOneToOne: false
                            },
 "start_test":
 { Args: { "p_test_id": string }; Returns: Json
+                           },
+"submit_lead":
+{ Args: { "p_payload": Json }; Returns: string
                            },
 "submit_test":
 { Args: { "p_attempt_id": string,"p_answers": Json }; Returns: Json

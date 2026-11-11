@@ -67,6 +67,11 @@ describe("Sidebar", () => {
     const hrefs = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href"));
     expect(hrefs).toEqual([
       "/es/admin",
+      "/es/admin/leads",
+      "/es/admin/calendar",
+      "/es/admin/groups",
+      "/es/admin/enrollments",
+      "/es/admin/attendance",
       "/es/admin/users",
       "/es/admin/students",
       "/es/admin/teachers",
@@ -77,11 +82,6 @@ describe("Sidebar", () => {
       "/es/admin/legal",
       "/es/admin/settings",
       "/es/admin/payments",
-      "/es/admin/calendar",
-      "/es/admin/groups",
-      "/es/admin/enrollments",
-      "/es/admin/attendance",
-      "/es/admin/leads",
     ]);
     const calendar = screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ });
     expect(calendar).toHaveAttribute("href", "/es/admin/calendar");
@@ -92,9 +92,9 @@ describe("Sidebar", () => {
   });
 
   it("a module in development marks itself as current", () => {
-    nav.pathname = "/es/admin/leads";
+    nav.pathname = "/es/admin/calendar";
     wrap(<Sidebar role="admin" locale="es" />);
-    expect(screen.getByRole("link", { name: /^Solicitudes,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
   });
 
   it("a nested admin page marks its section as current", () => {

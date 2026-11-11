@@ -1,4 +1,5 @@
 import type { Locale } from "../i18n/routing";
+import { platformEnv, supabaseHeaders } from "./platform";
 import type { BookingData } from "./booking";
 import type { ContactData } from "./contact";
 
@@ -33,7 +34,7 @@ export type OrderLead = {
 export type Lead = BookingLead | ContactLead | OrderLead;
 
 export type DeliveryResult =
-  | { ok: true; via: "email" | "log" }
+  | { ok: true; via: "email" | "log" | "platform" }
   | { ok: false; reason: "unavailable" | "failed" };
 
 type Env = Partial<Record<string, string | undefined>>;
@@ -141,4 +142,62 @@ export async function deliverLead(
 
   console.error("[leads] Falta RESEND_API_KEY, LEAD_TO_EMAIL o LEAD_FROM_EMAIL: solicitud no entregada");
   return { ok: false, reason: "unavailable" };
+}
+
+/**
+ * Guarda la solicitud en el portal (RPC `submit_lead`, clave anónima) para
+ * verla en Administración > Solicitudes. Nunca lanza: devuelve false si la
+ * plataforma no está configurada o falla. Los pedidos de la tienda no se guardan aquí.
+ */
+export async function saveLead(
+  lead: Lead,
+  env: Env = process.env,
+  fetchImpl: typeof fetch = fetch,
+): Promise<boolean> {
+  if (lead.kind === "order") return false;
+  const cfg = platformEnv(env);
+  if (!cfg) return false;
+  const record = lead as unknown as Record<string, string | undefined>;
+  try {
+    const res = await fetchImpl(`${cfg.url}/rest/v1/rpc/submit_lead`, {
+      method: "POST",
+      headers: supabaseHeaders(cfg.key),
+      body: JSON.stringify({
+        p_payload: {
+          kind: lead.kind,
+          name: record.name,
+          email: record.email,
+          phone: record.phone,
+          audience: record.audience,
+          place: record.place,
+          times: record.times,
+          language: record.language,
+          message: record.message,
+          locale: lead.locale,
+        },
+      }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) console.error(`[leads] La plataforma respondió ${res.status}`);
+    return res.ok;
+  } catch (error) {
+    console.error("[leads] No se pudo guardar en la plataforma", error instanceof Error ? error.message : error);
+    return false;
+  }
+}
+
+/**
+ * Entrega una solicitud por correo Y la guarda en el portal. Cuenta como entregada
+ * si sale por al menos uno de los dos caminos.
+ */
+export async function submitLead(
+  lead: Lead,
+  env: Env = process.env,
+  fetchImpl: typeof fetch = fetch,
+): Promise<DeliveryResult> {
+  const [mail, saved] = await Promise.all([deliverLead(lead, env, fetchImpl), saveLead(lead, env, fetchImpl)]);
+  if (mail.ok) return mail;
+  if (saved) return { ok: true, via: "platform" };
+  return mail;
 }

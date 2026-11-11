@@ -70,7 +70,7 @@ describe("NAV", () => {
 
   it("navGroupsFor puts what is finished on top and what is in development at the bottom", () => {
     // Admin: la portada, luego los grupos con algo listo y al final el que solo tiene módulos en desarrollo.
-    expect(navGroupsFor("admin").map((g) => g.group)).toEqual([null, "people", "content", "management", "operation"]);
+    expect(navGroupsFor("admin").map((g) => g.group)).toEqual([null, "operation", "people", "content", "management"]);
     // Dentro de un grupo, lo listo va antes que lo que está en desarrollo.
     expect(navGroupsFor("admin").find((g) => g.group === "management")?.items.map((i) => i.key)).toEqual([
       "catalog",
@@ -97,6 +97,7 @@ describe("NAV", () => {
     );
     expect(readyKeys).toEqual([
       "admin.dashboard",
+      "admin.leads",
       "admin.users",
       "admin.students",
       "admin.teachers",
@@ -155,7 +156,6 @@ describe("NAV", () => {
       "groups",
       "enrollments",
       "attendance",
-      "leads",
       "payments",
     ]);
     expect(devModules("teacher")).toHaveLength(6);

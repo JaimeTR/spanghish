@@ -1509,5 +1509,64 @@
     "statusActiveHelp": "La cuenta está habilitada. Si la deshabilitas, no podrá entrar al portal; sus datos se conservan.",
     "statusSuspendedHelp": "La cuenta está deshabilitada y no puede entrar. Habilítala para devolverle el acceso.",
     "statusSelf": "No puedes deshabilitar tu propia cuenta."
+  },
+  "leads": {
+    "title": "Solicitudes",
+    "intro": "Lo que llega por los formularios de la web: reservas de clase gratis y mensajes de contacto. Cambia el estado y apunta notas.",
+    "empty": "Todavía no ha llegado ninguna solicitud.",
+    "search": "Buscar por nombre, correo, teléfono o mensaje",
+    "open": "Ver solicitud",
+    "columns": {
+      "name": "Nombre",
+      "contact": "Contacto",
+      "kind": "Tipo",
+      "interest": "Interés",
+      "date": "Recibida",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "kind": {
+      "booking": "Clase gratis",
+      "contact": "Contacto"
+    },
+    "status": {
+      "new": "Nueva",
+      "contacted": "Contactada",
+      "converted": "Convertida",
+      "discarded": "Descartada"
+    },
+    "audience": {
+      "adults": "Adultos",
+      "kids": "Niños",
+      "mature": "Mayores"
+    },
+    "place": {
+      "sunshineCoast": "Sunshine Coast",
+      "brisbane": "Brisbane",
+      "online": "Online",
+      "notSure": "Sin decidir"
+    },
+    "language": {
+      "spanish": "Aprender español",
+      "english": "Practicar inglés"
+    },
+    "detail": {
+      "email": "Correo",
+      "phone": "Teléfono",
+      "audience": "Clases para",
+      "place": "Lugar",
+      "times": "Días y horarios",
+      "language": "Idioma",
+      "siteLocale": "Idioma de la web",
+      "message": "Mensaje",
+      "reply": "Responder por correo"
+    },
+    "form": {
+      "status": "Estado",
+      "notes": "Notas internas",
+      "notesHint": "Solo las ve la administración.",
+      "save": "Guardar",
+      "saving": "Guardando…"
+    }
   }
 }

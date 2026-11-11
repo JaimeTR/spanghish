@@ -1509,5 +1509,64 @@
     "statusActiveHelp": "The account is enabled. If you disable it, they cannot sign in; their data is kept.",
     "statusSuspendedHelp": "The account is disabled and cannot sign in. Enable it to give access back.",
     "statusSelf": "You cannot disable your own account."
+  },
+  "leads": {
+    "title": "Requests",
+    "intro": "What arrives from the website forms: free-lesson bookings and contact messages. Change the status and keep notes.",
+    "empty": "No requests have arrived yet.",
+    "search": "Search by name, email, phone or message",
+    "open": "View request",
+    "columns": {
+      "name": "Name",
+      "contact": "Contact",
+      "kind": "Type",
+      "interest": "Interest",
+      "date": "Received",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "kind": {
+      "booking": "Free lesson",
+      "contact": "Contact"
+    },
+    "status": {
+      "new": "New",
+      "contacted": "Contacted",
+      "converted": "Converted",
+      "discarded": "Discarded"
+    },
+    "audience": {
+      "adults": "Adults",
+      "kids": "Kids",
+      "mature": "Mature"
+    },
+    "place": {
+      "sunshineCoast": "Sunshine Coast",
+      "brisbane": "Brisbane",
+      "online": "Online",
+      "notSure": "Not sure"
+    },
+    "language": {
+      "spanish": "Learn Spanish",
+      "english": "Practise English"
+    },
+    "detail": {
+      "email": "Email",
+      "phone": "Phone",
+      "audience": "Lessons for",
+      "place": "Place",
+      "times": "Days and times",
+      "language": "Language",
+      "siteLocale": "Website language",
+      "message": "Message",
+      "reply": "Reply by email"
+    },
+    "form": {
+      "status": "Status",
+      "notes": "Internal notes",
+      "notesHint": "Only administration sees these.",
+      "save": "Save",
+      "saving": "Saving…"
+    }
   }
 }

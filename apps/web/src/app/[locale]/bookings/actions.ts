@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { isLocale } from "@/i18n/routing";
 import { isLikelySpam, validateBooking, type BookingErrors } from "@/lib/booking";
-import { deliverLead } from "@/lib/leads";
+import { submitLead } from "@/lib/leads";
 import { localePath } from "@/lib/routes";
 
 export type BookingState =
@@ -24,7 +24,7 @@ export async function submitBooking(_prev: BookingState, formData: FormData): Pr
   const result = validateBooking(formData);
   if (!result.ok) return { status: "invalid", errors: result.errors };
 
-  const delivery = await deliverLead({ ...result.data, locale, kind: "booking" });
+  const delivery = await submitLead({ ...result.data, locale, kind: "booking" });
   if (!delivery.ok) return { status: delivery.reason };
 
   redirect(localePath(locale, "thankYou"));
