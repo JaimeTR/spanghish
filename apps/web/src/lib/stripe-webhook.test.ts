@@ -35,6 +35,17 @@ describe("Stripe webhook", () => {
     expect(deliver).not.toHaveBeenCalled();
   });
 
+  it("records a refund in the portal and asks Stripe to retry when it cannot", async () => {
+    const payload = event("charge.refunded", { id: "ch_1", object: "charge", payment_intent: "pi_3abcdef", amount_refunded: 150 });
+    const refund = vi.fn().mockResolvedValue(true);
+    const ok = await handleStripeWebhook(payload, signed(payload), { env, deliver: vi.fn(), refund });
+    expect(ok.status).toBe(200);
+    expect(refund).toHaveBeenCalledWith("pi_3abcdef", 150);
+
+    const failing = await handleStripeWebhook(payload, signed(payload), { env, deliver: vi.fn(), refund: vi.fn().mockResolvedValue(false) });
+    expect(failing.status).toBe(500);
+  });
+
   it("rejects everything when the webhook secret is not configured", async () => {
     const spy = vi.spyOn(console, "error").mockImplementation(() => {});
     const payload = event("checkout.session.completed", paidSession);

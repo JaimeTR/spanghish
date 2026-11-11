@@ -80,9 +80,9 @@ describe("Sidebar", () => {
       "/es/admin/tests",
       "/es/admin/catalog",
       "/es/admin/products",
+      "/es/admin/payments",
       "/es/admin/legal",
       "/es/admin/settings",
-      "/es/admin/payments",
     ]);
     const calendar = screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ });
     expect(calendar).toHaveAttribute("href", "/es/admin/calendar");

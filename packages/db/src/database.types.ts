@@ -449,14 +449,14 @@ isOneToOne: false
                   ]
                 },"shop_orders": {
                   Row: {
-                    "created_at": string,"currency": string,"email": string | null,"expires_at": string,"id": string,"locale": string,"stripe_session_id": string,"token": string,"total_cents": number,"user_id": string | null
+                    "created_at": string,"currency": string,"email": string | null,"expires_at": string,"id": string,"locale": string,"payment_intent_id": string | null,"refunded_at": string | null,"refunded_cents": number,"stripe_session_id": string,"token": string,"total_cents": number,"user_id": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"stripe_session_id": string,"token"?: string,"total_cents": number,"user_id"?: string | null
+                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"payment_intent_id"?: string | null,"refunded_at"?: string | null,"refunded_cents"?: number,"stripe_session_id": string,"token"?: string,"total_cents": number,"user_id"?: string | null
                   }
                   Update: {
-                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"stripe_session_id"?: string,"token"?: string,"total_cents"?: number,"user_id"?: string | null
+                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"payment_intent_id"?: string | null,"refunded_at"?: string | null,"refunded_cents"?: number,"stripe_session_id"?: string,"token"?: string,"total_cents"?: number,"user_id"?: string | null
                   }
                   Relationships: [
     

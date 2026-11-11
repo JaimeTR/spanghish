@@ -76,9 +76,9 @@ describe("NAV", () => {
     expect(navGroupsFor("admin").find((g) => g.group === "management")?.items.map((i) => i.key)).toEqual([
       "catalog",
       "products",
+      "payments",
       "legal",
       "settings",
-      "payments",
     ]);
     expect(navGroupsFor("student").map((g) => g.group)).toEqual([null, "learn", "classes", "account"]);
     for (const role of ROLES) {
@@ -108,6 +108,7 @@ describe("NAV", () => {
       "admin.tests",
       "admin.catalog",
       "admin.products",
+      "admin.payments",
       "admin.legal",
       "admin.settings",
       "student.home",
@@ -159,7 +160,6 @@ describe("NAV", () => {
       "groups",
       "enrollments",
       "attendance",
-      "payments",
     ]);
     expect(devModules("teacher")).toHaveLength(6);
     expect(devModules("student")).toHaveLength(6);

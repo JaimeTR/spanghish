@@ -124,11 +124,11 @@ export async function registerOrder(input: OrderInput, admin: Admin = createAdmi
         user_id: userId,
         payment_intent_id: input.paymentIntentId ?? null,
       })
-      .select("id, token, user_id")
+      .select("id, token, user_id, payment_intent_id")
       .single();
     if (created.error) {
       // Carrera con otro aviso del mismo pago: se vuelve a leer el que ganó.
-      const again = await admin.from("shop_orders").select("id, token, user_id").eq("stripe_session_id", input.sessionId).maybeSingle();
+      const again = await admin.from("shop_orders").select("id, token, user_id, payment_intent_id").eq("stripe_session_id", input.sessionId).maybeSingle();
       if (again.error || !again.data) return { ok: false, status: 500 };
       order = again.data;
     } else {
