@@ -1,6 +1,6 @@
 import "server-only";
 import type { Database, Tables } from "@spanglish/db";
-import { parsePublishedLessonDetail, parsePublishedResources, type LessonBlock, type PublishedLessonDetail, type PublishedLessonSummary, type PublishedResource } from "@spanglish/content";
+import { GAME_TYPES, parseGameItems, parsePublishedLessonDetail, parsePublishedResources, type LessonBlock, type PublishedLessonDetail, type PublishedLessonSummary, type PublishedResource } from "@spanglish/content";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { isUuid } from "./catalog";
 
@@ -35,6 +35,11 @@ function toLessonBlock(row: BlockRow): LessonBlock {
   if (row.kind === "image" && row.image_path && row.image_width && row.image_height && row.alt_es && row.alt_en) return { id: row.id, position: row.position, kind: "image", imagePath: row.image_path, imageWidth: row.image_width, imageHeight: row.image_height, altEs: row.alt_es, altEn: row.alt_en };
   if (row.kind === "video" && row.youtube_id) return { id: row.id, position: row.position, kind: "video", youtubeId: row.youtube_id };
   if (row.kind === "quiz" && row.body_es && row.body_en && row.options_es && row.options_en && row.correct_option !== null) return { id: row.id, position: row.position, kind: "quiz", bodyEs: row.body_es, bodyEn: row.body_en, optionsEs: row.options_es, optionsEn: row.options_en, correctOption: row.correct_option, explanationEs: row.explanation_es, explanationEn: row.explanation_en };
+  if (row.kind === "game" && row.body_es && row.body_en && row.game_type && GAME_TYPES.some((t) => t === row.game_type)) {
+    const items = (row.game_data as { items?: unknown } | null)?.items;
+    const data = parseGameItems(row.game_type as (typeof GAME_TYPES)[number], items);
+    if (data) return { id: row.id, position: row.position, kind: "game", bodyEs: row.body_es, bodyEn: row.body_en, gameType: data.gameType, gameData: { items: data.items } };
+  }
   throw new Error(`Invalid lesson block ${row.id}`);
 }
 export { toLessonBlock };
@@ -56,7 +61,7 @@ export async function listPortalResources(supabase: Client): Promise<PublishedRe
 export async function listPortalLessons(supabase: Client): Promise<PublishedLessonSummary[]> {
   const { data, error } = await supabase.rpc("list_published_lessons");
   if (error) fail("listPortalLessons", error);
-  return data.map((row) => ({ id: row.id, slug: row.slug, kind: row.kind, componentKey: row.component_key as PublishedLessonSummary["componentKey"], category: row.category, levelCode: row.level_code, accessLevel: row.access_level, locked: row.locked, titleEs: row.title_es, titleEn: row.title_en, summaryEs: row.summary_es, summaryEn: row.summary_en, sortOrder: row.sort_order }));
+  return data.map((row) => ({ id: row.id, slug: row.slug, kind: row.kind, componentKey: row.component_key as PublishedLessonSummary["componentKey"], category: row.category, levelCode: row.level_code, accessLevel: row.access_level, locked: row.locked, titleEs: row.title_es, titleEn: row.title_en, summaryEs: row.summary_es, summaryEn: row.summary_en, sortOrder: row.sort_order, coverPath: row.cover_path }));
 }
 export async function getPortalLesson(supabase: Client, slug: string): Promise<PublishedLessonDetail | null> {
   const { data, error } = await supabase.rpc("get_published_lesson", { p_slug: slug });

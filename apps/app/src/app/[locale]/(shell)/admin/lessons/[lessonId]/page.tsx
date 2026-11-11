@@ -19,7 +19,7 @@ export default async function EditLessonPage({ params, searchParams }: { params:
     <LessonForm locale={locale} lesson={lesson} levels={levels} />
     <div className="mt-6 flex flex-wrap items-center gap-4"><span>{t(`statusNames.${lesson.status}`)}</span><Link className="underline" href={`/${locale}/admin/lessons/${lesson.id}/preview?lang=${locale}`}>{t("preview")}</Link></div>
     <PublishButton locale={locale} id={lesson.id} published={lesson.status === "published"} />
-    {lesson.kind === "article" ? <BlocksEditor lessonId={lesson.id} blocks={blocks} locale={locale} add={query.add} edit={query.edit} /> : null}
+    {lesson.kind === "article" ? <BlocksEditor lessonId={lesson.id} blocks={blocks} locale={locale} /> : null}
     {lesson.kind === "article" ? <DeleteLessonButton id={lesson.id} locale={locale} /> : null}
   </>;
 }

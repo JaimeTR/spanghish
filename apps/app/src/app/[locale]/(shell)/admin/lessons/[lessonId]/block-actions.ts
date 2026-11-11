@@ -7,7 +7,7 @@ import { requireArea } from "@/lib/require-area";
 import { createClient } from "@/lib/supabase/server";
 import { pingWebRevalidate } from "@/lib/web-revalidate";
 import type { TablesInsert, TablesUpdate } from "@spanglish/db";
-import { parseYouTubeId } from "@spanglish/content";
+import { parseGameSource, parseYouTubeId } from "@spanglish/content";
 async function refresh(locale: string, lessonId: string, published: boolean) { revalidatePath(`/${locale}/admin/lessons/${lessonId}`); revalidatePath(`/${locale}/admin/lessons/${lessonId}/preview`); if (published) await pingWebRevalidate(); }
 export async function saveBlock(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin");
@@ -21,6 +21,11 @@ export async function saveBlock(_prev: ActionState, formData: FormData): Promise
   if (data.kind === "image") values = { ...values, image_path: data.imagePath, image_width: data.imageWidth, image_height: data.imageHeight, alt_es: data.altEs, alt_en: data.altEn };
   if (data.kind === "video") values = { ...values, youtube_id: parseYouTubeId(data.video) };
   if (data.kind === "quiz") values = { ...values, body_es: data.bodyEs, body_en: data.bodyEn, options_es: data.optionsEs.split(/\r?\n/).map((value) => value.trim()).filter(Boolean), options_en: data.optionsEn.split(/\r?\n/).map((value) => value.trim()).filter(Boolean), correct_option: data.correctOption, explanation_es: data.explanationEs ?? null, explanation_en: data.explanationEn ?? null };
+  if (data.kind === "game") {
+    const game = parseGameSource(data.gameType, data.source);
+    if (!game.ok) return { status: "invalid", fieldErrors: { source: "invalid" } };
+    values = { ...values, body_es: data.bodyEs, body_en: data.bodyEn, game_type: data.gameType, game_data: { items: game.data.items } };
+  }
   const updateValues: TablesUpdate<"lesson_blocks"> = { ...values };
   delete updateValues.position;
   const result = data.id ? await db.from("lesson_blocks").update(updateValues).eq("id", data.id) : await db.from("lesson_blocks").insert(values);

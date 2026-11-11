@@ -552,7 +552,18 @@
       "quiz": "Pregunta",
       "options": "Opciones (una por línea)",
       "correct": "Número de opción correcta (desde 0)",
-      "explanation": "Explicación"
+      "explanation": "Explicación",
+      "game": "Juego",
+      "gameTitle": "Título o instrucción del juego",
+      "chooseAnother": "Elegir otro tipo",
+      "groupContent": "Contenido",
+      "groupGames": "Juegos interactivos",
+      "desc": {
+        "text": "Explicación con párrafos, listas y negrita.",
+        "image": "Una imagen con su texto alternativo.",
+        "video": "Un vídeo de YouTube.",
+        "quiz": "Pregunta de opción múltiple con explicación."
+      }
     },
     "upload": {
       "choose": "Seleccionar archivo",
@@ -573,6 +584,54 @@
       "correct": "¡Correcto!",
       "incorrect": "Prueba otra vez.",
       "choose": "Elige una respuesta."
+    },
+    "games": {
+      "types": {
+        "match": "Unir parejas",
+        "fill": "Completar la frase",
+        "order": "Ordenar palabras",
+        "flashcards": "Tarjetas de estudio",
+        "truefalse": "Verdadero o falso"
+      },
+      "hints": {
+        "match": "Une cada palabra con su pareja.",
+        "fill": "Elige la palabra que completa cada frase.",
+        "order": "Toca las palabras en el orden correcto.",
+        "flashcards": "Toca la tarjeta para darle la vuelta.",
+        "truefalse": "Decide si cada frase es verdadera o falsa."
+      },
+      "format": {
+        "match": "Una pareja por línea, con «=». Entre 2 y 8.",
+        "fill": "Una frase por línea: frase con ___ | respuesta correcta | opciones incorrectas separadas por comas.",
+        "order": "Una frase por línea (mínimo 2 palabras). Puedes añadir «| traducción».",
+        "flashcards": "Una tarjeta por línea: anverso = reverso. Hasta 30.",
+        "truefalse": "Una frase por línea: frase | v o f | explicación opcional."
+      },
+      "example": {
+        "match": "casa = house\nperro = dog\ngato = cat",
+        "fill": "Yo ___ estudiante. | soy | eres, es",
+        "order": "Yo soy estudiante | I am a student",
+        "flashcards": "hola = hello\nadiós = goodbye",
+        "truefalse": "El sol sale por la noche. | f | Sale por la mañana."
+      },
+      "again": "Reintentar",
+      "check": "Comprobar",
+      "clear": "Borrar",
+      "options": "Opciones",
+      "yourSentence": "Tu frase",
+      "right": "¡Correcto!",
+      "wrong": "Casi. Inténtalo otra vez.",
+      "score": "Aciertos: {score} de {total}",
+      "matchProgress": "Parejas: {done} de {total}",
+      "matchDone": "¡Completado en {tries} intentos!",
+      "front": "Anverso",
+      "back": "Reverso",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "card": "{current} de {total}",
+      "flipHint": "toca para girar",
+      "true": "Verdadero",
+      "false": "Falso"
     }
   },
   "catalog": {

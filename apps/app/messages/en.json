@@ -552,7 +552,18 @@
       "quiz": "Question",
       "options": "Options (one per line)",
       "correct": "Correct option number (starting at 0)",
-      "explanation": "Explanation"
+      "explanation": "Explanation",
+      "game": "Game",
+      "gameTitle": "Game title or instruction",
+      "chooseAnother": "Choose another type",
+      "groupContent": "Content",
+      "groupGames": "Interactive games",
+      "desc": {
+        "text": "Explanation with paragraphs, lists and bold.",
+        "image": "An image with its alt text.",
+        "video": "A YouTube video.",
+        "quiz": "Multiple-choice question with an explanation."
+      }
     },
     "upload": {
       "choose": "Choose file",
@@ -573,6 +584,54 @@
       "correct": "Correct!",
       "incorrect": "Try again.",
       "choose": "Choose an answer."
+    },
+    "games": {
+      "types": {
+        "match": "Match pairs",
+        "fill": "Complete the sentence",
+        "order": "Put words in order",
+        "flashcards": "Study cards",
+        "truefalse": "True or false"
+      },
+      "hints": {
+        "match": "Match each word with its pair.",
+        "fill": "Pick the word that completes each sentence.",
+        "order": "Tap the words in the right order.",
+        "flashcards": "Tap the card to flip it.",
+        "truefalse": "Decide whether each sentence is true or false."
+      },
+      "format": {
+        "match": "One pair per line, using \"=\". Between 2 and 8.",
+        "fill": "One sentence per line: sentence with ___ | correct answer | wrong options separated by commas.",
+        "order": "One sentence per line (at least 2 words). You can add \"| translation\".",
+        "flashcards": "One card per line: front = back. Up to 30.",
+        "truefalse": "One sentence per line: sentence | t or f | optional explanation."
+      },
+      "example": {
+        "match": "casa = house\nperro = dog\ngato = cat",
+        "fill": "Yo ___ estudiante. | soy | eres, es",
+        "order": "Yo soy estudiante | I am a student",
+        "flashcards": "hola = hello\nadiós = goodbye",
+        "truefalse": "El sol sale por la noche. | f | Sale por la mañana."
+      },
+      "again": "Try again",
+      "check": "Check",
+      "clear": "Clear",
+      "options": "Options",
+      "yourSentence": "Your sentence",
+      "right": "Correct!",
+      "wrong": "Almost. Try again.",
+      "score": "Score: {score} of {total}",
+      "matchProgress": "Pairs: {done} of {total}",
+      "matchDone": "Done in {tries} tries!",
+      "front": "Front",
+      "back": "Back",
+      "previous": "Previous",
+      "next": "Next",
+      "card": "{current} of {total}",
+      "flipHint": "tap to flip",
+      "true": "True",
+      "false": "False"
     }
   },
   "catalog": {

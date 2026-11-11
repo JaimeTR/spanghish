@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ACCESS_LEVELS, LEARN_CATEGORY_KEYS, RESOURCE_KINDS, parseYouTubeId } from "@spanglish/content";
+import { ACCESS_LEVELS, GAME_TYPES, LEARN_CATEGORY_KEYS, RESOURCE_KINDS, parseGameSource, parseYouTubeId } from "@spanglish/content";
 import { checkbox } from "./catalog";
 
 const optionalText = (max: number) => z.string().trim().max(max).optional();
@@ -46,7 +46,12 @@ const quizBlock = z.object({ ...base, kind: z.literal("quiz"), bodyEs: z.string(
     if (value.correctOption >= optionsEs.length) ctx.addIssue({ code: "custom", path: ["correctOption"], message: "range" });
     if (optionsEs.length !== optionsEn.length) ctx.addIssue({ code: "custom", path: ["optionsEn"], message: "invalid" });
   });
-export const blockSchema = z.discriminatedUnion("kind", [textBlock, imageBlock, videoBlock, quizBlock]);
+const gameBlock = z.object({ ...base, kind: z.literal("game"), gameType: z.enum(GAME_TYPES), bodyEs: z.string().trim().min(1).max(200), bodyEn: z.string().trim().min(1).max(200), source: z.string().max(6000) })
+  .superRefine((value, ctx) => {
+    const result = parseGameSource(value.gameType, value.source);
+    if (!result.ok) ctx.addIssue({ code: "custom", path: ["source"], message: result.error === "count" ? "range" : "invalid" });
+  });
+export const blockSchema = z.discriminatedUnion("kind", [textBlock, imageBlock, videoBlock, quizBlock, gameBlock]);
 export type BlockInput = z.infer<typeof blockSchema>;
 export type BlockField = string;
 export const moveSchema = z.object({ id: z.uuid(), direction: z.enum(["up", "down"]) });

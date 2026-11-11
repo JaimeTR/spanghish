@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { GAME_TYPES, parseGameItems } from "./games";
 import {
   ACCESS_LEVELS,
   AUDIENCES,
@@ -45,6 +46,7 @@ export const publishedLessonSummarySchema = z.object({
   summaryEs: nullableString,
   summaryEn: nullableString,
   sortOrder: integer,
+  coverPath: nullableString.optional(),
 });
 export type PublishedLessonSummary = z.infer<typeof publishedLessonSummarySchema>;
 
@@ -72,9 +74,23 @@ const lessonBlockUnionSchema = z.discriminatedUnion("kind", [
     explanationEs: z.string().nullable().default(null),
     explanationEn: z.string().nullable().default(null),
   }),
+  z.object({
+    ...blockBase,
+    kind: z.literal("game"),
+    bodyEs: z.string(),
+    bodyEn: z.string(),
+    gameType: z.enum(GAME_TYPES),
+    gameData: z.object({ items: z.array(z.unknown()) }),
+  }),
 ]);
 
 export const lessonBlockSchema = lessonBlockUnionSchema.superRefine((block, context) => {
+  if (block.kind === "game") {
+    if (!parseGameItems(block.gameType, block.gameData.items)) {
+      context.addIssue({ code: "custom", message: "Los datos del juego no son válidos.", path: ["gameData"] });
+    }
+    return;
+  }
   if (block.kind !== "quiz") return;
   if (block.optionsEs.length < 2 || block.optionsEs.length > 4) {
     context.addIssue({ code: "custom", message: "El cuestionario debe tener entre 2 y 4 opciones.", path: ["optionsEs"] });

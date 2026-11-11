@@ -16,7 +16,7 @@ export type LessonKind = (typeof LESSON_KINDS)[number];
 export const INTERACTIVE_KEYS = ["alphabet", "nouns"] as const;
 export type InteractiveKey = (typeof INTERACTIVE_KEYS)[number];
 
-export const BLOCK_KINDS = ["text", "image", "video", "quiz"] as const;
+export const BLOCK_KINDS = ["text", "image", "video", "quiz", "game"] as const;
 export type BlockKind = (typeof BLOCK_KINDS)[number];
 
 export const LEVEL_CODES = ["A1", "A2", "B1", "B2", "C1", "C2"] as const;

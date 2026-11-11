@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import type { LessonBlock } from "@spanglish/content";
+import { gameToSource, type GameData, type GameType, type LessonBlock } from "@spanglish/content";
 import { BilingualField } from "@/components/forms/BilingualField";
 import { Field } from "@/components/forms/Field";
 import { FormStatus } from "@/components/forms/FormStatus";
@@ -11,8 +11,9 @@ import { FileUpload } from "@/components/content/FileUpload";
 import type { BlockField } from "@/lib/schemas/content";
 import { saveBlock } from "./block-actions";
 
-export function BlockForm({ lessonId, locale, kind, block }: { lessonId: string; locale: string; kind: "text" | "image" | "video" | "quiz"; block?: LessonBlock }) {
-  const t = useTranslations("content.blocks"); const form = useFormAction<BlockField>(saveBlock);
+export function BlockForm({ lessonId, locale, kind, gameType, block }: { lessonId: string; locale: string; kind: "text" | "image" | "video" | "quiz" | "game"; gameType?: GameType; block?: LessonBlock }) {
+  const t = useTranslations("content.blocks"); const tg = useTranslations("content.games");
+  const game = block?.kind === "game" ? block : null; const activeGame = (game?.gameType ?? gameType) as GameType; const form = useFormAction<BlockField>(saveBlock);
   const imageBlock = block?.kind === "image" ? block : null;
   const quiz = block?.kind === "quiz" ? block : null;
   const [image, setImage] = useState({ path: imageBlock?.imagePath ?? "", width: imageBlock?.imageWidth ?? 0, height: imageBlock?.imageHeight ?? 0 });
@@ -23,6 +24,9 @@ export function BlockForm({ lessonId, locale, kind, block }: { lessonId: string;
       {kind === "video" ? <Field name="video" label={t("video")} error={form.fieldErrors.video}><input defaultValue={form.value("video", block?.kind === "video" ? `https://youtu.be/${block.youtubeId}` : "")} className="w-full rounded border border-line p-2" /></Field> : null}
       {kind === "image" ? <><input type="hidden" name="imagePath" value={image.path} /><input type="hidden" name="imageWidth" value={image.width || ""} /><input type="hidden" name="imageHeight" value={image.height || ""} /><FileUpload ownerId={lessonId} target="lessonImage" accept="image/png,image/jpeg,image/webp" maxBytes={2_097_152} locale={locale} currentLabel={image.path} onUploaded={(path, width, height) => setImage({ path, width: width ?? 0, height: height ?? 0 })} /><BilingualField name="alt" label={t("alt")} errors={form.fieldErrors} maxLength={200} defaultValues={{ es: form.value("altEs", imageBlock?.altEs), en: form.value("altEn", imageBlock?.altEn) }} /></> : null}
       {kind === "quiz" ? <><BilingualField name="body" label={t("quiz")} errors={form.fieldErrors} maxLength={1000} defaultValues={{ es: form.value("bodyEs", quiz?.bodyEs), en: form.value("bodyEn", quiz?.bodyEn) }} /><Field name="optionsEs" label={`${t("options")} · ${t("languageEs")}`} error={form.fieldErrors.optionsEs}><textarea value={optionsEs} onChange={(event) => setOptionsEs(event.currentTarget.value)} className="w-full rounded border border-line p-2" /></Field><Field name="optionsEn" label={`${t("options")} · ${t("languageEn")}`} error={form.fieldErrors.optionsEn}><textarea value={optionsEn} onChange={(event) => setOptionsEn(event.currentTarget.value)} className="w-full rounded border border-line p-2" /></Field><Field name="correctOption" label={t("correct")} error={form.fieldErrors.correctOption}><input type="number" min="0" max="3" defaultValue={form.value("correctOption", quiz?.correctOption ?? 0)} className="w-full rounded border border-line p-2" /></Field><BilingualField name="explanation" label={t("explanation")} errors={form.fieldErrors} multiline maxLength={1000} defaultValues={{ es: form.value("explanationEs", quiz?.explanationEs), en: form.value("explanationEn", quiz?.explanationEn) }} /></> : null}
+      {kind === "game" ? <><input type="hidden" name="gameType" value={activeGame} />
+        <BilingualField name="body" label={t("gameTitle")} errors={form.fieldErrors} maxLength={200} defaultValues={{ es: form.value("bodyEs", game?.bodyEs), en: form.value("bodyEn", game?.bodyEn) }} />
+        <Field name="source" label={tg(`types.${activeGame}`)} hint={tg(`format.${activeGame}`)} error={form.fieldErrors.source}><textarea rows={8} placeholder={tg(`example.${activeGame}`)} defaultValue={form.value("source", game ? gameToSource({ gameType: game.gameType, items: game.gameData.items } as GameData) : "")} className="w-full rounded border border-line bg-surface px-3 py-2 font-mono text-sm" /></Field></> : null}
       <FormStatus state={form.state} /><SubmitButton pendingLabel={t("saving")}>{t("save")}</SubmitButton>
     </div>
   </form>;
