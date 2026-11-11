@@ -246,7 +246,7 @@
   },
   "teachers": {
     "title": "Docentes",
-    "intro": "Las cuentas de docentes. Edita sus datos o habilita y deshabilita su acceso.",
+    "intro": "Las cuentas de docentes. Edita sus datos, habilita o deshabilita su acceso y, con el ojo, muestra u oculta su ficha en la web pública.",
     "invite": "Invitar docente",
     "empty": "Todavía no hay docentes.",
     "noName": "Sin nombre",
@@ -255,7 +255,8 @@
       "email": "Correo",
       "status": "Estado",
       "actions": "Acciones",
-      "phone": "Teléfono"
+      "phone": "Teléfono",
+      "web": "Web"
     },
     "status": {
       "active": "Habilitada",
@@ -282,7 +283,13 @@
     },
     "search": "Buscar por nombre o correo",
     "edit": "Editar",
-    "publicProfiles": "Perfiles públicos"
+    "web": {
+      "published": "Visible en la web",
+      "hidden": "Oculta",
+      "none": "Sin ficha"
+    },
+    "editWeb": "Editar ficha pública",
+    "createWeb": "Crear ficha pública"
   },
   "teacherProfiles": {
     "title": "Perfiles públicos de docentes",
@@ -318,7 +325,9 @@
       "facts": "Datos clave (uno por línea, máximo 6)",
       "showApproach": "Mostrar sección de método",
       "profileId": "Cuenta de docente (opcional)"
-    }
+    },
+    "hideFromWeb": "Ocultar de la web",
+    "showOnWeb": "Mostrar en la web"
   },
   "enums": {
     "audience": {

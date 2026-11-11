@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-/** El alta vive en un modal de la lista; esta dirección se conserva y lo abre. */
+/** El alta de la ficha pública se hace desde la fila del docente en Docentes. */
 export default async function NewTeacherProfilePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  redirect(`/${locale}/admin/teachers/profiles?new=1`);
+  redirect(`/${locale}/admin/teachers`);
 }

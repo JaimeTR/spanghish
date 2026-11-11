@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/server";
 import { publishSchema, moveSchema, teacherProfileSchema, type TeacherProfileField } from "@/lib/schemas/content";
 import { pingWebRevalidate } from "@/lib/web-revalidate";
 
-async function changed(locale: string, published: boolean) { revalidatePath(`/${locale}/admin/teachers/profiles`); if (published) await pingWebRevalidate(); }
+async function changed(locale: string, published: boolean) { revalidatePath(`/${locale}/admin/teachers`); if (published) await pingWebRevalidate(); }
 export async function saveTeacherProfile(_prev: ActionState<TeacherProfileField>, formData: FormData): Promise<ActionState<TeacherProfileField>> {
   const locale = String(formData.get("locale") ?? "es"); const user = await requireArea(locale as "es" | "en", "admin");
   const parsed = parseForm(teacherProfileSchema, formData); if (!parsed.ok) return { status: "invalid", fieldErrors: parsed.fieldErrors };
@@ -30,7 +30,7 @@ export async function setTeacherProfilePublished(_prev: ActionState, formData: F
 export async function moveTeacherProfile(formData: FormData): Promise<void> {
   const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin"); const p = parseForm(moveSchema, formData); if (!p.ok) throw new Error("Invalid move request");
   const db = await createClient(); const { data: row } = await db.from("teacher_profiles").select("status").eq("id", p.data.id).maybeSingle(); const { error } = await db.rpc("move_teacher_profile", { p_id: p.data.id, p_direction: p.data.direction }); if (error) throw error;
-  revalidatePath(`/${locale}/admin/teachers/profiles`); if (row?.status === "published") await pingWebRevalidate();
+  revalidatePath(`/${locale}/admin/teachers`); if (row?.status === "published") await pingWebRevalidate();
 }
 export async function deleteTeacherProfile(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const locale = String(formData.get("locale") ?? "es"); await requireArea(locale as "es" | "en", "admin"); const id = formData.get("id"); if (typeof id !== "string") return { status: "error", error: "not_found" };

@@ -246,7 +246,7 @@
   },
   "teachers": {
     "title": "Teachers",
-    "intro": "Teacher accounts. Edit their details or enable and disable their access.",
+    "intro": "Teacher accounts. Edit their details, enable or disable their access and, with the eye, show or hide their card on the public website.",
     "invite": "Invite a teacher",
     "empty": "There are no teachers yet.",
     "noName": "No name",
@@ -255,7 +255,8 @@
       "email": "Email",
       "status": "Status",
       "actions": "Actions",
-      "phone": "Phone"
+      "phone": "Phone",
+      "web": "Website"
     },
     "status": {
       "active": "Enabled",
@@ -282,7 +283,13 @@
     },
     "search": "Search by name or email",
     "edit": "Edit",
-    "publicProfiles": "Public profiles"
+    "web": {
+      "published": "Visible on the website",
+      "hidden": "Hidden",
+      "none": "No card"
+    },
+    "editWeb": "Edit public card",
+    "createWeb": "Create public card"
   },
   "teacherProfiles": {
     "title": "Public teacher profiles",
@@ -318,7 +325,9 @@
       "facts": "Key facts (one per line, maximum 6)",
       "showApproach": "Show approach section",
       "profileId": "Teacher account (optional)"
-    }
+    },
+    "hideFromWeb": "Hide from the website",
+    "showOnWeb": "Show on the website"
   },
   "enums": {
     "audience": {
