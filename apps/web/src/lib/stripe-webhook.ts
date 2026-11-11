@@ -109,6 +109,8 @@ export async function handleStripeWebhook(
   // Primero se registra en el portal (idempotente) para que el aviso lleve los enlaces; si falla, sigue el aviso normal.
   const downloads = await record(order);
   const result = await deliver(downloads && downloads.length > 0 ? { ...order, downloads } : order);
-  if (!result.ok) return { status: 500, body: "Order notification failed" };
+  // El pedido ya quedó registrado en el portal (descargas incluidas): que falle solo el aviso por correo
+  // (p. ej. Resend sin configurar) no debe hacer que Stripe reintente el webhook sin parar.
+  if (!result.ok && downloads === null) return { status: 500, body: "Order notification failed" };
   return { status: 200, body: "OK" };
 }

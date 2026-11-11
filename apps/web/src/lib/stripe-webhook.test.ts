@@ -83,6 +83,13 @@ describe("Stripe webhook", () => {
     expect((await handleStripeWebhook(paid, signed(paid), { env, deliver })).status).toBe(500);
   });
 
+  it("does not make Stripe retry when only the email fails but the portal already recorded the order", async () => {
+    const deliver = vi.fn(async () => ({ ok: false as const, reason: "unavailable" as const }));
+    const paid = event("checkout.session.completed", paidSession);
+    const record = vi.fn().mockResolvedValue([]);
+    expect((await handleStripeWebhook(paid, signed(paid), { env, deliver, record })).status).toBe(200);
+  });
+
   it("falls back to the default locale and flags unknown products", () => {
     const order = orderFromSession({ ...paidSession, metadata: { productIds: "ghost", locale: "fr" } } as unknown as Stripe.Checkout.Session);
     expect(order.locale).toBe("es");
