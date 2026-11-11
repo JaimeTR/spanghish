@@ -11,6 +11,15 @@
 - **Contenido fase 5: hecha** (entorno demo preparado en código; ver §5.2 y `docs/despliegue.md`).
 - Convención: ramas `feat/*` desde `develop`; al terminar y verificar, merge directo a `develop` y luego `main`; borrar la rama.
 
+
+## 0.1 Sistema de matrícula (2026-11-11, rama `feat/matricula`)
+Hecho y verificado en local (pgTAP 348, vitest web 185 y app 264, build de ambas apps, comprobado en el navegador):
+- **Migración 0035** (grupos, matrículas, prematrículas con reserva de plaza, pagos de matrícula) y **0036** (horarios, sesiones, asistencia). Las dos están SOLO en la base local: aplicarlas a Supabase real con `pnpm db:push` (no se hizo).
+- **Web:** `/enrol` (grupos con plazas) → formulario → `/enrol/pay/<token>` (tarjeta con Stripe dentro de la web, o transferencia) → `/enrol/success`. El importe sale de `program_prices` en la base, nunca del navegador. El webhook de Stripe (`checkout.session.completed` con `metadata.kind=enrollment`) avisa al portal.
+- **Portal:** `POST /api/enrollments/confirm` (secreto compartido) crea ficha, matrícula, pago y cuenta del alumno adulto, de forma idempotente; los reembolsos de Stripe también se anotan en pagos de matrícula. Admin: Grupos (con Horario y Generar clases), Matrículas (+ Prematrículas), Calendario, Asistencia y Pagos (matrículas y tienda). Docente: Hoy y Asistencia. Alumno: Mi horario, Mis cursos y Mis pagos.
+- **Para producción:** el portal necesita `SUPABASE_SERVICE_ROLE_KEY`, `WEB_REVALIDATE_SECRET` y `NEXT_PUBLIC_WEB_URL`; la web, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET` (el endpoint del webhook ya existe), `WEB_REVALIDATE_SECRET` y `NEXT_PUBLIC_APP_URL`. Los datos bancarios de la transferencia se envían a mano por correo (la prematrícula avisa a `LEAD_TO_EMAIL` si Resend está configurado).
+- **Pendiente (no hecho):** packs de clases con saldo, recuperaciones y clases sueltas, cierres/festivos, solicitudes de cambio de clase del alumno, vistas del tutor, correos automáticos al alumno. Las e2e `admin-students` (botón "Filtrar") y `student-resources` ya estaban desactualizadas antes de este trabajo.
+
 ## 1. Cadena de ramas y PRs (fusionar EN ESTE ORDEN)
 
 | Orden | Rama | PR | Contenido |

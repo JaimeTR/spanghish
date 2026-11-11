@@ -1758,7 +1758,8 @@
       "save": "Save changes",
       "create": "Create group",
       "saving": "Saving…"
-    }
+    },
+    "schedule": "Schedule"
   },
   "adminEnrollments": {
     "title": "Enrolments",
@@ -1905,6 +1906,92 @@
       "dueTitle": "Balance due",
       "dueHint": "To pay, contact us or make the transfer with your name as the reference.",
       "refunded": "refunded {amount}"
+    }
+  },
+  "classes": {
+    "eyebrow": "My classes",
+    "joinOnline": "Join the online class",
+    "cancelledNote": "Class cancelled. Reason: {reason}",
+    "sessionStatus": {
+      "scheduled": "Scheduled",
+      "completed": "Held",
+      "cancelled": "Cancelled"
+    },
+    "attendance": {
+      "title": "Attendance",
+      "intro": "Recent and upcoming classes. Open one to take attendance (teachers can mark from 30 minutes before to 14 days after).",
+      "introTeacher": "Your classes from the last 14 days and the coming week. Open one to take attendance.",
+      "back": "Back to attendance",
+      "emptyList": "There are no classes yet. Create them from Groups → Schedule → Generate classes.",
+      "emptyRoster": "This class has no enrolled students yet.",
+      "marked": "{count, plural, =0 {Not marked} one {# marked} other {# marked}}",
+      "markAll": "Mark everyone present",
+      "markFor": "Attendance of {name}",
+      "status": {
+        "present": "Present",
+        "late": "Late",
+        "absent": "Absent",
+        "excused": "Excused"
+      }
+    },
+    "today": {
+      "title": "Today",
+      "empty": "You have no classes today.",
+      "upcoming": "Next 7 days",
+      "seeAll": "See all my classes and attendance"
+    },
+    "calendar": {
+      "title": "Calendar",
+      "intro": "The classes of every group, week by week. They are generated from Groups → Schedule.",
+      "weekNav": "Week",
+      "prevWeek": "Previous week",
+      "nextWeek": "Next week",
+      "thisWeek": "This week",
+      "today": "today",
+      "noClasses": "No classes.",
+      "noTeacher": "No teacher",
+      "attendance": "Take attendance",
+      "cancel": "Cancel class",
+      "cancelTitle": "Cancel class",
+      "cancelHint": "The class stays on the calendar as cancelled and leaves the attendance list.",
+      "reason": "Reason (optional)",
+      "cancelButton": "Cancel class",
+      "cancelling": "Cancelling…",
+      "restore": "Reinstate class"
+    },
+    "schedule": {
+      "title": "My schedule",
+      "lead": "Your classes over the next 30 days.",
+      "empty": "You have no classes scheduled in the next 30 days.",
+      "rules": "Weekly schedule",
+      "noRules": "This group has no schedule yet.",
+      "addRule": "Add a time slot",
+      "addRuleButton": "Add time slot",
+      "deleteRule": "Remove time slot",
+      "weekday": "Day",
+      "startTime": "Start time",
+      "duration": "Duration (min)",
+      "startsOn": "From",
+      "endsOn": "Until",
+      "endsOnHint": "Optional; defaults to the end of the edition.",
+      "minutes": "{count} min",
+      "from": "from {from}",
+      "fromTo": "{from} – {to}",
+      "saving": "Saving…",
+      "generate": "Generate classes",
+      "generateHint": "Creates the classes from the time slots up to the chosen date. Existing ones are not repeated.",
+      "until": "Until",
+      "generateButton": "Generate classes",
+      "generating": "Generating…",
+      "weekdays": {
+        "1": "Monday",
+        "2": "Tuesday",
+        "3": "Wednesday",
+        "4": "Thursday",
+        "5": "Friday",
+        "6": "Saturday",
+        "7": "Sunday"
+      }
     }
   }
 }

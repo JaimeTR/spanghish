@@ -75,10 +75,10 @@ const g = { r: ready("guardian"), d: dev("guardian") };
 export const NAV: Record<AppRole, readonly NavItem[]> = {
   admin: [
     a.r("dashboard", ""),
-    a.d("calendar"),
+    a.r("calendar", "calendar"),
     a.r("groups", "groups"),
     a.r("enrollments", "enrollments"),
-    a.d("attendance"),
+    a.r("attendance", "attendance"),
     a.r("leads", "leads"),
     a.r("users", "users"),
     a.r("students", "students"),
@@ -92,10 +92,10 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.r("legal", "legal"),
     a.r("settings", "settings"),
   ],
-  teacher: [t.d("today"), t.d("groups"), t.d("calendar"), t.d("attendance"), t.d("requests"), t.d("resources")],
+  teacher: [t.r("today", "today"), t.d("groups"), t.d("calendar"), t.r("attendance", "attendance"), t.d("requests"), t.d("resources")],
   student: [
     s.r("home", ""),
-    s.d("schedule"),
+    s.r("schedule", "schedule"),
     s.r("courses", "courses"),
     s.d("requests"),
     s.r("resources", "resources"),

@@ -1,4 +1,4 @@
-import { ClipboardList, Pencil } from "lucide-react";
+import { CalendarClock, ClipboardList, Pencil } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DataTable, type DataColumn, type DataRow } from "@/components/admin/DataTable";
@@ -11,8 +11,9 @@ import { listTeachers } from "@/lib/data/people";
 import { seatsTaken } from "@/lib/enrollments/status";
 import { requireArea } from "@/lib/require-area";
 import { createClient } from "@/lib/supabase/server";
-import { formatDay } from "@/lib/time";
+import { addDays, formatDay, schoolToday } from "@/lib/time";
 import { GroupDelete, GroupForm, type GroupOptions } from "./GroupForm";
+import { ScheduleManager } from "./ScheduleForms";
 
 const TONES = { draft: "warning", active: "success", completed: "info", cancelled: "muted" } as const;
 const STATUSES = ["draft", "active", "completed", "cancelled"] as const;
@@ -30,7 +31,7 @@ export default async function GroupsPage({ params, searchParams }: { params: Pro
   const [groupsRes, editionsRes, programs, teachers, locations] = await Promise.all([
     supabase
       .from("groups")
-      .select("*, programs(name_es, name_en), program_editions(label_es, label_en, starts_on), locations(name), enrollments(status), enrollment_requests(status, expires_at)")
+      .select("*, programs(name_es, name_en), program_editions(label_es, label_en, starts_on, ends_on), locations(name), enrollments(status), enrollment_requests(status, expires_at), schedule_rules(id, weekday, start_time, duration_minutes, starts_on, ends_on, active)")
       .order("code")
       .limit(500),
     supabase.from("program_editions").select("id, program_id, label_es, label_en, starts_on").order("starts_on", { ascending: false }).limit(500),
@@ -42,6 +43,7 @@ export default async function GroupsPage({ params, searchParams }: { params: Pro
   if (editionsRes.error) throw new Error(`program_editions: ${editionsRes.error.code}`);
   const groups = groupsRes.data;
   const now = new Date();
+  const today = schoolToday();
   const teacherName = new Map(teachers.map((u) => [u.id, u.fullName ?? u.email ?? "—"]));
 
   const options: GroupOptions = {
@@ -72,6 +74,17 @@ export default async function GroupsPage({ params, searchParams }: { params: Pro
     const actions = (
       <RowActions>
         <IconLink href={`/${locale}/admin/enrollments?group=${g.id}`} label={t("viewEnrollments")} icon={<ClipboardList className="size-5" strokeWidth={1.75} />} />
+        <ModalButton iconOnly label={t("schedule")} title={`${t("schedule")} · ${g.name}`} icon={<CalendarClock className="size-5" strokeWidth={1.75} />} size="md">
+          <ScheduleManager
+            locale={locale}
+            groupId={g.id}
+            today={today}
+            defaultUntil={g.program_editions?.ends_on ?? addDays(today, 60)}
+            rules={g.schedule_rules
+              .filter((r) => r.active)
+              .map((r) => ({ id: r.id, weekday: r.weekday, startTime: r.start_time, durationMinutes: r.duration_minutes, startsOn: formatDay(r.starts_on, locale), endsOn: r.ends_on ? formatDay(r.ends_on, locale) : null }))}
+          />
+        </ModalButton>
         <ModalButton iconOnly label={t("edit")} title={t("editTitle")} icon={<Pencil className="size-5" strokeWidth={1.75} />}>
           <GroupForm locale={locale} options={options} group={g} />
         </ModalButton>

@@ -67,11 +67,11 @@ describe("Sidebar", () => {
     const hrefs = [...container.querySelectorAll("a")].map((a) => a.getAttribute("href"));
     expect(hrefs).toEqual([
       "/es/admin",
+      "/es/admin/calendar",
       "/es/admin/groups",
       "/es/admin/enrollments",
-      "/es/admin/leads",
-      "/es/admin/calendar",
       "/es/admin/attendance",
+      "/es/admin/leads",
       "/es/admin/users",
       "/es/admin/students",
       "/es/admin/teachers",
@@ -84,18 +84,21 @@ describe("Sidebar", () => {
       "/es/admin/legal",
       "/es/admin/settings",
     ]);
-    const calendar = screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ });
-    expect(calendar).toHaveAttribute("href", "/es/admin/calendar");
-    expect(within(calendar).getByText("En desarrollo")).toBeVisible();
+    // Todo el menú de administración está listo: ninguno lleva insignia.
+    expect(screen.queryByText("En desarrollo")).toBeNull();
     expect(container.querySelector("[aria-disabled]")).toBeNull();
-    // Un módulo listo no lleva insignia.
-    expect(within(screen.getByRole("link", { name: "Catálogo" })).queryByText("En desarrollo")).toBeNull();
+    // Un módulo en desarrollo de otra área sí es un enlace con insignia.
+    const teacher = wrap(<Sidebar role="teacher" locale="es" />);
+    const groups = within(teacher.container).getByRole("link", { name: /^Grupos,\s*En desarrollo$/ });
+    expect(groups).toHaveAttribute("href", "/es/teacher/groups");
+    expect(within(groups).getByText("En desarrollo")).toBeVisible();
   });
 
   it("a module in development marks itself as current", () => {
-    nav.pathname = "/es/admin/calendar";
-    wrap(<Sidebar role="admin" locale="es" />);
-    expect(screen.getByRole("link", { name: /^Calendario,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
+    nav.pathname = "/es/teacher/groups";
+    wrap(<Sidebar role="teacher" locale="es" />);
+    expect(screen.getByRole("link", { name: /^Grupos,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
+    nav.pathname = "/es/admin";
   });
 
   it("a nested admin page marks its section as current", () => {
@@ -108,7 +111,7 @@ describe("Sidebar", () => {
   it("current item has aria-current=page", () => {
     nav.pathname = "/es/teacher/today";
     wrap(<Sidebar role="teacher" locale="es" />);
-    expect(screen.getByRole("link", { name: /^Hoy,\s*En desarrollo$/ })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Hoy" })).toHaveAttribute("aria-current", "page");
     nav.pathname = "/es/admin";
   });
 });

@@ -5,9 +5,9 @@ const MAIN_NAV = "Navegación principal";
 
 // Módulos "en desarrollo" de cada área (lib/nav.ts).
 const AREAS = [
-  { who: "admin", home: "/es/admin", dev: 2, total: 17 },
-  { who: "teacher", home: "/es/teacher", dev: 6, total: 6 },
-  { who: "student", home: "/es/student", dev: 4, total: 10 },
+  { who: "admin", home: "/es/admin", dev: 0, total: 17 },
+  { who: "teacher", home: "/es/teacher", dev: 4, total: 6 },
+  { who: "student", home: "/es/student", dev: 3, total: 10 },
   { who: "guardian", home: "/es/guardian", dev: 5, total: 5 },
 ] as const;
 
@@ -28,9 +28,8 @@ for (const { who, home, dev, total } of AREAS) {
 test("a module in development explains what it will do, with a sample view and no data requests", async ({
   page,
 }) => {
-  await login(page, USERS.admin);
-  await expectPath(page, "/es/admin");
-  await expect(page.getByText("Datos de ejemplo")).toBeVisible();
+  await login(page, USERS.teacher);
+  await expectPath(page, "/es/teacher");
 
   const dataRequests: string[] = [];
   page.on("request", (r) => {
@@ -41,7 +40,7 @@ test("a module in development explains what it will do, with a sample view and n
     .getByRole("navigation", { name: MAIN_NAV })
     .getByRole("link", { name: /^Calendario\s*,\s*En desarrollo$/ });
   await calendarLink.click();
-  await expectPath(page, "/es/admin/calendar");
+  await expectPath(page, "/es/teacher/calendar");
   const main = page.getByRole("main");
   await expect(main.getByRole("heading", { level: 1 })).toHaveText("Calendario");
   await expect(main.getByText("En desarrollo", { exact: true })).toBeVisible();
@@ -56,7 +55,7 @@ test("a module in development explains what it will do, with a sample view and n
   expect(dataRequests).toEqual([]);
 
   await main.getByRole("link", { name: "Volver al inicio" }).click();
-  await expectPath(page, "/es/admin");
+  await expectPath(page, "/es/teacher");
 });
 
 test("a module in development of another role redirects like any other route of that role", async ({ page }) => {
@@ -82,7 +81,7 @@ test("an unknown module key is a 404, also for a ready module's key", async ({ p
 test("a module in development has no accessibility violations (es/en, desktop and mobile)", async ({ page }) => {
   await login(page, USERS.teacher);
   await expectPath(page, "/es/teacher");
-  for (const path of ["/es/teacher/attendance", "/en/teacher/attendance"]) {
+  for (const path of ["/es/teacher/requests", "/en/teacher/requests"]) {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();

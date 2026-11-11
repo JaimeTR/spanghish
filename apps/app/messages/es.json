@@ -1758,7 +1758,8 @@
       "save": "Guardar cambios",
       "create": "Crear grupo",
       "saving": "Guardando…"
-    }
+    },
+    "schedule": "Horario"
   },
   "adminEnrollments": {
     "title": "Matrículas",
@@ -1905,6 +1906,92 @@
       "dueTitle": "Saldo pendiente",
       "dueHint": "Para pagar, escríbenos o haz la transferencia con tu nombre como referencia.",
       "refunded": "devuelto {amount}"
+    }
+  },
+  "classes": {
+    "eyebrow": "Mis clases",
+    "joinOnline": "Entrar a la clase en línea",
+    "cancelledNote": "Clase cancelada. Motivo: {reason}",
+    "sessionStatus": {
+      "scheduled": "Programada",
+      "completed": "Realizada",
+      "cancelled": "Cancelada"
+    },
+    "attendance": {
+      "title": "Asistencia",
+      "intro": "Clases recientes y próximas. Abre una para tomar la asistencia (la docente puede marcar desde 30 minutos antes hasta 14 días después).",
+      "introTeacher": "Tus clases de los últimos 14 días y de la próxima semana. Abre una para tomar la asistencia.",
+      "back": "Volver a asistencia",
+      "emptyList": "Todavía no hay clases. Se crean desde Grupos → Horario → Generar clases.",
+      "emptyRoster": "Esta clase todavía no tiene alumnos matriculados.",
+      "marked": "{count, plural, =0 {Sin marcar} one {# marcada} other {# marcadas}}",
+      "markAll": "Marcar todos presentes",
+      "markFor": "Asistencia de {name}",
+      "status": {
+        "present": "Presente",
+        "late": "Tarde",
+        "absent": "Falta",
+        "excused": "Justificada"
+      }
+    },
+    "today": {
+      "title": "Hoy",
+      "empty": "Hoy no tienes clases.",
+      "upcoming": "Próximos 7 días",
+      "seeAll": "Ver todas mis clases y la asistencia"
+    },
+    "calendar": {
+      "title": "Calendario",
+      "intro": "Las clases de todos los grupos, semana a semana. Se generan desde Grupos → Horario.",
+      "weekNav": "Semana",
+      "prevWeek": "Semana anterior",
+      "nextWeek": "Semana siguiente",
+      "thisWeek": "Esta semana",
+      "today": "hoy",
+      "noClasses": "Sin clases.",
+      "noTeacher": "Sin docente",
+      "attendance": "Tomar asistencia",
+      "cancel": "Cancelar clase",
+      "cancelTitle": "Cancelar clase",
+      "cancelHint": "La clase se conserva en el calendario como cancelada y desaparece de la asistencia.",
+      "reason": "Motivo (opcional)",
+      "cancelButton": "Cancelar clase",
+      "cancelling": "Cancelando…",
+      "restore": "Reactivar clase"
+    },
+    "schedule": {
+      "title": "Mi horario",
+      "lead": "Tus próximas clases de los próximos 30 días.",
+      "empty": "No tienes clases programadas en los próximos 30 días.",
+      "rules": "Horarios semanales",
+      "noRules": "Este grupo aún no tiene horario.",
+      "addRule": "Añadir horario",
+      "addRuleButton": "Añadir horario",
+      "deleteRule": "Quitar horario",
+      "weekday": "Día",
+      "startTime": "Hora de inicio",
+      "duration": "Duración (min)",
+      "startsOn": "Desde",
+      "endsOn": "Hasta",
+      "endsOnHint": "Opcional; por defecto, el fin de la edición.",
+      "minutes": "{count} min",
+      "from": "desde {from}",
+      "fromTo": "{from} – {to}",
+      "saving": "Guardando…",
+      "generate": "Generar clases",
+      "generateHint": "Crea las clases de los horarios hasta la fecha elegida. Las que ya existen no se repiten.",
+      "until": "Hasta el",
+      "generateButton": "Generar clases",
+      "generating": "Generando…",
+      "weekdays": {
+        "1": "Lunes",
+        "2": "Martes",
+        "3": "Miércoles",
+        "4": "Jueves",
+        "5": "Viernes",
+        "6": "Sábado",
+        "7": "Domingo"
+      }
     }
   }
 }
