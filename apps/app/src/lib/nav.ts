@@ -15,6 +15,7 @@ export type NavIcon =
   | "content"
   | "settings"
   | "legal"
+  | "tests"
   | "today"
   | "resources"
   | "lessons"
@@ -81,6 +82,7 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.r("teachers", "teachers"),
     a.r("content", "resources"),
     a.r("lessons", "lessons"),
+    a.r("tests", "tests"),
     a.r("catalog", "catalog"),
     a.d("payments"),
     a.r("legal", "legal"),
@@ -94,6 +96,7 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     s.d("requests"),
     s.r("resources", "resources"),
     s.r("learn", "learn"),
+    s.r("tests", "tests"),
     s.d("assignments"),
     s.d("progress"),
     s.d("payments"),
@@ -116,6 +119,7 @@ const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
     teachers: "people",
     content: "content",
     lessons: "content",
+    tests: "content",
     catalog: "management",
     payments: "management",
     legal: "management",
@@ -135,6 +139,7 @@ const GROUP_OF: Record<AppRole, Partial<Record<NavIcon, NavGroup>>> = {
     requests: "classes",
     resources: "learn",
     learn: "learn",
+    tests: "learn",
     assignments: "learn",
     progress: "learn",
     payments: "account",

@@ -64,6 +64,6 @@ describe("toDomainError", () => {
     expect(DOMAIN_ERRORS).toContain("lead_already_converted");
     expect(DOMAIN_ERRORS).toContain("unknown");
     expect(new Set(DOMAIN_ERRORS).size).toBe(DOMAIN_ERRORS.length);
-    expect(DOMAIN_ERRORS).toHaveLength(22);
+    expect(DOMAIN_ERRORS).toHaveLength(23);
   });
 });

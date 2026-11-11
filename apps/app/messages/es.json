@@ -131,7 +131,8 @@
       "progress": "Progreso",
       "children": "Mis hijos",
       "consents": "Consentimientos",
-      "legal": "Documentos legales"
+      "legal": "Documentos legales",
+      "tests": "Tests"
     }
   },
   "account": {
@@ -238,7 +239,8 @@
       "lead_already_converted": "Esta solicitud ya se convirtió en alumno.",
       "content_incomplete": "Completa el contenido obligatorio antes de publicar.",
       "slug_taken": "Este identificador ya está en uso.",
-      "unknown": "Algo salió mal. Inténtalo de nuevo."
+      "unknown": "Algo salió mal. Inténtalo de nuevo.",
+      "attempts_exhausted": "Has usado todos los intentos de este test."
     }
   },
   "teachers": {
@@ -1237,6 +1239,192 @@
     "email": {
       "title": "Correos y notificaciones",
       "body": "Los correos de acceso y recuperación de contraseña usan hoy el envío por defecto de la plataforma, que es limitado. Cuando se configure un servidor de correo propio podrás elegir aquí qué avisos se envían y probar el envío."
+    }
+  },
+  "tests": {
+    "title": "Tests",
+    "intro": "Crea tests con banco de preguntas, compártelos y revisa las notas del alumnado.",
+    "new": "Nuevo test",
+    "empty": "Todavía no hay tests.",
+    "search": "Buscar por título o identificador",
+    "edit": "Editar",
+    "delete": "Eliminar test",
+    "publish": "Publicar",
+    "unpublish": "Despublicar",
+    "back": "Volver a tests",
+    "settings": "Ajustes del test",
+    "status": {
+      "draft": "Borrador",
+      "published": "Publicado"
+    },
+    "columns": {
+      "test": "Test",
+      "questions": "Preguntas",
+      "visibility": "Compartido",
+      "attempts": "Intentos",
+      "status": "Estado",
+      "actions": "Acciones",
+      "questionsCount": "{count, plural, one {# pregunta} other {# preguntas}}"
+    },
+    "visibility": {
+      "private": {
+        "name": "Privado (personas elegidas)"
+      },
+      "portal": {
+        "name": "Portal (según acceso)"
+      },
+      "link": {
+        "name": "Con enlace"
+      }
+    },
+    "form": {
+      "data": "Datos del test",
+      "title": "Título",
+      "description": "Descripción",
+      "slug": "Identificador",
+      "slugHint": "Letras minúsculas, números y guiones.",
+      "level": "Nivel",
+      "anyLevel": "Sin nivel",
+      "audience": "Público",
+      "anyAudience": "Todos",
+      "sharing": "Compartir",
+      "visibility": "Quién puede hacerlo",
+      "visibilityHint": "Privado: solo las personas que elijas. Portal: quien tenga el nivel de acceso indicado, desde su lista de tests. Con enlace: cualquier cuenta con la dirección, sin salir en listas.",
+      "access": "Nivel de acceso",
+      "accessHint": "Solo se usa en «Portal».",
+      "inResources": "Mostrar también en Recursos",
+      "inResourcesHint": "Aparece como recurso para quien pueda hacerlo.",
+      "grading": "Nota e intentos",
+      "passPercent": "Aprobado desde (%)",
+      "gradeScale": "Escala de la nota",
+      "gradeScaleHint": "Se muestra la nota sobre esta escala.",
+      "outOf": "Sobre {max}",
+      "maxAttempts": "Intentos máximos",
+      "maxAttemptsHint": "Vacío = sin límite.",
+      "timeLimit": "Tiempo límite (min)",
+      "timeLimitHint": "Vacío = sin límite. Se envía solo al terminar.",
+      "dynamic": "Test dinámico",
+      "dynamicHint": "El test es un banco de preguntas: cada intento puede ser distinto.",
+      "perAttempt": "Preguntas por intento",
+      "perAttemptHint": "Elige esa cantidad al azar del banco. Vacío = todas.",
+      "shuffleQuestions": "Barajar el orden de las preguntas",
+      "shuffleOptions": "Barajar las opciones de cada pregunta",
+      "save": "Guardar ajustes",
+      "saving": "Guardando…",
+      "create": "Crear test"
+    },
+    "questions": {
+      "title": "Banco de preguntas",
+      "empty": "Todavía no hay preguntas. Añade al menos una para poder publicar."
+    },
+    "question": {
+      "kind": "Tipo de pregunta",
+      "kinds": {
+        "single": "Opción única",
+        "truefalse": "Verdadero o falso",
+        "fill": "Respuesta escrita"
+      },
+      "prompt": "Enunciado",
+      "options": "Opciones",
+      "optionsHint": "Una por línea, entre 2 y 5.",
+      "correctOption": "Opción correcta",
+      "optionNumber": "Opción {n}",
+      "correctBool": "Respuesta correcta",
+      "true": "Verdadero",
+      "false": "Falso",
+      "accepted": "Respuestas aceptadas",
+      "acceptedHint": "Una por línea. No distingue mayúsculas, sí acentos.",
+      "explanation": "Explicación (se muestra al corregir)",
+      "points": "Puntos",
+      "pointsShort": "{points} pto(s)",
+      "save": "Guardar pregunta",
+      "saving": "Guardando…",
+      "add": "Añadir pregunta",
+      "edit": "Editar pregunta",
+      "delete": "Eliminar pregunta",
+      "up": "Subir {title}",
+      "down": "Bajar {title}"
+    },
+    "share": {
+      "title": "Compartir",
+      "privateHelp": "Este test es privado: solo lo verán las personas marcadas (y la administración).",
+      "linkHelp": "Cualquier cuenta con sesión iniciada que tenga esta dirección podrá hacerlo.",
+      "link": "Dirección del test",
+      "linkNote": "Añade el dominio del portal delante. Para dejar de compartirlo, cambia «Quién puede hacerlo».",
+      "portalHelp": "Aparece en la lista de tests de quien tenga el nivel de acceso indicado.",
+      "search": "Buscar persona",
+      "none": "Nadie coincide.",
+      "count": "{count, plural, =0 {Nadie seleccionado} one {# persona seleccionada} other {# personas seleccionadas}}",
+      "save": "Guardar quién lo ve",
+      "saving": "Guardando…"
+    },
+    "results": {
+      "title": "Notas",
+      "empty": "Todavía nadie ha hecho este test.",
+      "attempts": "Intentos",
+      "average": "Nota media",
+      "passRate": "Aprobados",
+      "person": "Persona",
+      "grade": "Nota",
+      "percent": "Acierto",
+      "result": "Resultado",
+      "passed": "Aprobado",
+      "failed": "No aprobado",
+      "date": "Fecha",
+      "search": "Buscar persona"
+    },
+    "run": {
+      "back": "← Volver",
+      "start": "Empezar el test",
+      "starting": "Preparando…",
+      "noMoreAttempts": "Has usado todos los intentos de este test.",
+      "progress": "Respondidas: {done} de {total}",
+      "timeLeft": "Tiempo restante",
+      "true": "Verdadero",
+      "false": "Falso",
+      "yourAnswer": "Tu respuesta",
+      "sending": "Enviando…",
+      "submit": "Enviar respuestas",
+      "passed": "¡Aprobado!",
+      "failed": "No aprobado",
+      "scoreLine": "{score} de {max} puntos · {percent}% de acierto",
+      "late": "Se acabó el tiempo: las respuestas no cuentan.",
+      "tryAgain": "Intentarlo de nuevo",
+      "review": "Revisión",
+      "noAnswer": "Sin respuesta",
+      "correct": "Correcta",
+      "incorrect": "Incorrecta",
+      "yourAnswerWas": "Tu respuesta",
+      "correctAnswer": "Respuesta correcta",
+      "factQuestions": "{count, plural, one {# pregunta} other {# preguntas}}",
+      "factTime": "{minutes} min",
+      "factNoTime": "Sin límite de tiempo",
+      "factPass": "Aprobado desde {percent}%",
+      "factAttempts": "Intentos: {done} de {max}",
+      "factUnlimited": "Intentos ilimitados",
+      "history": "Tus intentos"
+    },
+    "student": {
+      "title": "Tests",
+      "intro": "Practica y comprueba tu nivel. Tus notas quedan guardadas.",
+      "available": "Tests disponibles",
+      "empty": "No hay tests disponibles todavía.",
+      "meta": "{count, plural, one {# pregunta} other {# preguntas}}",
+      "minutes": "{minutes} min",
+      "best": "Mejor nota: {grade}/{scale}",
+      "passed": "Aprobado",
+      "notPassed": "No aprobado",
+      "exhausted": "Sin intentos disponibles",
+      "again": "Intentarlo de nuevo",
+      "start": "Empezar",
+      "grades": "Mis notas",
+      "noGrades": "Todavía no has hecho ningún test.",
+      "test": "Test",
+      "grade": "Nota",
+      "percent": "Acierto",
+      "result": "Resultado",
+      "date": "Fecha",
+      "resourcesTitle": "Tests"
     }
   }
 }

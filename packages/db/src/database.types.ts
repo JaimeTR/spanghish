@@ -445,6 +445,104 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"tests": {
+                  Row: {
+                    "access_level": Database["public"]['Enums']["access_level"],"audience": Database["public"]['Enums']["audience_segment"] | null,"created_at": string,"created_by": string | null,"description_en": string | null,"description_es": string | null,"grade_scale": number,"id": string,"in_resources": boolean,"level_id": string | null,"max_attempts": number | null,"pass_percent": number,"published_at": string | null,"questions_per_attempt": number | null,"shuffle_options": boolean,"shuffle_questions": boolean,"slug": string,"status": Database["public"]['Enums']["content_status"],"time_limit_minutes": number | null,"title_en": string,"title_es": string,"updated_at": string,"visibility": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "access_level"?: Database["public"]['Enums']["access_level"],"audience"?: Database["public"]['Enums']["audience_segment"] | null,"created_at"?: string,"created_by"?: string | null,"description_en"?: string | null,"description_es"?: string | null,"grade_scale"?: number,"id"?: string,"in_resources"?: boolean,"level_id"?: string | null,"max_attempts"?: number | null,"pass_percent"?: number,"published_at"?: string | null,"questions_per_attempt"?: number | null,"shuffle_options"?: boolean,"shuffle_questions"?: boolean,"slug": string,"status"?: Database["public"]['Enums']["content_status"],"time_limit_minutes"?: number | null,"title_en": string,"title_es": string,"updated_at"?: string,"visibility"?: string
+                  }
+                  Update: {
+                    "access_level"?: Database["public"]['Enums']["access_level"],"audience"?: Database["public"]['Enums']["audience_segment"] | null,"created_at"?: string,"created_by"?: string | null,"description_en"?: string | null,"description_es"?: string | null,"grade_scale"?: number,"id"?: string,"in_resources"?: boolean,"level_id"?: string | null,"max_attempts"?: number | null,"pass_percent"?: number,"published_at"?: string | null,"questions_per_attempt"?: number | null,"shuffle_options"?: boolean,"shuffle_questions"?: boolean,"slug"?: string,"status"?: Database["public"]['Enums']["content_status"],"time_limit_minutes"?: number | null,"title_en"?: string,"title_es"?: string,"updated_at"?: string,"visibility"?: string
+                  }
+                  Relationships: [
+    {
+      foreignKeyName: "tests_level_id_fkey"
+      columns: ["level_id"]
+isOneToOne: false
+      referencedRelation: "levels"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "tests_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+  ]
+                },"test_attempts": {
+                  Row: {
+                    "answers": Json | null,"grade": number | null,"id": string,"max_score": number | null,"passed": boolean | null,"percent": number | null,"question_ids": (string)[],"score": number | null,"started_at": string,"submitted_at": string | null,"test_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "answers"?: Json | null,"grade"?: number | null,"id"?: string,"max_score"?: number | null,"passed"?: boolean | null,"percent"?: number | null,"question_ids": (string)[],"score"?: number | null,"started_at"?: string,"submitted_at"?: string | null,"test_id": string,"user_id"?: string
+                  }
+                  Update: {
+                    "answers"?: Json | null,"grade"?: number | null,"id"?: string,"max_score"?: number | null,"passed"?: boolean | null,"percent"?: number | null,"question_ids"?: (string)[],"score"?: number | null,"started_at"?: string,"submitted_at"?: string | null,"test_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+    {
+      foreignKeyName: "test_attempts_test_id_fkey"
+      columns: ["test_id"]
+isOneToOne: false
+      referencedRelation: "tests"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "test_attempts_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+  ]
+                },"test_questions": {
+                  Row: {
+                    "accepted_answers": (string)[] | null,"correct_bool": boolean | null,"correct_option": number | null,"created_at": string,"explanation_en": string | null,"explanation_es": string | null,"id": string,"kind": Database["public"]['Enums']["test_question_kind"],"options": (string)[] | null,"points": number,"position": number,"prompt_en": string,"prompt_es": string,"test_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "accepted_answers"?: (string)[] | null,"correct_bool"?: boolean | null,"correct_option"?: number | null,"created_at"?: string,"explanation_en"?: string | null,"explanation_es"?: string | null,"id"?: string,"kind": Database["public"]['Enums']["test_question_kind"],"options"?: (string)[] | null,"points"?: number,"position": number,"prompt_en": string,"prompt_es": string,"test_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "accepted_answers"?: (string)[] | null,"correct_bool"?: boolean | null,"correct_option"?: number | null,"created_at"?: string,"explanation_en"?: string | null,"explanation_es"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["test_question_kind"],"options"?: (string)[] | null,"points"?: number,"position"?: number,"prompt_en"?: string,"prompt_es"?: string,"test_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+    {
+      foreignKeyName: "test_questions_test_id_fkey"
+      columns: ["test_id"]
+isOneToOne: false
+      referencedRelation: "tests"
+      referencedColumns: ["id"]
+    }
+  ]
+                },"test_shares": {
+                  Row: {
+                    "created_at": string,"test_id": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"test_id": string,"user_id": string
+                  }
+                  Update: {
+                    "created_at"?: string,"test_id"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+    {
+      foreignKeyName: "test_shares_test_id_fkey"
+      columns: ["test_id"]
+isOneToOne: false
+      referencedRelation: "tests"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "test_shares_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+  ]
                 },"user_roles": {
                   Row: {
                     "role": Database["public"]['Enums']["app_role"],"user_id": string
@@ -526,6 +624,28 @@ isOneToOne: false
               "access_level": Database["public"]['Enums']["access_level"],"audience": Database["public"]['Enums']["audience_segment"],"description_en": string,"description_es": string,"external_url": string,"has_file": boolean,"id": string,"kind": Database["public"]['Enums']["resource_kind"],"level_code": string,"locked": boolean,"sort_order": number,"thumbnail_path": string,"title_en": string,"title_es": string,"title_lang": string,"youtube_id": string
             }[]
                            },
+"get_test_info":
+{ Args: { "p_test_id": string }; Returns: Json
+                           },
+"list_available_tests":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "attempts": number,"audience": Database["public"]['Enums']["audience_segment"],"best_grade": number,"best_percent": number,"description_en": string,"description_es": string,"grade_scale": number,"id": string,"in_resources": boolean,"level_code": string,"max_attempts": number,"passed": boolean,"pass_percent": number,"question_count": number,"slug": string,"time_limit_minutes": number,"title_en": string,"title_es": string,"visibility": string
+            }[]
+                           },
+"list_my_test_results":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "attempt_id": string,"grade": number,"grade_scale": number,"level_code": string,"passed": boolean,"percent": number,"submitted_at": string,"test_id": string,"title_en": string,"title_es": string
+            }[]
+                           },
+"move_test_question":
+{ Args: { "p_question_id": string,"p_direction": string }; Returns: undefined
+                           },
+"start_test":
+{ Args: { "p_test_id": string }; Returns: Json
+                           },
+"submit_test":
+{ Args: { "p_attempt_id": string,"p_answers": Json }; Returns: Json
+                           },
 "list_published_teachers":
 { Args: Record<PropertyKey, never>; Returns: {
               "body_en": string,"body_es": string,"enrol_en": string,"enrol_es": string,"enrol_title_en": string,"enrol_title_es": string,"facts_en": (string)[],"facts_es": (string)[],"intro_en": string,"intro_es": string,"meta_description_en": string,"meta_description_es": string,"name": string,"photo_alt_en": string,"photo_alt_es": string,"photo_path": string,"photo_position": string,"role_en": string,"role_es": string,"show_approach": boolean,"slug": string,"sort_order": number,"specialty_en": string,"specialty_es": string,"tagline_en": string,"tagline_es": string
@@ -554,7 +674,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian","audience_segment": "kids"|"adults"|"mature","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","student_status": "active"|"inactive"
+            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian","audience_segment": "kids"|"adults"|"mature","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","test_question_kind": "single"|"truefalse"|"fill","edition_status": "draft"|"open"|"closed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","student_status": "active"|"inactive"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -670,7 +790,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian"],"audience_segment": ["kids", "adults", "mature"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"student_status": ["active", "inactive"]
+            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian"],"audience_segment": ["kids", "adults", "mature"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"test_question_kind": ["single", "truefalse", "fill"],"edition_status": ["draft", "open", "closed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"student_status": ["active", "inactive"]
           }
         }
 } as const

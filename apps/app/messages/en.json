@@ -131,7 +131,8 @@
       "progress": "Progress",
       "children": "My children",
       "consents": "Consents",
-      "legal": "Legal documents"
+      "legal": "Legal documents",
+      "tests": "Tests"
     }
   },
   "account": {
@@ -238,7 +239,8 @@
       "lead_already_converted": "This enquiry has already been turned into a student.",
       "content_incomplete": "Complete the required content before publishing.",
       "slug_taken": "This identifier is already in use.",
-      "unknown": "Something went wrong. Please try again."
+      "unknown": "Something went wrong. Please try again.",
+      "attempts_exhausted": "You have used all the attempts for this test."
     }
   },
   "teachers": {
@@ -1237,6 +1239,192 @@
     "email": {
       "title": "Emails and notifications",
       "body": "Sign-in and password-reset emails currently use the platform's default sender, which is limited. Once your own mail server is set up you will be able to choose which notices are sent and test delivery here."
+    }
+  },
+  "tests": {
+    "title": "Tests",
+    "intro": "Create question-bank tests, share them and review students' grades.",
+    "new": "New test",
+    "empty": "There are no tests yet.",
+    "search": "Search by title or slug",
+    "edit": "Edit",
+    "delete": "Delete test",
+    "publish": "Publish",
+    "unpublish": "Unpublish",
+    "back": "Back to tests",
+    "settings": "Test settings",
+    "status": {
+      "draft": "Draft",
+      "published": "Published"
+    },
+    "columns": {
+      "test": "Test",
+      "questions": "Questions",
+      "visibility": "Shared",
+      "attempts": "Attempts",
+      "status": "Status",
+      "actions": "Actions",
+      "questionsCount": "{count, plural, one {# question} other {# questions}}"
+    },
+    "visibility": {
+      "private": {
+        "name": "Private (chosen people)"
+      },
+      "portal": {
+        "name": "Portal (by access)"
+      },
+      "link": {
+        "name": "Link only"
+      }
+    },
+    "form": {
+      "data": "Test details",
+      "title": "Title",
+      "description": "Description",
+      "slug": "Slug",
+      "slugHint": "Lowercase letters, numbers and hyphens.",
+      "level": "Level",
+      "anyLevel": "No level",
+      "audience": "Audience",
+      "anyAudience": "Everyone",
+      "sharing": "Sharing",
+      "visibility": "Who can take it",
+      "visibilityHint": "Private: only the people you choose. Portal: anyone with the access level, from their tests list. Link only: any account with the address, not listed anywhere.",
+      "access": "Access level",
+      "accessHint": "Only used for \"Portal\".",
+      "inResources": "Also show in Resources",
+      "inResourcesHint": "Appears as a resource for anyone who can take it.",
+      "grading": "Grade and attempts",
+      "passPercent": "Pass from (%)",
+      "gradeScale": "Grade scale",
+      "gradeScaleHint": "The grade is shown on this scale.",
+      "outOf": "Out of {max}",
+      "maxAttempts": "Maximum attempts",
+      "maxAttemptsHint": "Empty = unlimited.",
+      "timeLimit": "Time limit (min)",
+      "timeLimitHint": "Empty = no limit. It is sent automatically when time is up.",
+      "dynamic": "Dynamic test",
+      "dynamicHint": "The test is a question bank: every attempt can be different.",
+      "perAttempt": "Questions per attempt",
+      "perAttemptHint": "Picks that many at random from the bank. Empty = all.",
+      "shuffleQuestions": "Shuffle question order",
+      "shuffleOptions": "Shuffle each question's options",
+      "save": "Save settings",
+      "saving": "Saving…",
+      "create": "Create test"
+    },
+    "questions": {
+      "title": "Question bank",
+      "empty": "There are no questions yet. Add at least one to publish."
+    },
+    "question": {
+      "kind": "Question type",
+      "kinds": {
+        "single": "Single choice",
+        "truefalse": "True or false",
+        "fill": "Typed answer"
+      },
+      "prompt": "Question",
+      "options": "Options",
+      "optionsHint": "One per line, 2 to 5.",
+      "correctOption": "Correct option",
+      "optionNumber": "Option {n}",
+      "correctBool": "Correct answer",
+      "true": "True",
+      "false": "False",
+      "accepted": "Accepted answers",
+      "acceptedHint": "One per line. Not case-sensitive, accent-sensitive.",
+      "explanation": "Explanation (shown when graded)",
+      "points": "Points",
+      "pointsShort": "{points} pt(s)",
+      "save": "Save question",
+      "saving": "Saving…",
+      "add": "Add question",
+      "edit": "Edit question",
+      "delete": "Delete question",
+      "up": "Move {title} up",
+      "down": "Move {title} down"
+    },
+    "share": {
+      "title": "Sharing",
+      "privateHelp": "This test is private: only the people ticked (and administration) will see it.",
+      "linkHelp": "Any signed-in account with this address can take it.",
+      "link": "Test address",
+      "linkNote": "Put the portal's domain in front. To stop sharing it, change \"Who can take it\".",
+      "portalHelp": "It appears in the tests list of anyone with the access level set.",
+      "search": "Search people",
+      "none": "No one matches.",
+      "count": "{count, plural, =0 {No one selected} one {# person selected} other {# people selected}}",
+      "save": "Save who can see it",
+      "saving": "Saving…"
+    },
+    "results": {
+      "title": "Grades",
+      "empty": "No one has taken this test yet.",
+      "attempts": "Attempts",
+      "average": "Average grade",
+      "passRate": "Pass rate",
+      "person": "Person",
+      "grade": "Grade",
+      "percent": "Score",
+      "result": "Result",
+      "passed": "Passed",
+      "failed": "Not passed",
+      "date": "Date",
+      "search": "Search people"
+    },
+    "run": {
+      "back": "← Back",
+      "start": "Start the test",
+      "starting": "Getting ready…",
+      "noMoreAttempts": "You have used all the attempts for this test.",
+      "progress": "Answered: {done} of {total}",
+      "timeLeft": "Time left",
+      "true": "True",
+      "false": "False",
+      "yourAnswer": "Your answer",
+      "sending": "Sending…",
+      "submit": "Submit answers",
+      "passed": "Passed!",
+      "failed": "Not passed",
+      "scoreLine": "{score} of {max} points · {percent}% correct",
+      "late": "Time ran out: your answers do not count.",
+      "tryAgain": "Try again",
+      "review": "Review",
+      "noAnswer": "No answer",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "yourAnswerWas": "Your answer",
+      "correctAnswer": "Correct answer",
+      "factQuestions": "{count, plural, one {# question} other {# questions}}",
+      "factTime": "{minutes} min",
+      "factNoTime": "No time limit",
+      "factPass": "Pass from {percent}%",
+      "factAttempts": "Attempts: {done} of {max}",
+      "factUnlimited": "Unlimited attempts",
+      "history": "Your attempts"
+    },
+    "student": {
+      "title": "Tests",
+      "intro": "Practise and check your level. Your grades are saved.",
+      "available": "Available tests",
+      "empty": "There are no tests available yet.",
+      "meta": "{count, plural, one {# question} other {# questions}}",
+      "minutes": "{minutes} min",
+      "best": "Best grade: {grade}/{scale}",
+      "passed": "Passed",
+      "notPassed": "Not passed",
+      "exhausted": "No attempts left",
+      "again": "Try again",
+      "start": "Start",
+      "grades": "My grades",
+      "noGrades": "You haven't taken any test yet.",
+      "test": "Test",
+      "grade": "Grade",
+      "percent": "Score",
+      "result": "Result",
+      "date": "Date",
+      "resourcesTitle": "Tests"
     }
   }
 }

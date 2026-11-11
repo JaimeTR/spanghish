@@ -26,6 +26,7 @@ export const DOMAIN_ERRORS = [
   "lead_already_converted",
   "content_incomplete",
   "slug_taken",
+  "attempts_exhausted",
   "unknown",
 ] as const;
 
@@ -49,7 +50,7 @@ export function toDomainError(error: DbError): DomainError {
       const text = `${message} ${error.details ?? ""}`;
       if (text.includes("enrollments_seat_unique")) return "already_enrolled";
       if (text.includes("sessions_group_starts_unique")) return "slot_taken";
-      if (text.includes("lessons_slug_key")) return "slug_taken";
+      if (text.includes("lessons_slug_key") || text.includes("tests_slug_key")) return "slug_taken";
       return "conflict";
     }
     case "PGRST116": // .single() sin filas: RLS no deja verla o no existe

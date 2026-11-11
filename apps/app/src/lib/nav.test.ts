@@ -29,6 +29,7 @@ describe("NAV", () => {
       "teachers",
       "content",
       "lessons",
+      "tests",
       "catalog",
       "payments",
       "legal",
@@ -49,6 +50,7 @@ describe("NAV", () => {
       "requests",
       "resources",
       "learn",
+      "tests",
       "assignments",
       "progress",
       "payments",
@@ -98,12 +100,14 @@ describe("NAV", () => {
       "admin.teachers",
       "admin.content",
       "admin.lessons",
+      "admin.tests",
       "admin.catalog",
       "admin.legal",
       "admin.settings",
       "student.home",
       "student.resources",
       "student.learn",
+      "student.tests",
     ]);
   });
 

@@ -71,6 +71,7 @@ describe("Sidebar", () => {
       "/es/admin/teachers",
       "/es/admin/resources",
       "/es/admin/lessons",
+      "/es/admin/tests",
       "/es/admin/catalog",
       "/es/admin/legal",
       "/es/admin/settings",
