@@ -1,8 +1,17 @@
 # Traspaso del proyecto (para continuar desde otra sesión o cuenta)
 
-Última actualización: 2026-11-09. Repositorio: `JaimeTR/spanghish` (público). Cliente: Maribel Mayhua (profesora de español, Australia). Producto: web pública bilingüe (es/en) + plataforma educativa privada. Stack: pnpm + Turborepo, Next.js 16, Tailwind v4, next-intl, Supabase (Postgres/Auth/Storage/RLS), Stripe.
+Última actualización: 2026-11-11 (sistema de matrícula y todos los módulos del portal terminados; ver §0.0). Repositorio: `JaimeTR/spanghish` (público). Cliente: Maribel Mayhua (profesora de español, Australia). Producto: web pública bilingüe (es/en) + plataforma educativa privada. Stack: pnpm + Turborepo, Next.js 16, Tailwind v4, next-intl, Supabase (Postgres/Auth/Storage/RLS), Stripe.
 
-## 0. Estado de ramas (actualizado 2026-11-10, integración directa sin PRs)
+## 0.0 Estado actual (2026-11-11) — LEER PRIMERO
+- **Ramas:** `feat/matricula`, `develop` y `main` están en el mismo commit (cierres, packs y limpieza, migración 0040). Trabajo nuevo: rama `feat/*` desde `develop`, verificar, subir con `git push origin <rama> <rama>:develop <rama>:main`.
+- **Base real (Supabase `eolcrcqyblkfcxtqfssi`, Sídney):** migraciones **0001–0040 aplicadas**. `packages/db` regenerado. Datos de prueba: ver §5.3.
+- **Despliegue (Vercel, equipo `team_54mFvzgA0j4YcJUz242Cpfvv`):** web `spanglish-web.vercel.app`, portal `spanglish-app-eta.vercel.app`; funciones en `syd1`; despliegue automático desde `main`. Variables de Stripe (pruebas), servicio de Supabase y `WEB_REVALIDATE_SECRET` ya puestas. Webhook de Stripe de pruebas: `/api/stripe/webhook` (checkout.session.completed, async_payment_succeeded, charge.refunded); devuelve 200 si el pedido quedó registrado aunque falle el correo.
+- **Módulos terminados (ya no queda nada "En desarrollo"):** Admin (alumnos, personas, docentes, catálogo, grupos, matrículas y prematrículas, calendario con cierres, asistencia, cambios de clase, pagos, packs, recursos, lecciones, tests, tienda, legal, ajustes). Docente (hoy, grupos, calendario, asistencia, cambios, tareas, recursos). Alumno (horario, cursos, pagos, cambios, tareas, progreso, recursos). Tutor (hijos, horario, pagos, consentimientos, recursos).
+- **Línea base:** pgTAP 404, vitest app 272 / web 186 / content 22 / ui 4; lint, typecheck y build en verde. e2e desactualizadas conocidas (no son de este trabajo): `admin-icons-modals` (3), `admin-students` (búsqueda), `student-resources` (visitante).
+- **Falta (configuración y mejoras):** Resend (`RESEND_API_KEY`, `LEAD_TO_EMAIL`, `LEAD_FROM_EMAIL`) para correos automáticos; recuperaciones y clases sueltas; recordatorios; pago en línea de saldos; contenido real publicado (grupo con edición abierta y precios, textos de consentimiento); Stripe en modo real; dominio `spanglish.com.au`; revisión de seguridad/rendimiento; arreglar las 3 e2e antiguas; auditoría visual de admin y web (en curso).
+- Las secciones §1, §2 y §5.x siguientes son histórico: la cadena de PRs de §1 ya se integró.
+
+## 0. Estado de ramas (histórico) (actualizado 2026-11-10, integración directa sin PRs)
 - **Política:** solo dos ramas importantes. **`develop` = trabajo** y **`main` = producción** (última versión estable). Se integra directo (sin PRs) tras verificar; `main` se actualiza desde `develop` cuando todo está verde. Carpeta de trabajo local: `spanghish-int` (rama `develop`). La carpeta `spanghish` es la original (contiene el `.git`); no se usa.
 - `develop` y `main` contienen: cimientos 1A, web pública completa, 1B fases 1-2, Contenido fases 0-2 (gestión de recursos y lecciones, e2e en verde), menú lateral agrupado/minimizable + menú de perfil + `/account`, páginas de docentes (índice y perfiles de Maribel y Pamela) leídas de la plataforma con respaldo estático, `/api/revalidate`, y la migración 0012 (`teacher_profiles`).
 - Verificado en el árbol integrado: lint, typecheck, tests (web 94, app 186, content 13, ui 4), pgTAP 311, build, e2e app 89 y e2e web 244 (2 pruebas de la web son intermitentes bajo carga y pasan solas: `conversion.spec.ts:182`, `home.spec.ts:173`). El CI de GitHub no se ha comprobado.
@@ -14,7 +23,7 @@
 
 ## 0.1 Sistema de matrícula (2026-11-11, rama `feat/matricula`)
 Hecho y verificado en local (pgTAP 348, vitest web 185 y app 264, build de ambas apps, comprobado en el navegador):
-- **Migración 0035** (grupos, matrículas, prematrículas con reserva de plaza, pagos de matrícula) y **0036** (horarios, sesiones, asistencia). Las dos están SOLO en la base local: aplicarlas a Supabase real con `pnpm db:push` (no se hizo).
+- **Migración 0035** (grupos, matrículas, prematrículas con reserva de plaza, pagos de matrícula) y **0036** (horarios, sesiones, asistencia). (Ya aplicadas a la base real.)
 - **Web:** `/enrol` (grupos con plazas) → formulario → `/enrol/pay/<token>` (tarjeta con Stripe dentro de la web, o transferencia) → `/enrol/success`. El importe sale de `program_prices` en la base, nunca del navegador. El webhook de Stripe (`checkout.session.completed` con `metadata.kind=enrollment`) avisa al portal.
 - **Portal:** `POST /api/enrollments/confirm` (secreto compartido) crea ficha, matrícula, pago y cuenta del alumno adulto, de forma idempotente; los reembolsos de Stripe también se anotan en pagos de matrícula. Admin: Grupos (con Horario y Generar clases), Matrículas (+ Prematrículas), Calendario, Asistencia y Pagos (matrículas y tienda). Docente: Hoy y Asistencia. Alumno: Mi horario, Mis cursos y Mis pagos.
 - **Para producción:** el portal necesita `SUPABASE_SERVICE_ROLE_KEY`, `WEB_REVALIDATE_SECRET` y `NEXT_PUBLIC_WEB_URL`; la web, `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_WEBHOOK_SECRET` (el endpoint del webhook ya existe), `WEB_REVALIDATE_SECRET` y `NEXT_PUBLIC_APP_URL`. Los datos bancarios de la transferencia se envían a mano por correo (la prematrícula avisa a `LEAD_TO_EMAIL` si Resend está configurado).
@@ -52,7 +61,7 @@ pnpm dev                            # ver README "Cómo correr en local"
 ```
 Variables: copiar `.env.example`; nunca subir secretos. Stripe y Resend se configuran con claves de prueba (ver README de `apps/web` "Tienda y pagos").
 
-## 4. Estado verificado (línea base al 2026-11-09)
+## 4. Estado verificado (histórico, 2026-11-09; la línea base vigente está en §0.0)
 - Plataforma (`feat/contenido-fase0`): pgTAP 285, vitest app 158, paquete `@spanglish/content` 13, e2e app 57 pasadas / 3 omitidas, lint/typecheck/build/`pnpm db:types` sin diff.
 - Web (`feat/web-conversion-pages`): vitest 80, e2e ~235 pasadas (82 omitidas = capturas), lint/typecheck/build en verde.
 - El CI de GitHub aún NO se ha comprobado en ninguna rama.

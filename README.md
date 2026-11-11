@@ -103,6 +103,9 @@ demostración, checklists de salida a demo y a producción, y el guion de la dem
 
 ## Estado del proyecto
 
-Hito 1A (cimientos) completo: monorepo, base de datos con roles y RLS, autenticación,
-shell por rol y CI. Siguiente: hito 1B (programas, cursos, grupos, matrículas, calendario,
-sesiones, asistencia y paneles de administradora y docente).
+Sistema completo y funcional: web pública con reserva y pago de clases (`/enrol`, Stripe), y portal
+con cuatro áreas (administración, docente, alumno y tutor): grupos, matrículas, calendario con
+cierres, asistencia, packs de clases, cambios de clase, tareas, progreso, consentimientos, recursos y
+pagos. Migraciones `0001`–`0040` (todas aplicadas a Supabase real). Para retomar el trabajo, leer
+[docs/HANDOFF.md](docs/HANDOFF.md) §0.0. Pendiente: correos automáticos (Resend), recuperaciones,
+contenido real y salida a producción (ver [docs/despliegue.md](docs/despliegue.md)).
