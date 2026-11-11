@@ -135,15 +135,30 @@
   },
   "account": {
     "title": "My account",
-    "intro": "Your sign-in details.",
-    "name": "Name",
+    "intro": "Your personal and contact details.",
     "email": "Email",
     "roles": "Roles",
     "changePassword": "Change my password",
     "settingsTitle": "Settings",
     "settingsIntro": "Your account preferences.",
     "language": "Language",
-    "languageHelp": "Choose the interface language."
+    "languageHelp": "Choose the interface language.",
+    "emailHint": "This is your sign-in email; it can't be changed here.",
+    "form": {
+      "title": "My details",
+      "fullName": "Full name",
+      "fullNameHint": "This is the name shown in the top corner.",
+      "phone": "Phone / mobile",
+      "phoneHint": "Include the country code if you can, e.g. +61 400 000 000.",
+      "birthDate": "Date of birth",
+      "address": "Address",
+      "city": "City",
+      "country": "Country",
+      "preferredLocale": "Preferred language",
+      "preferredLocaleHint": "For the emails and notices we send you.",
+      "save": "Save changes",
+      "saving": "Saving…"
+    }
   },
   "areas": {
     "admin": "Administration",

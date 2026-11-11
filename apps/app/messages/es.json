@@ -135,15 +135,30 @@
   },
   "account": {
     "title": "Mi cuenta",
-    "intro": "Tus datos de acceso.",
-    "name": "Nombre",
+    "intro": "Tus datos personales y de contacto.",
     "email": "Correo electrónico",
     "roles": "Roles",
     "changePassword": "Cambiar mi contraseña",
     "settingsTitle": "Configuración",
     "settingsIntro": "Preferencias de tu cuenta.",
     "language": "Idioma",
-    "languageHelp": "Elige el idioma de la interfaz."
+    "languageHelp": "Elige el idioma de la interfaz.",
+    "emailHint": "Es tu correo de acceso; no se cambia desde aquí.",
+    "form": {
+      "title": "Mis datos",
+      "fullName": "Nombre completo",
+      "fullNameHint": "Es el nombre que se muestra en la esquina superior.",
+      "phone": "Teléfono / celular",
+      "phoneHint": "Con código de país si es posible, por ejemplo +61 400 000 000.",
+      "birthDate": "Fecha de nacimiento",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "country": "País",
+      "preferredLocale": "Idioma preferido",
+      "preferredLocaleHint": "Para los correos y avisos que te enviemos.",
+      "save": "Guardar cambios",
+      "saving": "Guardando…"
+    }
   },
   "areas": {
     "admin": "Administración",

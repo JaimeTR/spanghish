@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { isLocale } from "@/i18n/routing";
 import { getSessionUser } from "@/lib/session";
 import { createClient } from "@/lib/supabase/server";
+import { ProfileForm } from "./ProfileForm";
 
 export default async function AccountPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -13,12 +14,13 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
   if (!user) notFound();
   const t = await getTranslations("account");
   const ta = await getTranslations("areas");
-  const { data } = await (await createClient()).auth.getUser();
-  const rows: [string, string][] = [
-    [t("name"), user.name ?? "—"],
-    [t("email"), data.user?.email ?? "—"],
-    [t("roles"), user.roles.map((role) => ta(role)).join(", ")],
-  ];
+
+  const { data: profile } = await (await createClient())
+    .from("profiles")
+    .select("full_name, email, phone, birth_date, address, city, country, preferred_locale")
+    .eq("id", user.id)
+    .maybeSingle();
+  if (!profile) notFound();
 
   return (
     <section aria-labelledby="account-title" className="max-w-2xl">
@@ -26,14 +28,26 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
         {t("title")}
       </h1>
       <p className="mt-2 text-text-muted">{t("intro")}</p>
+
       <dl className="mt-8 divide-y divide-line rounded-lg border border-line bg-surface">
-        {rows.map(([label, value]) => (
-          <div key={label} className="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-            <dt className="text-sm font-semibold text-text-muted">{label}</dt>
-            <dd className="min-w-0 break-words">{value}</dd>
-          </div>
-        ))}
+        <div className="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
+          <dt className="text-sm font-semibold text-text-muted">{t("email")}</dt>
+          <dd className="min-w-0 break-words">
+            {profile.email ?? "—"}
+            <span className="mt-1 block text-sm text-text-muted">{t("emailHint")}</span>
+          </dd>
+        </div>
+        <div className="grid gap-1 px-5 py-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
+          <dt className="text-sm font-semibold text-text-muted">{t("roles")}</dt>
+          <dd className="min-w-0 break-words">{user.roles.map((role) => ta(role)).join(", ")}</dd>
+        </div>
       </dl>
+
+      <h2 className="mt-10 text-xl font-bold text-text">{t("form.title")}</h2>
+      <div className="mt-4 rounded-lg border border-line bg-surface p-5">
+        <ProfileForm locale={locale} profile={profile} />
+      </div>
+
       <p className="mt-6">
         <Link
           href={`/${locale}/forgot-password`}
