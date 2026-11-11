@@ -110,3 +110,17 @@ describe("pago dentro de la web (embedded)", () => {
     expect(await createCheckoutSession(["alphabet"], "es", client, "https://x.test", undefined, true)).toEqual({ ok: false, reason: "failed" });
   });
 });
+
+describe("receiptUrlOf", () => {
+  const session = (receipt: unknown) => ({ payment_intent: { latest_charge: { receipt_url: receipt } } }) as never;
+  it("devuelve el recibo https de Stripe", async () => {
+    const { receiptUrlOf } = await import("./checkout");
+    expect(receiptUrlOf(session("https://pay.stripe.com/receipts/x"))).toBe("https://pay.stripe.com/receipts/x");
+  });
+  it("ignora recibos ausentes, no https o sin expandir", async () => {
+    const { receiptUrlOf } = await import("./checkout");
+    expect(receiptUrlOf(session("http://x"))).toBeNull();
+    expect(receiptUrlOf(session(null))).toBeNull();
+    expect(receiptUrlOf({ payment_intent: "pi_123" } as never)).toBeNull();
+  });
+});

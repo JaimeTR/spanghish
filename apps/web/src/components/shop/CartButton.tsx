@@ -10,7 +10,7 @@ import { localePath } from "@/lib/routes";
 import { findProduct, formatAud, subtotalCents } from "@/lib/shop";
 import { CONTACT } from "@/lib/site";
 import { ArrowIcon } from "../icons";
-import { btnPrimary } from "../styles";
+import { btnInk, btnPrimary } from "../styles";
 import { useCart } from "./CartProvider";
 import { EmbeddedPayment } from "./EmbeddedPayment";
 
@@ -206,10 +206,15 @@ function CartPanel({ locale, titleId, onClose }: { locale: Locale; titleId: stri
               {ids.map((id) => (
                 <input key={id} type="hidden" name="id" value={id} />
               ))}
-              <button type="submit" disabled={pending} className={`${btnPrimary} w-full disabled:cursor-progress disabled:opacity-80`}>
-                {pending ? t("pending") : t("checkout")}
-                {!pending && <ArrowIcon />}
-              </button>
+              <div className="flex flex-col gap-2">
+                <Link href={localePath(locale, "shopCheckout")} onClick={onClose} className={`${btnPrimary} w-full`}>
+                  {t("goCheckout")}
+                  <ArrowIcon />
+                </Link>
+                <button type="submit" disabled={pending} className={`${btnInk} w-full disabled:cursor-progress disabled:opacity-80`}>
+                  {pending ? t("pending") : t("checkout")}
+                </button>
+              </div>
             </form>
 
             {state.status !== "idle" && state.status !== "embedded" && !pending ? (

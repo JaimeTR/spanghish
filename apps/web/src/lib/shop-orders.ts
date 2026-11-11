@@ -34,6 +34,32 @@ function config(env: Env): { base: string; secret: string } | null {
   return { base, secret };
 }
 
+/** Avisa al portal de lo reembolsado de un pago. false si el portal no está configurado o falla. */
+export async function recordShopRefund(
+  paymentIntentId: string,
+  refundedCents: number,
+  env: Env = process.env,
+  fetchImpl: typeof fetch = fetch,
+): Promise<boolean> {
+  const cfg = config(env);
+  if (!cfg) return false;
+  try {
+    const res = await fetchImpl(`${cfg.base}/api/shop/refunds`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${cfg.secret}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ paymentIntentId, refundedCents }),
+      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+    });
+    // 404: no hay pedido de la tienda con ese pago (otro cobro de la misma cuenta de Stripe): no se reintenta.
+    if (!res.ok && res.status !== 404) console.error(`[shop-orders] El portal respondió ${res.status} al reembolso`);
+    return res.ok || res.status === 404;
+  } catch (error) {
+    console.error("[shop-orders] No se pudo avisar del reembolso", error instanceof Error ? error.message : error);
+    return false;
+  }
+}
+
 /** Registra el pedido en el portal. null si el portal no está configurado o falla. */
 export async function recordShopOrder(
   order: OrderLead,
@@ -52,6 +78,7 @@ export async function recordShopOrder(
         locale: order.locale,
         totalCents: order.totalCents,
         currency: order.currency,
+        ...(order.paymentIntentId ? { paymentIntentId: order.paymentIntentId } : {}),
         items: order.items.map((i) => ({ id: i.id, amountCents: i.amountCents })),
       }),
       cache: "no-store",

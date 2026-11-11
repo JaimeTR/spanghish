@@ -115,11 +115,12 @@ export async function paymentStatus(sessionId: unknown, client: SessionLookupCli
 /** La sesión de Stripe si está PAGADA; null en cualquier otro caso (sin clave, id raro, impagada o error). */
 export async function retrievePaidSession(
   sessionId: unknown,
-  client: { checkout: { sessions: { retrieve(id: string): Promise<Stripe.Checkout.Session> } } } | null = stripeFromEnv(),
+  client: { checkout: { sessions: { retrieve(id: string, params?: Stripe.Checkout.SessionRetrieveParams): Promise<Stripe.Checkout.Session> } } } | null = stripeFromEnv(),
 ): Promise<Stripe.Checkout.Session | null> {
   if (typeof sessionId !== "string" || !SESSION_ID.test(sessionId) || !client) return null;
   try {
-    const session = await client.checkout.sessions.retrieve(sessionId);
+    // Se expande el cargo para enlazar el recibo (boleta) que aloja Stripe.
+    const session = await client.checkout.sessions.retrieve(sessionId, { expand: ["payment_intent.latest_charge"] });
     return session.payment_status === "paid" ? session : null;
   } catch (error) {
     console.error("[checkout] No se pudo consultar la sesión", error instanceof Error ? error.message : error);
@@ -155,4 +156,14 @@ export async function createCheckoutSession(
     console.error("[checkout] Stripe no pudo crear la sesión", error instanceof Error ? error.message : error);
     return { ok: false, reason: "failed" };
   }
+}
+
+/** Recibo (boleta) alojado por Stripe del pago de la sesión; null si no hay o no es https. */
+export function receiptUrlOf(session: Stripe.Checkout.Session): string | null {
+  const intent = session.payment_intent;
+  if (!intent || typeof intent !== "object") return null;
+  const charge = intent.latest_charge;
+  if (!charge || typeof charge !== "object") return null;
+  const url = charge.receipt_url;
+  return typeof url === "string" && url.startsWith("https://") ? url : null;
 }

@@ -28,6 +28,7 @@ export const orderSchema = z.object({
   locale: z.enum(["es", "en"]).default("es"),
   totalCents: z.number().int().min(0).max(10_000_000),
   currency: z.string().length(3).default("aud"),
+  paymentIntentId: z.string().regex(/^pi_[A-Za-z0-9_]{5,200}$/).optional(),
   items: z
     .array(z.object({ id: z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/).max(60), amountCents: z.number().int().min(0).max(10_000_000) }))
     .min(1)
@@ -90,9 +91,14 @@ export async function ensureCustomer(admin: Admin, email: string, locale: "es" |
 export async function registerOrder(input: OrderInput, admin: Admin = createAdminClient()): Promise<OrderResult> {
   if (!SESSION.test(input.sessionId)) return { ok: false, status: 404 };
 
-  const existing = await admin.from("shop_orders").select("id, token, user_id").eq("stripe_session_id", input.sessionId).maybeSingle();
+  const existing = await admin.from("shop_orders").select("id, token, user_id, payment_intent_id").eq("stripe_session_id", input.sessionId).maybeSingle();
   if (existing.error) return { ok: false, status: 500 };
   let order = existing.data;
+
+  // Pedido anterior al módulo Pagos: se completa con el pago de Stripe.
+  if (order && !order.payment_intent_id && input.paymentIntentId) {
+    await admin.from("shop_orders").update({ payment_intent_id: input.paymentIntentId }).eq("id", order.id);
+  }
 
   // Pedido ya registrado sin cuenta (p. ej. antes de existir esta función): se enlaza ahora.
   if (order && !order.user_id && input.email) {
@@ -116,6 +122,7 @@ export async function registerOrder(input: OrderInput, admin: Admin = createAdmi
         total_cents: input.totalCents,
         currency: input.currency.toLowerCase(),
         user_id: userId,
+        payment_intent_id: input.paymentIntentId ?? null,
       })
       .select("id, token, user_id")
       .single();
@@ -143,6 +150,32 @@ export async function registerOrder(input: OrderInput, admin: Admin = createAdmi
 
   const downloads = await downloadsFor(admin, order!);
   return downloads ? { ok: true, downloads } : { ok: false, status: 500 };
+}
+
+export const refundSchema = z.object({
+  paymentIntentId: z.string().regex(/^pi_[A-Za-z0-9_]{5,200}$/),
+  refundedCents: z.number().int().min(0).max(10_000_000),
+});
+export type RefundInput = z.infer<typeof refundSchema>;
+
+/**
+ * Anota un reembolso (Stripe avisa con el total devuelto de ese cobro, así que repetirlo no suma dos
+ * veces). Si se devolvió todo, el enlace de descarga caduca al momento. 404 si no hay pedido con ese pago.
+ */
+export async function registerRefund(input: RefundInput, admin: Admin = createAdminClient()): Promise<{ ok: true } | { ok: false; status: 404 | 500 }> {
+  const found = await admin.from("shop_orders").select("id, total_cents, refunded_cents").eq("payment_intent_id", input.paymentIntentId).maybeSingle();
+  if (found.error) return { ok: false, status: 500 };
+  if (!found.data) return { ok: false, status: 404 };
+
+  const refunded = Math.min(input.refundedCents, found.data.total_cents);
+  if (refunded === found.data.refunded_cents) return { ok: true };
+  const patch: { refunded_cents: number; refunded_at: string | null; expires_at?: string } = {
+    refunded_cents: refunded,
+    refunded_at: refunded > 0 ? new Date().toISOString() : null,
+  };
+  if (refunded >= found.data.total_cents) patch.expires_at = new Date().toISOString();
+  const updated = await admin.from("shop_orders").update(patch).eq("id", found.data.id);
+  return updated.error ? { ok: false, status: 500 } : { ok: true };
 }
 
 /** Enlaces de un pedido ya registrado, por la sesión de Stripe. */

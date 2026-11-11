@@ -3,7 +3,7 @@ import { isLocale, routing } from "../i18n/routing";
 import { deliverLead, type DeliveryResult, type OrderLead } from "./leads";
 import { findProduct, PRODUCTS, type Product } from "./shop";
 import { getShopProducts } from "./shop-source";
-import { recordShopOrder } from "./shop-orders";
+import { recordShopOrder, recordShopRefund } from "./shop-orders";
 
 /**
  * Webhook de Stripe (POST /api/stripe/webhook). Verifica la firma con
@@ -30,6 +30,8 @@ export type WebhookDeps = {
   products?: readonly Product[];
   /** Registra el pedido en el portal y devuelve los enlaces de descarga (null si no se pudo). */
   record?: (lead: OrderLead) => Promise<{ name: string; url: string }[] | null>;
+  /** Anota en el portal lo reembolsado de un pago (true si quedó registrado). */
+  refund?: (paymentIntentId: string, refundedCents: number) => Promise<boolean>;
 };
 
 /** Pedido a partir de la sesión: productos y precios de lib/shop.ts, importes cobrados de Stripe. */
@@ -42,6 +44,7 @@ export function orderFromSession(session: Stripe.Checkout.Session, products: rea
     locale,
     email: session.customer_details?.email ?? session.customer_email ?? "",
     sessionId: session.id,
+    ...(typeof session.payment_intent === "string" ? { paymentIntentId: session.payment_intent } : {}),
     items: ids.map((id) => {
       const p = findProduct(id, products);
       return { id, name: p ? p.name.en : "Unknown product", amountCents: p?.priceCents ?? 0 };
@@ -54,7 +57,13 @@ export function orderFromSession(session: Stripe.Checkout.Session, products: rea
 export async function handleStripeWebhook(
   rawBody: string,
   signature: string | null,
-  { env = process.env, deliver = (lead) => deliverLead(lead), products, record = (lead) => recordShopOrder(lead, env) }: WebhookDeps = {},
+  {
+    env = process.env,
+    deliver = (lead) => deliverLead(lead),
+    products,
+    record = (lead) => recordShopOrder(lead, env),
+    refund = (intent, cents) => recordShopRefund(intent, cents, env),
+  }: WebhookDeps = {},
 ): Promise<WebhookResponse> {
   const secret = env.STRIPE_WEBHOOK_SECRET?.trim();
   if (!secret) {
@@ -68,6 +77,15 @@ export async function handleStripeWebhook(
     event = Stripe.webhooks.constructEvent(rawBody, signature, secret);
   } catch {
     return { status: 400, body: "Invalid signature" };
+  }
+
+  // Reembolsos: el portal anota lo devuelto y, si es el total, caduca la descarga. Si falla, Stripe reintenta.
+  if (event.type === "charge.refunded") {
+    const charge = event.data.object;
+    const intent = typeof charge.payment_intent === "string" ? charge.payment_intent : null;
+    if (!intent) return { status: 200, body: "Ignored" };
+    const ok = await refund(intent, charge.amount_refunded);
+    return ok ? { status: 200, body: "OK" } : { status: 500, body: "Refund not recorded" };
   }
 
   // Los métodos de pago diferidos completan la sesión antes de cobrar y avisan

@@ -88,7 +88,7 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
     a.r("tests", "tests"),
     a.r("catalog", "catalog"),
     a.r("products", "products"),
-    a.d("payments"),
+    a.r("payments", "payments"),
     a.r("legal", "legal"),
     a.r("settings", "settings"),
   ],

@@ -1648,5 +1648,32 @@
         "expires": "Descarga hasta"
       }
     }
+  },
+  "adminPayments": {
+    "title": "Pagos",
+    "intro": "Cobros de la tienda con tarjeta, lo reembolsado y el pago en Stripe. Los reembolsos se anotan solos cuando Stripe avisa.",
+    "empty": "Todavía no hay pagos.",
+    "search": "Buscar por correo o producto",
+    "openInStripe": "Abrir en Stripe",
+    "refundedOf": "devuelto {amount}",
+    "summary": {
+      "collected": "Cobrado",
+      "refunded": "Reembolsado",
+      "net": "Neto",
+      "count": "Pedidos"
+    },
+    "status": {
+      "paid": "Pagado",
+      "partial": "Reembolso parcial",
+      "refunded": "Reembolsado"
+    },
+    "columns": {
+      "date": "Fecha",
+      "email": "Correo",
+      "items": "Productos",
+      "amount": "Importe",
+      "status": "Estado",
+      "stripe": "Stripe"
+    }
   }
 }

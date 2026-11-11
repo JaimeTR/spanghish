@@ -1648,5 +1648,32 @@
         "expires": "Download until"
       }
     }
+  },
+  "adminPayments": {
+    "title": "Payments",
+    "intro": "Card payments for the shop, what was refunded and the payment in Stripe. Refunds are recorded automatically when Stripe sends the notice.",
+    "empty": "There are no payments yet.",
+    "search": "Search by email or product",
+    "openInStripe": "Open in Stripe",
+    "refundedOf": "refunded {amount}",
+    "summary": {
+      "collected": "Collected",
+      "refunded": "Refunded",
+      "net": "Net",
+      "count": "Orders"
+    },
+    "status": {
+      "paid": "Paid",
+      "partial": "Partially refunded",
+      "refunded": "Refunded"
+    },
+    "columns": {
+      "date": "Date",
+      "email": "Email",
+      "items": "Products",
+      "amount": "Amount",
+      "status": "Status",
+      "stripe": "Stripe"
+    }
   }
 }

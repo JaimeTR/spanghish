@@ -3,7 +3,7 @@ import { expectNoAxeViolations, horizontalOverflow } from "./helpers";
 
 /**
  * Tienda (carrito y pago) y Aprende ahora (lecciones). La e2e corre sin
- * STRIPE_SECRET_KEY: "Ir a pagar" debe decir que los pagos no están activos,
+ * STRIPE_SECRET_KEY: "Pagar ahora" debe decir que los pagos no están activos,
  * sin redirigir a ningún sitio.
  */
 
@@ -104,7 +104,7 @@ test.describe("shop and cart", () => {
     await addToCart(page, "El Abecedario – The Alphabet");
     await cartButton(page, 1).click();
     const dialog = page.getByRole("dialog", { name: "Tu carrito" });
-    await dialog.getByRole("button", { name: "Ir a pagar" }).click();
+    await dialog.getByRole("button", { name: "Pagar ahora" }).click();
     const alert = dialog.getByRole("alert");
     await expect(alert).toContainText("Los pagos aún no están activos; escríbenos y te lo enviamos.");
     await expect(alert.getByRole("link", { name: "hello@spanglish.com.au" })).toHaveAttribute("href", "mailto:hello@spanglish.com.au");

@@ -27,6 +27,8 @@ export type OrderLead = {
   /** Email del cliente que recoge Stripe (puede faltar). */
   email: string;
   sessionId: string;
+  /** Pago de Stripe (pi_…), para casar reembolsos en el portal. */
+  paymentIntentId?: string;
   items: { id: string; name: string; amountCents: number }[];
   totalCents: number;
   currency: string;

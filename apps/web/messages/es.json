@@ -1596,7 +1596,25 @@
       },
       "backShop": "Volver a la tienda",
       "toLearn": "Ir a Aprende ahora",
-      "myPurchases": "Ver mis compras"
+      "myPurchases": "Ver mis compras",
+      "order": "Detalle de tu pedido",
+      "orderNumber": "Pedido",
+      "date": "Fecha",
+      "email": "Correo",
+      "total": "Total pagado",
+      "receiptButton": "Descargar boleta",
+      "receiptNote": "La boleta (recibo) la aloja Stripe: ábrela para verla o guardarla como PDF.",
+      "downloadItem": "Descargar",
+      "noFile": "Maribel te lo envía por correo",
+      "nextTitle": "¿Y ahora qué?",
+      "nextPurchases": "Ver mis compras",
+      "nextPurchasesNote": "Entra con tu correo cuando quieras para volver a descargar.",
+      "nextLearn": "Aprende ahora",
+      "nextLearnNote": "Lecciones interactivas gratis con audio.",
+      "nextBooking": "Reservar clase gratis",
+      "nextBookingNote": "Habla con Maribel y empieza a practicar.",
+      "nextResources": "Recursos gratis",
+      "nextResourcesNote": "Videos y materiales para practicar."
     },
     "myPurchases": {
       "metaTitle": "Mis compras · Spanglish",
@@ -1617,6 +1635,13 @@
       "download": "Descargar",
       "noFile": "Maribel te lo envía por correo",
       "signOut": "Cerrar sesión"
+    },
+    "shopCheckout": {
+      "metaTitle": "Checkout · Spanglish",
+      "metaDescription": "Finaliza tu compra de materiales de Spanglish.",
+      "crumb": "Checkout",
+      "title": "Finaliza tu compra",
+      "lead": "Revisa tu pedido y paga de forma segura."
     }
   },
   "notFound": {
@@ -1653,7 +1678,7 @@
     "removeLabel": "Quitar {name} del carrito",
     "subtotal": "Subtotal",
     "currencyNote": "Precios en dólares australianos (AUD).",
-    "checkout": "Ir a pagar",
+    "checkout": "Pagar ahora",
     "pending": "Abriendo la página de pago…",
     "stripeNote": "Pagas en la página segura de Stripe: los datos de tu tarjeta no pasan por esta web.",
     "deliveryNote": "Después del pago, Maribel te envía los materiales por email.",
@@ -1663,7 +1688,8 @@
     "contactLead": "Escríbenos o llámanos:",
     "itemsLabel": "Productos en tu carrito",
     "payTitle": "Pagar",
-    "backToCart": "← Volver al carrito"
+    "backToCart": "← Volver al carrito",
+    "goCheckout": "Ir al checkout"
   },
   "shop": {
     "sale": "¡Oferta!",
@@ -1690,5 +1716,17 @@
         "alt": "Portada del libro Regular Verbs in Spanish, con el logo de Spanglish."
       }
     }
+  },
+  "checkout": {
+    "loading": "Cargando tu carrito…",
+    "summary": "Tu pedido",
+    "total": "Total",
+    "secure": "Pago seguro con Stripe: tu tarjeta nunca pasa por esta web.",
+    "instant": "Recibes los enlaces de descarga al terminar.",
+    "receipt": "Tu boleta (recibo) se descarga al terminar el pago.",
+    "pay": "Pago",
+    "payLead": "Revisa tu pedido y continúa para pagar sin salir de la web.",
+    "continue": "Continuar al pago",
+    "keepShopping": "Seguir comprando"
   }
 }
