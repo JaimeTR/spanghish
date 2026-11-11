@@ -421,6 +421,46 @@ isOneToOne: true
       referencedColumns: ["id"]
     }
                   ]
+                },"shop_order_items": {
+                  Row: {
+                    "amount_cents": number,"id": string,"name": string,"order_id": string,"product_id": string | null,"slug": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "amount_cents": number,"id"?: string,"name": string,"order_id": string,"product_id"?: string | null,"slug": string
+                  }
+                  Update: {
+                    "amount_cents"?: number,"id"?: string,"name"?: string,"order_id"?: string,"product_id"?: string | null,"slug"?: string
+                  }
+                  Relationships: [
+    {
+      foreignKeyName: "shop_order_items_order_id_fkey"
+      columns: ["order_id"]
+isOneToOne: false
+      referencedRelation: "shop_orders"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "shop_order_items_product_id_fkey"
+      columns: ["product_id"]
+isOneToOne: false
+      referencedRelation: "products"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"shop_orders": {
+                  Row: {
+                    "created_at": string,"currency": string,"email": string | null,"expires_at": string,"id": string,"locale": string,"stripe_session_id": string,"token": string,"total_cents": number
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"stripe_session_id": string,"token"?: string,"total_cents": number
+                  }
+                  Update: {
+                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"stripe_session_id"?: string,"token"?: string,"total_cents"?: number
+                  }
+                  Relationships: [
+    
+                  ]
                 },"students": {
                   Row: {
                     "audience": Database["public"]['Enums']["audience_segment"],"created_at": string,"created_by": string | null,"full_name": string,"id": string,"is_minor": boolean | null,"level_id": string | null,"preferred_locale": string,"profile_id": string | null,"status": Database["public"]['Enums']["student_status"],"updated_at": string

@@ -1630,6 +1630,21 @@
       "coverSize": "La portada pesa más de 2 MB.",
       "fileType": "Ese tipo de archivo no se puede vender.",
       "fileSize": "El archivo pesa más de 25 MB."
+    },
+    "ordersLink": "Pedidos",
+    "orders": {
+      "title": "Pedidos de la tienda",
+      "intro": "Compras pagadas con tarjeta. Cada comprador recibe un enlace de descarga que caduca a los 30 días.",
+      "back": "Volver a productos",
+      "empty": "Todavía no hay pedidos.",
+      "search": "Buscar por correo o producto",
+      "columns": {
+        "date": "Fecha",
+        "email": "Correo",
+        "items": "Productos",
+        "total": "Total",
+        "expires": "Descarga hasta"
+      }
     }
   }
 }

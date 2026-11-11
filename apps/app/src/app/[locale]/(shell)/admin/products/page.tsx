@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DataTable, type DataColumn, type DataRow } from "@/components/admin/DataTable";
-import { PageHeader, RowActions, StatusBadge } from "@/components/admin/PageHeader";
+import { buttonLinkClass, PageHeader, RowActions, StatusBadge } from "@/components/admin/PageHeader";
 import { CoverThumb } from "@/components/content/Cover";
 import { linkClass } from "@/components/form-styles";
 import { IconLink } from "@/components/ui/IconButton";
@@ -115,9 +115,14 @@ export default async function ProductsPage({
         title={t("title")}
         intro={t("intro")}
         action={
-          <ModalButton label={t("new")} title={t("new")} size="lg" defaultOpen={query.new === "1"}>
-            <ProductForm locale={locale} />
-          </ModalButton>
+          <div className="flex flex-wrap items-center gap-2">
+            <Link href={`/${locale}/admin/products/orders`} className={buttonLinkClass}>
+              {t("ordersLink")}
+            </Link>
+            <ModalButton label={t("new")} title={t("new")} size="lg" defaultOpen={query.new === "1"}>
+              <ProductForm locale={locale} />
+            </ModalButton>
+          </div>
         }
       />
       {data.length === 0 ? (

@@ -101,6 +101,21 @@ export async function paymentStatus(sessionId: unknown, client: SessionLookupCli
   }
 }
 
+/** La sesión de Stripe si está PAGADA; null en cualquier otro caso (sin clave, id raro, impagada o error). */
+export async function retrievePaidSession(
+  sessionId: unknown,
+  client: { checkout: { sessions: { retrieve(id: string): Promise<Stripe.Checkout.Session> } } } | null = stripeFromEnv(),
+): Promise<Stripe.Checkout.Session | null> {
+  if (typeof sessionId !== "string" || !SESSION_ID.test(sessionId) || !client) return null;
+  try {
+    const session = await client.checkout.sessions.retrieve(sessionId);
+    return session.payment_status === "paid" ? session : null;
+  } catch (error) {
+    console.error("[checkout] No se pudo consultar la sesión", error instanceof Error ? error.message : error);
+    return null;
+  }
+}
+
 export async function createCheckoutSession(
   productIds: unknown,
   locale: Locale,

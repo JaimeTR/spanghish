@@ -1574,7 +1574,11 @@
         "lead": "Payment received: Maribel will email you your materials as soon as possible.",
         "ask": "What happens now?",
         "answer": "Keep an eye on your inbox!",
-        "receipt": "Stripe also emails your payment receipt to the address you entered. Nothing arrived? Check your spam folder or get in touch."
+        "receipt": "Stripe also emails your payment receipt to the address you entered. Nothing arrived? Check your spam folder or get in touch.",
+        "leadDownloads": "Payment received: your materials are ready to download.",
+        "downloadsTitle": "Download your materials",
+        "download": "Download {name}",
+        "downloadsNote": "The links work for 30 days. If a material isn't listed here, Maribel will email it to you."
       },
       "unpaid": {
         "title": "Payment not completed",

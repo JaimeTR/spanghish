@@ -1574,7 +1574,11 @@
         "lead": "Pago recibido: Maribel te enviará tus materiales por email lo antes posible.",
         "ask": "¿Y ahora qué?",
         "answer": "¡Atenta al email!",
-        "receipt": "Stripe te envía también el recibo del pago al email que pusiste. ¿No te llega nada? Revisa la carpeta de spam o escríbenos."
+        "receipt": "Stripe te envía también el recibo del pago al email que pusiste. ¿No te llega nada? Revisa la carpeta de spam o escríbenos.",
+        "leadDownloads": "Pago recibido: tus materiales ya están listos para descargar.",
+        "downloadsTitle": "Descarga tus materiales",
+        "download": "Descargar {name}",
+        "downloadsNote": "Los enlaces funcionan durante 30 días. Si algún material no aparece aquí, Maribel te lo enviará por correo."
       },
       "unpaid": {
         "title": "Pago sin completar",

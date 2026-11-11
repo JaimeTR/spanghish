@@ -3,6 +3,7 @@ import { isLocale, routing } from "../i18n/routing";
 import { deliverLead, type DeliveryResult, type OrderLead } from "./leads";
 import { findProduct, PRODUCTS, type Product } from "./shop";
 import { getShopProducts } from "./shop-source";
+import { recordShopOrder } from "./shop-orders";
 
 /**
  * Webhook de Stripe (POST /api/stripe/webhook). Verifica la firma con
@@ -27,6 +28,8 @@ export type WebhookDeps = {
   deliver?: (lead: OrderLead) => Promise<DeliveryResult>;
   /** Productos a la venta (por defecto, los de la base de datos o el respaldo fijo). */
   products?: readonly Product[];
+  /** Registra el pedido en el portal y devuelve los enlaces de descarga (null si no se pudo). */
+  record?: (lead: OrderLead) => Promise<{ name: string; url: string }[] | null>;
 };
 
 /** Pedido a partir de la sesión: productos y precios de lib/shop.ts, importes cobrados de Stripe. */
@@ -51,7 +54,7 @@ export function orderFromSession(session: Stripe.Checkout.Session, products: rea
 export async function handleStripeWebhook(
   rawBody: string,
   signature: string | null,
-  { env = process.env, deliver = (lead) => deliverLead(lead), products }: WebhookDeps = {},
+  { env = process.env, deliver = (lead) => deliverLead(lead), products, record = (lead) => recordShopOrder(lead, env) }: WebhookDeps = {},
 ): Promise<WebhookResponse> {
   const secret = env.STRIPE_WEBHOOK_SECRET?.trim();
   if (!secret) {
@@ -75,7 +78,10 @@ export async function handleStripeWebhook(
   const session = event.data.object;
   if (session.payment_status !== "paid") return { status: 200, body: "Not paid yet" };
 
-  const result = await deliver(orderFromSession(session, products ?? (await getShopProducts(env))));
+  const order = orderFromSession(session, products ?? (await getShopProducts(env)));
+  // Primero se registra en el portal (idempotente) para que el aviso lleve los enlaces; si falla, sigue el aviso normal.
+  const downloads = await record(order);
+  const result = await deliver(downloads && downloads.length > 0 ? { ...order, downloads } : order);
   if (!result.ok) return { status: 500, body: "Order notification failed" };
   return { status: 200, body: "OK" };
 }

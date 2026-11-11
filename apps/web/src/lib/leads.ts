@@ -30,6 +30,8 @@ export type OrderLead = {
   items: { id: string; name: string; amountCents: number }[];
   totalCents: number;
   currency: string;
+  /** Enlaces de descarga ya generados por el portal (solo productos con archivo). */
+  downloads?: { name: string; url: string }[];
 };
 export type Lead = BookingLead | ContactLead | OrderLead;
 
@@ -73,7 +75,13 @@ function orderEmailText(lead: OrderLead): string {
     `Stripe Checkout session: ${lead.sessionId}`,
     `Website language: ${lead.locale}`,
     "",
-    "DELIVERY IS MANUAL: reply to this email and attach the files for the customer.",
+    ...(lead.downloads && lead.downloads.length > 0
+      ? [
+          "AUTOMATIC DELIVERY: the customer already has these download links on the payment confirmation page (valid for 30 days):",
+          ...lead.downloads.map((d) => `- ${d.name}: ${d.url}`),
+          "Products without a file attached are not covered: send those by hand.",
+        ]
+      : ["DELIVERY IS MANUAL: reply to this email and attach the files for the customer."]),
     "Stripe may resend the same notification: if this session id was already handled, ignore this email.",
   ].join("\n");
 }

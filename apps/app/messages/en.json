@@ -1630,6 +1630,21 @@
       "coverSize": "The cover is larger than 2 MB.",
       "fileType": "That file type can't be sold.",
       "fileSize": "The file is larger than 25 MB."
+    },
+    "ordersLink": "Orders",
+    "orders": {
+      "title": "Shop orders",
+      "intro": "Card payments. Every buyer gets a download link that expires after 30 days.",
+      "back": "Back to products",
+      "empty": "There are no orders yet.",
+      "search": "Search by email or product",
+      "columns": {
+        "date": "Date",
+        "email": "Email",
+        "items": "Products",
+        "total": "Total",
+        "expires": "Download until"
+      }
     }
   }
 }
