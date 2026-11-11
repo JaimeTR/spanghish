@@ -96,14 +96,14 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
   student: [
     s.r("home", ""),
     s.d("schedule"),
-    s.d("courses"),
+    s.r("courses", "courses"),
     s.d("requests"),
     s.r("resources", "resources"),
     s.r("learn", "learn"),
     s.r("tests", "tests"),
     s.d("assignments"),
     s.d("progress"),
-    s.d("payments"),
+    s.r("payments", "payments"),
   ],
   guardian: [g.d("children"), g.d("schedule"), g.d("payments"), g.d("consents"), g.d("resources")],
 };

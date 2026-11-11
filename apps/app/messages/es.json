@@ -1654,7 +1654,7 @@
   },
   "adminPayments": {
     "title": "Pagos",
-    "intro": "Cobros de la tienda con tarjeta, lo reembolsado y el pago en Stripe. Los reembolsos se anotan solos cuando Stripe avisa.",
+    "intro": "Cobros de matrículas y de la tienda, lo reembolsado y el pago en Stripe. Los reembolsos de tarjeta se anotan solos cuando Stripe avisa; los pagos manuales se registran en Matrículas.",
     "empty": "Todavía no hay pagos.",
     "search": "Buscar por correo o producto",
     "openInStripe": "Abrir en Stripe",
@@ -1677,7 +1677,25 @@
       "amount": "Importe",
       "status": "Estado",
       "stripe": "Stripe"
-    }
+    },
+    "enrollments": {
+      "title": "Matrículas",
+      "count": "Pagos",
+      "student": "Alumno",
+      "group": "Grupo",
+      "method": "Forma de pago",
+      "reference": "Referencia",
+      "empty": "Todavía no hay pagos de matrículas.",
+      "search": "Buscar por alumno, grupo o referencia",
+      "methods": {
+        "stripe": "Tarjeta",
+        "transfer": "Transferencia",
+        "cash": "Efectivo",
+        "eventbrite": "Eventbrite",
+        "other": "Otro"
+      }
+    },
+    "shopTitle": "Tienda"
   },
   "adminGroups": {
     "title": "Grupos",
@@ -1848,6 +1866,45 @@
       "create": "Matricular",
       "recordPayment": "Registrar pago",
       "saving": "Guardando…"
+    }
+  },
+  "studentEnrolment": {
+    "eyebrow": "Mis clases",
+    "status": {
+      "pending": "Pendiente",
+      "active": "Activa",
+      "paused": "En pausa",
+      "completed": "Finalizada",
+      "cancelled": "Cancelada"
+    },
+    "method": {
+      "stripe": "Tarjeta",
+      "transfer": "Transferencia",
+      "cash": "Efectivo",
+      "eventbrite": "Eventbrite",
+      "other": "Otro"
+    },
+    "courses": {
+      "title": "Mis cursos",
+      "lead": "Los grupos en los que estás matriculado, con su horario y lugar.",
+      "empty": "Todavía no tienes ninguna matrícula. Cuando te apuntes a un grupo aparecerá aquí.",
+      "dates": "Fechas",
+      "schedule": "Horario",
+      "where": "Lugar",
+      "map": "Ver mapa",
+      "balance": "Saldo",
+      "paidUp": "Al día",
+      "join": "Entrar a la clase en línea",
+      "seePayments": "Ver mis pagos"
+    },
+    "payments": {
+      "title": "Mis pagos",
+      "lead": "Lo que has pagado por tus cursos y lo que queda pendiente.",
+      "empty": "Todavía no hay pagos registrados.",
+      "history": "Historial",
+      "dueTitle": "Saldo pendiente",
+      "dueHint": "Para pagar, escríbenos o haz la transferencia con tu nombre como referencia.",
+      "refunded": "devuelto {amount}"
     }
   }
 }

@@ -1654,7 +1654,7 @@
   },
   "adminPayments": {
     "title": "Payments",
-    "intro": "Card payments for the shop, what was refunded and the payment in Stripe. Refunds are recorded automatically when Stripe sends the notice.",
+    "intro": "Enrolment and shop payments, refunds and the payment in Stripe. Card refunds are recorded automatically when Stripe notifies us; manual payments are recorded under Enrolments.",
     "empty": "There are no payments yet.",
     "search": "Search by email or product",
     "openInStripe": "Open in Stripe",
@@ -1677,7 +1677,25 @@
       "amount": "Amount",
       "status": "Status",
       "stripe": "Stripe"
-    }
+    },
+    "enrollments": {
+      "title": "Enrolments",
+      "count": "Payments",
+      "student": "Student",
+      "group": "Group",
+      "method": "Payment method",
+      "reference": "Reference",
+      "empty": "There are no enrolment payments yet.",
+      "search": "Search by student, group or reference",
+      "methods": {
+        "stripe": "Card",
+        "transfer": "Bank transfer",
+        "cash": "Cash",
+        "eventbrite": "Eventbrite",
+        "other": "Other"
+      }
+    },
+    "shopTitle": "Shop"
   },
   "adminGroups": {
     "title": "Groups",
@@ -1848,6 +1866,45 @@
       "create": "Enrol",
       "recordPayment": "Record payment",
       "saving": "Saving…"
+    }
+  },
+  "studentEnrolment": {
+    "eyebrow": "My classes",
+    "status": {
+      "pending": "Pending",
+      "active": "Active",
+      "paused": "Paused",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "method": {
+      "stripe": "Card",
+      "transfer": "Bank transfer",
+      "cash": "Cash",
+      "eventbrite": "Eventbrite",
+      "other": "Other"
+    },
+    "courses": {
+      "title": "My courses",
+      "lead": "The groups you are enrolled in, with their schedule and venue.",
+      "empty": "You have no enrolments yet. When you join a group it will appear here.",
+      "dates": "Dates",
+      "schedule": "Schedule",
+      "where": "Venue",
+      "map": "View map",
+      "balance": "Balance",
+      "paidUp": "Up to date",
+      "join": "Join the online class",
+      "seePayments": "See my payments"
+    },
+    "payments": {
+      "title": "My payments",
+      "lead": "What you have paid for your courses and what is still due.",
+      "empty": "There are no payments recorded yet.",
+      "history": "History",
+      "dueTitle": "Balance due",
+      "dueHint": "To pay, contact us or make the transfer with your name as the reference.",
+      "refunded": "refunded {amount}"
     }
   }
 }

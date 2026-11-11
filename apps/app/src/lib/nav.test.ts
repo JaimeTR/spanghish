@@ -80,7 +80,7 @@ describe("NAV", () => {
       "legal",
       "settings",
     ]);
-    expect(navGroupsFor("student").map((g) => g.group)).toEqual([null, "learn", "classes", "account"]);
+    expect(navGroupsFor("student").map((g) => g.group)).toEqual([null, "classes", "learn", "account"]);
     for (const role of ROLES) {
       let seenDevOnly = false;
       for (const { group, items } of navGroupsFor(role)) {
@@ -114,9 +114,11 @@ describe("NAV", () => {
       "admin.legal",
       "admin.settings",
       "student.home",
+      "student.courses",
       "student.resources",
       "student.learn",
       "student.tests",
+      "student.payments",
     ]);
   });
 
@@ -159,7 +161,7 @@ describe("NAV", () => {
   it("devModules returns the dev keys of an area", () => {
     expect(devModules("admin")).toEqual(["calendar", "attendance"]);
     expect(devModules("teacher")).toHaveLength(6);
-    expect(devModules("student")).toHaveLength(6);
+    expect(devModules("student")).toHaveLength(4);
     expect(devModules("guardian")).toHaveLength(5);
   });
 
