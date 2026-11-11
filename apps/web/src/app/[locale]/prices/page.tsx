@@ -6,11 +6,13 @@ import { FreeLessonBand } from "@/components/FreeLessonBand";
 import { ArrowIcon, CheckIcon } from "@/components/icons";
 import { HeroChat, heroButtons, PageHero } from "@/components/PageHero";
 import { PageShell } from "@/components/PageShell";
+import { UpcomingEditions } from "@/components/UpcomingEditions";
 import { PriceHighlights } from "@/components/PriceHighlights";
 import { PriceItem } from "@/components/PriceItem";
 import { btnInk, btnPrimary, container } from "@/components/styles";
 import { isLocale } from "@/i18n/routing";
 import { crumbsJsonLd, innerPageMetadata, type PageProps } from "@/lib/page-meta";
+import { getPublicEditions } from "@/lib/editions";
 import { PRICE_VALUES, type PriceName } from "@/lib/prices";
 import { bookingPath, localePath } from "@/lib/routes";
 import { CONTACT } from "@/lib/site";
@@ -45,6 +47,7 @@ export default async function PricesPage({ params }: PageProps) {
   const tn = await getTranslations({ locale, namespace: "nav" });
   const v = (key: string) => t(key, PRICE_VALUES);
   const buttons = heroButtons("burgundy");
+  const editions = await getPublicEditions();
 
   return (
     <PageShell locale={locale} route="prices" jsonLd={[await crumbsJsonLd(locale, [{ route: "prices", name: t("title") }])]}>
@@ -106,6 +109,7 @@ export default async function PricesPage({ params }: PageProps) {
               </PriceItem>
             ))}
           </ul>
+          {editions.length > 0 ? <UpcomingEditions locale={locale} editions={editions} /> : null}
           <Bubble
             tone="yellow"
             tail="right"

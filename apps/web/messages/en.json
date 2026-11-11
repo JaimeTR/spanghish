@@ -1033,7 +1033,26 @@
         "payment": "Payment is by bank transfer.",
         "changes": "Change and cancellation conditions are confirmed when you book."
       },
-      "askPrivate": "Ask for prices by email"
+      "askPrivate": "Ask for prices by email",
+      "editions": {
+        "title": "Upcoming editions",
+        "lead": "Open groups you can join right now.",
+        "lessonLength": "{minutes}-min lessons",
+        "when": "Dates",
+        "schedule": "Schedule",
+        "where": "Place",
+        "price": "Price",
+        "startsOn": "Starts {date}",
+        "endsOn": "ends {date}",
+        "online": "Online",
+        "map": "See map",
+        "newWindow": "opens in a new window",
+        "priceBoth": "{upfront} upfront or {lesson} per lesson",
+        "priceUpfront": "{upfront} upfront",
+        "priceLesson": "{lesson} per lesson",
+        "enrol": "Enrol now",
+        "note": "Payment is by bank transfer; we send you the details when we confirm your place."
+      }
     },
     "privacy": {
       "metaTitle": "Privacy policy · Spanglish",

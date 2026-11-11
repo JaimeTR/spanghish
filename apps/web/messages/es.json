@@ -1033,7 +1033,26 @@
         "payment": "Se paga por transferencia bancaria.",
         "changes": "Las condiciones de cambio y cancelación se confirman al reservar."
       },
-      "askPrivate": "Pedir precios por email"
+      "askPrivate": "Pedir precios por email",
+      "editions": {
+        "title": "Próximas ediciones",
+        "lead": "Grupos abiertos para apuntarte ahora.",
+        "lessonLength": "clases de {minutes} min",
+        "when": "Fechas",
+        "schedule": "Horario",
+        "where": "Lugar",
+        "price": "Precio",
+        "startsOn": "Empieza el {date}",
+        "endsOn": "termina el {date}",
+        "online": "Online",
+        "map": "Ver mapa",
+        "newWindow": "se abre en una ventana nueva",
+        "priceBoth": "{upfront} por adelantado o {lesson} por clase",
+        "priceUpfront": "{upfront} por adelantado",
+        "priceLesson": "{lesson} por clase",
+        "enrol": "Quiero apuntarme",
+        "note": "El pago es por transferencia bancaria; te enviamos los datos al confirmar tu plaza."
+      }
     },
     "privacy": {
       "metaTitle": "Política de privacidad · Spanglish",

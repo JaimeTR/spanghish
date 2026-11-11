@@ -87,6 +87,8 @@ export function ArticleBlocks({
             />
           );
         }
+        // Los juegos interactivos viven en el portal del alumnado; la web pública no los muestra.
+        if (block.kind === "game") return null;
         return (
           <QuizBlock
             key={block.id}
