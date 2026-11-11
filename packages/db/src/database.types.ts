@@ -71,6 +71,158 @@ isOneToOne: false
       referencedColumns: ["id","kind"]
     }
                   ]
+                },"enrollment_payments": {
+                  Row: {
+                    "amount_cents": number,"created_at": string,"currency": string,"enrollment_id": string,"id": string,"method": Database["public"]['Enums']["payment_method"],"note": string | null,"paid_at": string,"payment_intent_id": string | null,"recorded_by": string | null,"reference": string | null,"refunded_at": string | null,"refunded_cents": number,"stripe_session_id": string | null,"student_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "amount_cents": number,"created_at"?: string,"currency"?: string,"enrollment_id": string,"id"?: string,"method": Database["public"]['Enums']["payment_method"],"note"?: string | null,"paid_at"?: string,"payment_intent_id"?: string | null,"recorded_by"?: string | null,"reference"?: string | null,"refunded_at"?: string | null,"refunded_cents"?: number,"stripe_session_id"?: string | null,"student_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "amount_cents"?: number,"created_at"?: string,"currency"?: string,"enrollment_id"?: string,"id"?: string,"method"?: Database["public"]['Enums']["payment_method"],"note"?: string | null,"paid_at"?: string,"payment_intent_id"?: string | null,"recorded_by"?: string | null,"reference"?: string | null,"refunded_at"?: string | null,"refunded_cents"?: number,"stripe_session_id"?: string | null,"student_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "enrollment_payments_enrollment_id_fkey"
+      columns: ["enrollment_id"]
+isOneToOne: false
+      referencedRelation: "enrollments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollment_payments_recorded_by_fkey"
+      columns: ["recorded_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollment_payments_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"enrollment_requests": {
+                  Row: {
+                    "admin_notes": string | null,"amount_cents": number,"birth_date": string | null,"consent_text_id": string | null,"created_at": string,"email": string,"enrollment_id": string | null,"expires_at": string | null,"full_name": string,"group_id": string,"guardian_name": string | null,"guardian_relationship": string | null,"hold_started_at": string,"id": string,"is_minor": boolean,"message": string | null,"payment_method": Database["public"]['Enums']["payment_method"],"phone": string | null,"price_id": string | null,"price_kind": Database["public"]['Enums']["price_kind"],"site_locale": string,"status": Database["public"]['Enums']["enrollment_request_status"],"student_id": string | null,"terms_accepted_at": string,"token": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "admin_notes"?: string | null,"amount_cents": number,"birth_date"?: string | null,"consent_text_id"?: string | null,"created_at"?: string,"email": string,"enrollment_id"?: string | null,"expires_at"?: string | null,"full_name": string,"group_id": string,"guardian_name"?: string | null,"guardian_relationship"?: string | null,"hold_started_at"?: string,"id"?: string,"is_minor"?: boolean,"message"?: string | null,"payment_method"?: Database["public"]['Enums']["payment_method"],"phone"?: string | null,"price_id"?: string | null,"price_kind": Database["public"]['Enums']["price_kind"],"site_locale"?: string,"status"?: Database["public"]['Enums']["enrollment_request_status"],"student_id"?: string | null,"terms_accepted_at"?: string,"token"?: string,"updated_at"?: string
+                  }
+                  Update: {
+                    "admin_notes"?: string | null,"amount_cents"?: number,"birth_date"?: string | null,"consent_text_id"?: string | null,"created_at"?: string,"email"?: string,"enrollment_id"?: string | null,"expires_at"?: string | null,"full_name"?: string,"group_id"?: string,"guardian_name"?: string | null,"guardian_relationship"?: string | null,"hold_started_at"?: string,"id"?: string,"is_minor"?: boolean,"message"?: string | null,"payment_method"?: Database["public"]['Enums']["payment_method"],"phone"?: string | null,"price_id"?: string | null,"price_kind"?: Database["public"]['Enums']["price_kind"],"site_locale"?: string,"status"?: Database["public"]['Enums']["enrollment_request_status"],"student_id"?: string | null,"terms_accepted_at"?: string,"token"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "enrollment_requests_consent_text_id_fkey"
+      columns: ["consent_text_id"]
+isOneToOne: false
+      referencedRelation: "consent_texts"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollment_requests_enrollment_id_fkey"
+      columns: ["enrollment_id"]
+isOneToOne: false
+      referencedRelation: "enrollments"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollment_requests_group_id_fkey"
+      columns: ["group_id"]
+isOneToOne: false
+      referencedRelation: "groups"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollment_requests_price_id_fkey"
+      columns: ["price_id"]
+isOneToOne: false
+      referencedRelation: "program_prices"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollment_requests_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"enrollments": {
+                  Row: {
+                    "agreed_amount_cents": number | null,"billing_mode": Database["public"]['Enums']["billing_mode"],"cancelled_at": string | null,"created_at": string,"created_by": string | null,"ends_on": string | null,"group_id": string,"id": string,"notes": string | null,"price_id": string | null,"starts_on": string,"status": Database["public"]['Enums']["enrollment_status"],"student_id": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "agreed_amount_cents"?: number | null,"billing_mode": Database["public"]['Enums']["billing_mode"],"cancelled_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"ends_on"?: string | null,"group_id": string,"id"?: string,"notes"?: string | null,"price_id"?: string | null,"starts_on"?: string,"status"?: Database["public"]['Enums']["enrollment_status"],"student_id": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "agreed_amount_cents"?: number | null,"billing_mode"?: Database["public"]['Enums']["billing_mode"],"cancelled_at"?: string | null,"created_at"?: string,"created_by"?: string | null,"ends_on"?: string | null,"group_id"?: string,"id"?: string,"notes"?: string | null,"price_id"?: string | null,"starts_on"?: string,"status"?: Database["public"]['Enums']["enrollment_status"],"student_id"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "enrollments_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollments_group_id_fkey"
+      columns: ["group_id"]
+isOneToOne: false
+      referencedRelation: "groups"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollments_price_id_fkey"
+      columns: ["price_id"]
+isOneToOne: false
+      referencedRelation: "program_prices"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "enrollments_student_id_fkey"
+      columns: ["student_id"]
+isOneToOne: false
+      referencedRelation: "students"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"groups": {
+                  Row: {
+                    "capacity": number,"code": string,"created_at": string,"edition_id": string | null,"format": Database["public"]['Enums']["lesson_format"],"id": string,"is_public": boolean,"location_id": string | null,"location_note": string | null,"meeting_url": string | null,"name": string,"program_id": string,"status": Database["public"]['Enums']["group_status"],"teacher_id": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "capacity": number,"code": string,"created_at"?: string,"edition_id"?: string | null,"format": Database["public"]['Enums']["lesson_format"],"id"?: string,"is_public"?: boolean,"location_id"?: string | null,"location_note"?: string | null,"meeting_url"?: string | null,"name": string,"program_id": string,"status"?: Database["public"]['Enums']["group_status"],"teacher_id"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "capacity"?: number,"code"?: string,"created_at"?: string,"edition_id"?: string | null,"format"?: Database["public"]['Enums']["lesson_format"],"id"?: string,"is_public"?: boolean,"location_id"?: string | null,"location_note"?: string | null,"meeting_url"?: string | null,"name"?: string,"program_id"?: string,"status"?: Database["public"]['Enums']["group_status"],"teacher_id"?: string | null,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "groups_edition_fk"
+      columns: ["edition_id","program_id"]
+isOneToOne: false
+      referencedRelation: "program_editions"
+      referencedColumns: ["id","program_id"]
+    },{
+      foreignKeyName: "groups_location_id_fkey"
+      columns: ["location_id"]
+isOneToOne: false
+      referencedRelation: "locations"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "groups_program_id_fkey"
+      columns: ["program_id"]
+isOneToOne: false
+      referencedRelation: "programs"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "groups_teacher_id_fkey"
+      columns: ["teacher_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"guardians": {
                   Row: {
                     "created_at": string,"email": string,"full_name": string,"id": string,"phone": string | null,"preferred_locale": string,"profile_id": string | null,"updated_at": string
@@ -101,6 +253,20 @@ isOneToOne: true
                   }
                   Update: {
                     "active"?: boolean,"code"?: string,"name_en"?: string,"name_es"?: string
+                  }
+                  Relationships: [
+                    
+                  ]
+                },"leads": {
+                  Row: {
+                    "admin_notes": string | null,"audience": string | null,"created_at": string,"email": string,"full_name": string,"id": string,"kind": string,"language": string | null,"message": string | null,"phone": string | null,"place": string | null,"site_locale": string,"status": string,"times": string | null,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "admin_notes"?: string | null,"audience"?: string | null,"created_at"?: string,"email": string,"full_name": string,"id"?: string,"kind": string,"language"?: string | null,"message"?: string | null,"phone"?: string | null,"place"?: string | null,"site_locale"?: string,"status"?: string,"times"?: string | null,"updated_at"?: string
+                  }
+                  Update: {
+                    "admin_notes"?: string | null,"audience"?: string | null,"created_at"?: string,"email"?: string,"full_name"?: string,"id"?: string,"kind"?: string,"language"?: string | null,"message"?: string | null,"phone"?: string | null,"place"?: string | null,"site_locale"?: string,"status"?: string,"times"?: string | null,"updated_at"?: string
                   }
                   Relationships: [
                     
@@ -157,20 +323,6 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
-                },"leads": {
-                  Row: {
-                    "admin_notes": string | null,"audience": string | null,"created_at": string,"email": string,"full_name": string,"id": string,"kind": string,"language": string | null,"message": string | null,"phone": string | null,"place": string | null,"site_locale": string,"status": string,"times": string | null,"updated_at": string
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "admin_notes"?: string | null,"audience"?: string | null,"created_at"?: string,"email": string,"full_name": string,"id"?: string,"kind": string,"language"?: string | null,"message"?: string | null,"phone"?: string | null,"place"?: string | null,"site_locale"?: string,"status"?: string,"times"?: string | null,"updated_at"?: string
-                  }
-                  Update: {
-                    "admin_notes"?: string | null,"audience"?: string | null,"created_at"?: string,"email"?: string,"full_name"?: string,"id"?: string,"kind"?: string,"language"?: string | null,"message"?: string | null,"phone"?: string | null,"place"?: string | null,"site_locale"?: string,"status"?: string,"times"?: string | null,"updated_at"?: string
-                  }
-                  Relationships: [
-                    
-                  ]
                 },"levels": {
                   Row: {
                     "code": string,"id": string,"language_code": string,"name_en": string,"name_es": string,"sort": number
@@ -217,7 +369,7 @@ isOneToOne: false
                     "compare_at_cents"?: number | null,"cover_height"?: number | null,"cover_path"?: string | null,"cover_width"?: number | null,"created_at"?: string,"created_by"?: string | null,"file_name"?: string | null,"file_path"?: string | null,"file_size_bytes"?: number | null,"id"?: string,"name_en"?: string,"name_es"?: string,"price_cents"?: number,"published_at"?: string | null,"slug"?: string,"status"?: Database["public"]['Enums']["content_status"],"summary_en"?: string | null,"summary_es"?: string | null,"updated_at"?: string
                   }
                   Relationships: [
-    {
+                    {
       foreignKeyName: "products_created_by_fkey"
       columns: ["created_by"]
 isOneToOne: false
@@ -241,17 +393,23 @@ isOneToOne: false
                   ]
                 },"program_editions": {
                   Row: {
-                    "created_at": string,"ends_on": string,"id": string,"label_en": string | null,"label_es": string | null,"program_id": string,"starts_on": string,"status": Database["public"]['Enums']["edition_status"],"updated_at": string
+                    "created_at": string,"ends_on": string,"enrol_url": string | null,"id": string,"label_en": string | null,"label_es": string | null,"location_id": string | null,"program_id": string,"schedule_en": string | null,"schedule_es": string | null,"starts_on": string,"status": Database["public"]['Enums']["edition_status"],"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"ends_on": string,"id"?: string,"label_en"?: string | null,"label_es"?: string | null,"program_id": string,"starts_on": string,"status"?: Database["public"]['Enums']["edition_status"],"updated_at"?: string
+                    "created_at"?: string,"ends_on": string,"enrol_url"?: string | null,"id"?: string,"label_en"?: string | null,"label_es"?: string | null,"location_id"?: string | null,"program_id": string,"schedule_en"?: string | null,"schedule_es"?: string | null,"starts_on": string,"status"?: Database["public"]['Enums']["edition_status"],"updated_at"?: string
                   }
                   Update: {
-                    "created_at"?: string,"ends_on"?: string,"id"?: string,"label_en"?: string | null,"label_es"?: string | null,"program_id"?: string,"starts_on"?: string,"status"?: Database["public"]['Enums']["edition_status"],"updated_at"?: string
+                    "created_at"?: string,"ends_on"?: string,"enrol_url"?: string | null,"id"?: string,"label_en"?: string | null,"label_es"?: string | null,"location_id"?: string | null,"program_id"?: string,"schedule_en"?: string | null,"schedule_es"?: string | null,"starts_on"?: string,"status"?: Database["public"]['Enums']["edition_status"],"updated_at"?: string
                   }
                   Relationships: [
                     {
+      foreignKeyName: "program_editions_location_id_fkey"
+      columns: ["location_id"]
+isOneToOne: false
+      referencedRelation: "locations"
+      referencedColumns: ["id"]
+    },{
       foreignKeyName: "program_editions_program_id_fkey"
       columns: ["program_id"]
 isOneToOne: false
@@ -349,6 +507,52 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"shop_order_items": {
+                  Row: {
+                    "amount_cents": number,"id": string,"name": string,"order_id": string,"product_id": string | null,"slug": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "amount_cents": number,"id"?: string,"name": string,"order_id": string,"product_id"?: string | null,"slug": string
+                  }
+                  Update: {
+                    "amount_cents"?: number,"id"?: string,"name"?: string,"order_id"?: string,"product_id"?: string | null,"slug"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "shop_order_items_order_id_fkey"
+      columns: ["order_id"]
+isOneToOne: false
+      referencedRelation: "shop_orders"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "shop_order_items_product_id_fkey"
+      columns: ["product_id"]
+isOneToOne: false
+      referencedRelation: "products"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"shop_orders": {
+                  Row: {
+                    "created_at": string,"currency": string,"email": string | null,"expires_at": string,"id": string,"locale": string,"payment_intent_id": string | null,"refunded_at": string | null,"refunded_cents": number,"stripe_session_id": string,"token": string,"total_cents": number,"user_id": string | null
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"payment_intent_id"?: string | null,"refunded_at"?: string | null,"refunded_cents"?: number,"stripe_session_id": string,"token"?: string,"total_cents": number,"user_id"?: string | null
+                  }
+                  Update: {
+                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"payment_intent_id"?: string | null,"refunded_at"?: string | null,"refunded_cents"?: number,"stripe_session_id"?: string,"token"?: string,"total_cents"?: number,"user_id"?: string | null
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "shop_orders_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"student_admin_notes": {
                   Row: {
                     "created_at": string,"id": string,"notes": string,"student_id": string,"updated_at": string,"updated_by": string | null
@@ -421,46 +625,6 @@ isOneToOne: true
       referencedColumns: ["id"]
     }
                   ]
-                },"shop_order_items": {
-                  Row: {
-                    "amount_cents": number,"id": string,"name": string,"order_id": string,"product_id": string | null,"slug": string
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "amount_cents": number,"id"?: string,"name": string,"order_id": string,"product_id"?: string | null,"slug": string
-                  }
-                  Update: {
-                    "amount_cents"?: number,"id"?: string,"name"?: string,"order_id"?: string,"product_id"?: string | null,"slug"?: string
-                  }
-                  Relationships: [
-    {
-      foreignKeyName: "shop_order_items_order_id_fkey"
-      columns: ["order_id"]
-isOneToOne: false
-      referencedRelation: "shop_orders"
-      referencedColumns: ["id"]
-    },{
-      foreignKeyName: "shop_order_items_product_id_fkey"
-      columns: ["product_id"]
-isOneToOne: false
-      referencedRelation: "products"
-      referencedColumns: ["id"]
-    }
-                  ]
-                },"shop_orders": {
-                  Row: {
-                    "created_at": string,"currency": string,"email": string | null,"expires_at": string,"id": string,"locale": string,"payment_intent_id": string | null,"refunded_at": string | null,"refunded_cents": number,"stripe_session_id": string,"token": string,"total_cents": number,"user_id": string | null
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"payment_intent_id"?: string | null,"refunded_at"?: string | null,"refunded_cents"?: number,"stripe_session_id": string,"token"?: string,"total_cents": number,"user_id"?: string | null
-                  }
-                  Update: {
-                    "created_at"?: string,"currency"?: string,"email"?: string | null,"expires_at"?: string,"id"?: string,"locale"?: string,"payment_intent_id"?: string | null,"refunded_at"?: string | null,"refunded_cents"?: number,"stripe_session_id"?: string,"token"?: string,"total_cents"?: number,"user_id"?: string | null
-                  }
-                  Relationships: [
-    
-                  ]
                 },"students": {
                   Row: {
                     "audience": Database["public"]['Enums']["audience_segment"],"created_at": string,"created_by": string | null,"full_name": string,"id": string,"is_minor": boolean | null,"level_id": string | null,"preferred_locale": string,"profile_id": string | null,"status": Database["public"]['Enums']["student_status"],"updated_at": string
@@ -519,32 +683,6 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
-                },"tests": {
-                  Row: {
-                    "access_level": Database["public"]['Enums']["access_level"],"audience": Database["public"]['Enums']["audience_segment"] | null,"created_at": string,"created_by": string | null,"description_en": string | null,"description_es": string | null,"grade_scale": number,"id": string,"in_resources": boolean,"level_id": string | null,"max_attempts": number | null,"pass_percent": number,"published_at": string | null,"questions_per_attempt": number | null,"shuffle_options": boolean,"shuffle_questions": boolean,"slug": string,"status": Database["public"]['Enums']["content_status"],"time_limit_minutes": number | null,"title_en": string,"title_es": string,"updated_at": string,"visibility": string
-                  }
-                  ComputedFields: never
-                  Insert: {
-                    "access_level"?: Database["public"]['Enums']["access_level"],"audience"?: Database["public"]['Enums']["audience_segment"] | null,"created_at"?: string,"created_by"?: string | null,"description_en"?: string | null,"description_es"?: string | null,"grade_scale"?: number,"id"?: string,"in_resources"?: boolean,"level_id"?: string | null,"max_attempts"?: number | null,"pass_percent"?: number,"published_at"?: string | null,"questions_per_attempt"?: number | null,"shuffle_options"?: boolean,"shuffle_questions"?: boolean,"slug": string,"status"?: Database["public"]['Enums']["content_status"],"time_limit_minutes"?: number | null,"title_en": string,"title_es": string,"updated_at"?: string,"visibility"?: string
-                  }
-                  Update: {
-                    "access_level"?: Database["public"]['Enums']["access_level"],"audience"?: Database["public"]['Enums']["audience_segment"] | null,"created_at"?: string,"created_by"?: string | null,"description_en"?: string | null,"description_es"?: string | null,"grade_scale"?: number,"id"?: string,"in_resources"?: boolean,"level_id"?: string | null,"max_attempts"?: number | null,"pass_percent"?: number,"published_at"?: string | null,"questions_per_attempt"?: number | null,"shuffle_options"?: boolean,"shuffle_questions"?: boolean,"slug"?: string,"status"?: Database["public"]['Enums']["content_status"],"time_limit_minutes"?: number | null,"title_en"?: string,"title_es"?: string,"updated_at"?: string,"visibility"?: string
-                  }
-                  Relationships: [
-    {
-      foreignKeyName: "tests_level_id_fkey"
-      columns: ["level_id"]
-isOneToOne: false
-      referencedRelation: "levels"
-      referencedColumns: ["id"]
-    },{
-      foreignKeyName: "tests_created_by_fkey"
-      columns: ["created_by"]
-isOneToOne: false
-      referencedRelation: "profiles"
-      referencedColumns: ["id"]
-    }
-  ]
                 },"test_attempts": {
                   Row: {
                     "answers": Json | null,"grade": number | null,"id": string,"max_score": number | null,"passed": boolean | null,"percent": number | null,"question_ids": (string)[],"score": number | null,"started_at": string,"submitted_at": string | null,"test_id": string,"user_id": string
@@ -557,7 +695,7 @@ isOneToOne: false
                     "answers"?: Json | null,"grade"?: number | null,"id"?: string,"max_score"?: number | null,"passed"?: boolean | null,"percent"?: number | null,"question_ids"?: (string)[],"score"?: number | null,"started_at"?: string,"submitted_at"?: string | null,"test_id"?: string,"user_id"?: string
                   }
                   Relationships: [
-    {
+                    {
       foreignKeyName: "test_attempts_test_id_fkey"
       columns: ["test_id"]
 isOneToOne: false
@@ -570,7 +708,7 @@ isOneToOne: false
       referencedRelation: "profiles"
       referencedColumns: ["id"]
     }
-  ]
+                  ]
                 },"test_questions": {
                   Row: {
                     "accepted_answers": (string)[] | null,"correct_bool": boolean | null,"correct_option": number | null,"created_at": string,"explanation_en": string | null,"explanation_es": string | null,"id": string,"kind": Database["public"]['Enums']["test_question_kind"],"options": (string)[] | null,"points": number,"position": number,"prompt_en": string,"prompt_es": string,"test_id": string,"updated_at": string
@@ -583,14 +721,14 @@ isOneToOne: false
                     "accepted_answers"?: (string)[] | null,"correct_bool"?: boolean | null,"correct_option"?: number | null,"created_at"?: string,"explanation_en"?: string | null,"explanation_es"?: string | null,"id"?: string,"kind"?: Database["public"]['Enums']["test_question_kind"],"options"?: (string)[] | null,"points"?: number,"position"?: number,"prompt_en"?: string,"prompt_es"?: string,"test_id"?: string,"updated_at"?: string
                   }
                   Relationships: [
-    {
+                    {
       foreignKeyName: "test_questions_test_id_fkey"
       columns: ["test_id"]
 isOneToOne: false
       referencedRelation: "tests"
       referencedColumns: ["id"]
     }
-  ]
+                  ]
                 },"test_shares": {
                   Row: {
                     "created_at": string,"test_id": string,"user_id": string
@@ -603,7 +741,7 @@ isOneToOne: false
                     "created_at"?: string,"test_id"?: string,"user_id"?: string
                   }
                   Relationships: [
-    {
+                    {
       foreignKeyName: "test_shares_test_id_fkey"
       columns: ["test_id"]
 isOneToOne: false
@@ -616,7 +754,33 @@ isOneToOne: false
       referencedRelation: "profiles"
       referencedColumns: ["id"]
     }
-  ]
+                  ]
+                },"tests": {
+                  Row: {
+                    "access_level": Database["public"]['Enums']["access_level"],"audience": Database["public"]['Enums']["audience_segment"] | null,"created_at": string,"created_by": string | null,"description_en": string | null,"description_es": string | null,"grade_scale": number,"id": string,"in_resources": boolean,"level_id": string | null,"max_attempts": number | null,"pass_percent": number,"published_at": string | null,"questions_per_attempt": number | null,"shuffle_options": boolean,"shuffle_questions": boolean,"slug": string,"status": Database["public"]['Enums']["content_status"],"time_limit_minutes": number | null,"title_en": string,"title_es": string,"updated_at": string,"visibility": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "access_level"?: Database["public"]['Enums']["access_level"],"audience"?: Database["public"]['Enums']["audience_segment"] | null,"created_at"?: string,"created_by"?: string | null,"description_en"?: string | null,"description_es"?: string | null,"grade_scale"?: number,"id"?: string,"in_resources"?: boolean,"level_id"?: string | null,"max_attempts"?: number | null,"pass_percent"?: number,"published_at"?: string | null,"questions_per_attempt"?: number | null,"shuffle_options"?: boolean,"shuffle_questions"?: boolean,"slug": string,"status"?: Database["public"]['Enums']["content_status"],"time_limit_minutes"?: number | null,"title_en": string,"title_es": string,"updated_at"?: string,"visibility"?: string
+                  }
+                  Update: {
+                    "access_level"?: Database["public"]['Enums']["access_level"],"audience"?: Database["public"]['Enums']["audience_segment"] | null,"created_at"?: string,"created_by"?: string | null,"description_en"?: string | null,"description_es"?: string | null,"grade_scale"?: number,"id"?: string,"in_resources"?: boolean,"level_id"?: string | null,"max_attempts"?: number | null,"pass_percent"?: number,"published_at"?: string | null,"questions_per_attempt"?: number | null,"shuffle_options"?: boolean,"shuffle_questions"?: boolean,"slug"?: string,"status"?: Database["public"]['Enums']["content_status"],"time_limit_minutes"?: number | null,"title_en"?: string,"title_es"?: string,"updated_at"?: string,"visibility"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "tests_created_by_fkey"
+      columns: ["created_by"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "tests_level_id_fkey"
+      columns: ["level_id"]
+isOneToOne: false
+      referencedRelation: "levels"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"user_roles": {
                   Row: {
                     "role": Database["public"]['Enums']["app_role"],"user_id": string
@@ -646,11 +810,26 @@ isOneToOne: false
             "account_status":
 { Args: Record<PropertyKey, never>; Returns: string
                            },
+"admin_confirm_request":
+{ Args: { "p_payment": Json,"p_request_id": string }; Returns: Json
+                           },
+"admin_update_request":
+{ Args: { "p_action": string,"p_request_id": string }; Returns: Database["public"]['Enums']["enrollment_request_status"]
+                           },
 "can_read_resource_object":
 { Args: { "p_name": string }; Returns: boolean
                            },
+"can_take_test":
+{ Args: { "p_test_id": string }; Returns: boolean
+                           },
 "can_view_student":
 { Args: { "p_student_id": string }; Returns: boolean
+                           },
+"confirm_enrollment_request":
+{ Args: { "p_payment": Json,"p_request_id": string }; Returns: Json
+                           },
+"confirm_enrollment_request_internal":
+{ Args: { "p_payment": Json,"p_request_id": string,"p_skip_capacity": boolean }; Returns: Json
                            },
 "content_tier":
 { Args: Record<PropertyKey, never>; Returns: Database["public"]['Enums']["access_level"]
@@ -667,8 +846,25 @@ isOneToOne: false
 "enable_audit":
 { Args: { "p_table": unknown }; Returns: undefined
                            },
+"get_enrollment_request":
+{ Args: { "p_token": string }; Returns: Json
+                           },
 "get_published_lesson":
 { Args: { "p_slug": string }; Returns: Json
+                           },
+"get_test_info":
+{ Args: { "p_test_id": string }; Returns: Json
+                           },
+"group_is_bookable":
+{ Args: { "p_group_id": string }; Returns: boolean
+                           },
+"group_prices":
+{ Args: { "p_group_id": string }; Returns: {
+              "amount_cents": number,"id": string,"kind": Database["public"]['Enums']["price_kind"],"label_en": string,"label_es": string,"lessons_included": number
+            }[]
+                           },
+"group_seats_taken":
+{ Args: { "p_except_request"?: string,"p_group_id": string }; Returns: number
                            },
 "guarded_student_ids":
 { Args: Record<PropertyKey, never>; Returns: string[]
@@ -688,13 +884,21 @@ isOneToOne: false
 "is_active":
 { Args: Record<PropertyKey, never>; Returns: boolean
                            },
-"my_shop_purchases":
+"list_available_tests":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "attempts": number,"audience": Database["public"]['Enums']["audience_segment"],"best_grade": number,"best_percent": number,"description_en": string,"description_es": string,"grade_scale": number,"id": string,"in_resources": boolean,"level_code": string,"max_attempts": number,"pass_percent": number,"passed": boolean,"question_count": number,"slug": string,"time_limit_minutes": number,"title_en": string,"title_es": string,"visibility": string
+            }[]
+                           },
+"list_my_test_results":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "attempt_id": string,"grade": number,"grade_scale": number,"level_code": string,"passed": boolean,"percent": number,"submitted_at": string,"test_id": string,"title_en": string,"title_es": string
+            }[]
+                           },
+"list_public_editions":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
-"list_shop_products":
-{ Args: Record<PropertyKey, never>; Returns: {
-              "compare_at_cents": number,"cover_height": number,"cover_path": string,"cover_width": number,"has_file": boolean,"name_en": string,"name_es": string,"price_cents": number,"slug": string,"summary_en": string,"summary_es": string
-            }[]
+"list_public_groups":
+{ Args: Record<PropertyKey, never>; Returns: Json
                            },
 "list_published_lessons":
 { Args: Record<PropertyKey, never>; Returns: {
@@ -706,34 +910,14 @@ isOneToOne: false
               "access_level": Database["public"]['Enums']["access_level"],"audience": Database["public"]['Enums']["audience_segment"],"description_en": string,"description_es": string,"external_url": string,"has_file": boolean,"id": string,"kind": Database["public"]['Enums']["resource_kind"],"level_code": string,"locked": boolean,"sort_order": number,"thumbnail_path": string,"title_en": string,"title_es": string,"title_lang": string,"youtube_id": string
             }[]
                            },
-"get_test_info":
-{ Args: { "p_test_id": string }; Returns: Json
-                           },
-"list_available_tests":
-{ Args: Record<PropertyKey, never>; Returns: {
-              "attempts": number,"audience": Database["public"]['Enums']["audience_segment"],"best_grade": number,"best_percent": number,"description_en": string,"description_es": string,"grade_scale": number,"id": string,"in_resources": boolean,"level_code": string,"max_attempts": number,"passed": boolean,"pass_percent": number,"question_count": number,"slug": string,"time_limit_minutes": number,"title_en": string,"title_es": string,"visibility": string
-            }[]
-                           },
-"list_my_test_results":
-{ Args: Record<PropertyKey, never>; Returns: {
-              "attempt_id": string,"grade": number,"grade_scale": number,"level_code": string,"passed": boolean,"percent": number,"submitted_at": string,"test_id": string,"title_en": string,"title_es": string
-            }[]
-                           },
-"move_test_question":
-{ Args: { "p_question_id": string,"p_direction": string }; Returns: undefined
-                           },
-"start_test":
-{ Args: { "p_test_id": string }; Returns: Json
-                           },
-"submit_lead":
-{ Args: { "p_payload": Json }; Returns: string
-                           },
-"submit_test":
-{ Args: { "p_attempt_id": string,"p_answers": Json }; Returns: Json
-                           },
 "list_published_teachers":
 { Args: Record<PropertyKey, never>; Returns: {
               "body_en": string,"body_es": string,"enrol_en": string,"enrol_es": string,"enrol_title_en": string,"enrol_title_es": string,"facts_en": (string)[],"facts_es": (string)[],"intro_en": string,"intro_es": string,"meta_description_en": string,"meta_description_es": string,"name": string,"photo_alt_en": string,"photo_alt_es": string,"photo_path": string,"photo_position": string,"role_en": string,"role_es": string,"show_approach": boolean,"slug": string,"sort_order": number,"specialty_en": string,"specialty_es": string,"tagline_en": string,"tagline_es": string
+            }[]
+                           },
+"list_shop_products":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "compare_at_cents": number,"cover_height": number,"cover_path": string,"cover_width": number,"has_file": boolean,"name_en": string,"name_es": string,"price_cents": number,"slug": string,"summary_en": string,"summary_es": string
             }[]
                            },
 "move_lesson":
@@ -748,8 +932,47 @@ isOneToOne: false
 "move_teacher_profile":
 { Args: { "p_direction": string,"p_id": string }; Returns: undefined
                            },
+"move_test_question":
+{ Args: { "p_direction": string,"p_question_id": string }; Returns: undefined
+                           },
+"my_group_ids":
+{ Args: Record<PropertyKey, never>; Returns: string[]
+                           },
+"my_shop_purchases":
+{ Args: Record<PropertyKey, never>; Returns: Json
+                           },
+"owns_product_file":
+{ Args: { "p_name": string }; Returns: boolean
+                           },
 "resource_file_path":
 { Args: { "p_resource_id": string }; Returns: string
+                           },
+"school_today":
+{ Args: Record<PropertyKey, never>; Returns: string
+                           },
+"set_enrollment_request_method":
+{ Args: { "p_method": string,"p_token": string }; Returns: Json
+                           },
+"start_test":
+{ Args: { "p_test_id": string }; Returns: Json
+                           },
+"submit_enrollment_request":
+{ Args: { "p_payload": Json }; Returns: Json
+                           },
+"submit_lead":
+{ Args: { "p_payload": Json }; Returns: string
+                           },
+"submit_test":
+{ Args: { "p_answers": Json,"p_attempt_id": string }; Returns: Json
+                           },
+"taught_student_ids":
+{ Args: Record<PropertyKey, never>; Returns: string[]
+                           },
+"teaches_group":
+{ Args: { "p_group_id": string }; Returns: boolean
+                           },
+"test_attempt_payload":
+{ Args: { "p_attempt_id": string }; Returns: Json
                            },
 "text_items_within":
 { Args: { "p_items": (string)[],"p_max": number,"p_min": number }; Returns: boolean
@@ -759,7 +982,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","audience_segment": "kids"|"adults"|"mature","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","test_question_kind": "single"|"truefalse"|"fill","edition_status": "draft"|"open"|"closed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","student_status": "active"|"inactive"
+            "access_level": "public"|"account"|"enrolled","app_role": "admin"|"teacher"|"student"|"guardian"|"customer","audience_segment": "kids"|"adults"|"mature","billing_mode": "upfront"|"pack"|"payg"|"free","consent_kind": "enrolment_terms"|"privacy"|"minor_data"|"recordings"|"photos","consent_method": "portal"|"paper"|"email"|"web_form","content_status": "draft"|"published","edition_status": "draft"|"open"|"closed"|"cancelled","enrollment_request_status": "pending_payment"|"waitlist"|"converted"|"expired"|"cancelled","enrollment_status": "pending"|"active"|"paused"|"completed"|"cancelled","group_status": "draft"|"active"|"completed"|"cancelled","learn_category": "foundations"|"kids"|"adults"|"stories"|"games","lesson_block_kind": "text"|"image"|"video"|"quiz"|"game","lesson_format": "individual"|"own_group"|"local_group","lesson_kind": "interactive"|"article","location_kind": "library"|"office"|"home"|"online","payment_method": "stripe"|"transfer"|"cash"|"eventbrite"|"other","price_kind": "per_lesson"|"upfront"|"pack","resource_kind": "video"|"document"|"link"|"worksheet"|"vocabulary"|"recording"|"coursework","student_status": "active"|"inactive","test_question_kind": "single"|"truefalse"|"fill"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -875,7 +1098,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"audience_segment": ["kids", "adults", "mature"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"test_question_kind": ["single", "truefalse", "fill"],"edition_status": ["draft", "open", "closed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"student_status": ["active", "inactive"]
+            "access_level": ["public", "account", "enrolled"],"app_role": ["admin", "teacher", "student", "guardian", "customer"],"audience_segment": ["kids", "adults", "mature"],"billing_mode": ["upfront", "pack", "payg", "free"],"consent_kind": ["enrolment_terms", "privacy", "minor_data", "recordings", "photos"],"consent_method": ["portal", "paper", "email", "web_form"],"content_status": ["draft", "published"],"edition_status": ["draft", "open", "closed", "cancelled"],"enrollment_request_status": ["pending_payment", "waitlist", "converted", "expired", "cancelled"],"enrollment_status": ["pending", "active", "paused", "completed", "cancelled"],"group_status": ["draft", "active", "completed", "cancelled"],"learn_category": ["foundations", "kids", "adults", "stories", "games"],"lesson_block_kind": ["text", "image", "video", "quiz", "game"],"lesson_format": ["individual", "own_group", "local_group"],"lesson_kind": ["interactive", "article"],"location_kind": ["library", "office", "home", "online"],"payment_method": ["stripe", "transfer", "cash", "eventbrite", "other"],"price_kind": ["per_lesson", "upfront", "pack"],"resource_kind": ["video", "document", "link", "worksheet", "vocabulary", "recording", "coursework"],"student_status": ["active", "inactive"],"test_question_kind": ["single", "truefalse", "fill"]
           }
         }
 } as const

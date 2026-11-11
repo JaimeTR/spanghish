@@ -160,6 +160,18 @@ end
 $kid$;
 
 -- ---------------------------------------------------------------------------
+-- Grupos y matrículas de desarrollo (0035). El grupo público admite reservas desde
+-- la web; Student Local está matriculada (ve el contenido "enrolled").
+-- ---------------------------------------------------------------------------
+insert into public.groups (id, code, name, program_id, edition_id, format, capacity, status, is_public) values
+  ('b0000000-0000-4000-8000-000000000601', 'ADU-A1-LOCAL', 'Adultos A1 · grupo de prueba',
+   'b0000000-0000-4000-8000-000000000101', 'b0000000-0000-4000-8000-000000000201', 'local_group', 8, 'active', true);
+
+insert into public.enrollments (id, student_id, group_id, status, billing_mode, price_id, agreed_amount_cents) values
+  ('b0000000-0000-4000-8000-000000000701', 'b0000000-0000-4000-8000-000000000401',
+   'b0000000-0000-4000-8000-000000000601', 'active', 'upfront', 'b0000000-0000-4000-8000-000000000302', 31000);
+
+-- ---------------------------------------------------------------------------
 -- Contenido de desarrollo (0010). IDs fijos (c0…) para las e2e (SEED_CONTENT en
 -- apps/app/e2e/fixtures.ts). Además de lo que trae la migración (2 lecciones
 -- interactivas y 3 videos de Maribel):
