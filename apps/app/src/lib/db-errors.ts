@@ -8,6 +8,9 @@ export const DOMAIN_ERRORS = [
   "forbidden",
   "not_found",
   "conflict",
+  "not_available",
+  "invalid",
+  "price_invalid",
   "already_enrolled",
   "slot_taken",
   "group_full",
@@ -44,6 +47,8 @@ export function toDomainError(error: DbError): DomainError {
   switch (error.code) {
     case "42501":
       return "forbidden";
+    case "23503":
+      return "conflict";
     case "P0001":
       return isDomainError(message) ? message : "unknown";
     case "23505": {

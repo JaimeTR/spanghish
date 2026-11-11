@@ -49,7 +49,7 @@ export default async function EnrolPayPage({ params }: Props) {
     request.status === "pending_payment" && expires
       ? request.method === "transfer"
         ? t("holdUntilDate", { date: new Intl.DateTimeFormat(tag, { dateStyle: "long", timeZone: "Australia/Brisbane" }).format(expires) })
-        : t("holdUntil", { time: new Intl.DateTimeFormat(tag, { hour: "numeric", minute: "2-digit", timeZone: "Australia/Brisbane" }).format(expires) })
+        : t("holdUntil", { time: new Intl.DateTimeFormat(tag, { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "Australia/Brisbane" }).format(expires) })
       : null;
 
   const lead = request.status === "pending_payment" ? "" : t(LEADS[request.status], { email: request.email });

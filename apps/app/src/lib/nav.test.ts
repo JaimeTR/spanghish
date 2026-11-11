@@ -99,6 +99,8 @@ describe("NAV", () => {
     );
     expect(readyKeys).toEqual([
       "admin.dashboard",
+      "admin.groups",
+      "admin.enrollments",
       "admin.leads",
       "admin.users",
       "admin.students",
@@ -155,12 +157,7 @@ describe("NAV", () => {
   });
 
   it("devModules returns the dev keys of an area", () => {
-    expect(devModules("admin")).toEqual([
-      "calendar",
-      "groups",
-      "enrollments",
-      "attendance",
-    ]);
+    expect(devModules("admin")).toEqual(["calendar", "attendance"]);
     expect(devModules("teacher")).toHaveLength(6);
     expect(devModules("student")).toHaveLength(6);
     expect(devModules("guardian")).toHaveLength(5);

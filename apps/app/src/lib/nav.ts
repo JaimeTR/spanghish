@@ -76,8 +76,8 @@ export const NAV: Record<AppRole, readonly NavItem[]> = {
   admin: [
     a.r("dashboard", ""),
     a.d("calendar"),
-    a.d("groups"),
-    a.d("enrollments"),
+    a.r("groups", "groups"),
+    a.r("enrollments", "enrollments"),
     a.d("attendance"),
     a.r("leads", "leads"),
     a.r("users", "users"),

@@ -257,7 +257,10 @@
       "content_incomplete": "Complete the required content before publishing.",
       "slug_taken": "This identifier is already in use.",
       "unknown": "Something went wrong. Please try again.",
-      "attempts_exhausted": "You have used all the attempts for this test."
+      "attempts_exhausted": "You have used all the attempts for this test.",
+      "not_available": "This booking is no longer available.",
+      "invalid": "The data is not valid.",
+      "price_invalid": "That price is no longer available."
     }
   },
   "teachers": {
@@ -1674,6 +1677,177 @@
       "amount": "Amount",
       "status": "Status",
       "stripe": "Stripe"
+    }
+  },
+  "adminGroups": {
+    "title": "Groups",
+    "intro": "The actual class of each edition: teacher, venue, capacity and places taken.",
+    "new": "New group",
+    "newTitle": "New group",
+    "edit": "Edit group",
+    "editTitle": "Edit group",
+    "delete": "Delete group",
+    "viewEnrollments": "View the group's enrolments",
+    "empty": "There are no groups yet. Create the first one to start enrolling students.",
+    "search": "Search groups",
+    "unassigned": "Unassigned",
+    "columns": {
+      "group": "Group",
+      "program": "Program and edition",
+      "teacher": "Teacher",
+      "location": "Venue",
+      "seats": "Places",
+      "status": "Status",
+      "public": "Web booking",
+      "actions": "Actions"
+    },
+    "status": {
+      "draft": "Draft",
+      "active": "Active",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "public": {
+      "yes": "Yes",
+      "no": "No"
+    },
+    "format": {
+      "individual": "Individual",
+      "own_group": "Own group",
+      "local_group": "Local group"
+    },
+    "form": {
+      "code": "Code",
+      "codeHint": "Capitals, numbers and hyphens (e.g. ADU-A1-TUE).",
+      "name": "Name",
+      "program": "Program",
+      "edition": "Edition",
+      "editionHint": "Needed to take bookings from the website.",
+      "teacher": "Teacher",
+      "location": "Venue",
+      "locationNote": "Venue directions",
+      "meetingUrl": "Online class link",
+      "meetingUrlHint": "Zoom or Meet (https://…).",
+      "format": "Format",
+      "capacity": "Capacity",
+      "capacityHint": "Individual 1, own group up to 2, local group up to 30.",
+      "status": "Status",
+      "isPublic": "Takes bookings from the website",
+      "isPublicHint": "Only if the group is active and its edition is open.",
+      "choose": "Choose…",
+      "none": "None",
+      "unassigned": "Unassigned",
+      "save": "Save changes",
+      "create": "Create group",
+      "saving": "Saving…"
+    }
+  },
+  "adminEnrollments": {
+    "title": "Enrolments",
+    "intro": "Students enrolled in each group, their payments and the bookings that come from the website.",
+    "new": "New enrolment",
+    "newTitle": "New enrolment",
+    "edit": "Edit enrolment",
+    "editTitle": "Enrolment",
+    "recordPayment": "Record payment",
+    "empty": "There are no enrolments yet.",
+    "search": "Search",
+    "filteredByGroup": "Showing one group only.",
+    "clearFilter": "Show all",
+    "seatsFree": "{count, plural, =0 {full} one {# place free} other {# places free}}",
+    "tabs": {
+      "label": "Enrolment sections",
+      "enrollments": "Enrolments",
+      "requests": "Pre-enrolments"
+    },
+    "columns": {
+      "student": "Student",
+      "group": "Group",
+      "status": "Status",
+      "billing": "Plan",
+      "agreed": "Agreed",
+      "paid": "Paid",
+      "balance": "Balance",
+      "starts": "Start",
+      "actions": "Actions",
+      "person": "Person",
+      "contact": "Contact",
+      "amount": "Amount",
+      "method": "Payment",
+      "expires": "Expires",
+      "received": "Received"
+    },
+    "status": {
+      "pending": "Pending",
+      "active": "Active",
+      "paused": "Paused",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "billing": {
+      "upfront": "Full course",
+      "pack": "Lesson pack",
+      "payg": "Pay per lesson",
+      "free": "Free / scholarship"
+    },
+    "priceKind": {
+      "upfront": "Full course",
+      "pack": "{count} lessons",
+      "per_lesson": "Per lesson"
+    },
+    "method": {
+      "transfer": "Bank transfer",
+      "cash": "Cash",
+      "eventbrite": "Eventbrite",
+      "other": "Other"
+    },
+    "requestStatus": {
+      "pending_payment": "Payment pending",
+      "waitlist": "Waiting list",
+      "converted": "Enrolled",
+      "expired": "Expired",
+      "cancelled": "Cancelled"
+    },
+    "requestMethod": {
+      "stripe": "Card",
+      "transfer": "Bank transfer"
+    },
+    "requests": {
+      "empty": "There are no pre-enrolments. They appear here when someone books a place on the website.",
+      "confirm": "Confirm with payment",
+      "confirmLead": "Confirming creates the student record, the enrolment and the payment. With amount 0 the student is enrolled without a charge.",
+      "offer": "Offer a place (5-day hold)",
+      "cancel": "Cancel pre-enrolment",
+      "copyLink": "Copy payment link",
+      "copied": "Link copied",
+      "viewStudent": "View student record",
+      "notes": "Message and notes",
+      "guardian": "Guardian: {name}"
+    },
+    "form": {
+      "student": "Student",
+      "group": "Group",
+      "price": "Catalogue price",
+      "priceHint": "Optional: fills in the plan and the amount.",
+      "noPrice": "No catalogue price",
+      "billingMode": "Plan",
+      "agreedAmount": "Agreed amount",
+      "amount": "Amount",
+      "amountHint": "In dollars (AUD), e.g. 310 or 310.50.",
+      "startsOn": "Start date",
+      "notes": "Notes",
+      "status": "Status",
+      "statusHint": "Cancelling or completing frees the place.",
+      "method": "Payment method",
+      "reference": "Reference",
+      "referenceHint": "Transfer or receipt number.",
+      "note": "Note",
+      "adminNotes": "Internal notes",
+      "choose": "Choose…",
+      "save": "Save changes",
+      "create": "Enrol",
+      "recordPayment": "Record payment",
+      "saving": "Saving…"
     }
   }
 }

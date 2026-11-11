@@ -257,7 +257,10 @@
       "content_incomplete": "Completa el contenido obligatorio antes de publicar.",
       "slug_taken": "Este identificador ya está en uso.",
       "unknown": "Algo salió mal. Inténtalo de nuevo.",
-      "attempts_exhausted": "Has usado todos los intentos de este test."
+      "attempts_exhausted": "Has usado todos los intentos de este test.",
+      "not_available": "Esta reserva ya no está disponible.",
+      "invalid": "Los datos no son válidos.",
+      "price_invalid": "Ese precio ya no está disponible."
     }
   },
   "teachers": {
@@ -1674,6 +1677,177 @@
       "amount": "Importe",
       "status": "Estado",
       "stripe": "Stripe"
+    }
+  },
+  "adminGroups": {
+    "title": "Grupos",
+    "intro": "La clase real de cada edición: docente, sede, cupo y plazas ocupadas.",
+    "new": "Nuevo grupo",
+    "newTitle": "Nuevo grupo",
+    "edit": "Editar grupo",
+    "editTitle": "Editar grupo",
+    "delete": "Eliminar grupo",
+    "viewEnrollments": "Ver matrículas del grupo",
+    "empty": "Todavía no hay grupos. Crea el primero para poder matricular alumnos.",
+    "search": "Buscar grupo",
+    "unassigned": "Sin asignar",
+    "columns": {
+      "group": "Grupo",
+      "program": "Programa y edición",
+      "teacher": "Docente",
+      "location": "Sede",
+      "seats": "Plazas",
+      "status": "Estado",
+      "public": "Reserva web",
+      "actions": "Acciones"
+    },
+    "status": {
+      "draft": "Borrador",
+      "active": "Activo",
+      "completed": "Finalizado",
+      "cancelled": "Cancelado"
+    },
+    "public": {
+      "yes": "Sí",
+      "no": "No"
+    },
+    "format": {
+      "individual": "Individual",
+      "own_group": "Grupo propio",
+      "local_group": "Grupo local"
+    },
+    "form": {
+      "code": "Código",
+      "codeHint": "Mayúsculas, números y guiones (ej. ADU-A1-MAR).",
+      "name": "Nombre",
+      "program": "Programa",
+      "edition": "Edición",
+      "editionHint": "Necesaria para admitir reservas desde la web.",
+      "teacher": "Docente",
+      "location": "Sede",
+      "locationNote": "Indicaciones del lugar",
+      "meetingUrl": "Enlace de la clase en línea",
+      "meetingUrlHint": "Zoom o Meet (https://…).",
+      "format": "Formato",
+      "capacity": "Cupo",
+      "capacityHint": "Individual 1, grupo propio hasta 2, grupo local hasta 30.",
+      "status": "Estado",
+      "isPublic": "Admite reservas desde la web",
+      "isPublicHint": "Solo si el grupo está activo y su edición está abierta.",
+      "choose": "Elige…",
+      "none": "Ninguna",
+      "unassigned": "Sin asignar",
+      "save": "Guardar cambios",
+      "create": "Crear grupo",
+      "saving": "Guardando…"
+    }
+  },
+  "adminEnrollments": {
+    "title": "Matrículas",
+    "intro": "Alumnos matriculados en cada grupo, sus pagos y las reservas que llegan desde la web.",
+    "new": "Nueva matrícula",
+    "newTitle": "Nueva matrícula",
+    "edit": "Editar matrícula",
+    "editTitle": "Matrícula",
+    "recordPayment": "Registrar pago",
+    "empty": "Todavía no hay matrículas.",
+    "search": "Buscar",
+    "filteredByGroup": "Viendo solo un grupo.",
+    "clearFilter": "Ver todos",
+    "seatsFree": "{count, plural, =0 {completo} one {# plaza libre} other {# plazas libres}}",
+    "tabs": {
+      "label": "Secciones de matrículas",
+      "enrollments": "Matrículas",
+      "requests": "Prematrículas"
+    },
+    "columns": {
+      "student": "Alumno",
+      "group": "Grupo",
+      "status": "Estado",
+      "billing": "Modalidad",
+      "agreed": "Acordado",
+      "paid": "Pagado",
+      "balance": "Saldo",
+      "starts": "Inicio",
+      "actions": "Acciones",
+      "person": "Persona",
+      "contact": "Contacto",
+      "amount": "Importe",
+      "method": "Pago",
+      "expires": "Caduca",
+      "received": "Recibida"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "active": "Activa",
+      "paused": "En pausa",
+      "completed": "Finalizada",
+      "cancelled": "Cancelada"
+    },
+    "billing": {
+      "upfront": "Curso completo",
+      "pack": "Paquete de clases",
+      "payg": "Pago por clase",
+      "free": "Gratis / beca"
+    },
+    "priceKind": {
+      "upfront": "Curso completo",
+      "pack": "{count} clases",
+      "per_lesson": "Por clase"
+    },
+    "method": {
+      "transfer": "Transferencia",
+      "cash": "Efectivo",
+      "eventbrite": "Eventbrite",
+      "other": "Otro"
+    },
+    "requestStatus": {
+      "pending_payment": "Pago pendiente",
+      "waitlist": "Lista de espera",
+      "converted": "Matriculada",
+      "expired": "Caducada",
+      "cancelled": "Cancelada"
+    },
+    "requestMethod": {
+      "stripe": "Tarjeta",
+      "transfer": "Transferencia"
+    },
+    "requests": {
+      "empty": "No hay prematrículas. Aparecen aquí cuando alguien reserva plaza desde la web.",
+      "confirm": "Confirmar con pago",
+      "confirmLead": "Al confirmar se crean la ficha del alumno, la matrícula y el pago. Con importe 0 se matricula sin cobro.",
+      "offer": "Ofrecer plaza (reserva de 5 días)",
+      "cancel": "Cancelar prematrícula",
+      "copyLink": "Copiar enlace de pago",
+      "copied": "Enlace copiado",
+      "viewStudent": "Ver ficha del alumno",
+      "notes": "Mensaje y notas",
+      "guardian": "Tutor: {name}"
+    },
+    "form": {
+      "student": "Alumno",
+      "group": "Grupo",
+      "price": "Precio del catálogo",
+      "priceHint": "Opcional: rellena la modalidad y el importe.",
+      "noPrice": "Sin precio del catálogo",
+      "billingMode": "Modalidad",
+      "agreedAmount": "Importe acordado",
+      "amount": "Importe",
+      "amountHint": "En dólares (AUD), ej. 310 o 310.50.",
+      "startsOn": "Fecha de inicio",
+      "notes": "Notas",
+      "status": "Estado",
+      "statusHint": "Cancelar o finalizar libera la plaza.",
+      "method": "Forma de pago",
+      "reference": "Referencia",
+      "referenceHint": "Número de la transferencia o recibo.",
+      "note": "Nota",
+      "adminNotes": "Notas internas",
+      "choose": "Elige…",
+      "save": "Guardar cambios",
+      "create": "Matricular",
+      "recordPayment": "Registrar pago",
+      "saving": "Guardando…"
     }
   }
 }
