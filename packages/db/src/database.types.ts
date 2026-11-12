@@ -587,6 +587,26 @@ isOneToOne: false
                   Relationships: [
                     
                   ]
+                },"notifications": {
+                  Row: {
+                    "body_en": string | null,"body_es": string | null,"created_at": string,"dedupe_key": string | null,"id": string,"kind": string,"link": string | null,"read_at": string | null,"title_en": string,"title_es": string,"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body_en"?: string | null,"body_es"?: string | null,"created_at"?: string,"dedupe_key"?: string | null,"id"?: string,"kind": string,"link"?: string | null,"read_at"?: string | null,"title_en": string,"title_es": string,"user_id": string
+                  }
+                  Update: {
+                    "body_en"?: string | null,"body_es"?: string | null,"created_at"?: string,"dedupe_key"?: string | null,"id"?: string,"kind"?: string,"link"?: string | null,"read_at"?: string | null,"title_en"?: string,"title_es"?: string,"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notifications_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"products": {
                   Row: {
                     "compare_at_cents": number | null,"cover_height": number | null,"cover_path": string | null,"cover_width": number | null,"created_at": string,"created_by": string | null,"file_name": string | null,"file_path": string | null,"file_size_bytes": number | null,"id": string,"name_en": string,"name_es": string,"price_cents": number,"published_at": string | null,"slug": string,"status": Database["public"]['Enums']["content_status"],"summary_en": string | null,"summary_es": string | null,"updated_at": string
@@ -1200,6 +1220,9 @@ isOneToOne: false
 "enable_audit":
 { Args: { "p_table": unknown }; Returns: undefined
                            },
+"generate_reminders":
+{ Args: Record<PropertyKey, never>; Returns: number
+                           },
 "generate_sessions":
 { Args: { "p_group_id": string,"p_until": string }; Returns: number
                            },
@@ -1298,6 +1321,12 @@ isOneToOne: false
 "my_shop_purchases":
 { Args: Record<PropertyKey, never>; Returns: Json
                            },
+"notice_when":
+{ Args: { "p_at": string }; Returns: string
+                           },
+"notify":
+{ Args: { "p_body_en": string,"p_body_es": string,"p_dedupe": string,"p_kind": string,"p_link": string,"p_title_en": string,"p_title_es": string,"p_users": (string)[] }; Returns: undefined
+                           },
 "owns_product_file":
 { Args: { "p_name": string }; Returns: boolean
                            },
@@ -1326,6 +1355,9 @@ isOneToOne: false
                            },
 "start_test":
 { Args: { "p_test_id": string }; Returns: Json
+                           },
+"student_recipients":
+{ Args: { "p_student_id": string }; Returns: string[]
                            },
 "submit_enrollment_request":
 { Args: { "p_payload": Json }; Returns: Json

@@ -2006,5 +2006,14 @@
       "save": "Guardar ajuste",
       "saving": "Guardando…"
     }
+  },
+  "notifications": {
+    "title": "Avisos",
+    "intro": "Recordatorios de clases y tareas, y novedades de tus cambios de clase.",
+    "empty": "No tienes avisos por ahora.",
+    "markAll": "Marcar todo como leído",
+    "unread": "Sin leer",
+    "bell": "Avisos",
+    "bellUnread": "Avisos, {count} sin leer"
   }
 }

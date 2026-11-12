@@ -52,7 +52,9 @@ export function Topbar({
   area,
   locale,
   logout,
+  bell,
 }: {
+  bell?: React.ReactNode;
   name?: string;
   avatarPath?: string;
   roles: AppRole[];
@@ -98,6 +100,7 @@ export function Topbar({
         <RoleSwitcher roles={roles} current={area} locale={locale} className="hidden lg:flex" />
 
         <div className="ml-auto flex items-center gap-4">
+          {bell}
           <LocaleSwitch locale={locale} />
           <div className="hidden lg:block">
             <UserMenu name={name} avatarPath={avatarPath} role={area} locale={locale} logout={logout} />

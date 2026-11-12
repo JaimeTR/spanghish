@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { PortalShell } from "@/components/PortalShell";
 import { isLocale } from "@/i18n/routing";
 import { displayName, type AppRole } from "@/lib/access";
@@ -25,7 +26,7 @@ export async function AreaLayout({
   setRequestLocale(locale);
   const user = await requireArea(locale, area);
   return (
-    <PortalShell area={area} locale={locale} name={displayName(user)} avatarPath={user.avatarPath} roles={user.roles}>
+    <PortalShell area={area} locale={locale} name={displayName(user)} avatarPath={user.avatarPath} roles={user.roles} bell={<NotificationBell locale={locale} />}>
       {children}
     </PortalShell>
   );

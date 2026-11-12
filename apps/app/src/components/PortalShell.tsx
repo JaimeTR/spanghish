@@ -17,8 +17,10 @@ export function PortalShell({
   name,
   avatarPath,
   roles,
+  bell,
   children,
 }: {
+  bell?: React.ReactNode;
   area: AppRole;
   locale: Locale;
   name?: string;
@@ -40,7 +42,7 @@ export function PortalShell({
       <DesktopSidebar area={area} locale={locale} logout={logout} />
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <Topbar name={name} avatarPath={avatarPath} roles={roles} area={area} locale={locale} logout={logout} />
+        <Topbar name={name} avatarPath={avatarPath} roles={roles} area={area} locale={locale} logout={logout} bell={bell} />
         <main id="main" tabIndex={-1} className="w-full max-w-6xl flex-1 px-4 py-6 focus:outline-none sm:px-6 lg:px-10 lg:py-10">
           {children}
         </main>

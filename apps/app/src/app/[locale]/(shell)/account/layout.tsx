@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 import { PortalShell } from "@/components/PortalShell";
 import { isLocale } from "@/i18n/routing";
 import { displayName, roleHomePath, type AppRole } from "@/lib/access";
@@ -26,7 +27,7 @@ export default async function AccountLayout({
   const area = user ? AREA_PRIORITY.find((role) => user.roles.includes(role)) : undefined;
   if (!user || !area) redirect(roleHomePath([], locale));
   return (
-    <PortalShell area={area} locale={locale} name={displayName(user)} avatarPath={user.avatarPath} roles={user.roles}>
+    <PortalShell area={area} locale={locale} name={displayName(user)} avatarPath={user.avatarPath} roles={user.roles} bell={<NotificationBell locale={locale} />}>
       {children}
     </PortalShell>
   );

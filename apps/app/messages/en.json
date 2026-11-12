@@ -2006,5 +2006,14 @@
       "save": "Save adjustment",
       "saving": "Saving…"
     }
+  },
+  "notifications": {
+    "title": "Notices",
+    "intro": "Reminders for classes and assignments, and updates on your class changes.",
+    "empty": "You have no notices right now.",
+    "markAll": "Mark all as read",
+    "unread": "Unread",
+    "bell": "Notices",
+    "bellUnread": "Notices, {count} unread"
   }
 }
